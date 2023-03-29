@@ -1,103 +1,178 @@
-create database developer_app;
-use developer_app;
-
-create table developer
+create table developers
 (
-    id                   int auto_increment,
-    developer_name       varchar(200),
-    address_street       varchar(200),
-    address_number       varchar(200),
-    address_postal_code  varchar(200),
-    address_email        varchar(200),
-    address_second_email varchar(200),
-    nip_number           varchar(200),
+    id                        int auto_increment,
+    name                      varchar(200) NOT NULL,
+    address_country           varchar(200) NOT NULL,
+    address_city              varchar(200) NOT NULL,
+    address_street            varchar(200) NOT NULL,
+    address_building_number   varchar(200) NOT NULL,
+    address_premise_number    varchar(200),
+    address_postal_code       varchar(200),
+    address_telephone_number  varchar(200),
+    address_fax_number        varchar(200),
+    address_email             varchar(200),
+    tax_identification_number varchar(200) NOT NULL,
     primary key (id)
 );
 
-create table estate
-(
-    id                     int auto_increment,
-    estate_name            varchar(200),
-    estate_district        varchar(200),
-    estate_address         varchar(200),
-    estate_description     varchar(5000),
-    building_number        int,
-    building_quantity      int,
-    floors_number          int,
-    locals_number          int,
-    is_available           boolean,
-    is_during_construction boolean,
-    is_during_preparation  boolean,
-    developer_id           int,
-    primary key (id),
-    foreign key (developer_id) REFERENCES developer (id)
-);
-
-create table sales_office
+create table investments
 (
     id                       int auto_increment,
-    developer_name           varchar(200),
-    address_street           varchar(200),
-    address_number           varchar(200),
+    name                     varchar(200),
+    description              varchar(5000),
+    address_country          varchar(200),
+    address_voivodeship      varchar(200),
+    address_city             varchar(200) NOT NULL,
+    address_street           varchar(200) NOT NULL,
+    address_building_number  varchar(200),
     address_postal_code      varchar(200),
+    address_telephone_number varchar(200),
+    address_fax_number       varchar(200),
     address_email            varchar(200),
-    address_second_email     varchar(200),
-    opening_hours            varchar(200),
-    sales_manager_name       varchar(200),
-    sales_manager_tel_number varchar(200),
+    developer_id             int          NOT NULL,
+    primary key (id),
+    foreign key (developer_id) REFERENCES developers (id)
+);
+
+create table sales_offices
+(
+    id                       int auto_increment,
+    address_country          varchar(200),
+    address_city             varchar(200) NOT NULL,
+    address_street           varchar(200) NOT NULL,
+    address_building_number  varchar(200) NOT NULL,
+    address_premise_number   varchar(200),
+    address_postal_code      varchar(200),
+    address_telephone_number varchar(200),
+    address_fax_number       varchar(200),
+    address_email            varchar(200),
     primary key (id)
 );
 
-create table building
-(
-    id               int auto_increment,
-    building_name    varchar(200),
-    building_number  int,
-    locals_available int,
-    locals_reserved  int,
-    locals_sold      int,
-    estate_id        int,
-    sales_office_id  int,
-    primary key (id),
-    foreign key (estate_id) references estate (id),
-    foreign key (sales_office_id) references sales_office (id)
-);
-
-create table local
+create table sales_office_opening_hours
 (
     id                    int auto_increment,
-    developer             varchar(200),
-    country               varchar(200),
-    city                  varchar(200),
-    type                  varchar(200),
-    estate                varchar(200),
-    building              varchar(200),
-    address               varchar(200),
-    local_number          int,
-    floor_number          int(100),
-    surface_sq_m          decimal(2),
-    total_price           decimal(2),
-    per_sq_m_price        decimal(2),
-    rooms_quantity        int(100),
-    is_special_offer      boolean,
-    local_status          varchar(200),
-    exposure              varchar(200),
-    is_balcony            boolean,
-    is_garden             boolean,
-    is_terrace            boolean,
-    is_loggia             boolean,
-    ready_to_pick_up_date date,
-    building_id int,
-    primary key (id),
-    foreign key (building_id) references building(id)
-)
-    COLLATE = 'utf8_general_ci'
-    ENGINE = InnoDB;
+    day_of_week           int  NOT NULL,
+    time_open             time NOT NULL,
+    working_time_in_hours int  NOT NULL,
+    sales_office_id       int  NOT NULL,
+    foreign key (sales_office_id) REFERENCES sales_offices (id),
+    primary key (id)
+);
 
-#                       -rzut lokalu
-# 						-plan lokalu
-# 						-wirtualny spacer 3D
-# 						-widok elewacji
-# 						-plan 3D
-# 						-widok z okna
-# 						-broszura do pobrania
+create table sales_office_responsibility
+(
+    id              int auto_increment,
+    sales_office_id int NOT NULL,
+    investment_id   int NOT NULL,
+    foreign key (sales_office_id) REFERENCES sales_offices (id),
+    foreign key (investment_id) REFERENCES investments (id),
+    primary key (id)
+);
+
+create table employees
+(
+    id                        int auto_increment,
+    first_name                varchar(200) NOT NULL,
+    last_name                 varchar(200) NOT NULL,
+    position                  varchar(200) NOT NULL,
+    business_email            varchar(200),
+    business_telephone_number varchar(200),
+    address_country           varchar(200),
+    address_city              varchar(200) NOT NULL,
+    address_street            varchar(200) NOT NULL,
+    address_building_number   varchar(200) NOT NULL,
+    address_premise_number    varchar(200),
+    address_postal_code       varchar(200) NOT NULL,
+    address_telephone_number  varchar(200),
+    address_email             varchar(200),
+    personal_id_number        varchar(200) NOT NULL,
+    developer_id              int          NOT NULL,
+    foreign key (developer_id) REFERENCES developers (id),
+    primary key (id)
+);
+
+create table employment
+(
+    id              int auto_increment,
+    employee_id     int NOT NULL,
+    sales_office_id int NOT NULL,
+    primary key (id),
+    foreign key (employee_id) references employees (id),
+    foreign key (sales_office_id) references sales_offices (id)
+);
+
+create table clients
+(
+    id                                int auto_increment,
+    first_name                        varchar(200) NOT NULL,
+    last_name                         varchar(200) NOT NULL,
+    address_country                   varchar(200),
+    address_city                      varchar(200) NOT NULL,
+    address_street                    varchar(200) NOT NULL,
+    address_building_number           varchar(200) NOT NULL,
+    address_premise_number            varchar(200),
+    address_postal_code               varchar(200) NOT NULL,
+    address_telephone_number          varchar(200),
+    address_fax_number                varchar(200),
+    address_email                     varchar(200),
+    personal_id_number                varchar(200) NOT NULL,
+    company_name                      varchar(200),
+    company_address_country           varchar(200),
+    company_address_city              varchar(200),
+    company_address_street            varchar(200),
+    company_address_building_number   varchar(200),
+    company_address_premise_number    varchar(200),
+    company_address_postal_code       varchar(200),
+    company_address_telephone_number  varchar(200),
+    company_address_fax_number        varchar(200),
+    company_address_email             varchar(200),
+    company_tax_identification_number varchar(200),
+    primary key (id)
+);
+
+create table transactions
+(
+    id         int auto_increment,
+    date       date,
+    client_id  int NOT NULL,
+    premise_id int NOT NULL,
+    primary key (id),
+    foreign key (client_id) references clients (id),
+    foreign key (premise_id) references premises (id)
+);
+
+create table buildings
+(
+    id            int auto_increment,
+    name          varchar(200),
+    number        int NOT NULL,
+    investment_id int NOT NULL,
+    primary key (id),
+    foreign key (investment_id) references investments (id)
+);
+
+create table premises
+(
+    id               int auto_increment,
+    type             varchar(200)   NOT NULL,
+    number           int            NOT NULL,
+    floor            int(100)       NOT NULL,
+    surface_sq_m     decimal(16, 2) NOT NULL,
+    price_sq_m       decimal(16, 2),
+    price_total      decimal(16, 2),
+    number_of_rooms  int(100)       NOT NULL,
+    technical_status varchar(200),
+    sales_status     varchar(200),
+    exposure         varchar(200),
+    is_balcony       tinyint,
+    is_garden        tinyint,
+    is_terrace       tinyint,
+    is_loggia        tinyint,
+    building_id      int            NOT NULL,
+    primary key (id),
+    foreign key (building_id) references buildings (id)
+);
+
+COLLATE = 'utf8_general_ci';
+ENGINE = InnoDB;
