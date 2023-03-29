@@ -1,0 +1,56 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<body>
+
+    <div th:fragment="modal" class="modal" id="add-payment-modal">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content bg-light">
+                <div class="modal-header w-100">
+                    <h4 class="modal-title">Dodaj płatność</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <div class="modal-body w-100">
+                    <form>
+                        <div class="form-row pb-1 ">
+                            <label class="col-md-6 text-center pt-1" for="newPaymentValue" th:data-id="${data.id}">
+                                Wartość:
+                            </label>
+                            <input class="col-md-6 " type="number" required
+                                   pattern="[0-9]{1,}(\.[0-9]{2})?" placeholder="0.00"
+                                   name="newPaymentValue" id="newPaymentValue">
+                        </div>
+                        <div class="form-row pb-1 ">
+                            <label class="col-md-6 text-center pt-1" for="newPaymentMethod">
+                                Metoda płatności:
+                            </label>
+                            <select id="newPaymentMethod" name="newPaymentMethod"
+                                    class="mb-1 col-md-6" >
+                                <option th:each="method : ${paymentPaymentMethods}" th:value="${method.id}" th:text="${method.value}"></option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" onclick="postNewPayment()">
+                        Dodaj
+                    </button>
+                    <button type="button" data-dismiss="modal"
+
+                            onclick="postNewPaymentAndClose()">
+                        Dodaj i zamknij
+                    </button>
+                    <button type="button" onclick="resetAddPaymentForm()">
+                        Wyczyść
+                    </button>
+                    <button type="button" data-dismiss="modal">
+                        Zamknij
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

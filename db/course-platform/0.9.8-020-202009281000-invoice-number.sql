@@ -1,0 +1,1 @@
+ALTER TABLE crs_invoices ADD number varchar(100);

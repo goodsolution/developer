@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html th:lang="${#locale.getLanguage()}" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta name="description" th:content="#{meme.content.description}">
+    <meta name="keywords" th:content="#{meme.content.keywords}">
+    <title th:text="'Inner voice - Twój doradca' + ' · ' + ${@applicationConfig.getAppNameFront()}"></title>
+    <div th:replace="fragments/front-head"></div>
+    <script>
+        trace('page.show', 'adviser');
+    </script>
+    <div th:replace="fragments/datepicker :: imports"></div>
+    <div th:replace="fragments/timepicker :: imports"></div>
+    <script th:src="@{/js/front-adviser.js}"></script>
+    <script th:inline="javascript">
+        var loggedCustomer = [[${loggedCustomer}]];
+    </script>
+</head>
+
+<body>
+<nav th:replace="${@courseCustomersService.getLoggedCustomer()} ? 'fragments/logged-in-navbar' : 'fragments/logged-out-navbar'"></nav>
+
+<div class="container my-5">
+    <div class="row">
+        Witaj
+
+    </div>
+    <div id="advices">
+
+    </div>
+
+
+</div>
+
+<footer th:replace="fragments/footer"></footer>
+
+</body>
+
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html th:lang="${#locale.getLanguage()}" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta name="description" th:content="#{meme.content.description}">
+    <meta name="keywords" th:content="#{meme.content.keywords}">
+    <title th:text="'Gdzie szukać pracy' + ' · ' + ${@applicationConfig.getAppNameFront()}"></title>
+    <div th:replace="fragments/front-head"></div>
+    <script>
+        trace('page.show', 'find-job');
+    </script>
+    <!--<script th:src="@{/js/meme-page.js}"></script>-->
+</head>
+
+<body>
+<nav th:replace="${@courseCustomersService.getLoggedCustomer()} ? 'fragments/logged-in-navbar' : 'fragments/logged-out-navbar'"></nav>
+
+<div class="container my-5">
+    <div class="row">
+        <strong>Gdzie szukać pracy?</strong>
+
+    </div>
+    <div>
+        Daj się znaleźć. Załóż konto na portalach:
+        <ul>
+            <li><a href="https://www.linkedin.com/" target="_blank">Linkedin</a></li>
+            <li><a href="https://www.goldenline.pl/" target="_blank">Goldenline</a></li>
+        </ul>
+    </div>
+    <div>
+        Portale branżowe
+        <ul>
+            <li><a href="https://justjoin.it/" target="_blank">justjoin.it</a></li>
+            <li><a href="https://nofluffjobs.com/" target="_blank">nofluffjobs.com</a></li>
+        </ul>
+    </div>
+    <div>
+        Portale z ogłoszeniami o prace
+        <ul>
+            <li><a href="https://www.pracuj.pl/" target="_blank">Pracuj.pl</a></li>
+            <li><a href="https://www.gowork.pl/praca" target="_blank">Gowork.pl</a></li>
+            <li><a href="https://www.aplikuj.pl/" target="_blank">Aplikuj.pl</a></li>
+        </ul>
+    </div>
+    <div>
+        Portale z pośrednictwa pracy
+        <ul>
+            <li><a href="https://sii.pl/oferty-pracy/" target="_blank">SII</a></li>
+            <li><a href="https://www.career.scalosoft.com/oferty-pracy/" target="_blank">Scalo</a></li>
+            <li><a href="https://connectis.pl/career/" target="_blank">Connectis</a></li>
+        </ul>
+    </div>
+    <div>
+        Serwisy społecznościowe i grupy
+        <ul>
+            <li><a href="https://www.facebook.com/groups/praca.it.wynagrodzenia" target="_blank">Facebook, grupa: Praca IT / oferty i zlecenia</a></li>
+        </ul>
+    </div>
+    <div>
+        Znajomi i rodzina
+    </div>
+    <div id="records">
+
+    </div>
+
+
+</div>
+
+<footer th:replace="fragments/footer"></footer>
+
+</body>
+
+</html>

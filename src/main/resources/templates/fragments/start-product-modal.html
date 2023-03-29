@@ -1,0 +1,40 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<body>
+
+    <div th:fragment="modal" class="modal"
+         id="start-product-modal">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content bg-light">
+                <div class="modal-header">
+                    <h4>
+                        Wznowienie produktu
+                    </h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body w-100">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <p class="font-weight-bold text-center">Data wznowienia</p>
+                        </div>
+                        <div class="col-sm-6">
+                            <input type="text" id="dateStartProduct" class="btn-block modal-datepicker">
+                        </div>
+                    </div>
+                    <p class="text-center mt-3">
+                        <button type="button" class="confirmButton"
+                            data-orderId="" data-productId=""
+                            onclick="startProduct(this.getAttribute('data-orderId'), this.getAttribute('data-productId'));">
+                            Wznów
+                        </button>
+                        <button type="button" data-dismiss="modal">
+                            Anuluj
+                        </button>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <div th:replace="fragments/head"></div>
+    <script th:src="@{/js/courses.js}"></script>
+    <script th:inline="javascript">
+        var courseVisibilityStatusesDict = [[${courseVisibilityStatusesDict}]];
+    </script>
+</head>
+
+<body>
+<div th:replace="fragments/menu :: menu"></div>
+
+<h5 th:text="#{courses.header}"></h5>
+
+<div th:if="${!authorsDict.isEmpty()}">
+    <button type="button" class="btn btn-success btn-lg btn-block" data-toggle="modal" data-target="#create-modal" th:text="#{courses.create}"></button>
+</div>
+<div th:unless="${!authorsDict.isEmpty()}">
+    <button type="button" class="btn btn-success btn-lg btn-block" data-toggle="modal" data-target="#create-modal" disabled th:text="#{courses.create}"></button>
+    <div class="text-center">You can't create course because you don't have any author. <a href="/admin/authors">Click here</a> to add new author.</div>
+</div>
+
+<form id="filter" class="bg-light border m-0 p-0 my-3">
+    <div class="form-row m-0 p-0">
+        <div class="form-group row col-12 col-lg-6 border m-0 p-0 py-2">
+            <label class="col-12 col-sm-3 col-md-2 col-xl-3 my-auto text-center">Author:</label>
+            <div class="col-12 col-sm-9 col-md-10 col-xl-9 my-auto">
+                <select id="author_filter" class="form-control">
+                    <option value="">---</option>
+                    <option th:each="author : ${authorsDict}"
+                            th:value="${author.id}"
+                            th:text="${author.value}">
+                    </option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group row col-12 col-lg-6 border m-0 p-0 py-2">
+            <label class="col-12 col-sm-3 col-md-2 col-xl-3 my-auto text-center">Visibility status:</label>
+            <div class="col-12 col-sm-9 col-md-10 col-xl-9 my-auto">
+                <select id="visibility-status" class="form-control">
+                    <option value="">---</option>
+                    <option th:each="visibilityStatus : ${courseVisibilityStatusesDict}"
+                            th:value="${visibilityStatus.code}"
+                            th:text="${visibilityStatus.value}">
+                    </option>
+                </select>
+            </div>
+        </div>
+    </div>
+</form>
+
+    <div id="result-container" class="my-4">
+        <div class="table-responsive mb-0 pb-0">
+            <table class="table bg-light table-bordered table-hover table-sm mb-0 pb-0">
+                <thead class="thead-light">
+                    <tr>
+                        <th class="align-middle">ID</th>
+                        <th class="align-middle" th:text="#{courses.title}"></th>
+                        <th class="align-middle" th:text="#{courses.price}"></th>
+                        <th class="align-middle" th:text="#{courses.lang}"></th>
+                        <th class="align-middle" th:text="#{courses.author}"></th>
+                        <th class="align-middle" th:text="#{courses.visibility.status}"></th>
+                        <th class="align-middle" th:text="#{courses.details}"></th>
+                        <th class="align-middle" th:text="#{courses.delete}"></th>
+                    </tr>
+                </thead>
+                <tbody id="records">
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="create-modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel" th:text="#{courses.create.new}"></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form class="text-center">
+                        <div class="form-group">
+                            <label for="create-title" th:text="#{courses.title}"></label>
+                            <input id="create-title" type="text" class="form-control">
+                        </div>
+                        <div th:if="${@courseCustomersService.isLoggedCustomerAdmin()}" class="form-group">
+                            <label for="author" th:text="#{courses.author}"></label>
+                            <select id="author" class="form-control">
+                                <option th:each="author : ${authorsDict}"
+                                        th:value="${author.id}"
+                                        th:text="${author.value}">
+                                </option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="create-price" th:text="#{courses.price}"></label>
+                            <input id="create-price" type="number" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="create-language" th:text="#{courses.lang}"></label>
+                            <select id="create-language" class="form-control">
+                                <option th:each="language : ${languagesDict}"
+                                        th:value="${language.code}"
+                                        th:text="${language.value}">
+                                </option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="create-code" th:text="#{courses.code}"></label>
+                            <input id="create-code" type="text" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="create-description" th:text="#{courses.description}"></label>
+                            <textarea id="create-description" type="text" class="form-control" rows="3"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" onclick="sendCreateRequest()" th:text="#{courses.create}"></button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" th:text="#{courses.cancel}"></button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <div th:replace="fragments/pagination :: pagination"></div>
+    <div th:replace="fragments/operation-successful-modal :: modal"></div>
+    <div th:replace="fragments/delete-object-modal :: modal"></div>
+</body>
+
+</html>

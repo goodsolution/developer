@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <div th:replace="fragments/head"></div>
+    <div th:replace="fragments/datepicker :: imports"></div>
+    <div th:replace="fragments/timepicker :: imports"></div>
+
+    <script th:src="@{/js/order.js}"></script>
+
+    <script th:inline="javascript">
+    /*<![CDATA[*/
+        orderId = /*[[${data.id}]]*/;
+        orderStatusIdOld = /*[[${data.statusId}]]*/;
+        readOnly = /*[[${readOnly}]]*/;
+    /*]]>*/
+    </script>
+</head>
+
+<body>
+<div th:replace="fragments/menu :: menu"></div>
+<h5 th:if="${readOnly == false}">Podgląd zamówienia</h5>
+<h5 th:if="${readOnly == true}">Podgląd uproszczonego zamówienia</h5>
+<p>Numer zamówienia:
+    <span id="currentOrderId"
+          th:text="${data.id}" th:data-orderId="${data.id}">
+        </span>
+    <span th:if="${data.newCalendar == true}">
+        (To zamówienie używa nowego kalendarza)
+    </span>
+</p>
+
+<form id="orderUpdate" action="#" method="PUT"
+      class="bg-light border m-0 p-0 mb-3">
+
+    <div class="form-row m-0 p-0">
+        <div class="col-sm-6 border my-0 py-0 px-2">
+            <p class="mt-3">
+                <label for="orderStatusId" class="lead">
+                    Status zamówienia:
+                </label>
+                <select id="orderStatusId" class="mb-1" name="orderStatusId" th:data-id="${data.id}" th:disabled="${readOnly}">
+                    <option th:each="status : ${orderStatuses}" th:value="${status.id}" th:text="${status.value}"
+                            th:selected="${status.id == data.statusId}"></option>
+                </select>
+            </p>
+            <p th:if="${data.statusId == 6 && @authenticatedUser.hasRole('Super administrator') == true}" th:each="cancelled : ${data.statusCancellations}">
+                Anulowane przez
+                <span th:text="${cancelled.userData.firstName} + ' ' + ${cancelled.userData.lastName}"></span>
+                (<span th:text="${#temporals.format(cancelled.date, 'yyyy-MM-dd HH:mm:ss')}"></span>): <span th:text="${cancelled.reason}"></span>
+            </p>
+            <p>
+                Data złożenia zamówienia:
+                <span th:text="${#temporals.format(data.orderDate, 'yyyy-MM-dd HH:mm:ss')}"></span>
+            </p>
+            <p>
+                Adres IP:
+                <span th:text="${data.ipAddress}"></span>
+            </p>
+            <p id="email-section">
+                Adres email:
+                <span th:text="${data.email}"></span>
+
+                <button th:if="${readOnly == false}" type="button" onclick="editEmail()">Zmień</button>
+                <input type="text" id="email" name="email" th:value="${data.email}">
+                <button type="button" onclick="saveEmail()">Zapisz</button>
+
+            </p>
+            <p>
+                Faktura:
+                <span th:text="${data.orderInvoice.invoiceWantedString}"></span>
+            </p>
+            <p th:classappend="${data.orderInvoice.invoiceWantedStatus} ? '' : 'hide'">
+                Wystawiona faktura:
+                <input id="invoiceIssuedStatus" name="invoiceIssuedStatus" th:disabled="${readOnly}"
+                       type="checkbox" th:checked="${data.orderInvoice.invoiceIssuedStatus}">
+            </p>
+            <p>
+                Paragon:
+                <input id="receipt" name="receipt" th:disabled="${readOnly}"
+                       type="checkbox" th:checked="${data.receipt}">
+            </p>
+            <p>
+                <label for="demandingCustomer">Klient wymagający: </label>
+                <select id="demandingCustomer" name="demandingCustomer" class="mb-1" th:disabled="${readOnly}">
+                    <option th:each="choice : ${yesNo}" th:value="${choice.code}" th:text="${choice.value}"
+                            th:selected="${choice.value == '' + data.demandingCustomer}"></option>
+                </select>
+            </p>
+            <p>
+                <label for="paymentMethodId">Rodzaj płatności: </label>
+                <span th:if="${(data.paymentMethodId == 3) and (data.paymentStatusId == 1)}"
+                      th:text="${data.paymentMethodName}"></span>
+                <select th:unless="${(data.paymentMethodId == 3) and (data.paymentStatusId == 1)}" th:disabled="${readOnly}"
+                        id="paymentMethodId" name="paymentMethodId" class="mb-1">
+                    <option th:each="method : ${paymentMethods}" th:value="${method.id}" th:text="${method.value}"
+                            th:selected="${method.id == data.paymentMethodId}"></option>
+                </select>
+            </p>
+            <p>
+                Płatność kartą:
+                <input id="paymentByCard" name="paymentByCard" th:disabled="${readOnly}"
+                       type="checkbox" th:checked="${data.paymentByCard}">
+            </p>
+            <p>
+                <label for="paymentStatusId">Status płatności: </label>
+                <select th:disabled="${readOnly or ((data.paymentMethodId == 3) and (data.paymentStatusId == 1))}"
+                        id="paymentStatusId" name="paymentStatusId" class="mb-1">
+                    <option th:each="status : ${paymentStatuses}" th:value="${status.id}" th:text="${status.value}"
+                            th:selected="${status.id == data.paymentStatusId}"></option>
+                </select>
+            </p>
+            <p>
+                <label for="deliveryMethodId">Sposób dostawy: </label>
+                <select id="deliveryMethodId" name="deliveryMethodId" class="mb-1" th:disabled="${readOnly}">
+                    <option th:each="type : ${shipmentTypes}" th:value="${type.id}" th:text="${type.value}"
+                            th:selected="${type.id == data.shipmentTypeId}"></option>
+                </select>
+            </p>
+            <p>
+                Ostatnia aktualizacja statusu płatności:
+                <span th:text="${#temporals.format(data.paymentStatusUpdateDateTime, 'yyyy-MM-dd HH:mm:ss')}"></span>
+            </p>
+
+            <p th:if="${data.paymentStatusUpdateUser != null && @authenticatedUser.hasRole('Super administrator') == true}">
+                Przez:
+                <span th:text="${data.paymentStatusUpdateUser}"></span>
+            </p>
+            <p th:if="${readOnly && data.statusId != 7}">
+                <button type="button" onclick="openStopDietModal(orderId)">Wstrzymaj</button>
+            </p>
+            <p th:if="${readOnly && data.statusId == 7}">
+                <button type="button" onclick="openStartDietModal(orderId)">Wznów</button>
+            </p>
+            <p th:if="${customer.id != 0}">
+                <a href="#" th:href="@{/customer(id=${customer.id})}" class="disabled">
+                    <button type="button" disabled>Podgląd klienta</button>
+                </a>
+            </p>
+            <p>
+                <button type="button" onclick="sendOrderSummaryEmail(orderId)">
+                    Wyślij podsumowanie zamówienia
+                </button>
+            </p>
+            <div class="form-group">
+                <label th:if="${!data.groupOrdersEnabled || data.groupOrders}">Zamówienie zgrupowane</label><br>
+                <input id="groupOrders" name="groupOrders" type="checkbox"
+                       th:checked="${data.groupOrders}"
+                       th:disabled="${!data.groupOrdersEnabled || readOnly}">
+                <label for="groupOrders">Grupuj zamówienie</label>
+            </div>
+            <p th:if="${@authenticatedUser.hasRole('Super administrator') == true || @authenticatedUser.hasRole('Administrator') == true}">
+                <span th:text="${data.orderCreationSource}"></span>
+            </p>
+        </div>
+
+        <div class="col-sm-6 my-0 p-0">
+            <div class="border px-2">
+                <h6 class="mt-3">Zamawiający:</h6>
+                <div class="p-1">
+                    <div class="form-group form-row p-1 border">
+                        <label class="col-md-6 text-center pt-1" for="customerFirstName">
+                            Imię:
+                        </label>
+                        <input type="text" class="col-md-6" th:value="${customer.firstName}" th:disabled="${readOnly}"
+                               name="customerFirstName" id="customerFirstName">
+                    </div>
+                    <div class="form-group form-row p-1 border">
+                        <label class="col-md-6 text-center pt-1" for="customerLastName">
+                            Nazwisko:
+                        </label>
+                        <input class="col-md-6 " type="text" th:value="${customer.lastName}" th:disabled="${readOnly}"
+                               name="customerLastName" id="customerLastName">
+                    </div>
+                    <div class="form-group form-row p-1 border">
+                        <label class="col-md-6 text-center pt-1" for="customerPhone">
+                            Telefon:
+                        </label>
+                        <input class="col-md-6 " type="text" th:value="${customer.phoneNumber}" th:disabled="${readOnly}"
+                               name="customerPhone" id="customerPhone">
+                    </div>
+                    <div class="form-group form-row p-1 border">
+                        <label class="col-md-6 text-center pt-1" for="customerStreet">
+                            Ulica:
+                        </label>
+                        <input class="col-md-6 " type="text" th:value="${customer.street}" th:disabled="${readOnly}"
+                               name="customerStreet" id="customerStreet">
+                    </div>
+                    <div class="form-group form-row p-1 border">
+                        <label class="col-md-6 text-center pt-1" for="customerBuildingNumber">
+                            Numer domu:
+                        </label>
+                        <input class="col-md-6 " type="text" th:value="${customer.buildingNumber}" th:disabled="${readOnly}"
+                               name="customerBuildingNumber" id="customerBuildingNumber">
+                    </div>
+                    <div class="form-group form-row p-1 border">
+                        <label class="col-md-6 text-center pt-1" for="customerApartmentNumber">
+                            Numer lokalu:
+                        </label>
+                        <input type="text" class="col-md-6 " th:value="${customer.apartmentNumber}" th:disabled="${readOnly}"
+                               name="customerApartmentNumber" id="customerApartmentNumber">
+                    </div>
+                    <div class="form-group form-row p-1 border">
+                        <label class="col-md-6 text-center pt-1" for="customerPostalCode">
+                            Kod pocztowy:
+                        </label>
+                        <input type="text" class="col-md-6 " th:disabled="${readOnly}"
+                               th:value="${customer.postalCode}"
+                               name="customerPostalCode" id="customerPostalCode">
+                    </div>
+                    <div class="form-group form-row p-1 border">
+                        <label for="customerCityId" class="col-md-6 text-center pt-1">
+                            Miejscowość:
+                        </label>
+                        <select id="customerCityId" name="customerCityId" class="mb-1 col-md-6" th:disabled="${readOnly}">
+                            <option value="">---</option>
+                            <option th:each="city : ${cities}" th:value="${city.id}" th:text="${city.value}"
+                                    th:selected="${city.id == customer.cityId}"></option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="border px-2 border-bottom-0">
+                <div class="my-3 p-1">
+                    <h6>Godziny dostawy:</h6>
+                    <div class="form-group form-row p-1 my-1 border">
+                        <label for="hoursTo" class="col-md-6 text-center pt-1">
+                            Do:
+                        </label>
+                        <input type="text" class="col-md-6 timepicker" th:disabled="${readOnly}"
+                               th:value="${data.hoursTo}"
+                               id="hoursTo" name="hoursTo">
+                    </div>
+                </div>
+                <div class="my-3 p-1 toggle-disabled weekend-hours">
+                    <div>
+                        <input id="weekendHours" name="weekendHours" th:disabled="${readOnly}"
+                               type="checkbox" class="switch"
+                               th:checked="${data.weekendHoursStatus}">
+                        <label for="weekendHours" class="font-weight-bold">
+                            Inne godziny dostawy w weekend
+                        </label>
+                    </div>
+                    <div class="form-group form-row p-1 my-1 border">
+                        <label for="weekendHoursTo" class="col-md-6 text-center pt-1">
+                            Do:
+                        </label>
+                        <input type="text" class="col-md-6 timepicker"
+                               th:value="${data.weekendHoursTo}"
+                               th:disabled="${!data.weekendHoursStatus || readOnly}"
+                               id="weekendHoursTo" name="weekendHoursTo">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-row m-0 p-0">
+        <div class="col-sm-6 border my-0 py-0 toggle-disabled weekend-address">
+            <p class="mt-3">
+                <input id="weekendAddress" name="weekendAddress" th:disabled="${readOnly}"
+                       type="checkbox" class="switch"
+                       th:checked="${weekendAddress.weekendAddressStatus}">
+                <label class="font-weight-bold" for="weekendAddress">
+                    Inny adres w weekendy
+                </label>
+            </p>
+
+            <div class="py-1 px-2">
+                <div class="form-group form-row p-1 border">
+                    <label class="col-md-6 text-center pt-1" for="weekendStreet">
+                        Ulica:
+                    </label>
+                    <input class="col-md-6 " type="text"
+                           th:value="${weekendAddress.street != null ? weekendAddress.street : customer.street}"
+                           th:disabled="${!weekendAddress.weekendAddressStatus || readOnly}"
+                           name="weekendStreet" id="weekendStreet">
+                </div>
+                <div class="form-group form-row p-1 border">
+                    <label class="col-md-6 text-center pt-1" for="weekendBuildingNumber">
+                        Numer domu:
+                    </label>
+                    <input class="col-md-6 " type="text"
+                           th:value="${weekendAddress.buildingNumber != null ? weekendAddress.buildingNumber : customer.buildingNumber}"
+                           th:disabled="${!weekendAddress.weekendAddressStatus || readOnly}"
+                           name="weekendBuildingNumber" id="weekendBuildingNumber">
+                </div>
+                <div class="form-group form-row p-1 border">
+                    <label class="col-md-6 text-center pt-1" for="weekendApartmentNumber">
+                        Numer lokalu:
+                    </label>
+                    <input type="text" class="col-md-6"
+                           th:value="${weekendAddress.apartmentNumber != null ? weekendAddress.apartmentNumber : customer.apartmentNumber}"
+                           th:disabled="${!weekendAddress.weekendAddressStatus || readOnly}"
+                           name="weekendApartmentNumber" id="weekendApartmentNumber">
+                </div>
+                <div class="form-group form-row p-1 border">
+                    <label class="col-md-6 text-center pt-1" for="weekendPostalCode">
+                        Kod pocztowy:
+                    </label>
+                    <input type="text" class="col-md-6 "
+                           th:value="${weekendAddress.postalCode != null ? weekendAddress.postalCode : customer.postalCode}"
+                           th:disabled="${!weekendAddress.weekendAddressStatus || readOnly}"
+                           name="weekendPostalCode" id="weekendPostalCode">
+                </div>
+                <div class="form-group form-row p-1 border">
+                    <label for="weekendCityId" class="col-md-6 text-center pt-1">
+                        Miejscowość:
+                    </label>
+                    <select id="weekendCityId" name="weekendCityId" class="mb-1 col-md-6"
+                            th:disabled="${!weekendAddress.weekendAddressStatus || readOnly}">
+                        <option value="">---</option>
+                        <option th:each="city : ${cities}" th:value="${city.id}" th:text="${city.value}"
+                                th:selected="${city.id == weekendAddress.cityId}"></option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-6 border my-0 py-0 toggle-disabled invoice">
+            <p class="mt-3">
+                <input id="invoiceWanted" name="invoiceWanted" th:disabled="${readOnly}"
+                       type="checkbox" class="switch"
+                       th:checked="${invoice.invoiceWantedStatus}">
+                <label class="font-weight-bold" for="invoiceWanted">
+                    Chce otrzymać fakturę:
+                </label>
+            </p>
+
+
+            <div class="py-1 px-2">
+                <div class="form-group form-row p-1 border">
+                    <label class="col-md-6 text-center pt-1" for="invoiceCompanyName">
+                        Nazwa firmy:
+                    </label>
+                    <input class="col-md-6 " type="text"
+                           th:value="${invoice.companyName != null ? invoice.companyName : ''}"
+                           th:disabled="${!invoice.invoiceWantedStatus || readOnly}"
+                           name="invoiceCompanyName" id="invoiceCompanyName">
+                </div>
+                <div class="form-group form-row p-1 border">
+                    <label class="col-md-6 text-center pt-1" for="invoiceNip">
+                        Numer NIP:
+                    </label>
+                    <input class="col-md-6 " type="text"
+                           th:value="${invoice.nip != null ? invoice.nip : '' }"
+                           th:disabled="${!invoice.invoiceWantedStatus || readOnly}"
+                           name="invoiceNip" id="invoiceNip">
+                </div>
+                <div class="form-group form-row p-1 border">
+                    <label class="col-md-6 text-center pt-1" for="invoiceStreet">
+                        Ulica:
+                    </label>
+                    <input class="col-md-6 " type="text"
+                           th:value="${invoice.street != null ? invoice.street : customer.street}"
+                           th:disabled="${!invoice.invoiceWantedStatus || readOnly}"
+                           name="invoiceStreet" id="invoiceStreet">
+                </div>
+                <div class="form-group form-row p-1 border">
+                    <label class="col-md-6 text-center pt-1" for="invoiceBuildingNumber">
+                        Numer domu:
+                    </label>
+                    <input class="col-md-6 " type="text"
+                           th:value="${invoice.buildingNumber != null ? invoice.buildingNumber : customer.buildingNumber}"
+                           th:disabled="${!invoice.invoiceWantedStatus || readOnly}"
+                           name="invoiceBuildingNumber" id="invoiceBuildingNumber">
+                </div>
+                <div class="form-group form-row p-1 border">
+                    <label class="col-md-6 text-center pt-1" for="invoiceApartmentNumber">
+                        Numer lokalu:
+                    </label>
+                    <input type="text" class="col-md-6"
+                           th:value="${invoice.apartmentNumber != null ? invoice.apartmentNumber : customer.apartmentNumber}"
+                           th:disabled="${!invoice.invoiceWantedStatus || readOnly}"
+                           name="invoiceApartmentNumber" id="invoiceApartmentNumber">
+                </div>
+                <div class="form-group form-row p-1 border">
+                    <label class="col-md-6 text-center pt-1" for="invoicePostalCode">
+                        Kod pocztowy:
+                    </label>
+                    <input type="text" class="col-md-6"
+                           th:value="${invoice.postalCode != null ? invoice.postalCode : customer.postalCode}"
+                           th:disabled="${!invoice.invoiceWantedStatus || readOnly}"
+                           name="invoicePostalCode" id="invoicePostalCode">
+                </div>
+                <div class="form-group form-row p-1 border">
+                    <label for="invoiceCityName" class="col-md-6 text-center pt-1">
+                        Miejscowość:
+                    </label>
+                    <input type="text" class="col-md-6"
+                           th:value="${invoice.cityName != null ? invoice.cityName : customer.cityName}"
+                           th:disabled="${!invoice.invoiceWantedStatus || readOnly}"
+                           name="invoiceCityName" id="invoiceCityName">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="m-0 p-0 border">
+        <div class="p-2 w-100">
+            <h6>Uwagi: </h6>
+            <textarea th:text="${data.comment}" class="w-100" rows="10" th:disabled="${readOnly}"
+                      id="comments" name="comments"></textarea>
+        </div>
+    </div>
+
+    <div class="m-0 p-0 w-100 border">
+        <div class="p-2">
+            <h6>Uwagi administracyjne: </h6>
+            <textarea th:text="${data.adminComment}" class="w-100" rows="10" th:disabled="${readOnly}"
+                      id="adminComments" name="adminComments"></textarea>
+        </div>
+    </div>
+
+    <div class="form-group m-0 p-2 pt-3 border">
+        <label for="driverExclude" class="lead">
+            Wyklucz z naliczania dla kierowców:
+        </label>
+        <select id="driverExclude" name="driverExclude" th:disabled="${readOnly}"
+                form="orderUpdate" class="mb-1">
+            <option th:each="choice : ${yesNo}" th:value="${choice.code}"
+                    th:text="${choice.value}"
+                    th:selected="${choice.value == data.excludeFromDriverSettlement}"></option>
+        </select>
+    </div>
+
+    <div class="border m-0 p-2">
+        <p class="text-center m-0 p-0">
+            <button th:if="${readOnly == false}" type="button" class="w-50"
+                    form="orderUpdate" onclick="modifyOrder()">
+                Zapisz zmiany
+            </button>
+        </p>
+    </div>
+</form>
+
+<p class="mt-5" id="payment-button">
+        <span class="lead">
+            Płatności
+        </span>
+    <button type="button" data-toggle="modal" data-target="#add-payment-modal">
+        Dodaj płatność
+    </button>
+<div th:replace="fragments/add-payment-modal :: modal (orderId=${data.id})"></div>
+</p>
+
+<div id="payments" class="table-responsive mb-3 pb-0">
+    <table class="payments-table table bg-light table-bordered table-hover table-sm mb-0 pb-0">
+        <thead class="thead-light">
+        <tr>
+            <th class="align-middle">Lp.</th>
+            <th class="align-middle">Data</th>
+            <th class="align-middle">Wartość</th>
+            <th class="align-middle">Metoda płatności</th>
+            <th class="align-middle"></th>
+        </tr>
+        </thead>
+        <tbody id="">
+        <!--
+        <tr th:each="payment : ${paymentResult.payments}">
+            <td th:text="${payment.paymentNo}" class="align-middle"></td>
+            <td th:text="${#temporals.format(payment.dateTime, 'yyyy-MM-dd HH:mm:ss')}" class="align-middle"></td>
+            <td th:text="${#numbers.formatDecimal(payment.value, 1, 2, 'POINT') + ' PLN'}" class="align-middle"></td>
+            <td th:text="${payment.paymentMethodName}" class="align-middle"></td>
+            <td class="align-middle">
+                <button type="button" th:data-paymentId="${payment.paymentId}"
+                        onclick="openDeletePaymentModal(this.getAttribute('data-paymentId'));">
+                    Usuń
+                </button>
+            </td>
+        </tr>
+        -->
+        </tbody>
+        <tfoot>
+        <tr>
+            <td></td>
+            <th>Suma:</th>
+            <td class="align-middle"
+                th:text="${#numbers.formatDecimal(paymentResult.sum, 1, 2, 'POINT') + ' PLN'}"></td>
+            <td colspan="2"></td>
+        </tr>
+        <tr>
+            <td></td>
+            <th>Do zapłaty pozostało:</th>
+            <td class="align-middle"
+                th:text="${#numbers.formatDecimal(paymentResult.toPayLeft, 1, 2, 'POINT') + ' PLN'}"></td>
+            <td colspan="2"></td>
+        </tr>
+        <tr th:if="${paymentResult.refund > 0}">
+            <td></td>
+            <th>Zwrot:</th>
+            <td class="align-middle"
+                th:text="${#numbers.formatDecimal(paymentResult.refund, 1, 2, 'POINT') + ' PLN'}"></td>
+            <td colspan="2"></td>
+        </tr>
+        </tfoot>
+    </table>
+</div>
+
+<div id="discounts" class="table-responsive mb-5 pb-0">
+    <form id="discountForm">
+        <table class="table bg-light table-bordered table-sm mb-0 pb-0">
+            <tr>
+                <th class="align-middle">
+                    Użyty kod rabatowy:
+                </th>
+                <td class="align-middle">
+                    <input type="text" name="discountCode" id="discountCode" th:data-id="${data.id}"
+                           th:value="${data.discountCode}">
+                    <span id="discountValue" th:text="'(' + ${data.discountValue} + '%)'"></span>
+                </td>
+                <td class="align-middle">
+                    <button type="button" class="float" onclick="saveDiscount()">
+                        Zapisz
+                    </button>
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+
+<p>
+    <span class="lead">Produkty w zamówieniu: </span>
+    <button th:if="${readOnly == false}" type="button" data-toggle="modal" onclick="openAddProductModal()">
+        Nowy produkt
+    </button>
+</p>
+
+<div id="products" class="table-responsive mb-5 pb-0">
+    <table class="products-table table bg-light table-bordered table-hover table-sm mb-0 pb-0">
+        <thead class="thead-light">
+        <tr>
+            <th class="align-middle">ID</th>
+            <th class="align-middle">Produkt</th>
+            <th class="align-middle">Ilość</th>
+            <th class="align-middle">Od dnia</th>
+            <th class="align-middle">Dni</th>
+            <th class="align-middle">Dodatki</th>
+            <th class="align-middle">Cena netto</th>
+            <th class="align-middle">Stawka VAT</th>
+            <th class="align-middle">Cena brutto</th>
+            <th class="align-middle">Promocja</th>
+            <th class="align-middle">Wartość brutto</th>
+            <th class="align-middle">Weekendy</th>
+            <th class="align-middle">Testowy</th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <!--
+        <tr th:each="product : ${productResult.products}"
+            th:data-productId="${product.id}">
+            <td th:text="${product.productId}" class="align-middle"></td>
+            <td th:text="${product.typeName + ' (' + product.dietName + ')'}"
+                class="align-middle font-weight-bold productName"></td>
+            <td th:text="${product.quantity}"
+                class="align-middle productQuantity"></td>
+            <td th:text="${product.dateFrom}" class="align-middle"></td>
+            <td th:text="${product.days + ' dni'}"
+                class="align-middle productDays"></td>
+            <td th:text="${product.extras}"
+                class="align-middle productExtras"></td>
+            <td th:text="${#numbers.formatDecimal(product.netPrice, 1, 2, 'POINT') + ' PLN'}"
+                class="align-middle productNetPrice"></td>
+            <td th:text="${product.vatPercent + '%'}" class="align-middle"></td>
+            <td th:text="${#numbers.formatDecimal(product.grossPrice, 1, 2, 'POINT') + ' PLN'}"
+                class="align-middle productGrossPrice"></td>
+            <td th:text="${product.promotion}" class="align-middle"></td>
+            <td th:text="${#numbers.formatDecimal(product.grossValue, 1, 2, 'POINT') + ' PLN'}"
+                class="align-middle productGrossValue"></td>
+            <td th:text="${product.weekendsIndicator}"
+                class="align-middle productWeekendIndicator"></td>
+            <td th:text="${product.testIndicatorName}"
+                class="align-middle productTestIndicator"></td>
+            <td class="align-middle" th:if="${product.productStopped == false}">
+                <button type="button"
+                        th:data-orderId="${data.id}" th:data-productId="${product.id}"
+                        onclick="openSuspendProductModal(this.getAttribute('data-orderId'), this.getAttribute('data-productId'));">
+                    Wstrzymaj
+                </button>
+            </td>
+            <td class="align-middle" th:if="${product.productStopped == true}">
+                <button type="button"
+                        th:data-orderId="${data.id}" th:data-productId="${product.id}"
+                        onclick="openStartProductModal(this.getAttribute('data-orderId'), this.getAttribute('data-productId'));">
+                    Wznów
+                </button>
+            </td>
+            <td class="align-middle">
+                <button type="button"
+                        th:data-orderId="${data.id}" th:data-productId="${product.id}"
+                        onclick="openEditProductModal(this.getAttribute('data-orderId'), this.getAttribute('data-productId'));">
+                    Edytuj
+                </button>
+            </td>
+            <td class="align-middle">
+                <button type="button" th:data-orderId="${data.id}" th:data-productId="${product.id}"
+                        onclick="openDeleteProductModal(this.getAttribute('data-orderId'), this.getAttribute('data-productId'));">
+                    Usuń
+                </button>
+            </td>
+        </tr>
+        -->
+        </tbody>
+        <tfoot>
+        <tr>
+            <td colspan="12"></td>
+            <th>Suma przed rabatem</th>
+            <td class="align-middle"
+                th:text="${#numbers.formatDecimal(productResult.priceBeforeDiscount, 1, 2, 'POINT') + ' PLN'}"></td>
+            <th>Suma po rabacie</th>
+            <td class="align-middle"
+                th:text="${#numbers.formatDecimal(productResult.priceAfterDiscount, 1, 2, 'POINT') + ' PLN'}"></td>
+        </tr>
+        </tfoot>
+    </table>
+</div>
+
+<p th:if="${data.newCalendar == true}">
+    <span class="lead">Dni na które zamówiono (tak jak zamówił klient)</span>
+</p>
+<div th:if="${data.newCalendar == true}" id="order-days" class="table-responsive mb-5 pb-0">
+    <table class="order-days-table table bg-light table-bordered table-hover table-sm mb-0 pb-0">
+        <thead class="thead-light">
+        <tr>
+            <th class="align-middle">ID</th>
+            <th class="align-middle">Dzień</th>
+            <th class="align-middle">Produkt</th>
+            <th class="align-middle">Ilość</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        </tbody>
+
+    </table>
+</div>
+
+<p th:if="${data.newCalendar == true}" >
+    <span class="lead">Historia dni na które zamówiono (po zmianach)</span>
+</p>
+<div th:if="${data.newCalendar == true}" id="order-days-history" class="table-responsive mb-5 pb-0">
+    <table class="order-days-table-history table bg-light table-bordered table-hover table-sm mb-0 pb-0">
+        <thead class="thead-light">
+        <tr>
+            <th class="align-middle">ID</th>
+            <th class="align-middle">Dzień</th>
+            <th class="align-middle">Produkt</th>
+            <th class="align-middle">Status</th>
+            <th class="align-middle">Dostawa</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        </tbody>
+
+    </table>
+</div>
+
+<div id="changes" class="changes box" th:if="${@authenticatedUser.hasRole('Super administrator') == true || @authenticatedUser.hasRole('Administrator') == true}">
+    <p class="lead">Historia zmian:</p>
+    <div class="table-responsive mb-5 pb-0">
+        <table class="changes-table table bg-light table-bordered table-hover table-sm mb-0 pb-0">
+            <thead class="thead-light">
+            <tr>
+                <th class="align-middle">Lp.</th>
+                <th class="align-middle">Data i godzina</th>
+                <th class="align-middle">Zmieniono przez</th>
+                <th class="align-middle"></th>
+            </tr>
+            </thead>
+            <tbody class="results">
+            <!--
+            <tr th:each="change: ${changes}">
+                <td th:text="${change.no}" class="align-middle"></td>
+                <td th:text="${#temporals.format(change.dateTime, 'yyyy-MM-dd HH:mm:ss')}" class="align-middle"></td>
+                <td th:text="${change.name}" class="align-middle"></td>
+                <td class="align-middle">
+                    <button type="button" data-toggle="modal"
+                            th:data-target="'#show-change-modal-' + ${change.no}">
+                        Podgląd
+                    </button>
+
+                </td>
+            </tr>
+            -->
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div id="deliveries" class="deliveries">
+    <p class="lead">Informacje na temat dostaw: </p>
+    <div class="table-responsive mb-5 pb-0">
+        <table class="deliveries-table table bg-light table-bordered table-hover table-sm mb-0 pb-0">
+            <thead class="thead-light">
+            <tr>
+                <th class="align-middle">Lp.</th>
+                <th class="align-middle">Produkt</th>
+                <th class="align-middle">Kierowca</th>
+                <th class="align-middle">Dzień</th>
+                <th class="align-middle">Dzień dostawy</th>
+                <th class="align-middle">Godzina dostawy</th>
+                <th class="align-middle">Adres</th>
+                <th class="align-middle"></th>
+                <th class="align-middle">Dostawa</th>
+                <th class="align-middle">Zdjęcia</th>
+            </tr>
+            </thead>
+            <tbody class="results">
+            <!--
+            <tr th:each="delivery : ${deliveries}">
+                <td th:text="${delivery.no}" class="align-middle"></td>
+                <td th:text="${delivery.productName}" class="align-middle"></td>
+                <td th:text="${delivery.driver}" class="align-middle"></td>
+                <td th:text="${delivery.date}" class="align-middle"></td>
+                <td th:text="${#temporals.format(delivery.hourFrom, 'H:mm')} + ' - ' + ${#temporals.format(delivery.hourTo, 'H:mm')}"
+                    class="align-middle deliveryHours" th:data-deliveryId="${delivery.id}"></td>
+                <td th:text="${delivery.address}" class="align-middle deliveryAddress"
+                    th:data-deliveryId="${delivery.id}"></td>
+                <td>
+
+                    <button type="button"
+                            onclick="stopDelivery(this.getAttribute('data-deliveryId'), this.getAttribute('data-orderId'))"
+                            th:data-deliveryId="${delivery.id}" th:data-orderId="${data.id}">
+                        Zwolnij
+                    </button>
+
+                    <button type="button" data-toggle="modal"
+                            th:data-target="'#change-delivery-address-modal-' + ${delivery.id}">
+                        Zmień adres
+                    </button>
+
+                    <button type="button" data-toggle="modal"
+                            th:data-target="'#change-delivery-hours-modal-' + ${delivery.id}">
+                        Zmień godziny
+                    </button>
+
+                </td>
+                <td class="align-middle deliveryConfirmation"
+                    th:data-deliveryId="${delivery.id}" th:if="${delivery.status == 0}">
+                    <button class="font-weight-bold"
+                            data-toggle="modal"
+                            th:data-target="'#delivery-confirmation-modal-' + ${delivery.id}">
+                        Oznacz jako dostarczone
+                    </button>
+
+                </td>
+                <td class="align-middle deliveryConfirmation"
+                    th:data-deliveryId="${delivery.id}" th:if="${delivery.status != 0}">
+
+                            <span th:text="${'Dostarczono: ' + #temporals.format(delivery.deliveredDate, 'yyyy-MM-dd HH:mm:ss')}">
+                            </span>
+
+
+
+                </td>
+                <td th:text="${delivery.numberOfPhotos}" class="align-middle"></td>
+            </tr>
+            -->
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<div id="delivery-changes" class="delivery-changes box" th:if="${@authenticatedUser.hasRole('Super administrator') == true || @authenticatedUser.hasRole('Administrator') == true}">
+    <p class="lead">Historia zmian - terminarz dostaw:</p>
+    <div class="table-responsive mb-5 pb-0">
+        <table class="delivery-changes-table table bg-light table-bordered table-hover table-sm mb-0 pb-0">
+            <thead class="thead-light">
+            <tr>
+                <th class="align-middle">Lp.</th>
+                <th class="align-middle">Typ zmiany</th>
+                <th class="align-middle">Data i godzina</th>
+                <th class="align-middle">Zmieniono przez</th>
+                <th class="align-middle"></th>
+            </tr>
+            </thead>
+            <tbody class="results">
+            <!--
+            <tr th:each="change: ${deliveryChanges}">
+                <td th:text="${change.no}" class="align-middle"></td>
+                <td th:text="${change.type}" class="align-middle"></td>
+                <td th:text="${#temporals.format(change.dateTime, 'yyyy-MM-dd HH:mm:ss')}" class="align-middle"></td>
+                <td th:text="${change.userName}" class="align-middle"></td>
+                <td class="align-middle">
+                    <button type="button" data-toggle="modal"
+                            th:data-target="'#show-delivery-change-modal-' + ${change.no}">
+                        Szczegóły
+                    </button>
+
+                </td>
+            </tr>
+            -->
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div id="delivery-released" class="delivery-released">
+    <p class="lead">Zwolnione dostawy:</p>
+    <div class="table-responsive mb-5 pb-0">
+        <table class="delivery-released-table table bg-light table-bordered table-hover table-sm mb-0 pb-0">
+            <thead class="thead-light">
+            <tr>
+                <th class="align-middle">Lp.</th>
+                <th class="align-middle">Produkt</th>
+                <th class="align-middle">Kierowca</th>
+                <th class="align-middle">Dzień dostawy</th>
+                <th class="align-middle">Godzina dostawy</th>
+                <th class="align-middle"></th>
+            </tr>
+            </thead>
+            <tbody class="results">
+
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div id="emails" class="emails box" th:if="${@authenticatedUser.hasRole('Super administrator') == true || @authenticatedUser.hasRole('Administrator') == true}">
+    <p class="lead">Historia wysłanych wiadomości:</p>
+    <div class="table-responsive mb-5 pb-0">
+        <table class="emails-table table bg-light table-bordered table-hover table-sm mb-0 pb-0">
+            <thead class="thead-light">
+            <tr>
+                <th class="align-middle">Lp.</th>
+                <th class="align-middle">Tytuł</th>
+                <th class="align-middle">Przez</th>
+                <th class="align-middle">Data i godzina</th>
+                <th class="align-middle"></th>
+            </tr>
+            </thead>
+            <tbody class="results">
+            <!--
+            <tr th:each="email: ${emails}">
+                <td th:text="${email.no}" class="align-middle"></td>
+                <td th:text="${email.title}" class="align-middle"></td>
+                <td th:text="${email.sentBy}" class="align-middle"></td>
+                <td th:text="${#temporals.format(email.dateTime, 'yyyy-MM-dd HH:mm:ss')}" class="align-middle"></td>
+                <td class="align-middle">
+                    <button type="button" data-toggle="modal"
+                            th:data-target="'#show-email-modal' + ${email.id}">
+                        Podgląd
+                    </button>
+
+
+                </td>
+            </tr>
+            -->
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<div th:replace="fragments/delete-payment-modal :: modal"></div>
+<div th:replace="fragments/suspend-product-modal :: modal"></div>
+<div th:replace="fragments/start-product-modal :: modal"></div>
+<div th:replace="fragments/edit-product-modal :: modal"></div>
+<div th:replace="fragments/delete-product-modal :: modal"></div>
+<div th:replace="fragments/operation-successful-modal :: modal"></div>
+<div th:replace="fragments/datepicker :: code"></div>
+<div th:replace="fragments/timepicker :: code"></div>
+<div th:replace="fragments/show-email-modal-js :: modal"></div>
+<div th:replace="fragments/show-change-modal-js :: modal"></div>
+<div th:replace="fragments/show-delivery-change-modal-js :: modal"></div>
+<div th:replace="fragments/change-delivery-address-modal-js :: modal"></div>
+<div th:replace="fragments/delivery-confirmation-modal-js :: modal"></div>
+<div th:replace="fragments/change-delivery-hours-modal-js :: modal"></div>
+<div th:replace="fragments/cancel-order-reason-js :: modal"></div>
+<div th:replace="fragments/start-order-js :: modal"></div>
+<div th:replace="fragments/stop-order-js :: modal"></div>
+<div th:replace="fragments/add-product-modal-js :: modal"></div>
+<div th:replace="fragments/stop-diet-modal :: modal"></div>
+<div th:replace="fragments/start-diet-modal :: modal"></div>
+
+</body>
+
+</html>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <div th:replace="fragments/front-head"></div>
+    <title th:text="#{privacy.policy.tab.title} + ' · ' + ${@applicationConfig.getAppNameFront()}"></title>
+    <meta th:if="${#arrays.contains(@environment.getActiveProfiles(),'prod')}" name="robots" content="noindex">
+    <script>
+        trace('page.show', 'privacy-policy');
+    </script>
+</head>
+
+<body>
+<nav th:replace="${@courseCustomersService.getLoggedCustomer()} ? 'fragments/logged-in-navbar' : 'fragments/logged-out-navbar'"></nav>
+
+<div class="container my-5">
+
+    <div>
+        <h3 class="text-center">POLITYKA PRYWATNOŚCI I POLITYKA COOKIES</h3>
+
+        <div class="my-3">
+            Polityka prywatności serwisu skierowana jest do osób z niego korzystających, zwanych dalej Użytkownikami.
+            Prezentuje zakres danych dotyczących osobistej identyfikacji Użytkownika, które gromadzi właściciel serwisu
+            oraz mechanizmy zapewniające jego prywatność.
+        </div>
+        <div class="my-3">
+            <span class="font-weight-bold">1. Dane gromadzone przez właściciela serwisu:</span><br>
+            a) adres email w przypadku rejestracji<br>
+            b) w przypadku zakupu produktu<br>
+            - Imię i nazwisko<br>
+            - Nazwa firmy<br>
+            - Ulica i numer budynku<br>
+            - Kod pocztowy<br>
+            - Miejscowość<br>
+            - Kraj<br>
+            - NIP<br>
+        </div>
+        <div class="my-3">
+            <span class="font-weight-bold">2. Sposób zbierania danych</span><br>
+            Dane Użytkowników mogą być zbierane automatycznie przez serwer lub podawane przez Użytkownika podczas procesu
+            rejestracji bądź wysyłania przez Użytkownika zapytania do właściciela serwisu.
+        </div>
+        <div class="my-3">
+            <span class="font-weight-bold">3. Sposób wykorzystania danych</span><br>
+            Dane Użytkowników wykorzystywane są do celów generowania statystyk odwiedzin serwisu, utrzymania kontaktu z
+            Użytkownikami oraz wystawiania faktur. Dane Użytkowników nie są udostępniane innym podmiotom, z wyłączeniem
+            podmiotów upoważnionych na podstawie przepisów prawa.
+        </div>
+        <div class="my-3">
+            <span class="font-weight-bold">4. Kontakt z Użytkownikiem</span><br>
+            Właściciel serwisu przewiduje kontakt z Użytkownikami w celu informowania o zmianach w serwisie oraz jego usługach.
+            W przypadku pytań i wątpliwości w zakresie polityki prywatności prosimy o kierowanie pytań na adres e-mail:
+            <a class="text-info" th:href="${@applicationConfig.getCompanyContactMailto()}" th:text="${@applicationConfig.getCompanyContactMail()}"></a>
+        </div>
+        <div class="my-3">
+            <span class="font-weight-bold">5. Dokonywanie zmian w danych osobowych Użytkownika</span><br>
+            Każdy Użytkownik może pisemnie lub mailowo zgłosić do właściciela serwisu zmianę w swoich danych osobowych.
+        </div>
+        <div class="my-3">
+            <span class="font-weight-bold">6. Polityka korzystania przez serwis z plików cookies (tzw. ciasteczek)</span><br>
+            a) Pliki cookies (tzw. „ciasteczka”) stanowią dane informatyczne, w szczególności pliki tekstowe, które
+            przechowywane są w urządzeniu końcowym Użytkownika serwisu i przeznaczone są do korzystania ze stron
+            internetowych serwisu. Cookies zazwyczaj zawierają nazwę strony internetowej, z której pochodzą, czas
+            przechowywania ich na urządzeniu końcowym oraz unikalny numer.<br>
+            b) Podmiotem zamieszczającym na urządzeniu końcowym Użytkownika serwisu pliki cookies oraz uzyskującym do
+            nich dostęp jest właściciel serwisu oraz podmioty wyznaczone przez właściciela serwisu.<br>
+            c) Mechanizm cookies nie jest wykorzystywany do pozyskiwania jakichkolwiek informacji o użytkownikach serwisu
+            ani śledzenia ich nawigacji. Pliki cookies stosowane w serwisie nie przechowują żadnych danych osobowych ani
+            innych informacji zebranych od użytkowników.<br>
+            d) Domyślnie oprogramowanie służące do przeglądania stron internetowych (przeglądarka) zezwala na obsługę
+            plików cookies na urządzeniu Użytkownika, na którym jest uruchomiona. W większości przypadków oprogramowanie
+            w tym zakresie można skonfigurować samodzielnie, w tym między innymi wymusić automatyczne blokownie plików
+            cookies. Kwestie związane z konfiguracją sposobu obsługi plików cookies znajdują się w ustawieniach
+            oprogramowania (przeglądarki internetowe). Należy mieć na uwadze, że ustawienia ograniczeń w stosunku do
+            obsługi plików cookies mogą mieć wpływ na działanie niektórych funkcjonalności serwisu.<br>
+            e) Pliki cookies wykorzystywane są w celu optymalizacji korzystania ze stron internetowych; w szczególności
+            pliki te pozwalają rozpoznać urządzenie Użytkownika serwisu i odpowiednio wyświetlić stronę internetową,
+            dostosowaną do jego indywidualnych potrzeb oraz w celu tworzenia statystyk, które pomagają określić liczbę
+            Użytkowników odwiedzających serwis.
+        </div>
+        <div class="my-3">
+            <span class="font-weight-bold">7. Zabezpieczenie danych  użytkowników w serwisie</span><br>
+            a) Komunikacja między Użytkownikiem a serwerem jest szyfrowana oraz jest zabezpieczona poprzez mechanizm
+            uwierzytelniania dostępu do serwisu;<br>
+            b) Dostęp do administrowania serwisem odbywa się z zastosowaniem mechanizmu uwierzytelniania.
+        </div>
+    </div>
+
+</div>
+
+
+
+<footer th:replace="fragments/footer"></footer>
+
+</body>
+
+</html>

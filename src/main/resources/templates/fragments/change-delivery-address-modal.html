@@ -1,0 +1,77 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<body>
+
+<div th:fragment="modal" class="modal"
+     th:id="'change-delivery-address-modal-' + ${delivery.id}">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content bg-light">
+            <div class="modal-header w-100">
+                <h4 class="modal-title">Zmiana adresu</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <div class="modal-body w-100">
+                <p>Zmiana adresu na dzień: <span th:text="${delivery.date}"></span></p>
+                <form method="POST" class="mr-2"
+                    id="changeDeliveryAddressForm">
+                    <div class="form-row py-1">
+                        <label class="col-sm-6 text-center pt-1" for="deliveryAddressCity">
+                            Miasto:
+                        </label>
+                        <select id="deliveryAddressCity" name="deliveryAddressCity"
+                                class="mb-1 col-sm-6" >
+                            <option th:each="city : ${cities}" th:value="${city.id}"
+                                    th:text="${city.value}"
+                                    th:selected="${city.id == delivery.cityId}"></option>
+                        </select>
+                    </div>
+                    <div class="form-row pb-1">
+                        <label class="col-sm-6 text-center pt-1" for="deliveryAddressStreet">
+                            Ulica:
+                        </label>
+                        <input class="col-sm-6 " type="text"
+                               name="deliveryAddressStreet" id="deliveryAddressStreet">
+                    </div>
+                    <div class="form-row pb-1">
+                        <label class="col-sm-6 text-center pt-1" for="deliveryAddressBuilding">
+                            Numer domu:
+                        </label>
+                        <input class="col-sm-6 " type="text"
+                               name="deliveryAddressBuilding" id="deliveryAddressBuilding">
+                    </div>
+                    <div class="form-row pb-1">
+                        <label class="col-sm-6 text-center pt-1" for="deliveryAddressApartment">
+                            Numer lokalu:
+                        </label>
+                        <input class="col-sm-6 " type="text"
+                               name="deliveryAddressApartment" id="deliveryAddressApartment">
+                    </div>
+                    <div class="form-row pb-1">
+                        <label class="col-sm-6 text-center pt-1" for="deliveryAddressPostalCode">
+                            Kod pocztowy:
+                        </label>
+                        <input class="col-sm-6 " type="text"
+                               pattern="[0-9]{2}-[0-9]{3}"
+                               name="deliveryAddressPostalCode" id="deliveryAddressPostalCode">
+                    </div>
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" form="changeDeliveryAddressForm"
+                        th:data-deliveryId="${delivery.id}"
+                        th:data-orderId="${orderId}"
+                    onclick="changeDeliveryAddress(this.getAttribute('data-deliveryId'));">
+                    Zmień adres
+                </button>
+                <button type="button" data-dismiss="modal">
+                    Anuluj
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

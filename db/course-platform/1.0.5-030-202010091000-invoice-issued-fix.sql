@@ -1,0 +1,1 @@
+alter table crs_orders drop invoice_issued;

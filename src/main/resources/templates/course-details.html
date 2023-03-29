@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html th:lang="${#locale.getLanguage()}" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta name="description" th:content="#{course.content.description}">
+    <meta name="keywords" th:content="#{course.content.keywords}">
+    <title th:text="${course.title} + ' · ' + ${@applicationConfig.getAppNameFront()}"></title>
+    <div th:replace="fragments/front-head"></div>
+    <script th:inline="javascript">
+        var course = [[${course}]];
+    </script>
+    <script th:src="@{/js/course-details.js}"></script>
+</head>
+
+<body>
+
+<nav th:replace="${@courseCustomersService.getLoggedCustomer()} ? 'fragments/logged-in-navbar' : 'fragments/logged-out-navbar'"></nav>
+
+    <div class="container my-5">
+
+        <div class="card bg-light">
+
+            <div class="p-5">
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="text-center mt-3">
+                            <img th:if="${course.imageName != ''}" th:src="@{@{/get-image/} + ${course.imageName} + @{/}}" class="img-thumbnail" width="300px" height="300px">
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="text-center mt-3">
+                            <h1 th:text="${course.title}"></h1>
+                        </div>
+
+
+                        <div class="row mt-5">
+                            <div class="col-md-6 text-center">
+                                <span th:text="#{course.details.language}"></span><span> </span><strong th:text="${languageFromDict.value}"></strong>
+                            </div>
+                            <div class="col-md-6 text-center">
+                                <span th:text="#{course.details.author}"></span> <strong th:text="${course.author.firstName}"></strong> <strong th:text="${course.author.lastName}"></strong>
+                            </div>
+                        </div>
+
+                        <div class="text-center mt-5">
+                            <span th:text="#{course.details.price}"></span><span> </span><strong th:text="${course.price}"></strong> PLN
+                        </div>
+
+                        <div th:if="${course.saleStatus == 'o'}" class="text-center mt-3">
+                            <button type="button" class="btn btn-outline-success" onclick="addToBasket()" th:text="#{course.details.add.course.to.basket}"></button>
+                        </div>
+
+                        <div th:if="${course.saleStatus == 'c'}" class="text-center mt-3">
+                            <button type="button" class="btn btn-outline-success" onclick="addToBasket()" th:text="#{course.details.add.course.to.basket}" disabled></button>
+                            <h5 th:if="${course.saleStatus == 'c'}" class="text-danger mt-3"><b th:text="#{home.sale.closed}"></b></h5>
+                        </div>
+                    </div>
+                </div>
+
+                <h5 class="text-center mt-5" th:text="#{course.details.description}"></h5>
+                <div class="text-center" th:utext="${course.description}"></div>
+
+            </div>
+        </div>
+
+        <div id="comments" class="mt-5">
+            <h6 id="students-comments-header" class="text-center" style="display:none;" th:text="#{course.students.comments}"></h6>
+        </div>
+
+    </div>
+
+    <div th:replace="fragments/successfully-added-to-basket-modal :: modal"></div>
+    <footer th:replace="fragments/footer"></footer>
+
+</body>
+
+</html>

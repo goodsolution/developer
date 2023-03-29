@@ -1,0 +1,1 @@
+alter table images add column kind VARCHAR(1) DEFAULT 'O';

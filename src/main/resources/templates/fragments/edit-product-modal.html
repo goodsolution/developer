@@ -1,0 +1,109 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<body>
+
+<div th:fragment="modal" class="modal"
+     id="edit-product-modal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content bg-light">
+            <div class="modal-header w-100">
+                <h4 class="modal-title">Edycja produktu w zamówieniu</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body w-100">
+                <p class="text-center text-danger">
+                    Zmiana dni, ilości lub dostaw w weekendy zresetuje niedostarczone zamówienia.
+                </p>
+                <form method="PUT" class="mr-2"
+                      id="editProductForm">
+                    <div class="form-row py-1">
+                        <label class="col-sm-6 text-center pt-1" for="edit_product_diet">
+                            Dieta:
+                        </label>
+                        <select id="edit_product_diet" name="edit_product_diet"
+                                class="mb-1 col-sm-6" onchange="reloadProducts(document.getElementById('edit_product_type'), this)">
+
+                        </select>
+                    </div>
+                    <div class="form-row pb-1">
+                        <label class="col-sm-6 text-center pt-1" for="edit_product_type">
+                            Rodzaj:
+                        </label>
+                        <select id="edit_product_type" name="edit_product_type"
+                                class="mb-1 col-sm-6">
+                        </select>
+                    </div>
+                    <div class="form-row pb-1">
+                        <label class="col-sm-6 text-center pt-1" for="edit_product_quantity">
+                            Ilość:
+                        </label>
+                        <input class="col-sm-6 " type="number" min="1"
+                               name="edit_product_quantity" id="edit_product_quantity">
+                    </div>
+                    <div class="form-row pb-1">
+                        <label class="col-sm-6 text-center pt-1" for="edit_product_days">
+                            Liczba dni:
+                        </label>
+                        <input class="col-sm-6 " type="number" min="1"
+                               name="edit_product_days" id="edit_product_days">
+                    </div>
+                    <div class="form-row pb-1">
+                        <label class="col-sm-6 text-center pt-1" for="edit_product_weekend_option">
+                            Weekendy:
+                        </label>
+                        <select id="edit_product_weekend_option" name="edit_product_weekend_option"
+                                class="mb-1 col-sm-6" >
+                        </select>
+                    </div>
+                    <div class="form-row pb-1">
+                        <label class="col-sm-6 text-center pt-1" for="edit_product_test_day">
+                            Zestaw testowy:
+                        </label>
+                        <select id="edit_product_test_day" name="edit_product_test_day"
+                                class="mb-1 col-sm-6" >
+                        </select>
+                    </div>
+                    <div class="form-row pb-1 align-middle" id="edit_extras">
+                            <span class="col-sm-6 text-center">
+                                Dodatki:
+                            </span>
+                            <p class="col-sm-6 align-middle">
+                                <input class="" type="checkbox"
+                                       name="edit_product_extras_one" id="edit_product_extras_one">
+                                <label for="edit_product_extras_one" class="">
+                                    Woda Java 1,5l (6 PLN/dzień)
+                                </label>
+                            </p>
+                    </div>
+                    <div class="form-row pb-1 align-middle">
+                            <span class="col-sm-6 text-center">
+                                <input class="" type="checkbox"
+                                       name="edit_change_price" id="edit_change_price" onclick="togglePrice()">
+                                <label for="edit_change_price" class="">
+                                    Zmień kwotę
+                                </label>
+                            </span>
+                        <p class="col-sm-6 align-middle">
+                            <input class="" type="text"
+                                   name="edit_change_price_value" id="edit_change_price_value"><span id="edit_currency">PLN</span>
+                        </p>
+                    </div>
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" form="editProductForm" class="confirmButton"
+                        data-orderId="" data-productId=""
+                        onclick="editProduct(this.getAttribute('data-orderId'), this.getAttribute('data-productId'));">
+                    Zapisz produkt
+                </button>
+                <button type="button" data-dismiss="modal">
+                    Anuluj
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

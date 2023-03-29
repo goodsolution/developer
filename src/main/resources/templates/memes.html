@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <div th:replace="fragments/head"></div>
+    <script th:src="@{/js/memes.js}"></script>
+</head>
+
+<body>
+<div th:replace="fragments/menu :: menu"></div>
+
+<h5>Memes</h5>
+
+    <button type="button" class="btn btn-success btn-lg btn-block" data-toggle="modal" data-target="#create-modal">Create</button>
+
+<div id="result-container" class="my-4">
+    <div class="table-responsive mb-0 pb-0">
+        <table class="table bg-light table-bordered table-hover table-sm mb-0 pb-0">
+            <thead class="thead-light">
+            <tr>
+                <th class="align-middle">ID</th>
+                <th class="align-middle">Title</th>
+                <th class="align-middle">Creation Datetime</th>
+                <th class="align-middle">Language</th>
+                <th class="align-middle">Code</th>
+                <th class="align-middle">Details</th>
+                <th class="align-middle">Delete</th>
+            </tr>
+            </thead>
+            <tbody id="records">
+
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<div class="modal fade" id="create-modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Create meme</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <form id="upload-meme" class="upload">
+                <div class="modal-body text-center">
+
+                    <div class="form-group">
+                        <label for="create-title">Title</label>
+                        <input id="create-title" type="text" class="form-control">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="create-code">Code</label>
+                        <input id="create-code" type="text" class="form-control">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="create-description">Description</label>
+                        <textarea id="create-description" type="text" class="form-control" rows="3"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="create-keywords">Keywords</label>
+                        <textarea id="create-keywords" type="text" class="form-control" rows="3"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="create-language">Language</label>
+                        <select id="create-language" class="form-control">
+                            <option th:each="language : ${languagesDict}"
+                                    th:value="${language.code}"
+                                    th:text="${language.value}">
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="create-meme-file">File</label>
+                        <input type="file" name="file" class="form-control-file" id="create-meme-file" accept="image/*" />
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success">Create</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+</div>
+
+
+<div th:replace="fragments/pagination :: pagination"></div>
+<div th:replace="fragments/operation-successful-modal :: modal"></div>
+<div th:replace="fragments/delete-object-modal :: modal"></div>
+</body>
+
+</html>

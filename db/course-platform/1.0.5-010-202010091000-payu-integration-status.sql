@@ -1,0 +1,1 @@
+alter table crs_orders add payu_integration_status varchar(1);

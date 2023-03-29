@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<style>
+.dejavu {
+ font-family:  'dejavu';
+}
+
+
+                table {
+          border-collapse: collapse;
+          width: 100%;
+        }
+
+        table, td, th {
+          border: 1px solid black;
+        }
+    </style>
+</head>
+
+<body>
+<span class="dejavu" th:text="${'Zapotrzebowanie na dzień: ' + date}"></span>
+<table class="dejavu">
+    <thead>
+    <tr>
+        <th>L.p.</th>
+        <th>Dieta</th>
+        <th>Produkt</th>
+        <th>Sztuk</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="elem: ${list}">
+        <td th:text="${elem.no}"></td>
+        <td th:text="${elem.diet}"></td>
+        <td>
+            <table class="table table-sm mb-0">
+                <tr th:each="prod: ${elem.products}">
+                    <td th:text="${prod.name}"></td>
+                </tr>
+            </table>
+        </td>
+        <td>
+            <table class="table table-sm mb-0">
+                <tr th:each="prod: ${elem.products}">
+                    <td th:text="${prod.quantity}"></td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    </tbody>
+    <tfoot>
+    <tr>
+        <td colspan="2"></td>
+        <th>Suma:</th>
+        <td th:text="${sum}"></td>
+    </tr>
+    </tfoot>
+</table>
+</body>
+
+</html>

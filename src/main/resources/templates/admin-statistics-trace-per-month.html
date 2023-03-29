@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <div th:replace="fragments/head"></div>
+    <script th:src="@{/js/admin-statistics-trace-per-month.js}"></script>
+</head>
+
+<body>
+<div th:replace="fragments/menu :: menu"></div>
+
+<h5>Statistics&#47;Trace per month</h5>
+
+<div id="result-container" class="my-4">
+    <div class="table-responsive mb-0 pb-0">
+        <table class="table bg-light table-bordered table-hover table-sm mb-0 pb-0">
+            <thead class="thead-light">
+                <tr>
+                    <th>Trace per day: you can choose year -</th>
+                    <th>Refresh</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr>
+                    <td>
+                        <select id="select_YEAR" name="select_YEAR" class="mb-1">
+                            <option value="2023">2023</option>
+                            <option value="2022">2022</option>
+                            <option value="2021">2021</option>
+                            <option value="2020">2020</option>
+
+                        </select>
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-primary" onclick="refresh()">Refresh
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table><br>
+
+        <table class="table bg-light table-bordered table-hover table-sm mb-0 pb-0">
+            <thead class="thead-light">
+                <tr>
+                    <th class="align-middle">Date</th>
+                    <th class="align-middle">What</th>
+                    <th class="align-middle">Value</th>
+                    <th class="align-middle">Total</th>
+                </tr>
+            </thead>
+
+            <tbody id="records">
+                <tr>
+                    <td class="align-middle"></td>
+                    <td class="align-middle"></td>
+                    <td class="align-middle"></td>
+                    <td class="align-middle" id="NUMBER_OF_VISIBLE_COURSES">0</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div th:replace="fragments/operation-successful-modal :: modal"></div>
+
+</body>
+
+</html>

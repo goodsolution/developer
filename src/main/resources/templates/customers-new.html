@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <div th:replace="fragments/head"></div>
+    <div th:replace="fragments/datepicker :: imports"></div>
+    <script th:src="@{/js/customers-new.js}"></script>
+</head>
+
+<body>
+    <div th:replace="fragments/menu :: menu"></div>
+    <h5>Nowi klienci</h5>
+
+    <form action="#" th:action="@{/customers-new}">
+        <div class="bg-light border m-0 mb-3">
+            <div class="form-row m-0 p-0">
+                <div class="form-group border col-lg-3 col-sm-4 col-12 d-flex align-items-center m-0 p-0">
+                    <div class="w-100 px-2 py-3">
+                        <h6 class="text-center">Data od</h6>
+                        <input type="text" class="form-control form-control-sm" id="dateFrom" name="dateFrom"
+                            autocomplete="off" th:value="${defaultStartDate}" />
+                    </div>
+                </div>
+
+                <div class="form-group border col-lg-3 col-sm-4 col-12 d-flex align-items-center m-0 p-0">
+                    <div class="w-100 px-2 py-3">
+                        <h6 class="text-center">Data do</h6>
+                        <input type="text" class="form-control form-control-sm" id="dateTo" name="dateTo"
+                            autocomplete="off" th:value="${defaultEndDate}"/>
+                    </div>
+                </div>
+
+                <div class="form-group border col-lg-3 col-sm-4 col-12 d-flex align-items-center m-0 p-0">
+                    <div class="w-100 px-2 py-3">
+                        <h6 class="text-center">Status zamówienia</h6>
+                        <select class="form-control form-control-sm" id="orderStatus">
+                            <option value="">-&#45;&#45;</option>
+                            <option th:each="status : ${orderStatuses}" th:value="${status.id}"
+                                th:text="${status.value}">
+                            </option>
+                        </select>
+                    </div>
+                </div>
+
+                <div
+                    class="form-group border col-lg-3 col-sm-12 d-flex align-content-center justify-content-center m-0 p-0">
+                    <div class="mw-75 px-2 py-3">
+                        <h6 class="text-center">Diety</h6>
+                        <div class="form-check " id="dietId" th:each="diet: ${diets}">
+                            <input type="checkbox" class="form-check-input" th:value="${diet.id}">
+                            <label class="form-check-label" th:text="${diet.value}"></label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <div id="result-container">
+        <p>Znalezionych rekordów: <span id="new-customers-count"></span></p>
+        <div class="table-responsive mb-5">
+            <table class="table table-hover table-bordered table-sm m-0">
+                <thead class="thead-light">
+                    <tr>
+                        <th class="align-middle">Lp.</th>
+                        <th class="align-middle">Klient</th>
+                        <th class="align-middle">Zamówienie</th>
+                        <th class="align-middle">Kwota</th>
+                        <th class="align-middle">Status zamówienia</th>
+                        <th class="align-middle">Data</th>
+                    </tr>
+                </thead>
+                <tbody id="new-customers-results" class="bg-light">
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div th:replace="fragments/datepicker :: code"></div>
+
+</body>
+
+</html>

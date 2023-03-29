@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="utf-8" xmlns:th="http://www.thymeleaf.org"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="Kurs MySQL i SQL - bazy danych. Jak zarządzać bazami danych i tworzyć aplikacje bazodanowe">
+    <meta name="keywords" content="SQL, HTML, bazy danych, dane, aplikacje bazodanowe">
+    <title>Kurs SQL i MySQL</title>
+
+    <link rel="shortcut icon" type="image/x-icon" th:href="${@applicationConfig.getLogoFrontPath()}" />
+
+    <script src="https://use.fontawesome.com/releases/v5.15.1/js/all.js" crossorigin="anonymous"></script>
+
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css" />
+
+    <link rel="stylesheet" th:href="@{/css/landing-javascript-dom.css}" />
+</head>
+    <body id="page-top">
+
+        <nav class="navbar navbar-expand-lg bg-secondary text-uppercase fixed-top" id="mainNav">
+            <a class="navbar-brand js-scroll-trigger" href="#page-top">Kurs SQL i MySQL</a>
+            <button class="navbar-toggler navbar-toggler-right text-uppercase font-weight-bold bg-primary text-white rounded" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                Menu
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#js">SQL i MySQL</a></li>
+                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#for-who">Dla kogo kurs</a></li>
+                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#why-worth">Dlaczego warto</a></li>
+                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#what-learn">Czego się nauczysz</a></li>
+                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#requirements">Wymagania</a></li>
+                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#invitation">Zaproszenie</a></li>
+                </ul>
+            </div>
+        </nav>
+
+
+        <header class="masthead bg-info text-white text-center">
+            <div class="container d-flex align-items-center flex-column">
+
+                <h1 class="masthead-heading text-uppercase mb-0">Kurs SQL i MySQL</h1>
+
+                <div class="divider-custom divider-light">
+                    <div class="divider-custom-line"></div>
+                    <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
+                    <div class="divider-custom-line"></div>
+                </div>
+
+            </div>
+        </header>
+
+        <section class="page-section js" id="js">
+            <div class="container">
+
+                <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Czym jest SQL i MySQL?</h2>
+
+                <div class="divider-custom">
+                    <div class="divider-custom-line"></div>
+                    <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
+                    <div class="divider-custom-line"></div>
+                </div>
+
+                <div class="text-center">
+                    <div class="mt-3"><p class="lead">Mówiąc w skrócie - MySQL to baza danych, czyli miejsce w którym przechowujemy dane naszej aplikacji bądź serwisu. SQL z kolei jest językiem, za pomocą którego komunikujemy się z bazą.</p></div>
+                </div>
+
+            </div>
+        </section>
+
+        <section class="page-section bg-info text-white mb-0 for-who" id="for-who">
+            <div class="container">
+
+                <h2 class="page-section-heading text-center text-uppercase text-white">Dla kogo jest ten kurs?</h2>
+
+                <div class="divider-custom divider-light">
+                    <div class="divider-custom-line"></div>
+                    <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
+                    <div class="divider-custom-line"></div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-4 ml-auto"><p class="lead">- Dla osób, które chciałyby zacząć w swoich aplikacjach stosować bazy danych</p></div>
+                    <div class="col-lg-4 mr-auto"><p class="lead">- Dla osób, które chciałyby dowiedzieć się jak działają relacyjne bazy danych</p></div>
+                </div>
+
+                <div class="text-center mt-4">
+                    <a class="btn btn-xl btn-outline-light" href="/course/mysql-od-podstaw?lang=pl" target="_blank">
+                        Dołącz do grona kursantów!
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section class="page-section course why-worth" id="why-worth">
+            <div class="container">
+
+                <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Dlaczego warto dołączyć do kursu?</h2>
+
+                <div class="divider-custom">
+                    <div class="divider-custom-line"></div>
+                    <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
+                    <div class="divider-custom-line"></div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-4 col-md-6 text-center">
+                        <div class="mt-5">
+                            <i class="fas fa-4x fa-coins text-warning mb-4"></i>
+                            <h3 class="h4 mb-2">Najlepsza cena</h3>
+                            <p class="text-muted mb-0">Kurs jest obecnie w najlepszej cenie, wraz z dodawaną zawartością będzie coraz droższy! Kupując teraz otrzymujesz dostęp do wszystkich przyszłych aktualizacji za darmo!</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 text-center">
+                        <div class="mt-5">
+                            <i class="fas fa-4x fa-user-friends text-warning mb-4"></i>
+                            <h3 class="h4 mb-2">Nie zostaniesz na lodzie</h3>
+                            <p class="text-muted mb-0">Podczas nauki nie zostawimy Cię z problemami. Jeśli jakieś zagadnienie Cię przyblokuje lub okaże się za trudne - wystarczy, że do nas napiszesz.</p>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-12 text-center">
+                        <div class="mt-5">
+                            <i class="fas fa-4x fa-book text-warning mb-4"></i>
+                            <h3 class="h4 mb-2">Wszystko wyjaśnione od podstaw</h3>
+                            <p class="text-muted mb-0">Każde zagadnienie jest dogłębnie wyjaśnione tak, abyś wszystko bardzo dobrze zrozumiał. Nie ma miejsca na niedopowiedzenia, nawet jeśli dopiero zaczynasz :)</p>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+        <section class="page-section bg-info text-white mb-0 what-learn" id="what-learn">
+            <div class="container">
+
+                <h2 class="page-section-heading text-center text-uppercase text-white">Co Ci da ukończenie kursu?</h2>
+
+                <div class="divider-custom divider-light">
+                    <div class="divider-custom-line"></div>
+                    <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
+                    <div class="divider-custom-line"></div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-4 ml-auto"><p class="lead">- Nauczysz się na bardzo wysokim poziomie zarządzać bazami danych</p></div>
+                    <div class="col-lg-4 mr-auto"><p class="lead">- Pozwoli Ci tworzyć bardziej skomplikowane projekty</p></div>
+                </div>
+
+                <div class="text-center mt-4">
+                    <a class="btn btn-xl btn-outline-light" href="/course/mysql-od-podstaw?lang=pl" target="_blank">
+                        Nie możemy się Ciebie doczekać, dołącz do kursu!
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section class="page-section course requirements" id="requirements">
+            <div class="container">
+
+                <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Czego potrzebujesz aby ukończyć kurs?</h2>
+
+                <div class="divider-custom">
+                    <div class="divider-custom-line"></div>
+                    <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
+                    <div class="divider-custom-line"></div>
+                </div>
+
+                <div class="text-center">
+                    <div class="mt-3"><p class="lead">W zasadzie tylko komputera i dostępu do internetu :) Zaczynamy od podstaw więc nie jest wymagana żadna wiedza do ukończenia kursu.</p></div>
+                </div>
+
+            </div>
+        </section>
+
+        <section class="page-section bg-info text-white mb-0 invitation" id="invitation">
+            <div class="container">
+
+                <h2 class="page-section-heading text-center text-uppercase text-white">Nie pozostaje nam nic innego, niż zaprosić Cię do udziału w kursie!</h2>
+
+                <div class="divider-custom divider-light">
+                    <div class="divider-custom-line"></div>
+                    <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
+                    <div class="divider-custom-line"></div>
+                </div>
+
+
+                <div class="mt-3 text-center"><p class="lead">Masz jakieś wątpliwości? Masz jakieś pytania bądź uwagi?</p></div>
+                <div class="text-center"><p class="lead">Pisz śmiało:</p></div>
+                <a class="d-block text-center text-warning" href="mailto:contact@computing-college.com"><p class="lead">contact@computing-college.com</p></a>
+                <div class="text-center"><p class="lead">(W sumie jeśli nie masz, to też możesz napisać :D)</p></div>
+
+
+                <div class="mt-5 text-center"><p class="lead">Jeśli jednak nie czujesz się rozmownie, mam nadzieję, że przynajmniej będzie nam dane się poznać!</p></div>
+                <div class="text-center mt-5">
+                    <a class="btn btn-xl btn-outline-light" href="/course/mysql-od-podstaw?lang=pl" target="_blank">
+                        Dołącz do kursu teraz!
+                    </a>
+                </div>
+
+            </div>
+        </section>
+
+
+        <div class="copyright py-4 text-center text-white">
+            <div class="container"><small>Copyright 2021 © Lazur Dragon Sebastian Pola</small></div>
+        </div>
+
+        <div class="scroll-to-top d-lg-none position-fixed">
+            <a class="js-scroll-trigger d-block text-center text-white rounded" href="#page-top"><i class="fa fa-chevron-up"></i></a>
+        </div>
+
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"></script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+
+        <script th:src="@{/js/landing-mysql.js}"></script>
+
+    </body>
+</html>

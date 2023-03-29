@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html th:lang="${#locale.getLanguage()}" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta name="description" th:content="#{meme.content.description}">
+    <meta name="keywords" th:content="#{meme.content.keywords}">
+    <title th:text="'Java - zagadnienia' + ' · ' + ${@applicationConfig.getAppNameFront()}"></title>
+    <div th:replace="fragments/front-head"></div>
+    <script>
+        trace('page.show', 'find-job');
+    </script>
+    <!--<script th:src="@{/js/meme-page.js}"></script>-->
+</head>
+
+<body>
+<nav th:replace="${@courseCustomersService.getLoggedCustomer()} ? 'fragments/logged-in-navbar' : 'fragments/logged-out-navbar'"></nav>
+
+<div class="container my-5">
+    <div class="row">
+        <strong>Java zagadnienia</strong>
+    </div>
+    <div>
+        Core java
+    </div>
+    <div>
+        Zmienne:
+        <ul>
+            <li><a href="#" target="_blank">Prymitywne typu daych</a></li>
+            <li><a href="#" target="_blank">Tablice</a></li>
+        </ul>
+    </div>
+    <div>
+        Operatory:
+        <ul>
+            <li><a href="#" target="_blank">Operator przypisania</a></li>
+            <li><a href="#" target="_blank">Operatory arytmetyczne</a></li>
+            <li><a href="#" target="_blank">Operatory jedno argumentowe</a></li>
+            <li><a href="#" target="_blank">Operator porównania</a></li>
+            <li><a href="#" target="_blank">Operatory bitowe</a></li>
+        </ul>
+    </div>
+    <div>
+        Wyrażenia, instrukcje i bloki
+        <ul>
+            <li><a href="#" target="_blank">Wyrażenia, instrukcje i bloki</a></li>
+         </ul>
+    </div>
+    <div>
+        Instrukcje sterowania (przepływu) wykonania programu
+        <ul>
+            <li><a href="#" target="_blank">Instrukcja if-then</a></li>
+            <li><a href="#" target="_blank">Instrukcja if-then-else</a></li>
+            <li><a href="#" target="_blank">Instrukcja switch</a></li>
+            <li><a href="#" target="_blank">Instrukcja while</a></li>
+            <li><a href="#" target="_blank">Instrukcja do-while</a></li>
+            <li><a href="#" target="_blank">Instrukcja for</a></li>
+        </ul>
+    </div>
+    <div>
+        Klasy i obiekty
+        <ul>
+            <li><a href="#" target="_blank">Deklarowanie klas</a></li>
+            <li><a href="#" target="_blank">Deklarowanie pól klas/członków</a></li>
+            <li><a href="#" target="_blank">Definiowanie metod</a></li>
+            <li><a href="#" target="_blank">Konstruktory</a></li>
+            <li><a href="#" target="_blank">Tworzenie obiektów</a></li>
+            <li><a href="#" target="_blank">Używanie obiektów</a></li>
+            <li><a href="#" target="_blank">Typy wyliczeniowe</a></li>
+        </ul>
+    </div>
+    <div>
+        Klasy zagnieżdżone
+        <ul>
+            <li><a href="#" target="_blank">Klasy wewnętrzne</a></li>
+            <li><a href="#" target="_blank">Klasy lokalne</a></li>
+            <li><a href="#" target="_blank">Klasy anonimowe</a></li>
+            <li><a href="#" target="_blank">Wyrażenia lambda</a></li>
+        </ul>
+    </div>
+    <div>
+        Annotacje
+        <ul>
+            <li><a href="#" target="_blank">Deklarowanie annotacji</a></li>
+            <li><a href="#" target="_blank">Annotacje predefiniowane</a></li>
+        </ul>
+    </div>
+    <div>
+        Interfejsy
+<!--        <ul>-->
+<!--            <li><a href="#" target="_blank">Deklarowanie annotacji</a></li>-->
+<!--            <li><a href="#" target="_blank">Annotacje predefiniowane</a></li>-->
+<!--        </ul>-->
+    </div>
+    <div>
+        Dziedziczenie
+<!--        <ul>-->
+<!--            <li><a href="#" target="_blank">Deklarowanie annotacji</a></li>-->
+<!--            <li><a href="#" target="_blank">Annotacje predefiniowane</a></li>-->
+<!--        </ul>-->
+    </div>
+    <div>
+        Typy generyczne
+<!--        <ul>-->
+<!--            <li><a href="#" target="_blank">Deklarowanie annotacji</a></li>-->
+<!--            <li><a href="#" target="_blank">Annotacje predefiniowane</a></li>-->
+<!--        </ul>-->
+    </div>
+    <div>
+        Pakiety
+<!--        <ul>-->
+<!--            <li><a href="#" target="_blank">Deklarowanie annotacji</a></li>-->
+<!--            <li><a href="#" target="_blank">Annotacje predefiniowane</a></li>-->
+<!--        </ul>-->
+    </div>
+    <div>
+        Liczby i ciągi znaków oraz konwersje między nimi
+<!--        <ul>-->
+<!--            <li><a href="#" target="_blank">Deklarowanie annotacji</a></li>-->
+<!--            <li><a href="#" target="_blank">Annotacje predefiniowane</a></li>-->
+<!--        </ul>-->
+    </div>
+    <div>
+        Kolekcje
+<!--        <ul>-->
+<!--            <li><a href="#" target="_blank">Deklarowanie annotacji</a></li>-->
+<!--            <li><a href="#" target="_blank">Annotacje predefiniowane</a></li>-->
+<!--        </ul>-->
+    </div>
+    <div>
+        Data i czas
+<!--        <ul>-->
+<!--            <li><a href="#" target="_blank">Deklarowanie annotacji</a></li>-->
+<!--            <li><a href="#" target="_blank">Annotacje predefiniowane</a></li>-->
+<!--        </ul>-->
+    </div>
+    <div>
+        Wyrażenia regularne
+<!--        <ul>-->
+<!--            <li><a href="#" target="_blank">Deklarowanie annotacji</a></li>-->
+<!--            <li><a href="#" target="_blank">Annotacje predefiniowane</a></li>-->
+<!--        </ul>-->
+    </div>
+    <div>
+        Programowanie sieciowe
+<!--        <ul>-->
+<!--            <li><a href="#" target="_blank">Deklarowanie annotacji</a></li>-->
+<!--            <li><a href="#" target="_blank">Annotacje predefiniowane</a></li>-->
+<!--        </ul>-->
+    </div>
+    <div>
+        Wielowątkowość
+<!--        <ul>-->
+<!--            <li><a href="#" target="_blank">Deklarowanie annotacji</a></li>-->
+<!--            <li><a href="#" target="_blank">Annotacje predefiniowane</a></li>-->
+<!--        </ul>-->
+    </div>
+    <div>
+        Mechanizm refleksji
+<!--        <ul>-->
+<!--            <li><a href="#" target="_blank">Deklarowanie annotacji</a></li>-->
+<!--            <li><a href="#" target="_blank">Annotacje predefiniowane</a></li>-->
+<!--        </ul>-->
+    </div>
+    <div>
+        Grafika
+<!--        <ul>-->
+<!--            <li><a href="#" target="_blank">Deklarowanie annotacji</a></li>-->
+<!--            <li><a href="#" target="_blank">Annotacje predefiniowane</a></li>-->
+<!--        </ul>-->
+    </div>
+    ...
+
+</div>
+
+<footer th:replace="fragments/footer"></footer>
+
+</body>
+
+</html>

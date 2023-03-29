@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <div th:replace="fragments/front-head"></div>
+    <title th:text="#{regulation.tab.title} + ' · ' + ${@applicationConfig.getAppNameFront()}"></title>
+    <meta th:if="${#arrays.contains(@environment.getActiveProfiles(),'prod')}" name="robots" content="noindex">
+    <script>
+        trace('page.show', 'regulation');
+    </script>
+</head>
+
+<body>
+<nav th:replace="${@courseCustomersService.getLoggedCustomer()} ? 'fragments/logged-in-navbar' : 'fragments/logged-out-navbar'"></nav>
+
+<div class="container my-5">
+
+    <h3 class="text-center">REGULAMIN</h3>
+    <h6 class="text-center">Serwisu internetowego „Computing-College.com”</h6>
+
+    <div class="font-weight-bold my-3">Wstęp</div>
+
+    <div class="my-3">
+        Serwis internetowy dostępny pod adresem
+        <a th:href="${@applicationConfig.getCoursePlatformUrl()}" th:text="${@applicationConfig.getCoursePlatformUrl()}"></a> (zwany dalej „Serwisem internetowym”)
+        prowadzony jest przez firmę Lazur Dragon Sebastian Pola z siedzibą przy ul. Parcelowa 12, 09-505 Nowy Duninów,
+        NIP: 7743255310, REGON: 386583258, kontakt:
+        <a class="text-info" th:href="${@applicationConfig.getCompanyContactMailto()}" th:text="${@applicationConfig.getCompanyContactMail()}"></a>.
+    </div>
+    <div class="my-3">
+        Niniejszy regulamin określa rodzaje i zakres świadczenia usług drogą elektroniczną za pośrednictwem Serwisu
+        internetowego, zasady zawierania umów za pomocą Serwisu internetowego, zasady wykonywania tych umów, prawa i
+        obowiązki Klienta i Usługodawcy oraz tryb odstąpienia od umowy i postępowania reklamacyjnego.
+    </div>
+
+    <div class="font-weight-bold my-3">§1 Definicje</div>
+
+    <ol>
+        <li class="my-1">
+            <strong>Serwis internetowy</strong>
+            - serwis internetowy dostępny pod adresem
+            <a th:href="${@applicationConfig.getCoursePlatformUrl()}" th:text="${@applicationConfig.getCoursePlatformUrl()}"></a>
+        </li>
+        <li class="my-1">
+            <strong>Usługodawca</strong>
+            -  Lazur Dragon Sebastian Pola z siedzibą przy ul. Parcelowa 12, 09-505 Nowy Duninów,
+            NIP: 7743255310, REGON: 386583258
+        </li>
+        <li class="my-1">
+            <strong>Produkt</strong>
+            -  dożywotni dostęp do kursu w Serwisie Internetowym
+        </li>
+        <li class="my-1">
+            <strong>Klient</strong>
+            -  osoba fizyczna, osoba prawna albo jednostka organizacyjna nieposiadająca osobowości prawnej, której prawo
+            przyznaje zdolność prawną zawierająca umowę z Usługodawcą.
+        </li>
+        <li class="my-1">
+            <strong>Konto klienta</strong>
+            -  zbiór informacji o Kliencie, posiadanych produktach oraz historii zakupów znajdujący się w
+            systemie informatycznym Usługodawcy.
+        </li>
+        <li class="my-1">
+            <strong>Formularz rejestracji</strong>
+            -  formularz dostępny w Serwisie umożliwiający utworzenie Konta klienta.
+        </li>
+        <li class="my-1">
+            <strong>Umowa</strong>
+            -  umowa zawierana na odległość pomiędzy Klientem a Usługodawcą za pomocą Serwisu internetowego, której
+            przedmiotem jest zamówienie przez Klienta Produktu.
+        </li>
+    </ol>
+
+    <div class="font-weight-bold my-3">§2 Postanowienia ogólne</div>
+
+    <ol>
+        <li class="my-1">
+            Usługodawca zobowiązuje się do świadczenia usług na rzecz Klienta w zakresie i na warunkach określonych w Regulaminie.
+        </li>
+        <li class="my-1">
+            Klient zobowiązuje się do korzystania z Serwisu internetowego zgodnie z obowiązującymi przepisami prawa i zasadami współżycia społecznego.
+        </li>
+        <li class="my-1">
+            Klient korzystający z usług Usługodawcy zobowiązany jest do przestrzegania niniejszego Regulaminu.
+        </li>
+        <li class="my-1">
+            Klient wyraża zgodę na gromadzenie, przechowywania i przetwarzanie przez Usługodawcę danych osobowych w
+            celu realizacji usługi. Szczegółowe warunki gromadzenia, przetwarzania oraz ochrony danych osobowych przez
+            Usługodawcę określa „Polityka prywatności” Serwisu internetowego.
+        </li>
+        <li class="my-1">
+            Wszelkie ceny podane na stronie Serwisu internetowego podawane są w polskich złotych (PLN),
+            są cenami brutto zawierającymi wszystkie niezbędne składniki.
+        </li>
+    </ol>
+
+
+    <div class="font-weight-bold my-3">§3 Usługi i ogólne warunki świadczenia usług</div>
+
+    <ol>
+        <li class="my-1">
+            Usługodawca za pomocą Serwisu internetowego świadczy drogą elektroniczną następujące usługi:
+            <ol>
+                <li>prowadzenie konta klienta w Serwisie</li>
+                <li>umożliwienie zakupu Produktów</li>
+            </ol>
+        </li>
+        <li class="my-1">
+            Wymagania techniczne niezbędne do korzystania z usług świadczonych przez Usługodawcę:
+            <ol>
+                <li>urządzenie z dostępem do sieci Internetowej</li>
+                <li>przeglądarka internetowa obsługująca pliki Cookies oraz Java Script</li>
+                <li>dostęp do poczty elektronicznej</li>
+            </ol>
+        </li>
+        <li class="my-1">
+            Klient ponosi opłaty związane z dostępem do sieci Internetowej i transmisją danych zgodnie z taryfą swojego dostawcy usług internetowych.
+        </li>
+    </ol>
+
+    <div class="font-weight-bold my-3">§4 Rejestracja w Serwisie</div>
+
+    <ol>
+        <li class="my-1">
+            Konto klienta w Serwisie internetowym może posiadać wyłącznie Klient, który dokonał poprawnej rejestracji.
+        </li>
+        <li class="my-1">
+            Rejestracja odbywa się poprzez prawidłowe wypełnienie i przesłanie Usługodawcy Formularza rejestracji.
+            W trakcie rejestracji Klient podaje adres poczty elektronicznej (e-mail) służący do kontaktu z Usługodawcą,
+            ustala hasło które umożliwia dostęp do Konta klienta.
+        </li>
+        <li class="my-1">
+            Aktywacja Konta klienta następuje od razu po dokonaniu przez Klienta rejestracji.
+        </li>
+        <li class="my-1">
+            Klient upoważniony jest do posiadania wyłącznie jednego Konta klienta.
+        </li>
+        <li class="my-1">
+            Klient zobowiązany jest do korzystania wyłącznie z własnego Konta klienta.
+        </li>
+        <li class="my-1">
+            Klient zobowiązany jest do zachowania w tajemnicy oraz nieprzekazywaniu osobom trzecim danych
+            umożliwiających dostęp do jego Konta klienta.
+        </li>
+        <li class="my-1">
+            Klient zobowiązany jest do posługiwania się w Serwisie internetowym jedynie danymi dotyczącymi jego osoby i
+            zgodnymi ze stanem faktycznym.
+        </li>
+    </ol>
+
+
+    <div class="font-weight-bold my-3">§5 Zakup Produktu</div>
+
+    <ol>
+        <li class="my-1">
+            Usługodawca umożliwia Klientowi zakup Produktu przez Serwis internetowy.
+        </li>
+        <li class="my-1">
+            Dostęp do zakupionego Produktu Klient otrzymuje natychmiast po zaksięgowaniu płatności.
+        </li>
+        <li class="my-1">
+            Usługodawca umożliwia zakup Produktów 7 dni w tygodniu przez 24 godziny na dobę przez Serwis internetowy.
+        </li>
+        <li class="my-1">
+            W celu złożenia zamówienia Klient dodaje Produkt lub kilka Produktów do koszyka w Serwisie internetowym oraz klika "Kup i zapłać".
+        </li>
+        <li class="my-1">
+            Z chwilą kliknięcia przycisku "Kup i zapłać", w systemie tworzone jest zamówienie oraz dochodzi do zawarcia Umowy przez Klienta.
+        </li>
+    </ol>
+
+    <div class="font-weight-bold my-3">§6 Metody płatności</div>
+
+    <ol>
+        <li class="my-1">
+            Zamówienie można opłacić dowolną metodą płatności elektronicznej, dostępną w systemie PayU.
+        </li>
+        <li class="my-1">
+            Zamówienie należy opłacić w przeciągu 3 dni od momentu jego stworzenia. Jeśli to nie nastąpi, zostanie ono anulowane.
+        </li>
+    </ol>
+
+
+    <div class="font-weight-bold my-3">§7 Zwrot Produktu</div>
+
+    <ol>
+        <li class="my-1">Klient w momencie opłacenia zamówienia natychmiast otrzymuje Produkt. Z tego powodu traci prawo do ostąpienia do umowy.</li>
+    </ol>
+
+    <div class="font-weight-bold my-3">§8 Postępowanie reklamacyjne</div>
+
+    <ol>
+        <li class="my-1">
+            W przypadku niewykonania lub nienależytego wykonania przez Usługodawcę usług świadczonych drogą elektroniczną
+            za pomocą Serwisu internetowego, Klient jest uprawniony do złożenia reklamacji drogą elektroniczną na adres
+            <a class="text-info" th:href="${@applicationConfig.getCompanyContactMailto()}" th:text="${@applicationConfig.getCompanyContactMail()}"></a>.
+            Prawidłowo złożona reklamacja powinna zawierać oznaczenie Klienta (imię i nazwisko lub nazwa firmy, adres
+            zamieszkania lub adres siedziby firmy oraz adres poczty elektronicznej), przedmiot reklamacji, dokumentację
+            wraz ze wskazaniem okresu czasu, którego dotyczy reklamacja oraz okoliczności uzasadniające złożenie
+            reklamacji. Reklamacja powinna być złożona w terminie 7 dni od dnia, w którym usługa nie została
+            wykonana lub została wykonana nienależycie. Reklamację rozpatruje Usługodawca w terminie 14 dni
+            kalendarzowych od dnia otrzymania reklamacji.
+        </li>
+        <li class="my-1">
+            Reklamacje związane z realizacją Umowy dotyczącej Produktu należy składać w terminie 24 godzin od dnia wystąpienia
+            zdarzenia uzasadniającego zgłoszenie reklamacji. Reklamacje rozpatruje Usługodawca w terminie 7 dni kalendarzowych
+            od dnia otrzymania reklamacji.
+        </li>
+        <li class="my-1">
+            W przypadku przekroczenia terminów do zgłoszenia reklamacji określonych w ust. 1 – 2, reklamacja nie będzie rozpatrywana.
+            O przyczynie nierozpatrzenia reklamacji Usługodawca niezwłocznie powiadomi Klienta.
+        </li>
+        <li class="my-1">
+            Zwroty należności za reklamacje rozpatrzone pozytywnie na korzyść Klienta, będą dokonywane natychmiast lub następnego dnia roboczego.
+        </li>
+    </ol>
+
+
+    <div class="font-weight-bold my-3">§9 Odpowiedzialność</div>
+
+    <ol>
+        <li class="my-1">
+            Usługodawca nie ponosi odpowiedzialności za wprowadzenie przez Klienta błędnych danych (w szczególności przez
+            podanie błędnych danych w formularzach dostępnych na stronie) lub działanie Klienta w sposób utrudniający lub
+            uniemożliwiający świadczenie i realizację usług przez Usługodawcę.
+        </li>
+        <li class="my-1">
+            Usługodawca zastrzega sobie prawo do zawieszenia lub zakończenia świadczenia poszczególnych funkcjonalności
+            Serwisu internetowego z uwagi na konieczność konserwacji, przeglądu lub rozbudowy bazy technicznej bądź
+            oprogramowania. Zawieszenie bądź zakończenie świadczeń poszczególnych funkcjonalności Serwisu internetowego
+            nie może naruszać praw Klienta.
+        </li>
+        <li class="my-1">
+            Usługodawca zastrzega sobie prawo do zablokowania lub usuniecia Konta klienta w przypadku naruszania przez
+            Klienta postanowień niniejszego Regulaminu, korzystania z Serwisu w sposób niezgodny z jego przeznaczeniem
+            lub z naruszeniem obowiązujących przepisów prawa.
+        </li>
+    </ol>
+
+    <div class="font-weight-bold my-3">§10 Pozasądowe sposoby rozstrzygania reklamacji i dochodzenia roszczeń </div>
+
+    <div class="my-1">Klient będący Konsumentem posiada m.in. następujące możliwości skorzystania z pozasądowych sposobów rozpatrywania reklamacji i dochodzenia roszczeń:</div>
+
+    <ol>
+        <li class="my-1">jest uprawniony do zwrócenia się do stałego polubownego sądu konsumenckiego działającego przy
+            Inspekcji Handlowej z wnioskiem o rozstrzygnięcie sporu wynikłego z zawartej Umowy;
+        </li>
+        <li class="my-1">jest uprawniony do zwrócenia się do wojewódzkiego inspektora Inspekcji Handlowej z wnioskiem o
+            wszczęcie postępowania mediacyjnego w sprawie polubownego zakończenia sporu między Klientem a Serwisem internetowym;
+        </li>
+        <li class="my-1">może uzyskać bezpłatną pomoc w sprawie rozstrzygnięcia sporu między Klientem a Serwisem internetowym,
+            korzystając także z bezpłatnej pomocy powiatowego (miejskiego) rzecznika konsumentów lub organizacji społecznej,
+            do której zadań statutowych należy ochrona Konsumentów (m.in. Federacja Konsumentów, Stowarzyszenie
+            Konsumentów Polskich). Porady udzielane są pod przez Federację Konsumentów pod bezpłatnym numerem infolinii
+            konsumenckiej 800 007 707 oraz przez Stowarzyszenie Konsumentów Polskich pod adresem email porady@dlakonsumentow.pl;
+        </li>
+        <li class="my-1">złożyć swoją skargę za pośrednictwem unijnej platformy internetowej ODR, dostępnej pod
+            adresem: http://ec.europa.eu/consumers/odr/.
+        </li>
+    </ol>
+
+    <div class="font-weight-bold my-3">§11 Postanowienia końcowe</div>
+
+    <ol>
+        <li class="my-1">
+            Wszelkie treści zamieszczone na stronie Serwisu internetowego (wliczając w to grafikę, teksty, układ stron i
+            logotypy) korzystają z ochrony przewidzianej dla praw autorskich i są wyłączną własnością Usługodawcy.
+            Wykorzystywanie tych treści bez pisemnej zgody Usługodawcy skutkuje odpowiedzialnością cywilną oraz karną.
+        </li>
+        <li class="my-1">
+            Usługodawca zastrzega sobie prawo do zmiany niniejszego Regulaminu. O zmianie Regulaminu Usługodawca powiadomi
+            na każdego klienta mailowo.
+        </li>
+        <li class="my-1">
+            W pozostałych kwestiach nieuregulowanych zapisami niniejszego Regulaminu mają zastosowanie odpowiednie przepisy prawa polskiego.
+        </li>
+        <li class="my-1">
+            Klient będący konsumentem ma prawo do skorzystania z pozasądowych metod rozstrzygania sporów i dochodzenia roszczeń
+            w drodze mediacji lub sądu polubownego. Niezależnie od tego Klient może zwrócić się o pomoc do miejskiego (powiatowego)
+            rzecznika konsumentów. Wszelkie niezbędne informacje można uzyskać na stronie internetowej Urzędu Ochrony Konkurencji i
+            Konsumentów pod adresem www.uokik.gov.pl.
+        </li>
+        <li class="my-1">
+            Spory powstałe w wyniku świadczenia usług na podstawie niniejszego Regulaminu zostaną poddane pod
+            rozstrzygnięcie sądowi powszechnemu według wyboru Klienta zgodnie z właściwymi przepisami prawa polskiego.
+        </li>
+        <li class="my-1">
+            Regulamin wchodzi w życie z dniem 01.10.2020 r.
+        </li>
+    </ol>
+
+
+</div>
+
+
+
+<footer th:replace="fragments/footer"></footer>
+
+</body>
+
+</html>

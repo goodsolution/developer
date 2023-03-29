@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <div th:replace="fragments/head"></div>
+    <script th:inline="javascript">
+        var customer = [[${customer}]];
+        var authorityDict = [[${authoritiesDict}]];
+        var customerGroups = [[${customerGroups}]];
+
+    </script>
+    <script th:src="@{/js/customer-admin.js}"></script>
+    <script th:src="@{/libs/sha.js}"></script>
+
+</head>
+
+<body>
+<div th:replace="fragments/menu :: menu"></div>
+
+<div class="container">
+    <div class="text-center">
+        <h4 th:text="#{customer.admin.details}"></h4>
+        <h5>ID: <span th:text="${customer.id}"></span></h5>
+    </div>
+
+    <form class="bg-light p-5 border">
+        <div class="form-row">
+            <div class="form-group col-md-6 text-center">
+                <label for="first-and-last-name" th:text="#{customers.admin.first.and.last.name}"></label>
+                <input type="text" class="form-control" id="first-and-last-name"
+                       th:value="${customer.invoiceFirstAndLastName}">
+            </div>
+            <div class="form-group col-md-6 text-center">
+                <label for="login" th:text="#{customers.admin.login}"></label>
+                <input type="text" class="form-control" id="login" th:value="${customer.login}">
+            </div>
+            <div class="form-group col-md-6 text-center">
+            </div>
+            <button type="button" class="btn btn-outline-primary col-md-6 text-center" data-toggle="modal"
+                    data-target="#change-password-modal" th:text="#{my.account.change.password}"></button>
+            <div class="form-group col-md-6 text-center">
+                <label for="invoice-type" th:text="#{customer.admin.invoice.type}"></label>
+                <select id="invoice-type" class="form-control">
+                    <option th:each="invoiceType : ${invoiceTypesDict}"
+                            th:value="${invoiceType.code}"
+                            th:text="${invoiceType.value}"
+                            th:selected="(${invoiceType.code} == *{customer.invoiceType})">
+                    </option>
+                </select>
+            </div>
+            <div class="form-group col-md-6 text-center">
+                <label for="invoice-company-name" th:text="#{customer.admin.invoice.company.name}"></label>
+                <input type="text" class="form-control" id="invoice-company-name"
+                       th:value="${customer.invoiceCompanyName}">
+            </div>
+            <div class="form-group col-md-6 text-center">
+                <label for="invoice-street" th:text="#{customer.admin.invoice.street}"></label>
+                <input type="text" class="form-control" id="invoice-street" th:value="${customer.invoiceStreet}">
+            </div>
+            <div class="form-group col-md-6 text-center">
+                <label for="invoice-postal-code" th:text="#{customer.admin.invoice.postal.code}"></label>
+                <input type="text" class="form-control" id="invoice-postal-code"
+                       th:value="${customer.invoicePostalCode}">
+            </div>
+            <div class="form-group col-md-6 text-center">
+                <label for="invoice-city" th:text="#{customer.admin.invoice.city}"></label>
+                <input type="text" class="form-control" id="invoice-city" th:value="${customer.invoiceCity}">
+            </div>
+            <div class="form-group col-md-6 text-center">
+                <label for="invoice-nip" th:text="#{customer.admin.invoice.nip}"></label>
+                <input type="text" class="form-control" id="invoice-nip" th:value="${customer.invoiceNip}">
+            </div>
+            <div class="form-group col-md-6 text-center">
+                <label for="invoice-country" th:text="#{customer.admin.invoice.country}"></label>
+                <select id="invoice-country" class="form-control">
+                    <option th:each="country : ${countriesDict}"
+                            th:value="${country.code}"
+                            th:text="${country.value}" th:selected="(${country.code} == *{customer.invoiceCountry})">
+                    </option>
+                </select>
+            </div>
+            <div class="form-group col-md-6 text-center">
+                <label for="language" th:text="#{Language}"></label>
+                <select id="language" class="form-control">
+                    <option th:each="language : ${languagesDict}"
+                            th:value="${language.code}"
+                            th:text="${language.value}" th:selected="(${language.code} == *{customer.language})">
+                    </option>
+                </select>
+            </div>
+            <div class="form-group col-md-6 text-center">
+                <label for="regulation" th:text="#{customer.admin.regulation.accepted}"></label>
+                <select id="regulation" class="form-control">
+                    <option th:each="regulation : ${yesNoDict}"
+                            th:value="${regulation.code}"
+                            th:text="${regulation.value}"
+                            th:selected="(${#bools.isTrue(regulation.code)} == *{customer.regulationAccepted})">
+                    </option>
+                </select>
+            </div>
+            <div class="form-group col-md-6 text-center">
+                <label for="newsletter" th:text="#{customer.admin.newsletter.accepted}"></label>
+                <select id="newsletter" class="form-control">
+                    <option th:each="newsletter : ${yesNoDict}"
+                            th:value="${newsletter.code}"
+                            th:text="${newsletter.value}"
+                            th:selected="(${#bools.isTrue(newsletter.code)} == *{customer.newsletterAccepted})">
+                    </option>
+                </select>
+            </div>
+            <div class="form-group col-md-6 text-center">
+                <label for="email-confirmed" th:text="#{customer.admin.email.confirmed}"></label>
+                <select id="email-confirmed" class="form-control">
+                    <option th:each="email : ${yesNoDict}"
+                            th:value="${email.code}"
+                            th:text="${email.value}"
+                            th:selected="(${#bools.isTrue(email.code)} == *{customer.emailConfirmed})">
+                    </option>
+                </select>
+            </div>
+            <div class="form-group col-md-6 text-center">
+                <label for="enabled" th:text="#{customers.admin.enabled}"></label>
+                <select id="enabled" class="form-control">
+                    <option th:each="enabled : ${yesNoDict}"
+                            th:value="${enabled.code}"
+                            th:text="${enabled.value}"
+                            th:selected="(${#bools.isTrue(enabled.code)} == *{customer.isEnabled})">
+                    </option>
+                </select>
+            </div>
+            <div class="form-group col-md-6 text-center">
+                <label for="registration-datetime" th:text="#{customers.admin.registration.date}"></label>
+                <input type="text" class="form-control" id="registration-datetime"
+                       th:value="${customer.registrationDatetime}" readonly>
+            </div>
+            <div class="form-group col-md-6 text-center">
+                <label for="registration-ip" th:text="#{customer.admin.registration.ip}"></label>
+                <input type="text" class="form-control" id="registration-ip" th:value="${customer.registrationIp}"
+                       readonly>
+            </div>
+            <div class="form-group col-md-6 text-center">
+                <label for="user-agent" th:text="#{customer.admin.user.agent}"></label>
+                <input type="text" class="form-control" id="user-agent" th:value="${customer.userAgent}" readonly>
+            </div>
+        </div>
+        <form class="text-center">
+            <h6 th:text="#{customer.admin.choose.role}"></h6>
+            <!--            <th:block th:each="authority: ${authoritiesDict}">-->
+            <th:block th:each="authority: ${authoritiesDict}">
+                <input type="checkbox" th:id="${authority.code}" name="authorities" th:value="${authority.code}">
+                <label class="form-check-label" th:text="${authority.value}"></label>
+            </th:block>
+            <h6>Grupy:</h6>
+            <th:block th:each="customerGroup: ${customerGroups}">
+                <input type="checkbox" th:id="${'customer-group-' + customerGroup.id}" name="customerGroup"
+                       th:value="${customerGroup.id}">
+                <label class="form-check-label" th:text="${customerGroup.name}"></label>
+            </th:block>
+
+        </form>
+        <div class="text-center">
+            <button type="button" class="btn btn-danger mt-3" data-toggle="modal" data-target="#delete-object-modal"
+                    onclick="sendDeleteRequest()" th:text="#{Delete}"></button>
+            <button type="button" id="save-changes-button" class="btn btn-warning mt-3" onclick="sendUpdateRequest()"
+                    th:text="#{Save.changes}"></button>
+        </div>
+
+    </form>
+</div>
+
+<div class="modal fade" id="change-password-modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel" th:text="#{my.account.change.password}"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form class="text-center">
+                    <div class="form-group">
+                        <label for="new-password" th:text="#{my.account.enter.new.password}"></label>
+                        <input id="new-password" type="password" class="form-control" placeholder="********">
+                        <small class="form-text text-muted" th:text="#{password.requirements}"></small>
+                    </div>
+                    <div class="form-group">
+                        <label for="repeated-new-password" th:text="#{my.account.repeat.new.password}"></label>
+                        <input id="repeated-new-password" type="password" class="form-control" placeholder="********">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button id="change-password-button" type="button" class="btn btn-outline-primary"
+                        onclick="performPasswordChange()" th:text="#{my.account.change.password.button}"></button>
+                <h4 id="password-change-error-alert-text" class="alert-heading"></h4>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div th:replace="fragments/operation-successful-modal :: modal"></div>
+<div th:replace="fragments/delete-object-modal :: modal"></div>
+</body>
+
+</html>

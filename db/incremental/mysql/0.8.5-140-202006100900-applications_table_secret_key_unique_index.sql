@@ -1,0 +1,1 @@
+create unique index idx_secret_key on applications (secret_key);

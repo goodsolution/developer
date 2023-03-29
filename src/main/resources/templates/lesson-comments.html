@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <div th:replace="fragments/head"></div>
+    <script th:src="@{/js/lesson-comments.js}"></script>
+    <script th:inline="javascript">
+        var lessonCommentStatusesDict = [[${lessonCommentStatusesDict}]];
+    </script>
+</head>
+
+<body>
+<div th:replace="fragments/menu :: menu"></div>
+
+<h5 th:text="#{lesson.comments.header}"></h5>
+
+<div id="result-container" class="my-4">
+    <div class="table-responsive mb-0 pb-0">
+        <table class="table bg-light table-bordered table-hover table-sm mb-0 pb-0">
+            <thead class="thead-light">
+            <tr>
+                <th class="align-middle">ID</th>
+                <th class="align-middle" th:text="#{lesson.comments.lesson}"></th>
+                <th class="align-middle" th:text="#{lesson.comments.course}"></th>
+                <th class="align-middle" th:text="#{lesson.comments.customer}"></th>
+                <th class="align-middle" th:text="#{lesson.comments.text}"></th>
+                <th class="align-middle" th:text="#{lesson.comments.create.datetime}"></th>
+                <th class="align-middle" th:text="#{lesson.comments.status}"></th>
+                <th class="align-middle" th:text="#{lesson.comments.delete}"></th>
+            </tr>
+            </thead>
+            <tbody id="records">
+
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<div th:replace="fragments/pagination :: pagination"></div>
+<div th:replace="fragments/operation-successful-modal :: modal"></div>
+<div th:replace="fragments/delete-object-modal :: modal"></div>
+</body>
+
+</html>

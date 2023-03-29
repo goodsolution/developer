@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:remove="all">Title</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <style type="text/css">
+    .bought-courses-table-cell {
+      border: 1px solid #dddddd;
+      text-align: middle;
+      padding: 8px;
+    }
+    </style>
+</head>
+<body>
+<table width="100%" cellpadding="0" cellspacing="0" bgcolor="0095cc">
+    <tr>
+        <td height="50" align="center"><p th:text="#{mail.after.order.header}"></p></td>
+    </tr>
+    <tr bgcolor="ffffff">
+        <td height="100" align="center"><h1 th:text="#{mail.after.order.content}"></h1></td>
+    </tr>
+    <tr bgcolor="ffffff">
+        <td height="100" align="center">
+            <div>
+                <h3 th:text="#{mail.after.order.order.info}"></h3>
+                <div><span th:text="#{mail.after.order.order.number}"></span> <span th:text="${order.number}"></span></div>
+                <div><span th:text="#{mail.after.order.order.total.price}"></span> <span th:text="${order.totalPrice}"></span> PLN</div>
+            </div>
+        </td>
+    </tr>
+    <tr bgcolor="ffffff">
+        <td height="100" align="center">
+            <div>
+                <h3 th:text="#{mail.after.order.bought.courses}"></h3>
+                <table style="font-family: arial, sans-serif; border-collapse: collapse; margin-bottom: 25px;">
+                    <tr>
+                        <th class="bought-courses-table-cell" style="border: 1px solid #dddddd;" th:text="#{mail.after.order.course.name}"></th>
+                        <th class="bought-courses-table-cell" style="border: 1px solid #dddddd;" th:text="#{mail.after.order.course.price}"></th>
+                    </tr>
+                    <tr th:each="course : ${boughtCourses}">
+                        <td class="bought-courses-table-cell" style="border: 1px solid #dddddd;" th:text="${course.title}"></td>
+                        <td class="bought-courses-table-cell" style="border: 1px solid #dddddd;"><span th:text="${course.price}"></span> PLN</td>
+                    </tr>
+                </table>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td height="50" align="center"><p><span th:text="#{mail.after.order.footer}"></span> <a th:href="${pageUrl}" th:text="#{mail.after.registration.click}"></a></p></td>
+    </tr>
+</table>
+</body>
+</html>

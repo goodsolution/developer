@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <div th:replace="fragments/head"></div>
+    <script th:src="@{/js/admin-statistics-summary.js}"></script>
+</head>
+
+<body>
+<div th:replace="fragments/menu :: menu"></div>
+
+<h5>Statistics&#47;Summary</h5>
+
+<div id="result-container" class="my-4">
+    <div class="table-responsive mb-0 pb-0">
+        <table class="table bg-light table-bordered table-hover table-sm mb-0 pb-0">
+            <thead class="thead-light">
+            <tr>
+                <th class="align-middle">Name</th>
+                <th class="align-middle">Params</th>
+                <th class="align-middle">Refresh</th>
+                <th class="align-middle">Value</th>
+            </tr>
+            </thead>
+            <tbody id="records">
+            <tr>
+                <td class="align-middle"></td>
+                <td class="align-middle">COURSES</td>
+                <td class="align-middle"></td>
+                <td class="align-middle"></td>
+            </tr>
+            <tr>
+                <td class="align-middle">Number of visible courses</td>
+                <td class="align-middle"></td>
+                <td class="align-middle"><button type="button" class="btn btn-primary" onclick="refreshStatistic('NUMBER_OF_VISIBLE_COURSES')">Refresh
+                </button></td>
+                <td class="align-middle" id="NUMBER_OF_VISIBLE_COURSES">0</td>
+            </tr>
+            <tr>
+                <td class="align-middle"></td>
+                <td class="align-middle">ORDERS</td>
+                <td class="align-middle"></td>
+                <td class="align-middle"></td>
+            </tr>
+            <tr>
+                <td class="align-middle">Number of no free orders: </td>
+                <td class="align-middle">
+                    <select id="select_NUMBER_OF_NO_FREE_ORDERS" name="select_NUMBER_OF_NO_FREE_ORDERS"
+                            class="mb-1">
+                        <option value="YESTERDAY">YESTERDAY</option>
+                        <option value="TODAY">TODAY</option>
+                        <option value="LAST_WEEK">LAST_WEEK</option>
+                        <option value="LAST_MONTH">LAST_MONTH</option>
+                        <option value="LAST_YEAR">LAST_YEAR</option>
+                        <option value="TOTAL" selected>TOTAL</option>
+                    </select>
+                </td>
+                <td class="align-middle"><button type="button" class="btn btn-primary" onclick="refreshStatisticWithParam('NUMBER_OF_NO_FREE_ORDERS', 'select_NUMBER_OF_NO_FREE_ORDERS')">Refresh</button></td>
+                <td class="align-middle" id="NUMBER_OF_NO_FREE_ORDERS">0</td>
+            </tr>
+            <tr>
+                <td class="align-middle">Number of free orders: </td>
+                <td class="align-middle">
+                    <select id="select_NUMBER_OF_FREE_ORDERS" name="select_NUMBER_OF_FREE_ORDERS"
+                            class="mb-1">
+                        <option value="YESTERDAY">YESTERDAY</option>
+                        <option value="TODAY">TODAY</option>
+                        <option value="LAST_WEEK">LAST_WEEK</option>
+                        <option value="LAST_MONTH">LAST_MONTH</option>
+                        <option value="LAST_YEAR">LAST_YEAR</option>
+                        <option value="TOTAL" selected>TOTAL</option>
+                    </select>
+                </td>
+                <td class="align-middle"><button type="button" class="btn btn-primary" onclick="refreshStatisticWithParam('NUMBER_OF_FREE_ORDERS', 'select_NUMBER_OF_FREE_ORDERS')">Refresh</button></td>
+                <td class="align-middle" id="NUMBER_OF_FREE_ORDERS">0</td>
+            </tr>
+            <tr>
+                <td class="align-middle"></td>
+                <td class="align-middle"></td>
+                <td class="align-middle"></td>
+                <td class="align-middle"></td>
+            </tr>
+            <tr>
+                <td class="align-middle"></td>
+                <td class="align-middle">CUSTOMERS</td>
+                <td class="align-middle"></td>
+                <td class="align-middle"></td>
+            </tr>
+            <tr>
+                <td class="align-middle">Registered customers in last</td>
+                <td class="align-middle">
+                    <input type="number" id = "value_REGISTERED_CUSTOMERS" name="number_of_time_REGISTERED_CUSTOMERS" min="0" max="100">
+                    <select id="select_REGISTERED_CUSTOMERS" name="select_REGISTERED_CUSTOMERS"
+                            class="mb-1">
+                        <option value="HOURS">HOURS</option>
+                        <option value="DAYS">DAYS</option>
+                        <option value="MONTHS">MONTHS</option>
+                        <option value="YEARS">YEARS</option>
+                    </select>
+                    <p><span id="error"></span> </p>
+                </td>
+                <td class="align-middle"><button type="button" class="btn btn-primary" onclick="refreshStatisticWithValue('REGISTERED_CUSTOMERS_IN_LAST', 'select_REGISTERED_CUSTOMERS', 'value_REGISTERED_CUSTOMERS')">Refresh</button>
+                </td>
+                <td class="align-middle" id="REGISTERED_CUSTOMERS_IN_LAST">0</td>
+            </tr>
+
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div th:replace="fragments/operation-successful-modal :: modal"></div>
+
+</body>
+
+</html>

@@ -1,0 +1,1 @@
+ALTER TABLE crs_course_attachments ADD original_file_name varchar(500);

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <div th:replace="fragments/head"></div>
+    <div th:replace="fragments/datepicker :: imports"></div>
+    <script th:src="@{/js/menu-preview.js}"></script>
+</head>
+
+<body>
+    <div th:replace="fragments/menu :: menu"></div>
+
+    <h5>Podgląd menu</h5>
+
+    <form action="#" th:action="@{/statistics}">
+        <div class="bg-light border mb-5">
+            <div class="row p-0 m-0">
+                <div class="col-lg-3 col-md-4 col-sm-6 col-12 d-flex justify-content-center border p-0">
+                    <div class="mw-75 px-2 py-3">
+                        <h6 class="text-center">Diety</h6>
+                        <div class="form-check" th:each="diet: ${diets}">
+                            <input type="radio" class="form-check-input" th:name="dietId" th:value="${diet.id}" onchange="reloadProducts(document.getElementById('kind_id'), this.value)">
+                            <label class="form-check-label" th:text="${diet.value}"></label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-9 col-md-8 col-sm-6 col-12">
+                    <div class="row d-flex align-items-stretch h-50">
+                        <div class="col-md-4 col-12 d-flex align-items-center border p-0">
+                            <div class="w-100 px-2 py-3">
+                                <h6 class="text-center">Rodzaj</h6>
+                                <select class="form-control form-control-sm" id="kind_id">
+                                    <option value="">---</option>
+    <!--                                <option th:each="driver : ${drivers}" th:value="${driver.id}"-->
+    <!--                                        th:text="${driver.value}">-->
+    <!--                                </option>-->
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-12 d-flex align-items-center border p-0">
+                            <div class="w-100 px-2 py-3">
+                                <h6 class="text-center">Data od</h6>
+                                <input type="text" class="form-control form-control-sm" id="dateFrom" name="dateFrom"
+                                       autocomplete="off" th:value="${defaultStartDate}" />
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-12 d-flex align-items-center border p-0">
+                                <div class="w-100 px-2 py-3">
+                                    <h6 class="text-center">Data do</h6>
+                                    <input type="text" class="form-control form-control-sm" id="dateTo" name="dateTo"
+                                           autocomplete="off" th:value="${defaultEndDate}" />
+                                </div>
+                        </div>
+
+                    </div>
+
+                    <div class="row d-flex align-items-stretch h-50">
+                        <div class="col-md-4 col-12 d-flex align-items-center border p-0">
+                            <div class="w-100 px-2 py-3">
+                                <h6 class="text-center"></h6>
+                                <button id="new_order" class="btn-block h-100" type="button" href="#" onclick="openExcelSheet()"
+                                        data-toggle="modal" >
+                                    Generuj plik Excel
+                                </button>
+
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-12 d-flex align-items-center border p-0">
+                            <div class="w-100 px-2 py-3">
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+<!--                <div class="col-lg-3 col-md-4 col-sm-6 col-12 d-flex justify-content-center border p-0">-->
+<!--                    <div class="mw-75 px-2 py-3">-->
+<!--                        <h6 class="text-center">Diety</h6>-->
+<!--                        <div class="form-check" id="dietId" th:each="diet: ${diets}">-->
+<!--                            <input type="checkbox" class="form-check-input" th:value="${diet.id}">-->
+<!--                            <label class="form-check-label" th:text="${diet.value}"></label>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+
+            </div>
+        </div>
+    </form>
+
+    <div th:replace="fragments/datepicker :: code"></div>
+</body>
+
+</html>

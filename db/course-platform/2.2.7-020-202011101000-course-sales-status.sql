@@ -1,0 +1,1 @@
+ALTER TABLE crs_courses ADD sale_status varchar(1) NOT NULL DEFAULT 'o';

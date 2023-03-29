@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html th:lang="${#locale.getLanguage()}" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta name="description" th:content="#{meme.content.description}">
+    <meta name="keywords" th:content="#{meme.content.keywords}">
+    <title th:text="'Testowanie w Java' + ' · ' + ${@applicationConfig.getAppNameFront()}"></title>
+    <div th:replace="fragments/front-head"></div>
+    <script>
+        trace('page.show', 'java-test');
+    </script>
+    <!--<script th:src="@{/js/meme-page.js}"></script>-->
+</head>
+
+<body>
+<nav th:replace="${@courseCustomersService.getLoggedCustomer()} ? 'fragments/logged-in-navbar' : 'fragments/logged-out-navbar'"></nav>
+
+<div class="container my-5">
+    <div>
+        <strong>Testowanie w Java</strong>
+    </div>
+    <div>
+        Zasoby:
+    </div>
+    <div>
+        <ul>
+            <li><a href="https://www.kodolamacz.pl/blog/wprowadzenie-do-testowania-aplikacji-w-srodowisku-java/" target="_blank">www.kodolamacz.pl/blog/wprowadzenie-do-testowania-aplikacji-w-srodowisku-java/</a></li>
+            <li><a href="https://www.samouczekprogramisty.pl/testy-jednostkowe-z-junit/" target="_blank">www.samouczekprogramisty.pl/testy-jednostkowe-z-junit/</a></li>
+        </ul>
+    </div>
+    <div>
+        Narzędzia:
+    </div>
+    <div>
+        <ul>
+            <li>TestNG</li>
+            <li>Mockito</li>
+            <li>PowerMock</li>
+            <li>AssertJ</li>
+            <li>Hamcrest</li>
+            <li>Arquillian</li>
+            <li>Spock</li>
+            <li>JWalk</li>
+            <li>Grinder</li>
+            <li>JMeter</li>
+            <li>PIT</li>
+            <li>Cucumber</li>
+            <li>JBehave</li>
+            <li>Selenium</li>
+        </ul>
+    </div>
+    <div id="records">
+
+    </div>
+
+
+</div>
+
+<footer th:replace="fragments/footer"></footer>
+
+</body>
+
+</html>

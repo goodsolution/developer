@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html th:lang="${#locale.getLanguage()}" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta name="description" th:content="#{meme.content.description}">
+    <meta name="keywords" th:content="#{meme.content.keywords}">
+    <title th:text="'Pytania rekrutacyjne SQL' + ' · ' + ${@applicationConfig.getAppNameFront()}"></title>
+    <div th:replace="fragments/front-head"></div>
+    <script>
+        trace('page.show', 'sql-interview-questions');
+
+    </script>
+    <!--<script th:src="@{/js/meme-page.js}"></script>-->
+</head>
+
+<body>
+<nav th:replace="${@courseCustomersService.getLoggedCustomer()} ? 'fragments/logged-in-navbar' : 'fragments/logged-out-navbar'"></nav>
+
+<div class="container my-5">
+    <div class="row">
+        Pytania rekrutacyjne:
+
+    </div>
+    <div>
+        <br>
+        Pytania z realnych rozmów o pracę:<br>
+        <ul>
+            <li>Czym różni się UNION od UNION ALL?</li>
+            <li>Co oznacza * po słowie SELECT?</li>
+            <li>Do czego służą indeksy?</li>
+            <li>Jakie operacje przyspieszają indeksy?</li>
+            <li>Jakie operacje mogą spowalniać indeksy?</li>
+            <li>Co to jest constraint?</li>
+            <li>Co to jest widok?</li>
+            <li>Jakie mamy frazy/człony w poleceniu select?</li>
+            <li>Jakie znasz typy danych znakowe?</li>
+            <li>Jakie znasz typy numeryczne?</li>
+
+        </ul>
+    </div>
+
+<!--    <div>-->
+<!--        Linki do stron z pytaniami rekrutacyjnymi-->
+<!--        <ul>-->
+<!--            <li><a href="https://bulldogjob.pl/readme/java-developer-pytania-rekrutacyjne-odpowiedzi" target="_blank">bulldogjob.pl</a>-->
+<!--            </li>-->
+<!--        </ul>-->
+<!--    </div>-->
+
+
+</div>
+
+<footer th:replace="fragments/footer"></footer>
+
+</body>
+
+</html>

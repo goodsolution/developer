@@ -1,0 +1,1 @@
+ALTER TABLE crs_lessons ADD order_number INT NOT NULL;

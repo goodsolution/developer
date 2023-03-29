@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <div th:replace="fragments/head"></div>
+    <div th:replace="fragments/datepicker :: imports"></div>
+    <script th:src="@{/js/customer-groups.js}"></script>
+
+    <script th:inline="javascript">
+        var groupStatuses = [[${groupStatuses}]];
+    </script>
+
+
+</head>
+
+<body>
+    <div th:replace="fragments/menu :: menu"></div>
+    <h3>Grupy klientów</h3>
+
+    <div id="result-container">
+        <p>Wszystkich grup: <span id="customer-groups-count"></span></p>
+        <p>
+            <button id="new_customer_group" type="button" href="#" onclick="openAddCustomerGroupModal()" data-toggle="modal" >Dodaj nową grupę</button>
+        </p>
+        <div class="table-responsive mb-5">
+            <table class="table table-hover table-bordered table-sm m-0">
+                <thead class="thead-light">
+                    <tr>
+                        <th class="align-middle"><input type="checkbox" onclick="toggleCheckboxes(this.checked)"></th>
+                        <th class="align-middle" onclick="setSortPropsAndFindCustomerGroups('group_id')">ID Grupy <img id="groupIdSortingArrowImage" class="sortingArrowImage" src="" width="10px" height="10px"></th>
+                        <th class="align-middle" onclick="setSortPropsAndFindCustomerGroups('name')">Nazwa Grupy <img id="nameSortingArrowImage" class="sortingArrowImage" src="" width="10px" height="10px"></th>
+                        <th class="align-middle" onclick="setSortPropsAndFindCustomerGroups('number_of_users')">Ilość użytkowników <img id="numberOfUsersSortingArrowImage" class="sortingArrowImage" src="" width="10px" height="10px"></th>
+                        <th class="align-middle" onclick="setSortPropsAndFindCustomerGroups('status')">Status <img id="statusSortingArrowImage" class="sortingArrowImage" src="" width="10px" height="10px"></th>
+                        <th class="align-middle"></th>
+                    </tr>
+                </thead>
+                <tbody id="customer-groups-results" class="bg-light">
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div th:replace="fragments/pagination :: pagination"></div>
+    <div th:replace="fragments/datepicker :: code"></div>
+    <div th:replace="fragments/add-customer-group-modal-js :: modal"></div>
+    <div th:replace="fragments/operation-successful-modal :: modal"></div>
+
+</body>
+
+</html>

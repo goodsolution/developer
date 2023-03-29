@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+    <head>
+        <div th:replace="fragments/head"></div>
+        <div th:replace="fragments/datepicker :: imports"></div>
+        <div th:replace="fragments/timepicker :: imports"></div>
+        <script th:src="@{/js/add-order.js}"></script>
+        <script th:src="@{/js/customer.js}"></script>
+        <script th:inline="javascript">
+            var customerId = [[${customerId}]];
+            var customerGroupsDict = [[${customerGroups}]];
+            var customerStatusesDict = [[${customerStatuses}]];
+            var citiesDict = [[${cities}]];
+            var yesNoDict = [[${yesNo}]];
+            var customerLastOrderId = [[${customersLastOrderId}]];
+        </script>
+    </head>
+
+    <body>
+        <div th:replace="fragments/menu :: menu"></div>
+
+        <h5>Podgląd klienta</h5>
+
+        <button type="button" onclick="openAddOrderModal(customerId)" class="my-2">Dodaj nowe zamówienie</button>
+
+        <p class="my-2">ID klienta: <span id="customer-id"></span></p>
+
+        <form class="bg-light border m-0 p-0 my-3">
+            <div class="form-row m-0 p-0">
+                <div class="col-md-12 col-lg-6 border py-3 px-5">
+                    <div class="form-group row">
+                        <label class="col-12 col-sm-3 col-md-2 col-xl-3 my-auto text-center">Imię i nazwisko:</label>
+                        <div class="col-12 col-sm-9 col-md-10 col-xl-9 my-auto">
+                            <input id="name-and-surname" type="text" class="form-control" value="" disabled/>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-12 col-sm-3 col-md-2 col-xl-3 my-auto text-center">Adres e-mail:</label>
+                        <div class="col-12 col-sm-9 col-md-10 col-xl-9 my-auto">
+                            <input id="email" type="text" class="form-control" value=""/>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-12 col-sm-3 col-md-2 col-xl-3 my-auto text-center">Grupa:</label>
+                        <div class="col-12 col-sm-9 col-md-10 col-xl-9 my-auto">
+                            <select id="group" class="form-control"></select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-12 col-sm-3 col-md-2 col-xl-3 my-auto text-center">Status:</label>
+                        <div class="col-12 col-sm-9 col-md-10 col-xl-9 my-auto">
+                            <select id="status" class="form-control"></select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-12 col-sm-3 col-md-2 col-xl-3 my-auto text-center">Data rejestracji:</label>
+                        <div class="col-12 col-sm-9 col-md-10 col-xl-9 my-auto">
+                            <input id="registration-date" type="text" class="form-control" value="" disabled/>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-12 col-sm-3 col-md-2 col-xl-3 my-auto text-center">Adres IP:</label>
+                        <div class="col-12 col-sm-9 col-md-10 col-xl-9 my-auto">
+                            <input id="registration-ip" type="text" class="form-control" value="" disabled/>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-12 col-sm-3 col-md-2 col-xl-3 my-auto text-center">Akceptacja regualminu:</label>
+                        <div class="col-12 col-sm-9 col-md-10 col-xl-9 my-auto">
+                            <input id="regulation-acceptance" type="checkbox" disabled>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-12 col-sm-3 col-md-2 col-xl-3 my-auto text-center">Zgoda na newsletter:</label>
+                        <div class="col-12 col-sm-9 col-md-10 col-xl-9 my-auto">
+                            <input id="newsletter-acceptance" type="checkbox" disabled>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-12 col-sm-3 col-md-2 col-xl-3 my-auto text-center">Z:</label>
+                        <div id="customer-from" class="col-12 col-sm-9 col-md-10 col-xl-9 my-auto text-center"></div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-12 col-sm-3 col-md-2 col-xl-3 my-auto text-center">Klient wymagający:</label>
+                        <div class="col-12 col-sm-9 col-md-10 col-xl-9 my-auto">
+                            <select id="demanding-customer" class="form-control">
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 col-lg-6 border py-3 px-5">
+                    <h4>Dane rejestracyjne:</h4>
+                    <div class="form-group row">
+                        <label class="col-12 col-sm-3 col-md-2 col-xl-3 my-auto text-center">Imię:</label>
+                        <div class="col-12 col-sm-9 col-md-10 col-xl-9 my-auto">
+                            <input id="name" type="text" class="form-control" value=""/>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-12 col-sm-3 col-md-2 col-xl-3 my-auto text-center">Nazwisko:</label>
+                        <div class="col-12 col-sm-9 col-md-10 col-xl-9 my-auto">
+                            <input id="surname" type="text" class="form-control" value=""/>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-12 col-sm-3 col-md-2 col-xl-3 my-auto text-center">Numer telefonu:</label>
+                        <div class="col-12 col-sm-9 col-md-10 col-xl-9 my-auto">
+                            <input id="phone-number" type="text" class="form-control" value=""/>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-12 col-sm-3 col-md-2 col-xl-3 my-auto text-center">Ulica:</label>
+                        <div class="col-12 col-sm-9 col-md-10 col-xl-9 my-auto">
+                            <input id="street" type="text" class="form-control" value=""/>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-12 col-sm-3 col-md-2 col-xl-3 my-auto text-center">Numer domu:</label>
+                        <div class="col-12 col-sm-9 col-md-10 col-xl-9 my-auto">
+                            <input id="house-number" type="text" class="form-control" value=""/>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-12 col-sm-3 col-md-2 col-xl-3 my-auto text-center">Numer lokalu:</label>
+                        <div class="col-12 col-sm-9 col-md-10 col-xl-9 my-auto">
+                            <input id="apartment-number" type="text" class="form-control" value=""/>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-12 col-sm-3 col-md-2 col-xl-3 my-auto text-center">Kod pocztowy:</label>
+                        <div class="col-12 col-sm-9 col-md-10 col-xl-9 my-auto">
+                            <input id="postal-code" type="text" class="form-control" value=""/>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-12 col-sm-3 col-md-2 col-xl-3 my-auto text-center">Miejscowość:</label>
+                        <div class="col-12 col-sm-9 col-md-10 col-xl-9 my-auto">
+                            <select id="city" class="form-control"></select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 col-lg-6 border py-3 px-5">
+                    <input id="another-weekend-address" type="checkbox" class="mb-5"> Inny adres w weekendy
+                    <div id="weekend-address-data" style="display: none;">
+                        <h4>Adres weekendowy:</h4>
+                        <div class="form-group row">
+                            <label class="col-12 col-sm-3 col-md-2 col-xl-3 my-auto text-center">Ulica:</label>
+                            <div class="col-12 col-sm-9 col-md-10 col-xl-9 my-auto">
+                                <input id="weekend-street" type="text" class="form-control" value=""/>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-12 col-sm-3 col-md-2 col-xl-3 my-auto text-center">Numer domu:</label>
+                            <div class="col-12 col-sm-9 col-md-10 col-xl-9 my-auto">
+                                <input id="weekend-house-number" type="text" class="form-control" value=""/>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-12 col-sm-3 col-md-2 col-xl-3 my-auto text-center">Numer lokalu:</label>
+                            <div class="col-12 col-sm-9 col-md-10 col-xl-9 my-auto">
+                                <input id="weekend-apartment-number" type="text" class="form-control" value=""/>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-12 col-sm-3 col-md-2 col-xl-3 my-auto text-center">Kod pocztowy:</label>
+                            <div class="col-12 col-sm-9 col-md-10 col-xl-9 my-auto">
+                                <input id="weekend-postal-code" type="text" class="form-control" value=""/>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-12 col-sm-3 col-md-2 col-xl-3 my-auto text-center">Miejscowość:</label>
+                            <div class="col-12 col-sm-9 col-md-10 col-xl-9 my-auto">
+                                <select id="weekend-city" class="form-control">
+                                    <option value=""></option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 col-lg-6 border py-3 px-5">
+
+                    <input id="invoice" type="checkbox" class="mb-5"> Klient chce otrzymywać fakturę VAT
+                    <div id="invoice-data" style="display: none;">
+                        <h4>Domyślne dane do faktur:</h4>
+                        <div class="form-group row">
+                            <label class="col-12 col-sm-3 col-md-2 col-xl-3 my-auto text-center">Nazwa firmy:</label>
+                            <div class="col-12 col-sm-9 col-md-10 col-xl-9 my-auto">
+                                <input id="invoice-company-name" type="text" class="form-control" value=""/>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-12 col-sm-3 col-md-2 col-xl-3 my-auto text-center">Numer NIP:</label>
+                            <div class="col-12 col-sm-9 col-md-10 col-xl-9 my-auto">
+                                <input id="invoice-tax-no" type="text" class="form-control" value=""/>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-12 col-sm-3 col-md-2 col-xl-3 my-auto text-center">Ulica:</label>
+                            <div class="col-12 col-sm-9 col-md-10 col-xl-9 my-auto">
+                                <input id="invoice-street" type="text" class="form-control" value=""/>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-12 col-sm-3 col-md-2 col-xl-3 my-auto text-center">Numer domu:</label>
+                            <div class="col-12 col-sm-9 col-md-10 col-xl-9 my-auto">
+                                <input id="invoice-house-number" type="text" class="form-control" value=""/>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-12 col-sm-3 col-md-2 col-xl-3 my-auto text-center">Numer lokalu:</label>
+                            <div class="col-12 col-sm-9 col-md-10 col-xl-9 my-auto">
+                                <input id="invoice-apartment-number" type="text" class="form-control" value=""/>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-12 col-sm-3 col-md-2 col-xl-3 my-auto text-center">Kod pocztowy:</label>
+                            <div class="col-12 col-sm-9 col-md-10 col-xl-9 my-auto">
+                                <input id="invoice-postal-code" type="text" class="form-control" value=""/>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-12 col-sm-3 col-md-2 col-xl-3 my-auto text-center">Miejscowość:</label>
+                            <div class="col-12 col-sm-9 col-md-10 col-xl-9 my-auto">
+                                <input id="invoice-city" type="text" class="form-control" value=""/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 col-lg-6 border py-3 px-5">
+                    <h4>Godziny dostawy:</h4>
+                    <div class="form-group row">
+                        <label class="col-12 col-sm-3 col-md-2 col-xl-3 my-auto text-center">Do:</label>
+                        <div class="col-12 col-sm-9 col-md-10 col-xl-9 my-auto">
+                            <input id="week-preferred-hours-to" type="time" class="form-control timepicker"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 col-lg-6 border py-3 px-5">
+                    <input id="another-hours-weekend" type="checkbox" class="mb-3"> Inne godziny dostawy w weekend
+                    <div id="another-hours-weekend-data" class="form-group row" style="display: none;">
+                        <label class="col-12 col-sm-3 col-md-2 col-xl-3 my-auto text-center">Do:</label>
+                        <div class="col-12 col-sm-9 col-md-10 col-xl-9 my-auto">
+                            <input id="weekend-preferred-hours-to" type="time" class="form-control timepicker" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 col-lg-6 border py-3 px-5">
+                    <h4>Uwagi:</h4>
+                    <textarea id="comment" class="form-control" rows="10" value="">
+
+                    </textarea>
+                </div>
+                <div class="col-md-12 col-lg-6 border py-3 px-5">
+                    <h4>Dodatkowe:</h4>
+                    <div class="form-group row">
+                        <label class="col-12 col-sm-3 col-md-2 col-xl-3 my-auto text-center">Reset hasła klienta:</label>
+                        <div class="col-12 col-sm-9 col-md-10 col-xl-9 my-auto">
+                            <button type="button" disabled>Resetuj hasło</button>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-12 col-sm-3 col-md-2 col-xl-3 my-auto text-center">Wysyłanie wiadomości do klienta:</label>
+                        <div class="col-12 col-sm-9 col-md-10 col-xl-9 my-auto">
+                            <button type="button" onclick="showSendEmailModal()" >Wyślij wiadomość email</button>
+                            <button type="button" disabled>Wyślij wiadomość SMS</button>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-12 col-sm-3 col-md-2 col-xl-3 my-auto text-center">Ilość zamówień klienta:</label>
+                        <div id="orders-count" class="col-12 col-sm-9 col-md-10 col-xl-9 my-auto">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-12 col-sm-3 col-md-2 col-xl-3 my-auto text-center">Ostatnie zamówienie klienta:</label>
+                        <div class="col-12 col-sm-9 col-md-10 col-xl-9 my-auto">
+                            <button id="last-customer-order" onclick="goToOrderDetailsPage(customerLastOrderId)" type="button" disabled>Pokaż</button>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-12 col-sm-3 col-md-2 col-xl-3 my-auto text-center">Wszystkie zamówienia klienta:</label>
+                        <div class="col-12 col-sm-9 col-md-10 col-xl-9 my-auto">
+                            <button type="button" disabled>Pokaż</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        <button id="save-button" class="my-3" type="button" onclick="updateCustomer()" disabled>Zapisz</button>
+
+        <div th:replace="fragments/datepicker :: code"></div>
+        <div th:replace="fragments/timepicker :: code"></div>
+        <div th:replace="fragments/operation-successful-modal :: modal"></div>
+        <div th:replace="fragments/send-email-modal :: modal"></div>
+        <div th:replace="fragments/add-order-modal-js :: modal"></div>
+    </body>
+
+</html>

@@ -1,0 +1,118 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<body>
+
+<div th:fragment="modal" class="modal" id="add-product-modal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content bg-light">
+            <div class="modal-header w-100">
+                <h4 class="modal-title">Dodawanie nowego produktu</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <div class="modal-body w-100">
+                <form th:action="@{/api/products}" method="POST" class="mr-2">
+                    <div class="form-row py-1">
+                        <label class="col-sm-6 text-center pt-1" for="newProductDiet">
+                            Dieta:
+                        </label>
+                        <select id="newProductDiet" name="newProductDiet" th:data-id="@{data.id}"
+                                class="mb-1 col-sm-6" >
+                            <option value="">
+                                ---
+                            </option>
+                            <option th:each="diet : ${diets}" th:value="${diet.id}" th:text="${diet.value}"></option>
+                        </select>
+                    </div>
+                    <div class="form-row pb-1">
+                        <label class="col-sm-6 text-center pt-1" for="newProductType">
+                            Rodzaj:
+                        </label>
+                        <!-- TODO: zrobić resztę formatki-->
+                        <select id="newProductType" name="newProductType"
+                                class="mb-1 col-sm-6" >
+                            <!--<option th:each="option : ${types}" th:value="${type.id}" th:text="${type.value}"></option>-->
+                            <option value="">
+                                ---
+                            </option>
+                            <option th:value="51">1500 kcal</option>
+                            <option th:value="52">2000 kcal</option>
+                        </select>
+                    </div>
+                    <div class="form-row pb-1">
+                        <label class="col-sm-6 text-center pt-1" for="newProductQuantity">
+                            Ilość:
+                        </label>
+                        <input class="col-sm-6 " type="number" min="1" required
+                               name="newProductQuantity" id="newProductQuantity">
+                    </div>
+                    <div class="form-row pb-1">
+                        <label class="col-sm-6 text-center pt-1" for="dateNewProductStartt">
+                            Od dnia:
+                        </label>
+                        <input class="col-sm-6 " type="text" required
+                               name="dateNewProductStartt" id="dateNewProductStartt">
+                    </div>
+                    <div class="form-row pb-1">
+                        <label class="col-sm-6 text-center pt-1" for="newProductDays">
+                            Liczba dni:
+                        </label>
+                        <input class="col-sm-6 " type="number" min="1" required
+                               name="newProductDays" id="newProductDays">
+                    </div>
+                    <div class="form-row pb-1">
+                        <label class="col-sm-6 text-center pt-1" for="newProductWeekendOption">
+                            Weekendy:
+                        </label>
+                        <select id="newProductWeekendOption" name="newProductWeekendOption"
+                                class="mb-1 col-sm-6" >
+                            <option th:each="option : ${weekendOptions}" th:value="${option.id}"
+                                    th:text="${option.value}"></option>
+                            </select>
+                        </select>
+                    </div>
+                    <div class="form-row pb-1">
+                        <label class="col-sm-6 text-center pt-1" for="newProductTestDay">
+                            Zestaw testowy:
+                        </label>
+                        <select id="newProductTestDay" name="newProductTestDay"
+                                class="mb-1 col-sm-6" >
+                            <option th:each="choice : ${yesNo}" th:value="${choice.code}" th:text="${choice.value}" th:selected="${choice.code} == 'false'">></option>
+                        </select>
+                    </div>
+                    <div class="form-row pb-1 align-middle">
+                            <span class="col-sm-6 text-center">
+                                Dodatki:
+                            </span>
+                        <p class="col-sm-6 align-middle">
+                            <input class="" type="checkbox"
+                                   name="extrasOne" id="extrasOne">
+                            <label class="">
+                                Woda Java 1,5l (6 PLN/dzień)
+                            </label>
+                        </p>
+                    </div>
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" onclick="postNewProduct()">
+                    Dodaj
+                </button>
+                <button type="button" data-dismiss="modal"
+                        onclick="postNewProductAndClose()">
+                    Dodaj i zamknij
+                </button>
+                <button type="button" onclick="resetAddProductForm()">
+                    Wyczyść
+                </button>
+                <button type="button" data-dismiss="modal">
+                    Zamknij
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

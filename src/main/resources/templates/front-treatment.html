@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html th:lang="${#locale.getLanguage()}" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta name="description" th:content="#{meme.content.description}">
+    <meta name="keywords" th:content="#{meme.content.keywords}">
+    <title th:text="'Leczenie chorób' + ' · ' + ${@applicationConfig.getAppNameFront()}"></title>
+    <div th:replace="fragments/front-head"></div>
+    <script>
+        trace('page.show', 'treatment');
+    </script>
+    <!--<script th:src="@{/js/meme-page.js}"></script>-->
+</head>
+
+<body>
+<nav th:replace="${@courseCustomersService.getLoggedCustomer()} ? 'fragments/logged-in-navbar' : 'fragments/logged-out-navbar'"></nav>
+
+<div class="container my-5">
+    <div>
+        <strong>Leczenie chorób</strong>
+    </div>
+    <div>
+        <br>
+    </div>
+    <div class="text-center">
+        Zatoki
+    </div>
+    <div class="row d-flex justify-content-center" style="padding-bottom: 5px;">
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/iagmFPup9TA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
+
+    <div class="text-center">
+        Przeziębienie
+    </div>
+    <div class="row d-flex justify-content-center" style="padding-bottom: 5px;">
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/nEqLKZEkbIA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
+
+    <div class="text-center">
+        Kaszel
+    </div>
+    <div class="row d-flex justify-content-center" style="padding-bottom: 5px;">
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/00Jch-7zz3k" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
+</div>
+
+<footer th:replace="fragments/footer"></footer>
+
+</body>
+
+</html>

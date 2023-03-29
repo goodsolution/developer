@@ -1,0 +1,1 @@
+alter table applications add secret_key VARCHAR(1000);

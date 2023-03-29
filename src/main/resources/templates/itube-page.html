@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <div th:replace="fragments/head"></div>
+    <script th:src="@{/js/itube-page.js}"></script>
+    <script th:inline="javascript">
+        var itube = [[${itube}]];
+    </script>
+</head>
+
+<body>
+
+<div th:replace="fragments/menu :: menu"></div>
+
+<div class="container">
+    <div class="text-center">
+        <h4 th:text="#{itube.edit}"></h4>
+    </div>
+
+    <form class="bg-light p-5 border">
+        <div class="form-row">
+            <div class="form-group col-md-4 text-center">
+                <label for="titlePl" th:text="#{itube.title.pl}"></label>
+                <input type="text" class="form-control" id="titlePl" th:value="${itube.titlePl}">
+            </div>
+            <div class="form-group col-md-4 text-center">
+                <label for="titleEn" th:text="#{itube.title.en}"></label>
+                <input type="text" class="form-control" id="titleEn" th:value="${itube.titleEn}">
+            </div>
+            <div class="form-group col-md-4 text-center">
+                <label for="keywords" th:text="#{itube.keywords}"></label>
+                <input type="text" class="form-control" id="keywords" th:value="${itube.keywords}">
+            </div>
+            <div class="form-group col-md-4 text-center">
+                <label for="link" th:text="#{itube.link}"></label>
+                <input type="text" class="form-control" id="link" th:value="${itube.link}">
+            </div>
+        </div>
+
+        <div class="text-center">
+            <button type="button" class="btn btn-warning mt-3" onclick="history.back()" th:text="#{Cancel}"></button>
+            <button type="button" class="btn btn-warning mt-3" onclick="sendUpdateRequest()"
+                    th:text="#{Save.changes}"></button>
+        </div>
+
+    </form>
+
+</div>
+<div th:replace="fragments/operation-successful-modal :: modal"></div>
+<div th:replace="fragments/delete-object-modal :: modal"></div>
+</body>
+
+</html>

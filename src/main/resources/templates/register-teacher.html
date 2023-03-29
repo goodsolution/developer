@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <div th:replace="fragments/front-head"></div>
+    <script th:src="@{/js/register-teacher.js}"></script>
+    <script th:src="@{/libs/sha.js}"></script>
+</head>
+
+    <body>
+
+    <nav th:replace="${@courseCustomersService.getLoggedCustomer()} ? 'fragments/logged-in-navbar' : 'fragments/logged-out-navbar'"></nav>
+
+        <div class="container">
+
+            <div class="text-center mt-5 mb-3">
+                <h3 th:text="#{register.teacher.header}"></h3>
+                <div th:text="#{register.teacher.text}"></div>
+            </div>
+            <form class="">
+                <div class="row">
+                    <div class="col-lg-3"></div>
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label for="login" th:text="#{register.email}"></label>
+                            <input id="login" class="form-control" type="text" th:placeholder="#{register.your.login}">
+                        </div>
+                        <div class="form-group">
+                            <label for="password" th:text="#{register.password}"></label>
+                            <input id="password" class="form-control" type="password" placeholder="********">
+                            <small class="form-text text-muted" th:text="#{password.requirements}"></small>
+                        </div>
+                        <div class="form-group">
+                            <label for="repeated-password" th:text="#{register.repeat.password}"></label>
+                            <input id="repeated-password" class="form-control" type="password" placeholder="********">
+                        </div>
+                        <div class="form-group">
+                            <label for="language" th:text="#{register.pref.lang}"></label>
+                            <select id="language" class="form-control">
+                                <option th:each="language : ${languagesDict}" th:value="${language.code}" th:text="${language.value}"></option>
+                            </select>
+                        </div>
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="regulation">
+                            <label class="form-check-label" for="regulation">
+                                <span th:text="#{register.regulation.accept.accept}"></span>
+                                <a href="/regulation" th:text="#{register.regulation.accept.regulation}"></a>
+                                <span th:text="#{register.regulation.accept.and}"></span>
+                                <a href="/privacy-policy" th:text="#{register.regulation.accept.privacy.policy}"></a>
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="newsletter">
+                            <label class="form-check-label" for="newsletter" th:text="#{register.newsletter.accept.label}"></label>
+                        </div>
+
+                        <h3 class="mt-5" th:text="#{register.teacher.data}"></h3>
+                        <div class="form-group">
+                            <label for="first-name" th:text="#{register.teacher.first.name}"></label>
+                            <input id="first-name" class="form-control" type="text" th:placeholder="#{register.teacher.first.name}">
+                        </div>
+                        <div class="form-group">
+                            <label for="last-name" th:text="#{register.teacher.last.name}"></label>
+                            <input id="last-name" class="form-control" type="text" th:placeholder="#{register.teacher.last.name}">
+                        </div>
+
+                        <div id="error-alert" class="alert alert-danger text-center d-none mt-3" role="alert">
+                            <h4 id="error-alert-text" class="alert-heading"></h4>
+                        </div>
+
+                    </div>
+                    <div class="col-lg-3"></div>
+                </div>
+
+                <div class="text-center mt-3 mb-5">
+                    <button id="register-button" type="button" class="btn btn-primary mb-3" onclick="performUserRegistration()" th:text="#{register.register}"></button>
+                </div>
+
+            </form>
+        </div>
+        <footer th:replace="fragments/footer"></footer>
+    </body>
+
+</html>

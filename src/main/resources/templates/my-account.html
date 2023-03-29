@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title th:text="#{my.account.header} + ' · ' + ${@applicationConfig.getAppNameFront()}"></title>
+    <div th:replace="fragments/front-head"></div>
+    <script th:src="@{/js/my-account.js}"></script>
+    <script th:src="@{/libs/sha.js}"></script>
+    <script th:replace="fragments/languages-script"></script>
+</head>
+
+<body>
+    <nav th:replace="${@courseCustomersService.getLoggedCustomer()} ? 'fragments/logged-in-navbar' : 'fragments/logged-out-navbar'"></nav>
+
+    <div class="container my-5">
+
+        <div class="text-center">
+            <h1 th:text="#{my.account.header}"></h1>
+        </div>
+
+
+        <div th:if="${!@courseCustomersService.getLoggedCustomer().getEmailConfirmed()}" class="mt-5">
+
+            <div id="email-not-confirmed-alert" class="alert alert-danger text-center" role="alert">
+                <div th:text="#{my.account.email.not.confirmed}"></div>
+                <button class="btn btn-outline-success mt-3" onclick="sendEmailConfirmationLink()" th:text="#{my.account.send.confirmation.mail}"></button>
+            </div>
+
+            <div id="email-confirmation-link-sent-alert" class="alert alert-success text-center" role="alert" style="display: none">
+                <div th:text="#{my.account.confirmation.mail.sent}"></div>
+            </div>
+
+        </div>
+
+        <div class="card p-4 my-5">
+            <div class="text-center">
+                <h3 th:text="#{my.account.change.password}"></h3>
+            </div>
+            <form>
+                <div class="form-group">
+                    <label for="actual-password" th:text="#{my.account.enter.actual.password}"></label>
+                    <input id="actual-password" type="password" class="form-control" placeholder="********">
+                </div>
+                <div class="form-group">
+                    <label for="new-password" th:text="#{my.account.enter.new.password}"></label>
+                    <input id="new-password" type="password" class="form-control" placeholder="********">
+                    <small class="form-text text-muted" th:text="#{password.requirements}"></small>
+                </div>
+                <div class="form-group">
+                    <label for="repeated-new-password" th:text="#{my.account.repeat.new.password}"></label>
+                    <input id="repeated-new-password" type="password" class="form-control" placeholder="********">
+                </div>
+            </form>
+            <div class="text-center">
+                <button id="change-password" type="button" class="btn btn-outline-primary" onclick="performPasswordChange()" th:text="#{my.account.change.password.button}"></button>
+            </div>
+
+            <div id="password-change-error-alert" class="alert alert-danger text-center mt-3 d-none" role="alert">
+                <h4 id="password-change-error-alert-text" class="alert-heading"></h4>
+            </div>
+        </div>
+
+        <div class="card p-4 my-5">
+
+            <div class="text-center">
+                <h3 th:text="#{my.account.settings}"></h3>
+            </div>
+
+            <form>
+                <div class="form-group">
+                    <label for="language" th:text="#{my.account.you.pref.lang}"></label>
+                    <select id="language" class="form-control">
+                        <option th:each="language : ${languagesDict}" th:value="${language.code}"
+                                th:text="${language.value}" th:selected="(${language.code} == *{customer.language})">
+                        </option>
+                    </select>
+                </div>
+
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="newsletter-accepted" th:checked="${customer.newsletterAccepted}">
+                    <label class="form-check-label" for="newsletter-accepted" th:text="#{my.account.newsletter.subscription}"></label>
+                </div>
+
+            </form>
+            <div class="text-center">
+                <button type="button" class="btn btn-outline-primary" onclick="sendLoggedCustomerPutRequest()" th:text="#{my.account.save}"></button>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div th:replace="fragments/operation-successful-modal :: modal"></div>
+    <footer th:replace="fragments/footer"></footer>
+</body>
+
+</html>

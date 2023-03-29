@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <div th:replace="fragments/head"></div>
+    <script th:src="@{/js/selection-admin.js}"></script>
+    <script th:inline="javascript">
+            var course = [[${course}]];
+            var authorsDict = [[${authorsDict}]];
+            var lessonVisibilityStatusesDict = [[${lessonVisibilityStatusesDict}]];
+            var courseSaleStatusesDict = [[${courseSaleStatusesDict}]];
+        </script>
+</head>
+
+<body>
+<div th:replace="fragments/menu :: menu"></div>
+
+<div class="container">
+    <div class="text-center">
+        <h4>Selection details</h4>
+    </div>
+
+    <form class="bg-light p-5 border">
+        <div class="form-row">
+            <div class="form-group col-md-4 text-center">
+                <label for="title">Title</label>
+                <input type="text" class="form-control" id="title" th:value="${course.title}">
+            </div>
+            <div class="form-group col-md-4 text-center">
+                <label for="price">Price</label>
+                <input type="number" class="form-control" id="price" th:value="${course.price}">
+            </div>
+            <div class="form-group col-md-4 text-center">
+                <label for="language">Language</label>
+                <select id="language" class="form-control">
+                    <option th:each="language : ${languagesDict}"
+                            th:value="${language.code}"
+                            th:text="${language.value}"
+                            th:selected="(${language.code} == *{course.language})">
+                    </option>
+                </select>
+            </div>
+            <div th:if="${@courseCustomersService.isLoggedCustomerAdmin()}" class="form-group col-md-4 text-center">
+                <label for="author">Author</label>
+                <select id="author" class="form-control">
+                    <option th:each="author : ${authorsDict}"
+                            th:value="${author.id}"
+                            th:text="${author.value}"
+                            th:selected="(${author.id} == *{course.author.id})">
+                    </option>
+                </select>
+            </div>
+
+            <div class="form-group col-md-4 text-center">
+                <label for="visibility-status">Visibility Status</label>
+                <select id="visibility-status" class="form-control">
+                    <option th:each="visibilityStatus : ${courseVisibilityStatusesDict}"
+                            th:value="${visibilityStatus.code}"
+                            th:text="${visibilityStatus.value}"
+                            th:selected="(${visibilityStatus.code} == *{course.visibilityStatus})">
+                    </option>
+                </select>
+            </div>
+
+            <div class="form-group col-md-4 text-center">
+                <label for="title">Code</label>
+                <input type="text" class="form-control" id="code" th:value="${course.code}">
+            </div>
+
+            <div class="form-group col-md-4 text-center">
+                <label for="sale-status">Sale Status</label>
+                <select id="sale-status" class="form-control">
+                    <option th:each="saleStatus : ${courseSaleStatusesDict}"
+                            th:value="${saleStatus.code}"
+                            th:text="${saleStatus.value}"
+                            th:selected="(${saleStatus.code} == *{course.saleStatus})">
+                    </option>
+                </select>
+            </div>
+
+            <div class="form-group col-12 text-center">
+                <label for="description">Description</label>
+                <textarea id="description" type="text" class="form-control" rows="3" th:text="${course.description}"></textarea>
+            </div>
+        </div>
+        <div class="text-center">
+            <button type="button" class="btn btn-danger mt-3" onclick="showDeleteModal()">Delete</button>
+            <button type="button" class="btn btn-warning mt-3" onclick="sendUpdateRequest()">Save changes</button>
+        </div>
+    </form>
+
+    <form class="bg-light p-5 mt-3 border" method="post" enctype="multipart/form-data" th:action="@{/admin/update/image/course/(id=${course.id})}">
+        <h4 class="text-center">Current photo:</h4>
+        <div class="text-center my-3" th:switch="${course.imageName == ''}">
+            <img th:case="${false}" th:src="@{@{/get-image/} + ${course.imageName} + @{/}}" class="img-thumbnail" width="300px" height="300px">
+            <div th:case="${true}">No photo</div>
+        </div>
+        <h4 class="text-center">Change photo</h4>
+        <div class="text-center">
+            <input type="file" accept="image/*" name="imageFile">
+            <input type="submit" value="Upload">
+        </div>
+    </form>
+
+    <form class="bg-light p-5 mt-3 border">
+        <h4 class="text-center">Lessons</h4>
+        <button type="button" class="btn btn-success btn-lg btn-block" data-toggle="modal" data-target="#create-lesson-modal">Create</button>
+        <div id="result-container" class="my-4">
+            <div class="table-responsive mb-0 pb-0">
+                <table class="table bg-light table-bordered table-hover table-sm mb-0 pb-0">
+                    <thead class="thead-light">
+                        <tr>
+                            <th class="align-middle">Navigation</th>
+                            <th class="align-middle">Title</th>
+                            <th class="align-middle">Visibility Status</th>
+                            <th class="align-middle">Edit</th>
+                            <th class="align-middle">Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody id="records">
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </form>
+
+    <form class="bg-light p-5 mt-3 border">
+        <h4 class="text-center">Attachments</h4>
+        <button type="button" class="btn btn-success btn-lg btn-block" data-toggle="modal" data-target="#create-course-attachment-modal">Create</button>
+        <div id="course-attachments-result-container" class="my-4">
+            <div class="table-responsive mb-0 pb-0">
+                <table class="table bg-light table-bordered table-hover table-sm mb-0 pb-0">
+                    <thead class="thead-light">
+                    <tr>
+                        <th class="align-middle">ID</th>
+                        <th class="align-middle">Name</th>
+                        <th class="align-middle">Download</th>
+                        <th class="align-middle">Delete</th>
+                    </tr>
+                    </thead>
+                    <tbody id="course-attachments-records">
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </form>
+</div>
+
+    <div th:fragment="modal" class="modal" id="delete-lesson-modal">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content bg-red p-2">
+                <div class="modal-body w-100">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <p> </p>
+                    <p class="font-weight-bold text-center">Are you sure, you want delete this lesson?</p>
+                    <p class="text-center">
+                        <button class="btn btn-danger" type="button" onclick="sendLessonDeleteRequest()">
+                            Yes
+                        </button>
+                        <button class="btn btn-secondary" type="button" data-dismiss="modal">
+                            Cancel
+                        </button>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div th:fragment="modal" class="modal" id="delete-course-attachment-modal">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content bg-red p-2">
+                <div class="modal-body w-100">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <p> </p>
+                    <p class="font-weight-bold text-center">Are you sure, you want delete this attachment?</p>
+                    <p class="text-center">
+                        <button class="btn btn-danger" type="button" onclick="sendCourseAttachmentDeleteRequest()">
+                            Yes
+                        </button>
+                        <button class="btn btn-secondary" type="button" data-dismiss="modal">
+                            Cancel
+                        </button>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="create-lesson-modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Create new lesson</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form class="text-center">
+                        <div class="form-group">
+                            <label for="create-title">Title</label>
+                            <input id="create-title" type="text" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="create-movie-link-type" th:text="#{Movie.Link.Type}"></label>
+                            <select id="create-movie-link-type" class="form-control">
+                                <option th:each="type : ${movieLinkTypesDict}"
+                                        th:value="${type.code}"
+                                        th:text="${type.value}">
+                                </option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="create-movie-link">Movie Link</label>
+                            <input id="create-movie-link" type="text" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="create-description">Description</label>
+                            <textarea id="create-description" type="text" class="form-control" rows="5"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" onclick="sendCreateLessonRequest()">Create</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="create-course-attachment-modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Create new attachment</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <form id="upload-course-attachment" class="upload">
+                    <div class="modal-body">
+                        <div class="text-center">
+                            <div class="form-group">
+                                <label for="create-course-attachment-name">Name</label>
+                                <input id="create-course-attachment-name" type="text" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="create-course-attachment-file">File</label>
+                                <input type="file" name="file" class="form-control-file" id="create-course-attachment-file"/>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-success">Create</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+    <div th:replace="fragments/operation-successful-modal :: modal"></div>
+    <div th:replace="fragments/delete-object-modal :: modal"></div>
+</body>
+
+</html>

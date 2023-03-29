@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title th:text="#{payments.header} + ' · ' + ${@applicationConfig.getAppNameFront()}"></title>
+    <div th:replace="fragments/front-head"></div>
+    <script th:replace="fragments/languages-script"></script>
+    <script th:src="@{/js/payments.js}"></script>
+    <script th:inline="javascript">
+        var orderStatusesDict = [[${ordersStatusesDict}]];
+        var invoiceTypesDict = [[${invoiceTypesDict}]];
+    </script>
+</head>
+
+<body>
+<nav th:replace="${@courseCustomersService.getLoggedCustomer()} ? 'fragments/logged-in-navbar' : 'fragments/logged-out-navbar'"></nav>
+
+<div id="container" class="container my-5">
+
+    <div class="text-center">
+        <h1 th:text="#{payments.header}"></h1>
+        <h6 th:text="#{payments.info}"></h6>
+    </div>
+
+
+    <div id="result-container" class="my-4" style="display: none;">
+        <div class="table-responsive mb-0 pb-0">
+            <table class="table bg-light table-bordered table-hover table-sm mb-0 pb-0">
+                <thead class="thead-light">
+                <tr>
+                    <th class="align-middle text-center" th:text="#{payments.number}"></th>
+                    <th class="align-middle text-center" th:text="#{payments.purchase.date}"></th>
+                    <th class="align-middle text-center" th:text="#{payments.total.price}"></th>
+                    <th class="align-middle text-center" th:text="#{payments.status}"></th>
+                    <th class="align-middle text-center" th:text="#{payments.details}"></th>
+                </tr>
+                </thead>
+                <tbody id="records">
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="details-modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel" th:text="#{payments.details}"></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <h5 class="text-center mt-3" th:text="#{payments.ordered.courses}"></h5>
+                    <div id="courses-list-container" class="mt-3">
+                        <div class="table-responsive mb-0 pb-0">
+                            <table class="table bg-light table-bordered table-hover table-sm mb-0 pb-0">
+                                <thead class="thead-light">
+                                <tr>
+                                    <th class="align-middle text-center" th:text="#{payments.title}"></th>
+                                    <th class="align-middle text-center" th:text="#{payments.price}"></th>
+                                </tr>
+                                </thead>
+                                <tbody id="courses-list-records">
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <h5 id="invoices" class="text-center mt-5" th:text="#{payments.invoices}"></h5>
+                    <div id="no-invoices-info" class="text-center" th:text="#{payments.no.invoices}"></div>
+                    <div id="invoices-list-container" class="mt-3">
+                        <div class="table-responsive mb-0 pb-0">
+                            <table class="table bg-light table-bordered table-hover table-sm mb-0 pb-0">
+                                <thead class="thead-light">
+                                <tr>
+                                    <th class="align-middle text-center" th:text="#{payments.type}"></th>
+                                    <th class="align-middle text-center" th:text="#{payments.number}"></th>
+                                    <th class="align-middle text-center" th:text="#{payments.download}"></th>
+                                </tr>
+                                </thead>
+                                <tbody id="invoices-list-records">
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div id="renew-payment-window" class="my-4" style="display: none;">
+                        <h5 class="text-center" th:text="#{payments.finish.payment}"></h5>
+                        <div class="text-center my-2" th:text="#{payments.finish.payment.content}"></div>
+                        <div class="text-center">
+                            <a id="renew-payment-button" href="" type="button" class="btn btn-success" th:text="#{payments.pay}"></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer mt-3">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" th:text="#{payments.cancel}"></button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+<footer th:replace="fragments/footer"></footer>
+</body>
+
+</html>

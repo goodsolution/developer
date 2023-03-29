@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title th:text="#{thanks.for.shopping.tab.title} + ' · ' + ${@applicationConfig.getAppNameFront()}"></title>
+    <div th:replace="fragments/front-head"></div>
+    <meta th:if="${#arrays.contains(@environment.getActiveProfiles(),'prod')}" name="robots" content="noindex">
+</head>
+
+    <body>
+
+    <nav th:replace="${@courseCustomersService.getLoggedCustomer()} ? 'fragments/logged-in-navbar' : 'fragments/logged-out-navbar'"></nav>
+
+        <div class="container">
+
+            <div th:if="${param.error}">
+                <div class="text-center mt-5 mb-3">
+                    <h3 th:text="#{thanks.for.shopping.something.went.wrong}"></h3>
+                </div>
+                <div class="text-center" th:text="#{thanks.for.shopping.contact.support}"></div>
+                <div class="text-center mt-3 mb-5">
+                    <div><a href="/" th:text="#{thanks.for.shopping.to.home.page}"></a></div>
+                </div>
+            </div>
+
+            <div th:unless="${param.error}">
+                <div class="text-center mt-5 mb-3">
+                    <h3 th:text="#{thanks.for.shopping.header}"></h3>
+                </div>
+                <div class="text-center" th:text="#{thanks.for.shopping.content}"></div>
+                <div class="text-center mt-3 mb-5">
+                    <div><a href="/my-courses" th:text="#{thanks.for.shopping.call.to.action}"></a></div>
+                </div>
+            </div>
+        </div>
+
+    <footer th:replace="fragments/footer"></footer>
+    </body>
+
+</html>

@@ -1,0 +1,5 @@
+ROLE_ADMIN - super user
+ROLE_STUDENT - private lesson student
+ROLE_USER - ???
+ROLE_EMPLOYER - employer for job offers
+ROLE_TEACHER - teacher for course platform

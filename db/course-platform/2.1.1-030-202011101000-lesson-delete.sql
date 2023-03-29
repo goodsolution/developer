@@ -1,0 +1,1 @@
+ALTER TABLE crs_lessons ADD delete_datetime datetime;

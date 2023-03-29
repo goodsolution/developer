@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <div th:replace="fragments/head"></div>
+    <script th:src="@{/js/products-types.js}"></script>
+    <style>
+        input {
+            width: 100%;
+        }
+        .wide{
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <div th:replace="fragments/menu :: menu"></div>
+    <h5>Zarządzanie produktami</h5>
+
+
+
+    <div id="result-container">
+        <div class="table-responsive mb-5">
+            <table class="table table-hover table-bordered table-sm m-0">
+                <thead class="thead-light">
+                    <tr>
+                        <th class="align-middle">Lp.</th>
+                        <th class="align-middle">Nazwa</th>
+                        <th class="align-middle"></th>
+                        <th class="align-middle"></th>
+
+                    </tr>
+                </thead>
+                <tbody id="products-types-results" class="bg-light">
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div id="delete-modal">
+
+    </div>
+    <div id="add-modal"></div>
+
+    <div th:replace="fragments/operation-successful-modal :: modal"></div>
+
+</body>
+
+</html>

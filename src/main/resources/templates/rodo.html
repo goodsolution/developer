@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <div th:replace="fragments/front-head"></div>
+    <title th:text="#{rodo.tab.title} + ' · ' + ${@applicationConfig.getAppNameFront()}"></title>
+    <meta th:if="${#arrays.contains(@environment.getActiveProfiles(),'prod')}" name="robots" content="noindex">
+    <script>
+        trace('page.show', 'rodo');
+    </script>
+</head>
+
+<body>
+<nav th:replace="${@courseCustomersService.getLoggedCustomer()} ? 'fragments/logged-in-navbar' : 'fragments/logged-out-navbar'"></nav>
+
+<div class="container my-5">
+
+    <div class="text-center">
+        <h3>Obowiązek informacyjny wg RODO</h3>
+        <h6>Poniżej znajdziesz wszelkie niezbędne informacje dotyczące przetwarzania Twoich danych osobowych na potrzeby serwisu</h6>
+    </div>
+
+    <table class="table table-bordered my-5">
+        <tbody>
+            <tr>
+                <td class="text-center align-middle">Kto jest administratorem moich danych?</td>
+                <td class="text-center align-middle">
+                    Administratorem Twoich danych osobowych jest firma Lazur Dragon Sebastian Pola z siedzibą przy ul. Parcelowa 12, 09-505 Nowy Duninów.
+                </td>
+            </tr>
+            <tr>
+                <td class="text-center align-middle">Jaki jest zakres przetwarzania moich danych osobowych?</td>
+                <td class="text-center align-middle">
+                    Podczas rejestracji w serwisie, potrzebujemy tylko Twojego adresu email. Po złożeniu przez
+                    Ciebie zamówienia, potrzebujemy danych do wystawienia faktury. W tym celu pobieramy następujące informacje:
+                    Imię i nazwisko, nazwa firmy, adres (ulica i numer budynku, miasto, kraj) oraz NIP.
+                </td>
+            </tr>
+            <tr>
+                <td class="text-center align-middle">Jaki jest cel przetwarzania moich danych osobowych?</td>
+                <td class="text-center align-middle">
+                    Celem przetwarzania Twoich danych jest możliwość założenia konta w naszym serwisie
+                    oraz wystawienia Ci faktury za zakupione produkty.
+                </td>
+            </tr>
+            <tr>
+                <td class="text-center align-middle">Jaka jest podstawa prawna przetwarzania moich danych osobowych?</td>
+                <td class="text-center align-middle">
+                    Twoja zgoda na przetwarzanie danych osobowych. Niewyrażenie przez Ciebie zgody
+                    uniemożliwi rejestrację w serwisie.
+                </td>
+            </tr>
+            <tr>
+                <td class="text-center align-middle">Komu przekazywane są moje dane?</td>
+                <td class="text-center align-middle">
+                    1) Podmiotom realizującym płatności<br>
+                    2) Podmiotom prowadzącym naszą księgowość<br>
+                </td>
+            </tr>
+            <tr>
+                <td class="text-center align-middle">Jak długo przetwarzane będą moje dane?</td>
+                <td class="text-center align-middle">
+                    Wszelkie dane przetwarzane na potrzeby rachunkowości oraz ze względów podatkowych przetwarzamy przez
+                    5 lat liczonych od końca roku kalendarzowego, w którym powstał obowiązek podatkowy. Po upływie wyżej
+                    wymienionych okresów Twoje dane są usuwane lub poddawane anonimizacji.
+                </td>
+            </tr>
+            <tr>
+                <td class="text-center align-middle">Jakie przysługują mi prawa?</td>
+                <td class="text-center align-middle">
+                    Prawo do cofnięcia zgody w dowolnym momencie bez wpływu na zgodność z prawem przetwarzania, którego
+                    dokonano na podstawie zgody przed jej cofnięciem. Dostępu do swoich danych osobowych, kopii
+                    przetwarzanych danych, sprostowania, usunięcia lub ograniczenia przetwarzania. Przysługuje Ci prawo
+                    do wniesienia sprzeciwu wobec przetwarzania danych osobowych w celach marketingowych, a także prawo
+                    do wniesienia skargi do Prezesa Urzędu Ochrony Danych. Dane nie będą wykorzystywane do
+                    zautomatyzowanego podejmowania decyzji lub profilowania.
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+</div>
+
+
+
+<footer th:replace="fragments/footer"></footer>
+
+</body>
+
+</html>

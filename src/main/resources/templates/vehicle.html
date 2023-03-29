@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html th:lang="${#locale.getLanguage()}" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta name="description" th:content="#{cepik.content.description}">
+    <meta name="keywords" th:content="#{cepik.content.keywords}">
+    <title th:text="#{cepik.tab.title} + ' · ' + ${@applicationConfig.getAppNameFront()}"></title>
+    <div th:replace="fragments/front-head"></div>
+    <script th:src="@{/js/vehicle.js}"></script>
+    <script th:replace="fragments/languages-script"></script>
+    <script th:inline="javascript">
+        var vehicle = [[${vehicle}]];
+    </script>
+</head>
+
+<body>
+<nav th:replace="${@courseCustomersService.getLoggedCustomer()} ? 'fragments/logged-in-navbar' : 'fragments/logged-out-navbar'"></nav>
+
+
+<div class="container my-4">
+    <div class="card p-3 bg-light">
+        <h4><span th:text="#{home.cepik.vehicle.details.main}"></span></h4>
+        <h5>ID: <span th:text="${vehicle.id}"></span></h5>
+    </div>
+    <form class="bg-light p-5 border">
+        <div class="form-row">
+            <div class="form-group col-md-6 text-center">
+                <table class="table table-light">
+                    <thead>
+                    <tr>
+                        <th th:text="#{home.cepik.vehicle.attribute.header}"></th>
+                        <th th:text="#{home.cepik.vehicle.details.header}"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th th:text="#{home.cepik.voivodeship}"></th>
+                            <td><span th:text="${vehicle.getVoivodshipCode()}"></span></td>
+                        </tr>
+                        <tr>
+                            <th th:text="#{home.cepik.vehicle.registrationVoivodship}">Model</th>
+                            <td><span th:text="${vehicle.getRegistrationVoivodship()}"></span></td>
+                        </tr>
+                        <tr>
+                            <th th:text="#{home.cepik.brand}"></th>
+                            <td><span th:text="${vehicle.getBrand()}"></span></td>
+                        </tr>
+                        <tr>
+                            <th th:text="#{home.cepik.model}"></th>
+                            <td><span th:text="${vehicle.getModel()}"></span></td>
+                        </tr>
+                        <tr>
+                            <th th:text="#{home.cepik.vehicle.carCategory}"></th>
+                            <td><span th:text="${vehicle.getCarCategory()}"></span></td>
+                        </tr>
+                        <tr>
+                            <th th:text="#{home.cepik.vehicle.type}"></th>
+                            <td><span th:text="${vehicle.getType()}"></span></td>
+                        </tr>
+                        <tr>
+                            <th th:text="#{home.cepik.vehicle.version}"></th>
+                            <td><span th:text="${vehicle.getVersion()}"></span></td>
+                        </tr>
+                        <tr>
+                            <th scope="row" th:text="#{home.cepik.vehicle.variant}"></th>
+                            <td><span th:text="${vehicle.getVariant()}"></span></td>
+                        </tr>
+                        <tr>
+                            <th th:text="#{home.cepik.vehicle.kind}"></th>
+                            <td><span th:text="${vehicle.getCarKind()}"></span></td>
+                        </tr>
+                        <tr>
+                            <th th:text="#{home.cepik.vehicle.subKind}">Model</th>
+                            <td><span th:text="${vehicle.getCarSubKind()}"></span></td>
+                        </tr>
+                        <tr>
+                            <th th:text="#{home.cepik.vehicle.purpose}"></th>
+                            <td><span th:text="${vehicle.getCarPurpose()}"></span></td>
+                        </tr>
+                        <tr>
+                            <th th:text="#{home.cepik.vehicle.origin}">Model</th>
+                            <td><span th:text="${vehicle.getCarOrigin()}"></span></td>
+                        </tr>
+                        <tr>
+                            <th th:text="#{home.cepik.vehicle.namePlateKind}"></th>
+                            <td><span th:text="${vehicle.getCarNamePlateKind()}"></span></td>
+                        </tr>
+                        <tr>
+                            <th th:text="#{home.cepik.vehicle.productionMethod}">Model</th>
+                            <td><span th:text="${vehicle.getCarProductionMethod()}"></span></td>
+                        </tr>
+                        <tr>
+                            <th th:text="#{home.cepik.vehicle.productionYear}"></th>
+                            <td><span th:text="${vehicle.getCarProductionYear()}"></span></td>
+                        </tr>
+                        <tr>
+                            <th th:text="#{home.cepik.vehicle.initialRegistrationDateInCountry}">Model</th>
+                            <td><span th:text="${vehicle.getInitialRegistrationDateInCountry()}"></span></td>
+                        </tr>
+                        <tr>
+                            <th th:text="#{home.cepik.vehicle.lastRegistrationDateInCountry}"></th>
+                            <td><span th:text="${vehicle.getLastRegistrationDateInCountry()}"></span></td>
+                        </tr>
+                        <tr>
+                            <th th:text="#{home.cepik.vehicle.registrationDateAbroad}"></th>
+                            <td><span th:text="${vehicle.getRegistrationDateAbroad()}"></span></td>
+                        </tr>
+                        <tr>
+                            <th th:text="#{home.cepik.vehicle.engineDisplacement}"></th>
+                            <td><span th:text="${vehicle.getEngineDisplacement()}"></span></td>
+                        </tr>
+                        <tr>
+                            <th th:text="#{home.cepik.vehicle.motorPowerToUnladenWeightRatioMotorcycle}"></th>
+                            <td><span th:text="${vehicle.getMotorPowerToUnladenWeightRatioMotorcycle()}"></span></td>
+                        </tr>
+                        <tr>
+                            <th th:text="#{home.cepik.vehicle.engineNetPower}"></th>
+                            <td><span th:text="${vehicle.getHybridEngineNetPower()}"></span></td>
+                        </tr>
+                        <tr>
+                            <th th:text="#{home.cepik.vehicle.hybridEngineNetPower}"></th>
+                            <td><span th:text="${vehicle.getHybridEngineNetPower()}"></span></td>
+                        </tr>
+                        <tr>
+                            <th th:text="#{home.cepik.vehicle.ownMass}"></th>
+                            <td><span th:text="${vehicle.getOwnMass()}"></span></td>
+                        </tr>
+                        <tr>
+                            <th th:text="#{home.cepik.vehicle.massOfVehicleReadyToRun}"></th>
+                            <td><span th:text="${vehicle.getMassOfVehicleReadyToRun()}"></span></td>
+                        </tr>
+                        <tr>
+                            <th th:text="#{home.cepik.vehicle.permissibleGrossWeight}"></th>
+                            <td><span th:text="${vehicle.getPermissibleGrossWeight()}"></span></td>
+                        </tr>
+                        <tr>
+                            <th th:text="#{home.cepik.vehicle.maxTotalMass}"></th>
+                            <td><span th:text="${vehicle.getMaxTotalMass()}"></span></td>
+                        </tr>
+                        <tr>
+                            <th th:text="#{home.cepik.vehicle.permissiblePackage}"></th>
+                            <td><span th:text="${vehicle.getPermissiblePackage()}"></span></td>
+                        </tr>
+                        <tr>
+                            <th th:text="#{home.cepik.vehicle.maxPackage}"></th>
+                            <td><span th:text="${vehicle.getMaxPackage()}"></span></td>
+                        </tr>
+                        <tr>
+                            <th th:text="#{home.cepik.vehicle.permissibleTotalMassOfVehiclesSet}">Model</th>
+                            <td><span th:text="${vehicle.getPermissibleTotalMassOfVehiclesSet()}"></span></td>
+                        </tr>
+                        <tr>
+                            <th th:text="#{home.cepik.vehicle.axlesNumber}"></th>
+                            <td><span th:text="${vehicle.getAxlesNumber()}"></span></td>
+                        </tr>
+                        <tr>
+                            <th th:text="#{home.cepik.vehicle.permissibleAxleLoad}">Model</th>
+                            <td><span th:text="${vehicle.getPermissibleAxleLoad()}"></span></td>
+                        </tr>
+                        <tr>
+                            <th th:text="#{home.cepik.vehicle.maxAxleLoad}"></th>
+                            <td><span th:text="${vehicle.getMaxAxleLoad()}"></span></td>
+                        </tr>
+                        <tr>
+                            <th th:text="#{home.cepik.vehicle.maxTotalWeightTrailerWithBrake}">></th>
+                            <td><span th:text="${vehicle.getMaxTotalWeightTrailerWithBrake()}"></span></td>
+                        </tr>
+                        <tr>
+                            <th th:text="#{home.cepik.vehicle.maxTotalWeightTrailerWithoutBrake}"></th>
+                            <td><span th:text="${vehicle.getMaxTotalWeightTrailerWithoutBrake()}"></span></td>
+                        </tr>
+                        <tr>
+                            <th th:text="#{home.cepik.vehicle.placesNumberInTotal}"></th>
+                            <td><span th:text="${vehicle.getPlacesNumberInTotal()}"></span></td>
+                        </tr>
+                        <tr>
+                            <th th:text="#{home.cepik.vehicle.seatsNumber}"></th>
+                            <td><span th:text="${vehicle.getSeatsNumber()}"></span></td>
+                        </tr>
+                        <tr>
+                            <th th:text="#{home.cepik.vehicle.standingPlacesNumber}"></th>
+                            <td><span th:text="${vehicle.getStandingPlacesNumber()}"></span></td>
+                        </tr>
+                        <tr>
+                            <th th:text="#{home.cepik.vehicle.fuelType}"></th>
+                            <td><span th:text="${vehicle.getFuelType()}"></span></td>
+                        </tr>
+                        <tr>
+                            <th th:text="#{home.cepik.vehicle.firstAlternativefuelType}"></th>
+                            <td><span th:text="${vehicle.getFirstAlternativefuelType()}"></span></td>
+                        </tr>
+                        <tr>
+                            <th th:text="#{home.cepik.vehicle.secondAlternativefuelType}">Model</th>
+                            <td><span th:text="${vehicle.getSecondAlternativefuelType()}"></span></td>
+                        </tr>
+                        <tr>
+                            <th th:text="#{home.cepik.vehicle.averageFuelConsumption}"></th>
+                            <td><span th:text="${vehicle.getAverageFuelConsumption()}"></span></td>
+                        </tr>
+                        <tr>
+                            <th th:text="#{home.cepik.vehicle.co2EmissionLevel}"></th>
+                            <td><span th:text="${vehicle.getCo2EmissionLevel()}"></span></td>
+                        </tr>
+                        <tr>
+                            <th th:text="#{home.cepik.vehicle.suspensionType}"></th>
+                            <td><span th:text="${vehicle.getSuspensionType()}"></span></td>
+                        </tr>
+                        <tr>
+                            <th th:text="#{home.cepik.vehicle.equipmentAndTypeOfRadarDevice}">Model</th>
+                            <td><span th:text="${vehicle.getEquipmentAndTypeOfRadarDevice()}"></span></td>
+                        </tr>
+                        <tr>
+                            <th th:text="#{home.cepik.vehicle.steeringRightHandSide}"></th>
+                            <td><span th:text="${vehicle.getSteeringRightHandSide()}"></span></td>
+                        </tr>
+                        <tr>
+                            <th th:text="#{home.cepik.vehicle.steeringRightHandSideOrigin}">Model</th>
+                            <td><span th:text="${vehicle.getSteeringRightHandSideOrigin()}"></span></td>
+                        </tr>
+                        <tr>
+                            <th th:text="#{home.cepik.vehicle.catalystAbsorber}"></th>
+                            <td><span th:text="${vehicle.getCatalystAbsorber()}"></span></td>
+                        </tr>
+                        <tr>
+                            <th th:text="#{home.cepik.vehicle.manufacturerName}"></th>
+                            <td><span th:text="${vehicle.getManufacturerName()}"></span></td>
+                        </tr>
+                        <tr>
+                            <th th:text="#{home.cepik.vehicle.transportInstituteCode}"></th>
+                            <td><span th:text="${vehicle.getCarTransportInstituteCode()}"></span></td>
+                        </tr>
+                        <tr>
+                            <th th:text="#{home.cepik.vehicle.wheelBaseSteeringOtherAxles}"></th>
+                            <td><span th:text="${vehicle.getWheelBaseSteeringOtherAxles()}"></span></td>
+                        </tr>
+                        <tr>
+                            <th th:text="#{home.cepik.vehicle.maxTrackWheel}"></th>
+                            <td><span th:text="${vehicle.getMaxTrackWheel()}"></span></td>
+                        </tr>
+                        <tr>
+                            <th th:text="#{home.cepik.vehicle.avgTrackWheel}"></th>
+                            <td><span th:text="${vehicle.getAvgTrackWheel()}"></span></td>
+                        </tr>
+                        <tr>
+                            <th th:text="#{home.cepik.vehicle.minTrackWheel}">></th>
+                            <td><span th:text="${vehicle.getMinTrackWheel()}"></span></td>
+                        </tr>
+                        <tr>
+                            <th th:text="#{home.cepik.vehicle.exhaustEmissionReduction}"></th>
+                            <td><span th:text="${vehicle.getExhaustEmissionReduction()}"></span></td>
+                        </tr>
+                        <tr>
+                            <th th:text="#{home.cepik.vehicle.dateOfFirstRegistration}"></th>
+                            <td><span th:text="${vehicle.getDateOfFirstRegistration()}"></span></td>
+                        </tr>
+                        <tr>
+                            <th th:text="#{home.cepik.vehicle.encodingTypeSubtypeDestiny}"></th>
+                            <td><span th:text="${vehicle.getEncodingTypeSubtypeDestiny()}"></span></td>
+                        </tr>
+                        <tr>
+                            <th th:text="#{home.cepik.vehicle.codeKindSubgenusDestiny}"></th>
+                            <td><span th:text="${vehicle.getCodeKindSubgenusDestiny()}"></span></td>
+                        </tr>
+                        <tr>
+                            <th th:text="#{home.cepik.vehicle.deregistrationDate}"></th>
+                            <td><span th:text="${vehicle.getVehicleDeregistrationDate()}"></span></td>
+                        </tr>
+                        <tr>
+                            <th th:text="#{home.cepik.vehicle.deregistrationReason}">Model</th>
+                            <td><span th:text="${vehicle.getVehicleDeregistrationReason()}"></span></td>
+                        </tr>
+                        <tr>
+                            <th th:text="#{home.cepik.vehicle.dataInputDate}"></th>
+                            <td><span th:text="${vehicle.getDataInputDate()}"></span></td>
+                        </tr>
+                        <tr>
+                            <th th:text="#{home.cepik.vehicle.registrationCommune}"></th>
+                            <td><span th:text="${vehicle.getRegistrationCommune()}"></span></td>
+                        </tr>
+                        <tr>
+                            <th th:text="#{home.cepik.vehicle.registrationDistrict}"></th>
+                            <td><span th:text="${vehicle.getRegistrationDistrict()}"></span></td>
+                        </tr>
+                        <tr>
+                            <th th:text="#{home.cepik.vehicle.ownerDistrict}"></th>
+                            <td><span th:text="${vehicle.getOwnerDistrict()}"></span></td>
+                        </tr>
+                        <tr>
+                            <th th:text="#{home.cepik.vehicle.ownerCommune}"></th>
+                            <td><span th:text="${vehicle.getOwnerCommune()}"></span></td>
+                        </tr>
+                        <tr>
+                            <th th:text="#{home.cepik.vehicle.ownerVoivodshipCode}"></th>
+                            <td><span th:text="${vehicle.getOwnerVoivodshipCode()}"></span></td>
+                        </tr>
+                        <tr>
+                            <th th:text="#{home.cepik.vehicle.co2EmissionsAlternativeFuel1}"></th>
+                            <td><span th:text="${vehicle.getCo2EmissionsAlternativeFuel1()}"></span></td>
+                        </tr>
+                        <tr>
+                            <th th:text="#{home.cepik.vehicle.ownerVoivodship}"></th>
+                            <td><span th:text="${vehicle.getOwnerVoivodship()}"></span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="text-center">
+<!--            <button type="button" class="btn btn-danger mt-3" data-toggle="modal" data-target="#delete-object-modal">-->
+<!--                Delete-->
+<!--            </button>-->
+<!--            <button type="button" class="btn btn-warning mt-3" onclick="history.back()" th:text="#{Cancel}"></button>-->
+<!--            <button type="button" class="btn btn-warning mt-3" onclick="sendUpdateRequest()">Save changes</button>-->
+        </div>
+    </form>
+
+</div>
+
+<div th:replace="fragments/operation-successful-modal :: modal"></div>
+<div th:replace="fragments/delete-object-modal :: modal"></div>
+</body>
+
+</html>
+
+
+<!--<!DOCTYPE html>-->
+<!--<html th:lang="${#locale.getLanguage()}" xmlns:th="http://www.thymeleaf.org">-->
+
+<!--<head>-->
+<!--    <meta name="description" th:content="#{cepik.content.description}">-->
+<!--    <meta name="keywords" th:content="#{cepik.content.keywords}">-->
+<!--    <title th:text="#{cepik.tab.title} + ' · ' + ${@applicationConfig.getAppNameFront()}"></title>-->
+<!--    <div th:replace="fragments/front-head"></div>-->
+<!--    <script th:src="@{/js/check-vin.js}"></script>-->
+<!--    <script th:replace="fragments/languages-script"></script>-->
+<!--    <script th:inline="javascript">-->
+<!--        var voivodeship = [[${voivodeship}]];-->
+<!--        var brand = [[${brand}]];-->
+<!--        var carKind = [[${carKind}]];-->
+<!--        var carOrigin = [[${carOrigin}]];-->
+<!--        var carProductionMethod = [[${carProductionMethod}]];-->
+<!--        var fuelType = [[${fuelType}]];-->
+<!--    </script>-->
+<!--</head>-->
+
+<!--<body>-->
+<!--<nav th:replace="${@courseCustomersService.getLoggedCustomer()} ? 'fragments/logged-in-navbar' : 'fragments/logged-out-navbar'"></nav>-->
+
+<!--<div class="container my-4">-->
+<!--    <div class="card p-3 bg-light">-->
+<!--        <h5 class="text-left" th:text="#{home.cepik.descriptions}"></h5>-->
+<!--        <div class="row mt-3">-->
+<!--            <div class="col-lg-10 p-3">-->
+<!--                <label for="date-from" th:text="#{home.cepik.date.from}"></label>-->
+<!--                <input id="date-from" type="text" class="form-control">-->
+<!--            </div>-->
+<!--            <div class="col-lg-10 p-3">-->
+<!--                <label for="date-to" th:text="#{home.cepik.date.to}"></label>-->
+<!--                <input id="date-to" type="text" class="form-control">-->
+<!--            </div>-->
+<!--            <div class="col-lg-10 p-3">-->
+<!--                <label for="date-type" th:text="#{home.cepik.date.type}"></label>-->
+<!--                <input id="date-type" type="text" class="form-control">-->
+<!--            </div>-->
+<!--            <div class="col-lg-10 p-3">-->
+<!--                <label for="vin" th:text="#{home.cepik.vehicle.vin}"></label>-->
+<!--                <input id="vin" type="text" class="form-control">-->
+<!--            </div>-->
+<!--            <div class="col-lg-10 p-3">-->
+<!--                <label for="voivodeship" th:text="#{home.cepik.voivodeship}"></label>-->
+<!--                <select id="voivodeship" class="form-control">-->
+<!--                    <option th:each="type : ${voivodeship}"-->
+<!--                            th:value="${type.code}"-->
+<!--                            th:text="${type.value}">-->
+<!--                    </option>-->
+<!--                </select>-->
+<!--            </div>-->
+<!--            <div class="col-lg-10 p-3">-->
+<!--                <label for="brand" th:text="#{home.cepik.brand}"></label>-->
+<!--                <select id="brand" class="form-control">-->
+<!--                    <option th:each="type : ${brand}"-->
+<!--                            th:value="${type.code}"-->
+<!--                            th:text="${type.code}">-->
+<!--                    </option>-->
+<!--                </select>-->
+<!--            </div>-->
+<!--            <div class="col-lg-10 p-3">-->
+<!--                <label for="model" th:text="#{home.cepik.model}"></label>-->
+<!--                <input id="model" type="text" class="form-control">-->
+<!--            </div>-->
+<!--            <div class="col-lg-10 p-3">-->
+<!--                <label for="carCategory" th:text="#{home.cepik.vehicle.carCategory}"></label>-->
+<!--                <input id="carCategory" type="text" class="form-control">-->
+<!--            </div>-->
+<!--            <div class="col-lg-10 p-3">-->
+<!--                <label for="type" th:text="#{home.cepik.vehicle.type}"></label>-->
+<!--                <input id="type" type="text" class="form-control">-->
+<!--            </div>-->
+<!--            <div class="col-lg-10 p-3">-->
+<!--                <label for="version" th:text="#{home.cepik.vehicle.version}"></label>-->
+<!--                <input id="version" type="text" class="form-control">-->
+<!--            </div>-->
+<!--            <div class="col-lg-10 p-3">-->
+<!--                <label for="variant" th:text="#{home.cepik.vehicle.variant}"></label>-->
+<!--                <input id="variant" type="text" class="form-control">-->
+<!--            </div>-->
+<!--            <div class="col-lg-10 p-3">-->
+<!--                <label for="carKind" th:text="#{home.cepik.vehicle.kind}"></label>-->
+<!--                <select id="carKind" class="form-control">-->
+<!--                    <option th:each="type : ${carKind}"-->
+<!--                            th:value="${type.code}"-->
+<!--                            th:text="${type.code}">-->
+<!--                    </option>-->
+<!--                </select>-->
+<!--            </div>-->
+<!--            <div class="col-lg-10 p-3">-->
+<!--                <label for="carSubKind" th:text="#{home.cepik.vehicle.subKind}"></label>-->
+<!--                <input id="carSubKind" type="text" class="form-control">-->
+<!--            </div>-->
+<!--            <div class="col-lg-10 p-3">-->
+<!--                <label for="carPurpose" th:text="#{home.cepik.vehicle.purpose}"></label>-->
+<!--                <input id="carPurpose" type="text" class="form-control">-->
+<!--            </div>-->
+<!--            <div class="col-lg-10 p-3">-->
+<!--                <label for="carOrigin" th:text="#{home.cepik.vehicle.origin}"></label>-->
+<!--                <select id="carOrigin" class="form-control">-->
+<!--                    <option th:each="type : ${carOrigin}"-->
+<!--                            th:value="${type.code}"-->
+<!--                            th:text="${type.code}">-->
+<!--                    </option>-->
+<!--                </select>-->
+<!--            </div>-->
+<!--            <div class="col-lg-10 p-3">-->
+<!--                <label for="carNamePlateKind" th:text="#{home.cepik.vehicle.namePlateKind}"></label>-->
+<!--                <input id="carNamePlateKind" type="text" class="form-control">-->
+<!--            </div>-->
+<!--            <div class="col-lg-10 p-3">-->
+<!--                <label for="carProductionMethod" th:text="#{home.cepik.vehicle.productionMethod}"></label>-->
+<!--                <select id="carProductionMethod" class="form-control">-->
+<!--                    <option th:each="type : ${carProductionMethod}"-->
+<!--                            th:value="${type.code}"-->
+<!--                            th:text="${type.code}">-->
+<!--                    </option>-->
+<!--                </select>-->
+<!--            </div>-->
+<!--            <div class="col-lg-10 p-3">-->
+<!--                <label for="carProductionYear" th:text="#{home.cepik.vehicle.productionYear}"></label>-->
+<!--                <input id="carProductionYear" type="text" class="form-control">-->
+<!--            </div>-->
+<!--            <div class="col-lg-10 p-3">-->
+<!--                <label for="initialRegistrationDateInCountry"-->
+<!--                       th:text="#{home.cepik.vehicle.initialRegistrationDateInCountry}"></label>-->
+<!--                <input id="initialRegistrationDateInCountry" type="text" class="form-control">-->
+<!--            </div>-->
+<!--            <div class="col-lg-10 p-3">-->
+<!--                <label for="lastRegistrationDateInCountry"-->
+<!--                       th:text="#{home.cepik.vehicle.lastRegistrationDateInCountry}"></label>-->
+<!--                <input id="lastRegistrationDateInCountry" type="text" class="form-control">-->
+<!--            </div>-->
+<!--            <div class="col-lg-10 p-3">-->
+<!--                <label for="registrationDateAbroad" th:text="#{home.cepik.vehicle.registrationDateAbroad}"></label>-->
+<!--                <input id="registrationDateAbroad" type="text" class="form-control">-->
+<!--            </div>-->
+<!--            <div class="col-lg-10 p-3">-->
+<!--                <label for="engineDisplacement" th:text="#{home.cepik.vehicle.engineDisplacement}"></label>-->
+<!--                <input id="engineDisplacement" type="text" class="form-control">-->
+<!--            </div>-->
+<!--            <div class="col-lg-10 p-3">-->
+<!--                <label for="motorPowerToUnladenWeightRatioMotorcycle"-->
+<!--                       th:text="#{home.cepik.vehicle.motorPowerToUnladenWeightRatioMotorcycle}"></label>-->
+<!--                <input id="motorPowerToUnladenWeightRatioMotorcycle" type="text" class="form-control">-->
+<!--            </div>-->
+<!--            <div class="col-lg-10 p-3">-->
+<!--                <label for="engineNetPower" th:text="#{home.cepik.vehicle.engineNetPower}"></label>-->
+<!--                <input id="engineNetPower" type="text" class="form-control">-->
+<!--            </div>-->
+<!--            <div class="col-lg-10 p-3">-->
+<!--                <label for="hybridEngineNetPower" th:text="#{home.cepik.vehicle.hybridEngineNetPower}"></label>-->
+<!--                <input id="hybridEngineNetPower" type="text" class="form-control">-->
+<!--            </div>-->
+<!--            <div class="col-lg-10 p-3">-->
+<!--                <label for="ownMass" th:text="#{home.cepik.vehicle.ownMass}"></label>-->
+<!--                <input id="ownMass" type="text" class="form-control">-->
+<!--            </div>-->
+<!--            <div class="col-lg-10 p-3">-->
+<!--                <label for="massOfVehicleReadyToRun" th:text="#{home.cepik.vehicle.massOfVehicleReadyToRun}"></label>-->
+<!--                <input id="massOfVehicleReadyToRun" type="text" class="form-control">-->
+<!--            </div>-->
+<!--            <div class="col-lg-10 p-3">-->
+<!--                <label for="permissibleGrossWeight" th:text="#{home.cepik.vehicle.permissibleGrossWeight}"></label>-->
+<!--                <input id="permissibleGrossWeight" type="text" class="form-control">-->
+<!--            </div>-->
+<!--            <div class="col-lg-10 p-3">-->
+<!--                <label for="maxTotalMass" th:text="#{home.cepik.vehicle.maxTotalMass}"></label>-->
+<!--                <input id="maxTotalMass" type="text" class="form-control">-->
+<!--            </div>-->
+<!--            <div class="col-lg-10 p-3">-->
+<!--                <label for="permissiblePackage" th:text="#{home.cepik.vehicle.permissiblePackage}"></label>-->
+<!--                <input id="permissiblePackage" type="text" class="form-control">-->
+<!--            </div>-->
+<!--            <div class="col-lg-10 p-3">-->
+<!--                <label for="maxPackage" th:text="#{home.cepik.vehicle.maxPackage}"></label>-->
+<!--                <input id="maxPackage" type="text" class="form-control">-->
+<!--            </div>-->
+<!--            <div class="col-lg-10 p-3">-->
+<!--                <label for="permissibleTotalMassOfVehiclesSet"-->
+<!--                       th:text="#{home.cepik.vehicle.permissibleTotalMassOfVehiclesSet}"></label>-->
+<!--                <input id="permissibleTotalMassOfVehiclesSet" type="text" class="form-control">-->
+<!--            </div>-->
+<!--            <div class="col-lg-10 p-3">-->
+<!--                <label for="axlesNumber" th:text="#{home.cepik.vehicle.axlesNumber}"></label>-->
+<!--                <input id="axlesNumber" type="text" class="form-control">-->
+<!--            </div>-->
+<!--            <div class="col-lg-10 p-3">-->
+<!--                <label for="permissibleAxleLoad" th:text="#{home.cepik.vehicle.permissibleAxleLoad}"></label>-->
+<!--                <input id="permissibleAxleLoad" type="text" class="form-control">-->
+<!--            </div>-->
+<!--            <div class="col-lg-10 p-3">-->
+<!--                <label for="maxAxleLoad" th:text="#{home.cepik.vehicle.maxAxleLoad}"></label>-->
+<!--                <input id="maxAxleLoad" type="text" class="form-control">-->
+<!--            </div>-->
+<!--            <div class="col-lg-10 p-3">-->
+<!--                <label for="maxTotalWeightTrailerWithBrake"-->
+<!--                       th:text="#{home.cepik.vehicle.maxTotalWeightTrailerWithBrake}"></label>-->
+<!--                <input id="maxTotalWeightTrailerWithBrake" type="text" class="form-control">-->
+<!--            </div>-->
+<!--            <div class="col-lg-10 p-3">-->
+<!--                <label for="maxTotalWeightTrailerWithoutBrake"-->
+<!--                       th:text="#{home.cepik.vehicle.maxTotalWeightTrailerWithoutBrake}"></label>-->
+<!--                <input id="maxTotalWeightTrailerWithoutBrake" type="text" class="form-control">-->
+<!--            </div>-->
+<!--            <div class="col-lg-10 p-3">-->
+<!--                <label for="placesNumberInTotal" th:text="#{home.cepik.vehicle.placesNumberInTotal}"></label>-->
+<!--                <input id="placesNumberInTotal" type="text" class="form-control">-->
+<!--            </div>-->
+<!--            <div class="col-lg-10 p-3">-->
+<!--                <label for="seatsNumber" th:text="#{home.cepik.vehicle.seatsNumber}"></label>-->
+<!--                <input id="seatsNumber" type="text" class="form-control">-->
+<!--            </div>-->
+<!--            <div class="col-lg-10 p-3">-->
+<!--                <label for="standingPlacesNumber" th:text="#{home.cepik.vehicle.standingPlacesNumber}"></label>-->
+<!--                <input id="standingPlacesNumber" type="text" class="form-control">-->
+<!--            </div>-->
+<!--            <div class="col-lg-10 p-3">-->
+<!--                <label for="fuelType" th:text="#{home.cepik.vehicle.fuelType}"></label>-->
+<!--                <select id="fuelType" class="form-control">-->
+<!--                    <option th:each="type : ${fuelType}"-->
+<!--                            th:value="${type.code}"-->
+<!--                            th:text="${type.code}">-->
+<!--                    </option>-->
+<!--                </select>-->
+<!--            </div>-->
+<!--            <div class="col-lg-10 p-3">-->
+<!--                <label for="firstAlternativefuelType"-->
+<!--                       th:text="#{home.cepik.vehicle.firstAlternativefuelType}"></label>-->
+<!--                <input id="firstAlternativefuelType" type="text" class="form-control">-->
+<!--            </div>-->
+<!--            <div class="col-lg-10 p-3">-->
+<!--                <label for="secondAlternativefuelType"-->
+<!--                       th:text="#{home.cepik.vehicle.secondAlternativefuelType}"></label>-->
+<!--                <input id="secondAlternativefuelType" type="text" class="form-control">-->
+<!--            </div>-->
+<!--            <div class="col-lg-10 p-3">-->
+<!--                <label for="averageFuelConsumption" th:text="#{home.cepik.vehicle.averageFuelConsumption}"></label>-->
+<!--                <input id="averageFuelConsumption" type="text" class="form-control">-->
+<!--            </div>-->
+<!--            <div class="col-lg-10 p-3">-->
+<!--                <label for="co2EmissionLevel" th:text="#{home.cepik.vehicle.co2EmissionLevel}"></label>-->
+<!--                <input id="co2EmissionLevel" type="text" class="form-control">-->
+<!--            </div>-->
+<!--            <div class="col-lg-10 p-3">-->
+<!--                <label for="suspensionType" th:text="#{home.cepik.vehicle.suspensionType}"></label>-->
+<!--                <input id="suspensionType" type="text" class="form-control">-->
+<!--            </div>-->
+<!--            <div class="col-lg-10 p-3">-->
+<!--                <label for="equipmentAndTypeOfRadarDevice"-->
+<!--                       th:text="#{home.cepik.vehicle.equipmentAndTypeOfRadarDevice}"></label>-->
+<!--                <input id="equipmentAndTypeOfRadarDevice" type="text" class="form-control">-->
+<!--            </div>-->
+<!--            <div class="col-lg-10 p-3">-->
+<!--                <label for="steeringRightHandSide" th:text="#{home.cepik.vehicle.steeringRightHandSide}"></label>-->
+<!--                <input id="steeringRightHandSide" type="text" class="form-control">-->
+<!--            </div>-->
+<!--            <div class="col-lg-10 p-3">-->
+<!--                <label for="steeringRightHandSideOrigin"-->
+<!--                       th:text="#{home.cepik.vehicle.steeringRightHandSideOrigin}"></label>-->
+<!--                <input id="steeringRightHandSideOrigin" type="text" class="form-control">-->
+<!--            </div>-->
+<!--            <div class="col-lg-10 p-3">-->
+<!--                <label for="catalystAbsorber" th:text="#{home.cepik.vehicle.catalystAbsorber}"></label>-->
+<!--                <input id="catalystAbsorber" type="text" class="form-control">-->
+<!--            </div>-->
+<!--            <div class="col-lg-10 p-3">-->
+<!--                <label for="manufacturerName" th:text="#{home.cepik.vehicle.manufacturerName}"></label>-->
+<!--                <input id="manufacturerName" type="text" class="form-control">-->
+<!--            </div>-->
+<!--            <div class="col-lg-10 p-3">-->
+<!--                <label for="carTransportInstituteCode"-->
+<!--                       th:text="#{home.cepik.vehicle.transportInstituteCode}"></label>-->
+<!--                <input id="carTransportInstituteCode" type="text" class="form-control">-->
+<!--            </div>-->
+<!--            <div class="col-lg-10 p-3">-->
+<!--                <label for="wheelBaseSteeringOtherAxles"-->
+<!--                       th:text="#{home.cepik.vehicle.wheelBaseSteeringOtherAxles}"></label>-->
+<!--                <input id="wheelBaseSteeringOtherAxles" type="text" class="form-control">-->
+<!--            </div>-->
+<!--            <div class="col-lg-10 p-3">-->
+<!--                <label for="maxTrackWheel" th:text="#{home.cepik.vehicle.maxTrackWheel}"></label>-->
+<!--                <input id="maxTrackWheel" type="text" class="form-control">-->
+<!--            </div>-->
+<!--            <div class="col-lg-10 p-3">-->
+<!--                <label for="avgTrackWheel" th:text="#{home.cepik.vehicle.avgTrackWheel}"></label>-->
+<!--                <input id="avgTrackWheel" type="text" class="form-control">-->
+<!--            </div>-->
+<!--            <div class="col-lg-10 p-3">-->
+<!--                <label for="minTrackWheel" th:text="#{home.cepik.vehicle.minTrackWheel}"></label>-->
+<!--                <input id="minTrackWheel" type="text" class="form-control">-->
+<!--            </div>-->
+<!--            <div class="col-lg-10 p-3">-->
+<!--                <label for="exhaustEmissionReduction" th:text="#{home.cepik.vehicle.exhaustEmissionReduction}"></label>-->
+<!--                <input id="exhaustEmissionReduction" type="text" class="form-control">-->
+<!--            </div>-->
+<!--            <div class="col-lg-10 p-3">-->
+<!--                <label for="dateOfFirstRegistration" th:text="#{home.cepik.vehicle.dateOfFirstRegistration}"></label>-->
+<!--                <input id="dateOfFirstRegistration" type="text" class="form-control">-->
+<!--            </div>-->
+<!--            <div class="col-lg-10 p-3">-->
+<!--                <label for="encodingTypeSubtypeDestiny"-->
+<!--                       th:text="#{home.cepik.vehicle.encodingTypeSubtypeDestiny}"></label>-->
+<!--                <input id="encodingTypeSubtypeDestiny" type="text" class="form-control">-->
+<!--            </div>-->
+<!--            <div class="col-lg-10 p-3">-->
+<!--                <label for="codeKindSubgenusDestiny"-->
+<!--                       th:text="#{home.cepik.vehicle.codeKindSubgenusDestiny}"></label>-->
+<!--                <input id="codeKindSubgenusDestiny" type="text" class="form-control">-->
+<!--            </div>-->
+<!--            <div class="col-lg-10 p-3">-->
+<!--                <label for="vehicleDeregistrationDate" th:text="#{home.cepik.vehicle.deregistrationDate}"></label>-->
+<!--                <input id="vehicleDeregistrationDate" type="text" class="form-control">-->
+<!--            </div>-->
+<!--            <div class="col-lg-10 p-3">-->
+<!--                <label for="vehicleDeregistrationReason"-->
+<!--                       th:text="#{home.cepik.vehicle.deregistrationReason}"></label>-->
+<!--                <input id="vehicleDeregistrationReason" type="text" class="form-control">-->
+<!--            </div>-->
+<!--            <div class="col-lg-10 p-3">-->
+<!--                <label for="dataInputDate" th:text="#{home.cepik.vehicle.dataInputDate}"></label>-->
+<!--                <input id="dataInputDate" type="text" class="form-control">-->
+<!--            </div>-->
+<!--            <div class="col-lg-10 p-3">-->
+<!--                <label for="registrationVoivodship" th:text="#{home.cepik.vehicle.registrationVoivodship}"></label>-->
+<!--                <input id="registrationVoivodship" type="text" class="form-control">-->
+<!--            </div>-->
+<!--            <div class="col-lg-10 p-3">-->
+<!--                <label for="registrationCommune" th:text="#{home.cepik.vehicle.registrationCommune}"></label>-->
+<!--                <input id="registrationCommune" type="text" class="form-control">-->
+<!--            </div>-->
+<!--            <div class="col-lg-10 p-3">-->
+<!--                <label for="registrationDistrict" th:text="#{home.cepik.vehicle.registrationDistrict}"></label>-->
+<!--                <input id="registrationDistrict" type="text" class="form-control">-->
+<!--            </div>-->
+<!--            <div class="col-lg-10 p-3">-->
+<!--                <label for="ownerDistrict" th:text="#{home.cepik.vehicle.ownerDistrict}"></label>-->
+<!--                <input id="ownerDistrict" type="text" class="form-control">-->
+<!--            </div>-->
+<!--            <div class="col-lg-10 p-3">-->
+<!--                <label for="ownerCommune" th:text="#{home.cepik.vehicle.ownerCommune}"></label>-->
+<!--                <input id="ownerCommune" type="text" class="form-control">-->
+<!--            </div>-->
+<!--            <div class="col-lg-10 p-3">-->
+<!--                <label for="ownerVoivodshipCode" th:text="#{home.cepik.vehicle.ownerVoivodshipCode}"></label>-->
+<!--                <input id="ownerVoivodshipCode" type="text" class="form-control">-->
+<!--            </div>-->
+<!--            <div class="col-lg-10 p-3">-->
+<!--                <label for="co2EmissionsAlternativeFuel1"-->
+<!--                       th:text="#{home.cepik.vehicle.co2EmissionsAlternativeFuel1}"></label>-->
+<!--                <input id="co2EmissionsAlternativeFuel1" type="text" class="form-control">-->
+<!--            </div>-->
+<!--            <div class="col-lg-10 p-3">-->
+<!--                <label for="ownerVoivodship" th:text="#{home.cepik.vehicle.ownerVoivodship}"></label>-->
+<!--                <input id="ownerVoivodship" type="text" class="form-control">-->
+<!--            </div>-->
+<!--            <div class="col-lg-10 p-3">-->
+<!--                <button class="btn btn-primary" onclick="refresh()"><span><i class="fas fa-search"></i></span>-->
+<!--                    <span th:text="#{home.search}"></span></button>-->
+<!--            </div>-->
+<!--            <div id="no-data-found-info" class="col-lg-10 p-3">-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <div id="result-container py-2">-->
+<!--            <div class="table-responsive mb-0 pb-0">-->
+<!--                <table class="table bg-light table-bordered table-hover table-sm mb-0 pb-0">-->
+<!--                    <thead class="thead-light">-->
+<!--                    <tr>-->
+<!--                        <th class="align-middle" th:text="#{home.cepik.id}"></th>-->
+<!--                        <th class="align-middle" th:text="#{home.cepik.type}"></th>-->
+<!--                        <th class="align-middle" th:text="#{home.cepik.vin}"></th>-->
+<!--                        <th class="align-middle" th:text="#{home.cepik.brand}"></th>-->
+<!--                        <th class="align-middle" th:text="#{home.cepik.model}"></th>-->
+<!--                        <th class="align-middle" th:text="#{home.cepik.vehicle.kind}"></th>-->
+<!--                        <th class="align-middle" th:text="#{home.cepik.vehicle.first.registration.pl}"></th>-->
+<!--                        <th class="align-middle" th:text="#{home.cepik.vehicle.details}"></th>-->
+<!--                    </tr>-->
+<!--                    </thead>-->
+<!--                    <tbody id="results">-->
+
+<!--                    </tbody>-->
+<!--                </table>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+<!--</body>-->
+<!--</html>-->
+
+<!--"marka": "DODGE",-->
+<!--"kategoria-pojazdu": "0",-->
+<!--"typ": "-&#45;&#45;",-->
+<!--"model": "CHARGER",-->
+<!--"wariant": "-&#45;&#45;",-->
+<!--"wersja": "-&#45;&#45;",-->
+<!--"rodzaj-pojazdu": "SAMOCHÓD OSOBOWY",-->
+<!--"podrodzaj-pojazdu": "COUPE",-->
+<!--"przeznaczenie-pojazdu": "-&#45;&#45;",-->
+<!--"pochodzenie-pojazdu": "UŻYW. IMPORT INDYW",-->
+<!--"rodzaj-tabliczki-znamionowej": "ORYGINALNA",-->
+<!--"sposob-produkcji": "1973",-->
+<!--"rok-produkcji": "ZABYTKOWY",-->
+<!--"data-pierwszej-rejestracji-w-kraju": "2021-01-01",-->
+<!--"data-ostatniej-rejestracji-w-kraju": "2022-03-21",-->
+<!--"data-rejestracji-za-granica": "1973-03-21",-->
+<!--"pojemnosc-skokowa-silnika": 5210,-->
+<!--"stosunek-mocy-silnika-do-masy-wlasnej-motocykle": null,-->
+<!--"moc-netto-silnika": 112,-->
+<!--"moc-netto-silnika-hybrydowego": null,-->
+<!--"masa-wlasna": 1645,-->
+<!--"masa-pojazdu-gotowego-do-jazdy": null,-->
+<!--"dopuszczalna-masa-calkowita": 2390,-->
+<!--"max-masa-calkowita": 2390,-->
+<!--"dopuszczalna-ladownosc": 745,-->
+<!--"max-ladownosc": null,-->
+<!--"dopuszczalna-masa-calkowita-zespolu-pojazdow": null,-->
+<!--"liczba-osi": 2,-->
+<!--"dopuszczalny-nacisk-osi": 12,-->
+<!--"maksymalny-nacisk-osi": 12,-->
+<!--"max-masa-calkowita-przyczepy-z-hamulcem": null,-->
+<!--"max-masa-calkowita-przyczepy-bez-hamulca": null,-->
+<!--"liczba-miejsc-ogolem": 4,-->
+<!--"liczba-miejsc-siedzacych": 4,-->
+<!--"liczba-miejsc-stojacych": null,-->
+<!--"rodzaj-paliwa": "BENZYNA",-->
+<!--"rodzaj-pierwszego-paliwa-alternatywnego": null,-->
+<!--"rodzaj-drugiego-paliwa-alternatywnego": null,-->
+<!--"srednie-zuzycie-paliwa": null,-->
+<!--"poziom-emisji-co2": null,-->
+<!--"rodzaj-zawieszenia": null,-->
+<!--"wyposazenie-i-rodzaj-urzadzenia-radarowego": "1282",-->
+<!--"hak": false,-->
+<!--"kierownica-po-prawej-stronie": null,-->
+<!--"kierownica-po-prawej-stronie-pierwotnie": false,-->
+<!--"katalizator-pochlaniacz": false,-->
+<!--"nazwa-producenta": null,-->
+<!--"kod-instytutu-transaportu-samochodowego": "002380046900004",-->
+<!--"rozstaw-kol-osi-kierowanej-pozostalych-osi": null,-->
+<!--"max-rozstaw-kol": null,-->
+<!--"avg-rozstaw-kol": null,-->
+<!--"min-rozstaw-kol": null,-->
+<!--"redukcja-emisji-spalin": null,-->
+<!--"data-pierwszej-rejestracji": "1973-03-21",-->
+<!--"rodzaj-kodowania-rodzaj-podrodzaj-przeznaczenie": "9",-->
+<!--"kod-rodzaj-podrodzaj-przeznaczenie": "03",-->
+<!--"data-wyrejestrowania-pojazdu": null,-->
+<!--"przyczyna-wyrejestrowania-pojazdu": null,-->
+<!--"data-wprowadzenia-danych": null,-->
+<!--"rejestracja-wojewodztwo": "WIELKOPOLSKIE",-->
+<!--"rejestracja-gmina": "POZNAŃ-JEŻYCE",-->
+<!--"rejestracja-powiat": "POZNAŃ",-->
+<!--"wlasciciel-wojewodztwo": null,-->
+<!--"wlasciciel-powiat": null,-->
+<!--"wlasciciel-gmina": null,-->
+<!--"wlasciciel-wojewodztwo-kod": null,-->
+<!--"wojewodztwo-kod": "30",-->
+<!--"poziom-emisji-co2-paliwo-alternatywne-1": null-->

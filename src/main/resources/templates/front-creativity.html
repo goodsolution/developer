@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html th:lang="${#locale.getLanguage()}" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta name="description" th:content="#{meme.content.description}">
+    <meta name="keywords" th:content="#{meme.content.keywords}">
+    <title th:text="'Kreatywność' + ' · ' + ${@applicationConfig.getAppNameFront()}"></title>
+    <div th:replace="fragments/front-head"></div>
+    <script>
+        trace('page.show', 'creativity');
+    </script>
+    <!--<script th:src="@{/js/meme-page.js}"></script>-->
+</head>
+
+<body>
+<nav th:replace="${@courseCustomersService.getLoggedCustomer()} ? 'fragments/logged-in-navbar' : 'fragments/logged-out-navbar'"></nav>
+
+<div class="container my-5">
+    <div>
+        <strong>Kreatywność</strong>
+    </div>
+    <div>
+        Kreatywność (od łac. creatus czyli twórczy) - proces umysłowy pociągający za sobą
+        powstawanie nowych idei, koncepcji, lub nowych skojarzeń, powiązań z istniejącymi już ideami i
+        koncepcjami. Myślenie kreatywne, to myślenie prowadzące do uzyskania oryginalnych i
+        użytecznych rozwiązań. Alternatywna, bardziej codzienna definicja kreatywności mówi, że jest to
+        po prostu zdolność tworzenia czegoś nowego.
+        <br>
+    </div>
+    <div>
+        <br>
+    </div>
+    <div>
+        <ul>
+            <li>„Wszystkie dzieci rodzą się geniuszami, a my przez pierwsze ich sześć lat życia
+                pozbawiamy je tego geniuszu.”
+                Buckminister Fuller</li>
+            <li>„Gdybym miał w ciągu godziny podjąć decyzję,
+                i miałbym na to jedną godzinę,
+                to przez 40 minut badałbym problem,
+                przez 15 minut sprawdzałbym, czy to dobrze zrobiłem
+                i w ciągu 5 minut podjąłbym decyzję.”
+                Albert Einstein</li>
+            <li>Przypadek sprzyja tylko dobrze przygotowanym”
+                Ludwik Pasteur</li>
+        </ul>
+    </div>
+    <div id="records">
+
+    </div>
+
+
+</div>
+
+<footer th:replace="fragments/footer"></footer>
+
+</body>
+
+</html>

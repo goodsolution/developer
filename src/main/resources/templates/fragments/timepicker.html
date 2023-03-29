@@ -1,0 +1,23 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<div th:fragment="imports" th:remove="tag">
+    <link rel="stylesheet" th:href="@{/libs/jquery.timepicker.min.css}" />
+    <script th:src="@{/libs/jquery.timepicker.min.js}"></script>
+</div>
+
+<script th:fragment="code">
+    $(document).ready(function(){
+        $(".timepicker").timepicker({
+            timeFormat: 'HH:mm',
+            interval: 60,
+            minTime: '00:00',
+            maxTime: '23:00',
+            startTime: '00:00',
+            dynamic: false,
+            dropdown: true,
+            scrollbar: true
+        });
+    });
+</script>
+
+</html>

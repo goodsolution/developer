@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html th:lang="${#locale.getLanguage()}" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta name="description" th:content="#{meme.content.description}">
+    <meta name="keywords" th:content="#{meme.content.keywords}">
+    <title th:text="'Testowanie w Java' + ' · ' + ${@applicationConfig.getAppNameFront()}"></title>
+    <div th:replace="fragments/front-head"></div>
+    <script>
+        trace('page.show', 'java-frameworks');
+    </script>
+    <!--<script th:src="@{/js/meme-page.js}"></script>-->
+</head>
+
+<body>
+<nav th:replace="${@courseCustomersService.getLoggedCustomer()} ? 'fragments/logged-in-navbar' : 'fragments/logged-out-navbar'"></nav>
+
+<div class="container my-5">
+    <div>
+        <strong>Frameworki w Java</strong>
+    </div>
+    <div>
+        Framework albo platforma programistyczna – szkielet do budowy aplikacji. Definiuje on strukturę aplikacji oraz ogólny mechanizm jej działania, a także dostarcza zestaw komponentów i bibliotek ogólnego przeznaczenia do wykonywania określonych zadań. Programista tworzy aplikację, rozbudowując i dostosowując poszczególne komponenty do wymagań realizowanego projektu, tworząc w ten sposób gotową aplikację.
+
+        Frameworki bywają niekiedy błędnie zaliczane do bibliotek programistycznych. Typowe cechy, które każą wyróżniać je jako samodzielną kategorię oprogramowania, to:
+
+        odwrócenie sterowania – w odróżnieniu od aplikacji oraz bibliotek, przepływ sterowania jest narzucany przez framework, a nie przez użytkownika.
+        domyślne zachowanie – domyślna konfiguracja frameworka musi być użyteczna i dawać sensowny wynik, zamiast być zbiorem pustych operacji do nadpisania przez programistę.
+        rozszerzalność – poszczególne komponenty frameworka powinny być rozszerzalne przez programistę, jeśli ten chce rozbudować je o niezbędne mu dodatkowe funkcje.
+        zamknięta struktura wewnętrzna – programista może rozbudowywać framework, ale nie poprzez modyfikację domyślnego kodu.<br>
+        Wiecej tu:
+    </div>
+    <div>
+        <ul>
+            <li><a href="https://pl.wikipedia.org/wiki/Framework" target="_blank">pl.wikipedia.org/wiki/Framework</a></li>
+            <li><a href="https://programistajava.pl/framework-co-to-jest-i-do-czego-sluzy/" target="_blank">programistajava.pl/framework-co-to-jest-i-do-czego-sluzy/</a></li>
+        </ul>
+    </div>
+
+    <div>
+        Różnica miedzy framework a biblioteką.<br>
+        Oba pojęcia często są ze sobą mylone. Jednakże granice między tymi pojęciami są ostre tylko trzeba dobrze zrozumieć ich znaczenie.
+
+        Biblioteka to zbiór różnych funkcjonalności, programów, typów danych a nawet API ułatwiających rozwiązanie konkretnego problemu. Programista wykorzystując bibliotekę w swoim kodzie źródłowym może wykorzystać jakieś rozwiązanie zaproponowane przez kogoś innego. Języki programowania zawierają podstawowe lub często wykorzystywane struktury w tzw. Bibliotece standardowej. Przykładem takiej biblioteki jest klasa String w Javie. Zawiera mnóstwo przydatnych metod do pracy na łańcuchami znakowymi. Przykładem zewnętrznej biblioteki może być biblioteka do obsługi formatu JSON, która zawiera metodę parsowania dokumentu oraz tworzenia go. Zatem przedstawiając to bardziej prozaicznie – piszemy własny kod, a do biblioteki (np. metody klasy) odwołujemy się wyłącznie wtedy, gdy jest akurat potrzebna.
+
+        Framework tak jak pisaliśmy wcześniej to szkielet gotowej aplikacji, którą trzeba dostosować do własnych potrzeb. Większość kodu jest zatem napisana przez twórców frameworka, a programista tak naprawdę dba o to, żeby odpowiednio zaimplementować logikę biznesową aplikacji lub dodatkowe funkcjonalności. Pozwala to zaoszczędzić czas potrzebny normalnie na opracowanie rozwiązań, które robi za nas framework, a są potrzebne do prawidłowego działania aplikacji. Jest to bardzo wygodne podejście w przypadku bardziej skomplikowanych rozwiązań jak np. aplikacje webowe.
+    </div>
+
+</div>
+
+<footer th:replace="fragments/footer"></footer>
+
+</body>
+
+</html>

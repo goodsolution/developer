@@ -1,0 +1,73 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<body>
+
+<div th:fragment="modal" class="modal"
+     th:id="'change-delivery-address-modal'">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content bg-light">
+            <div class="modal-header w-100">
+                <h4 class="modal-title">Zmiana adresu</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <div class="modal-body w-100">
+                <p>Zmiana adresu na dzień: <span id = "change_delivery_address_on_day"></span></p>
+                <form method="POST" class="mr-2"
+                    id="changeDeliveryAddressForm">
+                    <div class="form-row py-1">
+                        <label class="col-sm-6 text-center pt-1" for="deliveryAddressCity">
+                            Miasto:
+                        </label>
+                        <select id="deliveryAddressCity" name="deliveryAddressCity"
+                                class="mb-1 col-sm-6" >
+
+                        </select>
+                    </div>
+                    <div class="form-row pb-1">
+                        <label class="col-sm-6 text-center pt-1" for="deliveryAddressStreet">
+                            Ulica:
+                        </label>
+                        <input class="col-sm-6 " type="text"
+                               name="deliveryAddressStreet" id="deliveryAddressStreet">
+                    </div>
+                    <div class="form-row pb-1">
+                        <label class="col-sm-6 text-center pt-1" for="deliveryAddressBuilding">
+                            Numer domu:
+                        </label>
+                        <input class="col-sm-6 " type="text"
+                               name="deliveryAddressBuilding" id="deliveryAddressBuilding">
+                    </div>
+                    <div class="form-row pb-1">
+                        <label class="col-sm-6 text-center pt-1" for="deliveryAddressApartment">
+                            Numer lokalu:
+                        </label>
+                        <input class="col-sm-6 " type="text"
+                               name="deliveryAddressApartment" id="deliveryAddressApartment">
+                    </div>
+                    <div class="form-row pb-1">
+                        <label class="col-sm-6 text-center pt-1" for="deliveryAddressPostalCode">
+                            Kod pocztowy:
+                        </label>
+                        <input class="col-sm-6 " type="text"
+                               name="deliveryAddressPostalCode" id="deliveryAddressPostalCode">
+                    </div>
+                    <input type="hidden" id="change_addr_delivery_id" name="change_addr_delivery_id">
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" form="changeDeliveryAddressForm"
+                    onclick="changeDeliveryAddress(document.getElementById('change_addr_delivery_id').value);">
+                    Zmień adres
+                </button>
+                <button type="button" data-dismiss="modal">
+                    Anuluj
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

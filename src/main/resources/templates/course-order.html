@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <div th:replace="fragments/head"></div>
+    <script th:src="@{/js/course-order.js}"></script>
+    <script th:inline="javascript">
+        var order = [[${order}]];
+        var billingTypesDict = [[${billingTypesDict}]];
+        var orderStatusesDict = [[${orderStatusesDict}]];
+        var invoiceTypesDict = [[${invoiceTypesDict}]];
+    </script>
+</head>
+
+<body>
+<div th:replace="fragments/menu :: menu"></div>
+
+<div class="container">
+    <div class="text-center">
+        <h4>Order details</h4>
+        <h5>ID: <span th:text="${order.id}"></span></h5>
+    </div>
+
+    <form class="bg-light p-2 mt-3 mb-5 border">
+        <div class="text-center">
+        <button type="button" class="btn btn-warning" onclick="history.back()" th:text="#{Cancel}"></button>
+        </div>
+    </form>
+
+    <form class="bg-light p-5 border">
+
+        <h6 class="text-center mb-3">General info</h6>
+        <div class="form-row">
+            <div class="form-group col-md-4 text-center">
+                <label for="number">Number</label>
+                <input type="text" class="form-control" id="number" th:value="${order.number}" readonly>
+            </div>
+            <div class="form-group col-md-4 text-center">
+                <label for="purchase-date">Purchase date</label>
+                <input type="text" class="form-control" id="purchase-date" th:value="${order.purchaseDate}" readonly>
+            </div>
+            <div class="form-group col-md-4 text-center">
+                <label for="total-price">Total Price</label>
+                <input type="number" class="form-control" id="total-price" th:value="${order.totalPrice}" readonly>
+            </div>
+            <div class="form-group col-md-4 text-center">
+                <label for="status">Status</label>
+                <input type="text" class="form-control" id="status" readonly>
+            </div>
+        </div>
+
+
+        <h6 class="text-center mb-3 mt-5">Customer info</h6>
+        <div class="form-row">
+            <div class="form-group col-md-4 text-center">
+                <label for="customer-id">ID</label>
+                <input type="text" class="form-control" id="customer-id" th:value="${order.customer.id}" readonly>
+            </div>
+
+            <div class="form-group col-md-4 text-center">
+                <label for="customer-login">Login</label>
+                <input type="text" class="form-control" id="customer-login" th:value="${order.customer.login}" readonly>
+            </div>
+
+            <div class="form-group col-md-4 text-center">
+                <label for="customer-language">Language</label>
+                <input type="text" class="form-control" id="customer-language" th:value="${order.customer.language}" readonly>
+            </div>
+        </div>
+
+        <h6 class="text-center mb-3 mt-5">Data to invoice (billing)</h6>
+        <div class="form-row">
+            <div class="form-group col-md-4 text-center">
+                <label for="invoice-type">Type</label>
+                <input type="text" class="form-control" id="invoice-type" readonly>
+            </div>
+
+            <div class="form-group col-md-4 text-center">
+                <label for="invoice-first-and-last-name">First and last name</label>
+                <input type="text" class="form-control" id="invoice-first-and-last-name" th:value="${order.invoiceFirstAndLastName}" readonly>
+            </div>
+
+            <div class="form-group col-md-4 text-center">
+                <label for="invoice-company-name">Company name</label>
+                <input type="text" class="form-control" id="invoice-company-name" th:value="${order.invoiceCompanyName}" readonly>
+            </div>
+
+            <div class="form-group col-md-4 text-center">
+                <label for="invoice-street">Street</label>
+                <input type="text" class="form-control" id="invoice-street" th:value="${order.invoiceStreet}" readonly>
+            </div>
+
+            <div class="form-group col-md-4 text-center">
+                <label for="invoice-postal-code">Postal code</label>
+                <input type="text" class="form-control" id="invoice-postal-code" th:value="${order.invoicePostalCode}" readonly>
+            </div>
+
+            <div class="form-group col-md-4 text-center">
+                <label for="invoice-city">City</label>
+                <input type="text" class="form-control" id="invoice-city" th:value="${order.invoiceCity}" readonly>
+            </div>
+
+            <div class="form-group col-md-4 text-center">
+                <label for="invoice-nip">NIP</label>
+                <input type="text" class="form-control" id="invoice-nip" th:value="${order.invoiceNip}" readonly>
+            </div>
+
+            <div class="form-group col-md-4 text-center">
+                <label for="invoice-issued">Invoice issued</label>
+                <input type="text" class="form-control" id="invoice-issued" th:value="${order.invoiceIssued}" readonly>
+            </div>
+        </div>
+
+
+        <button th:if="${order.status == 'u' || order.status == 'w'}" type="button" class="btn btn-danger btn-lg btn-block mt-5 mb-3" data-toggle="modal" data-target="#cancel-order-modal">Cancel this order</button>
+
+    </form>
+
+    <h5 class="text-center mt-5 mb-3">Order's invoices:</h5>
+    <div id="result-container" class="mb-5">
+        <div class="table-responsive mb-0 pb-0">
+            <table class="table bg-light table-bordered table-hover table-sm mb-0 pb-0">
+                <thead class="thead-light">
+                <tr>
+                    <th class="align-middle">ID</th>
+                    <th class="align-middle">Type</th>
+                    <th class="align-middle">Number</th>
+                    <th class="align-middle">Download</th>
+                    <th class="align-middle">Delete</th>
+                </tr>
+                </thead>
+                <tbody id="invoices">
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <form class="bg-light p-5 mt-3 mb-5 border" method="post" enctype="multipart/form-data" th:action="@{/admin/upload-invoice/(orderId=${order.id})}">
+        <h4 class="text-center">Upload new invoice to order:</h4>
+        <div class="form-row text-center">
+
+            <div class="col-md-4"></div>
+
+            <div class="form-group text-center col-md-4">
+                <label for="upload-invoice-number" class="mt-1">Number:</label>
+                <input type="text" class="form-control" id="upload-invoice-number" name="invoiceNumber">
+
+                <label for="upload-invoice-type" class="mt-1">Type:</label>
+                <select class="form-control" id="upload-invoice-type" name="invoiceType">
+                    <option th:each="invoiceType : ${invoiceTypesDict}"
+                            th:value="${invoiceType.code}"
+                            th:text="${invoiceType.value}">
+                    </option>
+                </select>
+            </div>
+
+            <div class="col-md-4"></div>
+
+        </div>
+
+        <div class="text-center my-3">
+            <input type="file" accept=".pdf" name="invoiceFile">
+            <input type="submit" value="Upload">
+        </div>
+    </form>
+
+    <h5 class="text-center mt-5 mb-3">Courses purchased in order:</h5>
+    <div id="purchased-courses-result-container" class="mb-5">
+        <div class="table-responsive mb-0 pb-0">
+            <table class="table bg-light table-bordered table-hover table-sm mb-0 pb-0">
+                <thead class="thead-light">
+                <tr>
+                    <th class="align-middle">Course Title</th>
+                    <th class="align-middle">Price</th>
+                    <th class="align-middle">Returned</th>
+                    <th class="align-middle">Return</th>
+                </tr>
+                </thead>
+                <tbody id="purchased-courses">
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <form class="bg-light p-2 mt-3 mb-5 border">
+        <div class="text-center">
+            <button type="button" class="btn btn-warning" onclick="history.back()" th:text="#{Cancel}"></button>
+        </div>
+    </form>
+</div>
+
+    <div class="modal" id="delete-invoice-modal">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content bg-red p-2">
+                <div class="modal-body w-100">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <p> </p>
+                    <p class="font-weight-bold text-center">Are you sure, you want delete this invoice?</p>
+                    <p class="text-center">
+                        <button class="btn btn-danger" type="button" onclick="sendDeleteInvoiceRequest()">
+                            Yes
+                        </button>
+                        <button class="btn btn-secondary" type="button" data-dismiss="modal">
+                            Cancel
+                        </button>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<div class="modal" id="return-purchased-course-modal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content bg-red p-2">
+            <div class="modal-body w-100">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <p> </p>
+                <p class="font-weight-bold text-center">Are you sure, you want return this course?</p>
+                <p class="text-center">
+                    <button class="btn btn-danger" type="button" onclick="setPurchasedCourseReturned()">
+                        Yes
+                    </button>
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">
+                        Cancel
+                    </button>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="cancel-order-modal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content bg-red p-2">
+            <div class="modal-body w-100">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <p> </p>
+                <p class="font-weight-bold text-center">Are you sure, you want cancel this order?</p>
+                <p class="text-center">
+                    <button class="btn btn-danger" type="button" onclick="cancelOrder()">
+                        Yes
+                    </button>
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">
+                        Cancel
+                    </button>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div th:replace="fragments/operation-successful-modal :: modal"></div>
+<div th:replace="fragments/delete-object-modal :: modal"></div>
+</body>
+
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <div th:replace="fragments/head"></div>
+    <script th:src="@{/js/admin-marketing-newsletter.js}"></script>
+</head>
+
+<body>
+<div th:replace="fragments/menu :: menu"></div>
+
+<h5>Marketing&#47;Newsletter</h5>
+
+<div id="result-container" class="my-4">
+    <div class="table-responsive mb-0 pb-0">
+        <table class="table bg-light table-bordered table-hover table-sm mb-0 pb-0">
+            <thead class="thead-light">
+            <tr>
+                <th class="align-middle">Name</th>
+                <th class="align-middle">Value</th>
+            </tr>
+            </thead>
+            <tbody id="records">
+            <tr>
+                <td class="align-middle">Title (pl)</td>
+                <td class="align-middle"><textarea id="title_pl" type="text" class="form-control" rows="3">Nowości (Newsletter)</textarea></td>
+            </tr>
+            <tr>
+                <td class="align-middle">Content (Html) (pl)</td>
+                <td class="align-middle"><textarea id="html_pl" type="text" class="form-control" rows="3"></textarea></td>
+            </tr>
+            <tr>
+                <td class="align-middle"></td>
+                <td class="align-middle"></textarea></td>
+            </tr>
+            <tr>
+                <td class="align-middle">Title (en-us)</td>
+                <td class="align-middle"><textarea id="title_en" type="text" class="form-control" rows="3">Newsletter</textarea></td>
+            </tr>
+            <tr>
+                <td class="align-middle">Content (Html) (en-us)</td>
+                <td class="align-middle"><textarea id="html_en" type="text" class="form-control" rows="3"></textarea></td>
+            </tr>
+            <tr>
+                <td class="align-middle"></td>
+                <td class="align-middle"><button type="button" class="btn btn-primary" onclick="send();">Send to all</button></td>
+            </tr>
+
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div th:replace="fragments/operation-successful-modal :: modal"></div>
+
+</body>
+
+</html>

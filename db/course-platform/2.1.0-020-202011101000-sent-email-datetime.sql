@@ -1,0 +1,1 @@
+ALTER TABLE crs_sent_emails ADD create_datetime datetime;
