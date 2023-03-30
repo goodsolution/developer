@@ -1,1 +1,0 @@
-ALTER TABLE crs_purchased_courses ADD returned boolean NOT NULL;

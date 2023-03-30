@@ -1,6 +1,0 @@
-Ideas for project
-(regardless of their current feasibility)
-
-- Set pagination on first side, when records search filters are changed.
-- .
-

@@ -1,1 +1,0 @@
-alter table advices add name varchar(100);

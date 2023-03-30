@@ -1,1 +1,0 @@
-alter table advices add variable_name VARCHAR(1000);

@@ -1,1 +1,0 @@
-ALTER TABLE crs_sent_emails DROP INDEX event;

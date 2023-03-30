@@ -1,1 +1,0 @@
-ALTER TABLE crs_action_trace ADD ip_address varchar(50);
