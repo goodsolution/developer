@@ -16,13 +16,11 @@ public class PasswordResetTokensService {
 
     private PasswordResetTokensJdbcRepository passwordResetTokensJdbcRepository;
     private CourseCustomersService courseCustomersService;
-    private EmailService emailService;
     private ApplicationConfig applicationConfig;
 
-    public PasswordResetTokensService(PasswordResetTokensJdbcRepository passwordResetTokensJdbcRepository, CourseCustomersService courseCustomersService, EmailService emailService, ApplicationConfig applicationConfig) {
+    public PasswordResetTokensService(PasswordResetTokensJdbcRepository passwordResetTokensJdbcRepository, CourseCustomersService courseCustomersService, ApplicationConfig applicationConfig) {
         this.passwordResetTokensJdbcRepository = passwordResetTokensJdbcRepository;
         this.courseCustomersService = courseCustomersService;
-        this.emailService = emailService;
         this.applicationConfig = applicationConfig;
     }
 
@@ -38,27 +36,6 @@ public class PasswordResetTokensService {
         passwordResetTokensJdbcRepository.update(data);
     }
 
-    public void prepareAndSendToken(String email) {
-        try {
-            CustomerData customer = courseCustomersService.find(new CustomersFilter(email)).get(0);
-            PasswordResetTokenData token = prepare(customer);
-            create(token);
-            emailService.sendPasswordResetMail(token);
-        } catch (IndexOutOfBoundsException ex) {
-            throw new IllegalArgumentException("We can't find account with that email");
-        }
-    }
-
-    public void resetPassword(String token, String newPasswordHash) {
-        try{
-            PasswordResetTokenData tokenData = find(new PasswordResetTokensFilter(token)).get(0);
-            validateTokenBeforeReset(tokenData);
-            courseCustomersService.changePassword(tokenData.getCustomer(), newPasswordHash);
-            update(new PasswordResetTokenData(tokenData, true));
-        } catch (IndexOutOfBoundsException ex) {
-            throw new IllegalArgumentException("Incorrect token!");
-        }
-    }
 
     private PasswordResetTokenData prepare(CustomerData customer) {
         return new PasswordResetTokenData(customer, UUID.randomUUID().toString(),

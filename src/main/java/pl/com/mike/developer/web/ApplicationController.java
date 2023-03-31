@@ -3,23 +3,15 @@ package pl.com.mike.developer.web;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.env.Environment;
-import org.springframework.core.io.InputStreamResource;
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 import org.thymeleaf.TemplateEngine;
 import pl.com.mike.developer.api.courseplatform.*;
-import pl.com.mike.developer.auth.AuthenticatedUser;
 import pl.com.mike.developer.auth.Permissions;
 import pl.com.mike.developer.config.ApplicationConfig;
-import pl.com.mike.developer.domain.*;
-import pl.com.mike.developer.domain.courseplatform.CustomerData;
 import pl.com.mike.developer.domain.courseplatform.*;
 import pl.com.mike.developer.domain.vin.CarsFilter;
 import pl.com.mike.developer.logic.Language;
@@ -32,11 +24,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.IOException;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
 
 @Controller
 public class ApplicationController {
@@ -44,49 +32,35 @@ public class ApplicationController {
     private CustomersService customersService;
     private DictionariesService dictionariesService;
     private CacheService cacheService;
-    private AuthenticatedUser authenticatedUser;
-    private CoursesService coursesService;
+
     private FilesService filesService;
-    private LessonsService lessonsService;
-    private BasketService basketService;
-    private CourseCustomersService courseCustomersService;
+
     private ApplicationConfig applicationConfig;
-    private EmailService emailService;
+
     private TemplateEngine templateEngine;
-    private InvoicesService invoicesService;
-    private CourseOrdersService courseOrdersService;
+
     private MemesService memesService;
     private AuthorsService authorsService;
-    private CourseAttachmentsService courseAttachmentsService;
+
     private ModulesService modulesService;
-    private LessonAttachmentsService lessonAttachmentsService;
     private Environment environment;
-    private EmailConfirmationService emailConfirmationService;
+
     private CepikService cepikService;
     private VehicleService vehicleService;
 
-    public ApplicationController( CustomersService customersService, DictionariesService dictionariesService, CacheService cacheService, AuthenticatedUser authenticatedUser, CoursesService coursesService, FilesService filesService, LessonsService lessonsService, BasketService basketService, CourseCustomersService courseCustomersService, ApplicationConfig applicationConfig, EmailService emailService, TemplateEngine templateEngine, InvoicesService invoicesService, CourseOrdersService courseOrdersService, MemesService memesService, AuthorsService authorsService, CourseAttachmentsService courseAttachmentsService, ModulesService modulesService, LessonAttachmentsService lessonAttachmentsService, Environment environment, EmailConfirmationService emailConfirmationService, CepikService cepikService, VehicleService vehicleService) {
+    public ApplicationController( CustomersService customersService, DictionariesService dictionariesService, CacheService cacheService, FilesService filesService, ApplicationConfig applicationConfig,TemplateEngine templateEngine, MemesService memesService, AuthorsService authorsService, ModulesService modulesService, Environment environment, CepikService cepikService, VehicleService vehicleService) {
         this.customersService = customersService;
         this.dictionariesService = dictionariesService;
         this.cacheService = cacheService;
-        this.authenticatedUser = authenticatedUser;
-        this.coursesService = coursesService;
+
         this.filesService = filesService;
-        this.lessonsService = lessonsService;
-        this.basketService = basketService;
-        this.courseCustomersService = courseCustomersService;
         this.applicationConfig = applicationConfig;
-        this.emailService = emailService;
         this.templateEngine = templateEngine;
-        this.invoicesService = invoicesService;
-        this.courseOrdersService = courseOrdersService;
         this.memesService = memesService;
         this.authorsService = authorsService;
-        this.courseAttachmentsService = courseAttachmentsService;
         this.modulesService = modulesService;
-        this.lessonAttachmentsService = lessonAttachmentsService;
+
         this.environment = environment;
-        this.emailConfirmationService = emailConfirmationService;
         this.cepikService = cepikService;
         this.vehicleService = vehicleService;
     }
@@ -364,35 +338,6 @@ public class ApplicationController {
         return filesService.getMemeFile(fileName);
     }
 
-    @GetMapping(
-            value = "/get-invoice/{id}",
-            produces = MediaType.APPLICATION_PDF_VALUE
-    )
-    public @ResponseBody
-    byte[] getInvoice(@PathVariable Long id) {
-
-        InvoiceData invoice = invoicesService.find(new InvoicesFilter(id, null, false)).get(0);
-
-        if (!courseCustomersService.getLoggedCustomer().getId().equals(invoice.getOrder().getCustomer().getId())) {
-            throw new IllegalArgumentException("Access denied");
-        }
-
-        return filesService.getInvoice(invoice.getFileName());
-
-    }
-
-    @GetMapping(value = "/download/course/attachment/{id}")
-    public @ResponseBody
-    byte[] downloadCourseAttachment(@PathVariable Long id) {
-        return courseAttachmentsService.getFile(id);
-    }
-
-    @GetMapping(value = "/download/lesson/attachment/{lessonAttachmentId}")
-    public @ResponseBody
-    byte[] downloadLessonAttachment(@PathVariable Long lessonAttachmentId) {
-        return lessonAttachmentsService.getFile(lessonAttachmentId);
-    }
-
 
     @GetMapping({"/payments"})
     public String payments(Model model) {
@@ -442,18 +387,6 @@ public class ApplicationController {
         return "register-teacher";
     }
 
-
-    @GetMapping({"/basket"})
-    public String basket(Model model) {
-        CustomerData customer = courseCustomersService.getLoggedCustomer();
-        if (customer != null) {
-            model.addAttribute("loggedCustomer", new CustomerGetResponse(customer));
-        }
-        model.addAttribute("pathToGallery", applicationConfig.getCoursePathToGallery());
-        model.addAttribute("countriesDict", dictionariesService.getDictionary(DictionaryType.COUNTRIES));
-        return "basket";
-    }
-
     @GetMapping({"/registered-successfully"})
     public String registeredSuccessfully() {
         return "registered-successfully";
@@ -470,12 +403,6 @@ public class ApplicationController {
         return "data-changed-successfully";
     }
 
-    @GetMapping({"/account-settings"})
-    public String myAccount(Model model) {
-        model.addAttribute("languagesDict", dictionariesService.getDictionary(DictionaryType.LANGUAGES));
-        model.addAttribute("customer", new CustomerGetResponse(courseCustomersService.getLoggedCustomer()));
-        return "my-account";
-    }
 
     @GetMapping({"/my-courses"})
     public String myCourses() {
@@ -514,180 +441,20 @@ public class ApplicationController {
         return "vehicle";
     }
 
-    @GetMapping({"/selection/{code}"})
-    public String selection(@PathVariable String code, Model model) {
-        CourseData course = coursesService.find(new CoursesFilter(code)).get(0);
-        model.addAttribute("course", new CourseGetResponse(course));
-        model.addAttribute("languageFromDict", dictionariesService.getDictionaryElementByCode(course.getLanguage(), DictionaryType.LANGUAGES));
-        return "selection";
-    }
-
-    @GetMapping({"/watch/course/{courseId}"})
-    public String watchCourse(@PathVariable Long courseId, Model model) {
-
-        for (CourseData course : coursesService.findCoursesOwnedByLoggedCustomer()) {
-            if (course.getId().equals(courseId)) {
-
-                CustomerData loggedCustomer = courseCustomersService.getLoggedCustomer();
-
-                if (loggedCustomer == null) {
-                    throw new IllegalArgumentException("Your are logged out. Please log in and retry");
-                }
-
-                if (!hasUserCourse(courseId, loggedCustomer)) {
-                    throw new IllegalArgumentException("Access denied");
-                }
-
-                List<LessonData> lessonsWithoutModule = lessonsService.findWithCustomerActivity(courseId, loggedCustomer, true, null);
-                List<ModuleData> modulesInCourse = modulesService.find(new ModulesFilter(courseId, false, ModuleVisibilityStatus.VISIBLE));
-
-                List<ModuleGetResponse> modulesInCourseResponses = new ArrayList<>();
-
-                for (ModuleData moduleInCourse : modulesInCourse) {
-                    List<LessonData> lessons = lessonsService.findWithCustomerActivity(courseId, loggedCustomer, null, moduleInCourse.getId());
-                    modulesInCourseResponses.add(new ModuleGetResponse(moduleInCourse, lessonsToResponses(lessons)));
-                }
-
-                model.addAttribute("lessonsWithoutModules", lessonsToResponses(lessonsWithoutModule));
-                model.addAttribute("modules", modulesInCourseResponses);
-                model.addAttribute("course", new CourseGetResponse(coursesService.find(new CoursesFilter(courseId)).get(0)));
-
-                return "watch";
-            }
-        }
-
-        return "error";
-    }
-
-    private Boolean hasUserCourse(Long courseId, CustomerData customer) {
-        List<CourseData> ownedCourses = coursesService.findCoursesOwnedByCustomer(customer);
-        for (CourseData ownedCourse : ownedCourses) {
-            if (ownedCourse.getId().equals(courseId)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private List<LessonGetResponse> lessonsToResponses(List<LessonData> lessons) {
-        List<LessonGetResponse> list = new ArrayList<>();
-        for (LessonData lesson : lessons) {
-            list.add(new LessonGetResponse(lesson));
-        }
-        return list;
-    }
-
-    @GetMapping({"/course-details/{id}"})
-    public String courseDetails(@PathVariable Long id, Model model) {
-
-        CourseData course = coursesService.find(new CoursesFilter(id)).get(0);
-
-        if (course.getCode() == null || course.getCode().equals("")) {
-            model.addAttribute("course", new CourseGetResponse(course));
-            model.addAttribute("languageFromDict", dictionariesService.getDictionaryElementByCode(course.getLanguage(), DictionaryType.LANGUAGES));
-            return "course-details";
-        } else {
-            return "redirect:/course/" + course.getCode();
-        }
-
-    }
-
-    @GetMapping({"/course/{code}"})
-    public String course(@PathVariable String code, Model model) {
-        CourseData course = coursesService.find(new CoursesFilter(code)).get(0);
-        model.addAttribute("course", new CourseGetResponse(course));
-        model.addAttribute("languageFromDict", dictionariesService.getDictionaryElementByCode(course.getLanguage(), DictionaryType.LANGUAGES));
-        return "course-details";
-    }
-
-    @GetMapping({"/buy-our-code/{code}"})
-    public String buyOurCode(@PathVariable String code, Model model) {
-        CourseData course = coursesService.find(new CoursesFilter(code)).get(0);
-        model.addAttribute("course", new CourseGetResponse(course));
-        model.addAttribute("languageFromDict", dictionariesService.getDictionaryElementByCode(course.getLanguage(), DictionaryType.LANGUAGES));
-        return "course-details";
-    }
 
 
 
-    @GetMapping({"/orders-short"})
-    public String ordersShort(Model model,
-                              @RequestParam(name = "first_name", required = false) String firstName,
-                              @RequestParam(name = "last_name", required = false) String lastName,
-                              @RequestParam(name = "order_id", required = false) String orderId,
-                              @RequestParam(name = "page", required = false) Long page,
-                              @RequestParam(name = "page_size", required = false, defaultValue = "100") Long pageSize
-    ) {
-        if (!authenticatedUser.hasAnyPermission(new Permissions[]{Permissions.SIMPLIFIED_ORDERS})) {
-            return "denied";
-        }
-        model.addAttribute("shipmentTypes", dictionariesService.getDictionary(DictionaryType.SHIPMENT_TYPES, Language.PL));
-        model.addAttribute("paymentMethods", dictionariesService.getDictionary(DictionaryType.ORDER_PAYMENT_METHODS, Language.PL));
-        model.addAttribute("paymentStatuses", dictionariesService.getDictionary(DictionaryType.PAYMENT_STATUSES, Language.PL));
-        model.addAttribute("orderStatuses", dictionariesService.getDictionary(DictionaryType.ORDER_STATUSES, Language.PL));
-        model.addAttribute("yesNo", dictionariesService.getDictionary(DictionaryType.YES_NO, Language.PL));
-
-        page = initPageWhenNotSet(page, 1);
-
-//        model.addAttribute("list", ordersService.findOrdersShort(new OrdersFilter(firstName, lastName, orderId), page, pageSize));
-        model.addAttribute("selectedPage", page);
-        model.addAttribute("selectedPageSize", pageSize);
-        model.addAttribute("firstName", firstName);
-        model.addAttribute("lastName", lastName);
-        model.addAttribute("orderId", orderId);
 
 
-        return "orders-short";
-    }
+
 
     @GetMapping({"/test-sets"})
     public String testSets(Model model) {
         return "test-sets";
     }
 
-    @GetMapping({"/statistics"})
-    public String statistics(Model model) {
-        if (!authenticatedUser.hasAnyPermission(new Permissions[]{Permissions.DELIVERY_VALUE})) {
-            return "denied";
-        }
-        model.addAttribute("paymentStatuses", dictionariesService.getDictionary(DictionaryType.PAYMENT_STATUSES, Language.PL));
-        model.addAttribute("paymentMethods", dictionariesService.getDictionary(DictionaryType.ORDER_PAYMENT_METHODS, Language.PL));
-        model.addAttribute("shipmentTypes", dictionariesService.getDictionary(DictionaryType.SHIPMENT_TYPES, Language.PL));
-        model.addAttribute("drivers", dictionariesService.getDictionary(DictionaryType.DRIVERS, Language.PL));
-        model.addAttribute("diets", dictionariesService.getDictionary(DictionaryType.DIETS, Language.PL));
 
-        model.addAttribute("defaultStartDate", LocalDate.now());
-        model.addAttribute("defaultEndDate", LocalDate.now());
 
-        return "statistics";
-    }
-
-    @GetMapping({"/menu-preview"})
-    public String menuPreview(Model model
-    ) {
-        if (!authenticatedUser.hasAnyPermission(new Permissions[]{Permissions.MENU_PREVIEW})) {
-            return "denied";
-        }
-//        model.addAttribute("paymentStatuses", dictionariesService.getDictionary(DictionaryType.PAYMENT_STATUSES, Language.PL));
-//        model.addAttribute("paymentMethods", dictionariesService.getDictionary(DictionaryType.ORDER_PAYMENT_METHODS, Language.PL));
-//        model.addAttribute("shipmentTypes", dictionariesService.getDictionary(DictionaryType.SHIPMENT_TYPES, Language.PL));
-//        model.addAttribute("drivers", dictionariesService.getDictionary(DictionaryType.DRIVERS, Language.PL));
-        model.addAttribute("diets", dictionariesService.getDictionary(DictionaryType.DIETS, Language.PL));
-
-        model.addAttribute("defaultStartDate", LocalDate.now());
-        model.addAttribute("defaultEndDate", LocalDate.now().plusDays(6));
-
-        return "menu-preview";
-    }
-
-    @GetMapping({"/gallery"})
-    public String gallery(Model model) {
-        if (!authenticatedUser.hasAnyPermission(new Permissions[]{Permissions.GALLERY})) {
-            return "denied";
-        }
-        useModelForGallery(model);
-        return "gallery";
-    }
 
     private void useModelForGallery(Model model) {
         model.addAttribute("paymentStatuses", dictionariesService.getDictionary(DictionaryType.PAYMENT_STATUSES, Language.PL));
@@ -700,43 +467,10 @@ public class ApplicationController {
         model.addAttribute("defaultEndDate", LocalDate.now());
     }
 
-    @GetMapping({"/customers-new"})
-    public String newCustomers(Model model) {
-        if (!authenticatedUser.hasAnyPermission(new Permissions[]{Permissions.CUSTOMERS_STATS})) {
-            return "denied";
-        }
-        model.addAttribute("orderStatuses", dictionariesService.getDictionary(DictionaryType.ORDER_STATUSES, Language.PL));
-        model.addAttribute("diets", dictionariesService.getDictionary(DictionaryType.DIETS, Language.PL));
 
-        model.addAttribute("defaultStartDate", LocalDate.now().minusMonths(1));
-        model.addAttribute("defaultEndDate", LocalDate.now());
-        return "customers-new";
-    }
 
-    @GetMapping({"/customer-groups"})
-    public String customerGroups(Model model) {
-        if (!authenticatedUser.hasAnyPermission(new Permissions[]{Permissions.CUSTOMERS_GROUPS})) {
-            return "denied";
-        }
 
-        model.addAttribute("groupStatuses", dictionariesService.getDictionary(DictionaryType.CUSTOMER_GROUP_STATUSES, Language.PL));
 
-        return "customer-groups";
-    }
-
-    @GetMapping({"/customer"})
-    public String customer(@RequestParam(name = "id") Long customerId, Model model) {
-        if (!authenticatedUser.hasAnyPermission(new Permissions[]{Permissions.CUSTOMERS})) {
-            return "denied";
-        }
-        model.addAttribute("customerId", customerId);
-        model.addAttribute("customerGroups", dictionariesService.getDictionary(DictionaryType.CUSTOMER_GROUPS, Language.PL));
-        model.addAttribute("customerStatuses", dictionariesService.getDictionary(DictionaryType.CUSTOMER_STATUSES, Language.PL));
-        model.addAttribute("cities", dictionariesService.getDictionary(DictionaryType.CITIES, Language.PL));
-        model.addAttribute("yesNo", dictionariesService.getDictionary(DictionaryType.YES_NO, Language.PL));
-//        model.addAttribute("customersLastOrderId", ordersService.getCustomersLastOrderId(customerId));
-        return "customer";
-    }
 
 
     @GetMapping({"/login"})
@@ -765,45 +499,10 @@ public class ApplicationController {
         return "login";
     }
 
-    @GetMapping({"/customers"})
-    public String customers(Model model) {
-        if (!authenticatedUser.hasAnyPermission(new Permissions[]{Permissions.CUSTOMERS})) {
-            return "denied";
-        }
 
-        model.addAttribute("customerTypes", dictionariesService.getDictionary(DictionaryType.CUSTOMER_TYPES, Language.PL));
-        model.addAttribute("customerGroups", dictionariesService.getDictionary(DictionaryType.CUSTOMER_GROUPS, Language.PL));
-        model.addAttribute("customerStatuses", dictionariesService.getDictionary(DictionaryType.CUSTOMER_STATUSES, Language.PL));
 
-        return "customers";
-    }
 
-    @GetMapping({"/allergens"})
-    public String allergens(Model model) {
-        if (!authenticatedUser.hasAnyPermission(new Permissions[]{Permissions.DIETETICS_SETTINGS_ALLERGEN})) {
-            return "denied";
-        }
-        model.addAttribute("orderStatuses", dictionariesService.getDictionary(DictionaryType.ORDER_STATUSES, Language.PL));
-        model.addAttribute("diets", dictionariesService.getDictionary(DictionaryType.DIETS, Language.PL));
 
-        model.addAttribute("defaultStartDate", LocalDate.now().minusMonths(1));
-        model.addAttribute("defaultEndDate", LocalDate.now());
-        return "allergens";
-    }
-
-    @GetMapping({"/products-types"})
-    public String productsTypes(Model model) {
-        if (!authenticatedUser.hasAnyPermission(new Permissions[]{Permissions.DIETETICS_PRODUCT_TYPES})) {
-            return "denied";
-            // todo poprawne dane
-        }
-        model.addAttribute("orderStatuses", dictionariesService.getDictionary(DictionaryType.ORDER_STATUSES, Language.PL));
-        model.addAttribute("diets", dictionariesService.getDictionary(DictionaryType.DIETS, Language.PL));
-
-        model.addAttribute("defaultStartDate", LocalDate.now().minusMonths(1));
-        model.addAttribute("defaultEndDate", LocalDate.now());
-        return "products-types";
-    }
 
 
     @GetMapping({"/kurs-debugowanie-java-w-intellij"})

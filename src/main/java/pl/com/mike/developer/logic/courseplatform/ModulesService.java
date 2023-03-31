@@ -12,27 +12,12 @@ import java.util.List;
 public class ModulesService {
 
     private ModulesJdbcRepository modulesJdbcRepository;
-    private CoursesService coursesService;
     private final static String DIRECTION_UP = "UP";
     private final static String DIRECTION_DOWN = "DOWN";
 
 
-    public ModulesService(ModulesJdbcRepository modulesJdbcRepository, CoursesService coursesService) {
+    public ModulesService(ModulesJdbcRepository modulesJdbcRepository) {
         this.modulesJdbcRepository = modulesJdbcRepository;
-        this.coursesService = coursesService;
-    }
-
-    public void create(ModuleData data) {
-        CourseData course = prepareAndValidateCourse(data.getCourseId());
-
-        if(!course.getType().equals(CourseType.COURSE.getCode())) {
-            throw new IllegalArgumentException("You can't create module for this course type");
-        }
-
-        Long orderNumber = prepareOrderNumber();
-        ModuleData module = new ModuleData(course, data.getName(), orderNumber, ModuleVisibilityStatus.INVISIBLE);
-        validate(module);
-        modulesJdbcRepository.create(module);
     }
 
     public ModuleData get(Long id)  {
@@ -110,16 +95,6 @@ public class ModulesService {
         }
     }
 
-    private CourseData prepareAndValidateCourse(Long courseId) {
-        List<CourseData> courses = coursesService.find(new CoursesFilter(courseId));
-        if(courses.size() == 0) {
-            throw new IllegalArgumentException("Can't find course with ID: " + courseId);
-        } else if (courses.size() > 1) {
-            throw new IllegalArgumentException("Found more than one course");
-        } else {
-            return courses.get(0);
-        }
-    }
 
     private Long prepareOrderNumber() {
         Long maxOrderNumber = modulesJdbcRepository.getMaxOrderNumber();

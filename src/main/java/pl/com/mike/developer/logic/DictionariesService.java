@@ -89,8 +89,6 @@ public class DictionariesService {
             return getAuthors(lang);
         } else if (DictionaryType.COURSE_ORDER_STATUSES == type) {
             return getCourseOrderStatuses(lang);
-        } else if (DictionaryType.EMAIL_TITLES == type) {
-            return getEmailTitles(lang);
         } else if (DictionaryType.INVOICE_TYPES == type) {
             return getInvoiceTypes(lang);
         } else if (DictionaryType.BILLING_TYPES == type) {
@@ -99,8 +97,6 @@ public class DictionariesService {
             return getCountries(lang);
         } else if (DictionaryType.COURSE_VISIBILITY_STATUSES == type) {
             return getCourseVisibilityStatuses(lang);
-        } else if (DictionaryType.COURSE_COMMENT_VISIBILITY_STATUSES == type) {
-            return getCourseCommentVisibilityStatuses(lang);
         } else if (DictionaryType.LESSON_COMMENT_STATUSES == type) {
             return getLessonCommentStatuses(lang);
         } else if (DictionaryType.LESSON_VISIBILITY_STATUSES == type) {
@@ -553,29 +549,6 @@ public class DictionariesService {
         return list;
     }
 
-    private List<DictionaryData> getEmailTitles(Language lang) {
-        List<DictionaryData> list = new ArrayList<>();
-
-        if (Language.US == lang || Language.EN == lang) {
-            list.add(new DictionaryData(EmailTitle.AFTER_REGISTRATION.getCode(), "Registration confirmation", lang.getCode()));
-            list.add(new DictionaryData(EmailTitle.AFTER_ORDER.getCode(), "Order confirmation", lang.getCode()));
-            list.add(new DictionaryData(EmailTitle.AFTER_PASSWORD_CHANGE.getCode(), "Password has been changed", lang.getCode()));
-            list.add(new DictionaryData(EmailTitle.PASSWORD_RESET.getCode(), "Password reset", lang.getCode()));
-            list.add(new DictionaryData(EmailTitle.NEWSLETTER.getCode(), "Newsletter", lang.getCode()));
-            list.add(new DictionaryData(EmailTitle.EMAIL_CONFIRMATION_LINK.getCode(), "Confirm your email", lang.getCode()));
-
-        } else if (Language.PL == lang) {
-            list.add(new DictionaryData(EmailTitle.AFTER_REGISTRATION.getCode(), "Potwierdzenie rejestracji", lang.getCode()));
-            list.add(new DictionaryData(EmailTitle.AFTER_ORDER.getCode(), "Potwierdzenie złożenia zamówienia", lang.getCode()));
-            list.add(new DictionaryData(EmailTitle.AFTER_PASSWORD_CHANGE.getCode(), "Hasło zostało zmienione", lang.getCode()));
-            list.add(new DictionaryData(EmailTitle.PASSWORD_RESET.getCode(), "Resetowanie hasła", lang.getCode()));
-            list.add(new DictionaryData(EmailTitle.NEWSLETTER.getCode(), "Nowości (Newsletter)", lang.getCode()));
-            list.add(new DictionaryData(EmailTitle.EMAIL_CONFIRMATION_LINK.getCode(), "Potwierdź swój email", lang.getCode()));
-        }
-
-        return list;
-    }
-
     private List<DictionaryData> getInvoiceTypes(Language lang) {
 
         List<DictionaryData> list = new ArrayList<>();
@@ -628,20 +601,6 @@ public class DictionariesService {
         } else {
             list.add(new DictionaryData(CourseVisibilityStatus.INVISIBLE.getValue(), "Invisible", lang.getCode()));
             list.add(new DictionaryData(CourseVisibilityStatus.VISIBLE.getValue(), "Visible", lang.getCode()));
-        }
-
-        return list;
-    }
-
-    private List<DictionaryData> getCourseCommentVisibilityStatuses(Language lang) {
-        List<DictionaryData> list = new ArrayList<>();
-
-        if (Language.PL == lang) {
-            list.add(new DictionaryData(CourseCommentVisibilityStatus.INVISIBLE.getValue(), "Niewidoczny", lang.getCode()));
-            list.add(new DictionaryData(CourseCommentVisibilityStatus.VISIBLE.getValue(), "Widoczny", lang.getCode()));
-        } else {
-            list.add(new DictionaryData(CourseCommentVisibilityStatus.INVISIBLE.getValue(), "Invisible", lang.getCode()));
-            list.add(new DictionaryData(CourseCommentVisibilityStatus.VISIBLE.getValue(), "Visible", lang.getCode()));
         }
 
         return list;

@@ -15,17 +15,17 @@ import java.util.Locale;
 public class CourseCustomersService {
 
     private CourseCustomersJdbcRepository courseCustomersJdbcRepository;
-    private EmailService emailService;
+
     private CustomerAuthoritiesService customerAuthoritiesService;
     private AuthorsService authorsService;
-    private CustomerToGroupService customerToGroupService;
 
-    public CourseCustomersService(CourseCustomersJdbcRepository courseCustomersJdbcRepository, EmailService emailService, CustomerAuthoritiesService customerAuthoritiesService, AuthorsService authorsService, CustomerToGroupService customerToGroupService) {
+
+    public CourseCustomersService(CourseCustomersJdbcRepository courseCustomersJdbcRepository, CustomerAuthoritiesService customerAuthoritiesService, AuthorsService authorsService) {
         this.courseCustomersJdbcRepository = courseCustomersJdbcRepository;
-        this.emailService = emailService;
+
         this.customerAuthoritiesService = customerAuthoritiesService;
         this.authorsService = authorsService;
-        this.customerToGroupService = customerToGroupService;
+
     }
 
     public Long create(CustomerData customer) {
@@ -43,59 +43,13 @@ public class CourseCustomersService {
         return courseCustomersJdbcRepository.find(filter);
     }
 
-    public List<CustomerData> findWithDetails(CustomersFilter filter) {
-        List<CustomerData> customers = courseCustomersJdbcRepository.find(filter);
-        List<CustomerData> customersWithDetails = new ArrayList<>();
-        if (customers == null) {
-            customersWithDetails = null;
-        } else {
-            for (CustomerData customer : customers) {
-                customersWithDetails.add(new CustomerData(customer, customerAuthoritiesService.getAuthoritiesForCustomer(customer), customerToGroupService.find(new CustomerToGroupFilter(null, customer.getId(), null, null)))
-                        );
-            }
-        } return customersWithDetails;
-    }
 
-    public void update(CustomerData data) {
-        validate(data);
-        if (data.getAuthorities() != null) {
-            customerAuthoritiesService.deleteAuthorities(data);
-            customerAuthoritiesService.validateAndCreateAuthorityForCustomer(data, data.getAuthorities());
-        } else {
-            data = new CustomerData(data, customerAuthoritiesService.getAuthoritiesForCustomer(data),null);
-        }
-        courseCustomersJdbcRepository.update(data);
-        customerToGroupService.delete(data.getId());
-        assignGroupsToCustomer(data, data.getId());
 
-    }
+
 
     public void delete(Long id) {
         CustomerData customerData = find(new CustomersFilter(id)).get(0);
         courseCustomersJdbcRepository.update(new CustomerData(customerData, LocalDateTime.now()));
-    }
-
-    public void registerCustomer(CustomerData customerCreateRequest) {
-
-        validate(customerCreateRequest);
-
-        if (isEmailTaken(customerCreateRequest.getLogin())) {
-            addCustomerAuthorityToAccount(customerCreateRequest);
-        } else {
-            createNewCustomerAccount(customerCreateRequest);
-        }
-    }
-
-    public void registerTeacher(CustomerData customerCreateRequest) {
-
-        validate(customerCreateRequest);
-        authorsService.validate(customerCreateRequest.getAuthorFirstName(), customerCreateRequest.getAuthorLastName());
-
-        if (isEmailTaken(customerCreateRequest.getLogin())) {
-            addTeacherAuthorityToAccount(customerCreateRequest);
-        } else {
-            createTeacherNewAccount(customerCreateRequest);
-        }
     }
 
     public CustomerData getLoggedCustomer() {
@@ -132,32 +86,11 @@ public class CourseCustomersService {
         return customerAuthoritiesService.hasCustomerAuthority(getLoggedCustomer(), CustomerAuthority.valueOf(role.toUpperCase()));
     }
 
-    public void changeLoggedUsersPassword(String actualPasswordHash, String newPasswordHash) {
-        CustomerData customer = getLoggedCustomer();
-        if (actualPasswordHash.equals(customer.getPasswordHash())) {
-            changePassword(customer, newPasswordHash);
-        } else {
-            throw new IllegalArgumentException("Wrong actual password");
-        }
-    }
 
-    public void changePasswordAdmin(Long id, String newPasswordHash) {
-        CustomerData customer = get(id);
-        changePassword(customer, newPasswordHash);
-    }
 
-    public void changePassword(CustomerData customer, String newPasswordHash) {
-        validatePasswordChange(newPasswordHash, customer.getPasswordHash());
-        update(new CustomerData(customer, newPasswordHash));
-        SecurityContextHolder.getContext().setAuthentication(null);
-        emailService.sendAfterPasswordChangeMail(customer);
-    }
 
-    public void updateLoggedCustomer(String language, Boolean newsletterAccepted) {
-        CustomerData loggedCustomer = getLoggedCustomer();
-        CustomerData updatedCustomer = new CustomerData(loggedCustomer, language, newsletterAccepted);
-        update(updatedCustomer);
-    }
+
+
 
     public List<CustomerData> findConfirmEmailNotificationRecipients() {
         return courseCustomersJdbcRepository.findConfirmEmailNotificationRecipients();
@@ -236,14 +169,7 @@ public class CourseCustomersService {
         }
     }
 
-    private void createTeacherNewAccount(CustomerData teacherCreateRequest) {
-        CustomerData customer = new CustomerData(teacherCreateRequest.getLogin(), teacherCreateRequest.getPasswordHash(), teacherCreateRequest.getLanguage(), teacherCreateRequest.getRegulationAccepted(), teacherCreateRequest.getNewsletterAccepted(), true, teacherCreateRequest.getRegistrationDatetime(), teacherCreateRequest.getRegistrationIp(), teacherCreateRequest.getRegistrationUserAgent(), false);
-        Long customerId = create(customer);
-        CustomerData createdCustomer = find(new CustomersFilter(customerId)).get(0);
-//        customerAuthoritiesService.validateAndCreateAuthorityForCustomer(createdCustomer, CustomerAuthority.TEACHER);
-        emailService.sendAfterRegistrationMail(createdCustomer, Locale.forLanguageTag(teacherCreateRequest.getLanguage()));
-        createAuthorForCustomer(createdCustomer, teacherCreateRequest.getAuthorFirstName(), teacherCreateRequest.getAuthorLastName());
-    }
+
 
     private void createAuthorForCustomer(CustomerData customer, String authorFirstName, String authorLastName) {
         AuthorData author = new AuthorData(authorFirstName, authorLastName);
@@ -260,21 +186,6 @@ public class CourseCustomersService {
             throw new IllegalArgumentException("Email or password incorrect");
         }
         createAuthorForCustomer(customer, teacherCreateRequest.getAuthorFirstName(), teacherCreateRequest.getAuthorLastName());
-    }
-
-    private void createNewCustomerAccount(CustomerData customerCreateRequest) {
-        CustomerData customer = new CustomerData(customerCreateRequest.getLogin(), customerCreateRequest.getPasswordHash(), customerCreateRequest.getLanguage(), customerCreateRequest.getRegulationAccepted(), customerCreateRequest.getNewsletterAccepted(), customerCreateRequest.getEnabled(), customerCreateRequest.getInvoiceFirstAndLastName(), customerCreateRequest.getRegistrationDatetime(), customerCreateRequest.getRegistrationIp(), customerCreateRequest.getRegistrationUserAgent(), customerCreateRequest.getEmailConfirmed());
-        Long customerId = create(customer);
-        assignGroupsToCustomer(customerCreateRequest, customerId);
-        CustomerData createdCustomer = find(new CustomersFilter(customerId)).get(0);
-        customerAuthoritiesService.validateAndCreateAuthorityForCustomer(createdCustomer, customerCreateRequest.getAuthorities());
-        emailService.sendAfterRegistrationMail(createdCustomer, Locale.forLanguageTag(customerCreateRequest.getLanguage()));
-    }
-
-    private void assignGroupsToCustomer(CustomerData customerCreateRequest, Long customerId) {
-        for (CustomerToGroupData group : customerCreateRequest.getGroups()) {
-            customerToGroupService.create(new CustomerToGroupData(customerId, group.getCustomerGroupId()));
-        }
     }
 
     private void addCustomerAuthorityToAccount(CustomerData customerCreateRequest) {
