@@ -35,20 +35,9 @@ public class AppEndpoint {
         this.dictionariesService = dictionariesService;
     }
 
-
-
     @GetMapping(path = "/api/orders/ordersCount", produces = "application/json; charset=UTF-8")
     public OrderCountGetResponse countOrders() {
         return new OrderCountGetResponse(1234L);
-    }
-
-
-
-    private String getTimeWithoutLeadingZeros(LocalTime timeWithLeadingZeros) {
-        if (timeWithLeadingZeros == null) {
-            return "";
-        }
-        return timeWithLeadingZeros.format(DateTimeFormatter.ofPattern("H:mm"));
     }
 
     @GetMapping(path = "/api/product/demand", produces = "application/json; charset=UTF-8")
@@ -74,7 +63,6 @@ public class AppEndpoint {
         return new CustomerGroupGetResponse(1L);
     }
 
-
     @GetMapping(path = "/api/user/{id}", produces = "application/json; charset=UTF-8")
     public UserGetResponse getUser(@PathVariable Long id) {
         return new UserGetResponse(1L);
@@ -93,14 +81,6 @@ public class AppEndpoint {
     @GetMapping(path = "/api/dictionary/{name}", produces = "application/json; charset=UTF-8")
     public List<DictionaryData> getDictionary(@PathVariable String name) {
         return dictionariesService.getDictionary(DictionaryType.valueOf(name.toUpperCase()), Language.PL);
-    }
-
-    private List<GetAllergenResponse> prepareAllergenGetResponses(List<AllergenData> allergens) {
-        List<GetAllergenResponse> list = new ArrayList<>();
-        for (AllergenData allergen : allergens) {
-            list.add(new GetAllergenResponse(allergen.getId(), allergen.getNo(), allergen.getName()));
-        }
-        return list;
     }
 
     @PostMapping(path = "/api/customer-groups", consumes = "application/json; charset=UTF-8", produces = "application/json; charset=UTF-8")
@@ -134,15 +114,12 @@ public class AppEndpoint {
         if (name == null) {
             name = oldData.getName();
         }
-
         if (discount == null) {
             discount = oldData.getDiscount();
         }
-
         if (status == null) {
             status = oldData.getStatus();
         }
-
         return new CustomerGroupData(groupId, name, discount, status);
     }
 
@@ -151,7 +128,6 @@ public class AppEndpoint {
         log.trace("delete the specified customer group (" + groupId + ").");
         customersService.deleteCustomerGroup(groupId);
     }
-
 
     @GetMapping(path = "/api/customers", produces = "application/json; charset=UTF-8")
     public CustomersResultGetResponse findCustomers(
@@ -169,11 +145,9 @@ public class AppEndpoint {
 
     private List<CustomersGetResponse> customersDataToResponses(List<CustomerData> data) {
         List<CustomersGetResponse> responses = new ArrayList<>();
-
         for (CustomerData datum : data) {
             responses.add(customerDataToResponse(datum));
         }
-
         return responses;
     }
 
@@ -203,7 +177,7 @@ public class AppEndpoint {
     }
 
     @PostMapping(path = "/api/customers", consumes = "application/json; charset=UTF-8", produces = "application/json; charset=UTF-8")
-    public Long createCustomer(@RequestBody CustomerPostRequest req ) {
+    public Long createCustomer(@RequestBody CustomerPostRequest req) {
         log.trace("Create new customer with the following data: ");
         log.trace("req: " + req);
         return customersService.createCustomer(new CustomerData(req.getName(), req.getSurname(), req.getStreet(), req.getHouseNumber(), req.getApartmentNumber(), req.getPostalCode(), req.getCity(), req.getMail(), req.getGroup(), req.getStatus(), req.getCustomerFrom(), req.getType()));
