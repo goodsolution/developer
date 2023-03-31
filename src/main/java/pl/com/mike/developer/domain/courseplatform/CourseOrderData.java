@@ -1,7 +1,6 @@
 package pl.com.mike.developer.domain.courseplatform;
 
 import pl.com.mike.developer.logic.courseplatform.OrderStatus;
-import pl.com.mike.developer.logic.courseplatform.PayuIntegrationOrderStatus;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -86,7 +85,7 @@ public class CourseOrderData {
 
     }
 
-    public CourseOrderData(CourseOrderData data, PayuIntegrationOrderStatus payuIntegrationOrderStatus) {
+    public CourseOrderData(CourseOrderData data) {
         this.id = data.getId();
         this.number = data.getNumber();
         this.customer = data.getCustomer();
@@ -104,8 +103,6 @@ public class CourseOrderData {
         this.payuOrderId = data.getPayuOrderId();
         this.payuPaymentUrl = data.getPayuPaymentUrl();
         this.invoiceCountry = data.getInvoiceCountry();
-        this.payuIntegrationStatus = payuIntegrationOrderStatus.getStatus();
-
     }
 
     public CourseOrderData(CourseOrderData data, String payuOrderId, String payuPaymentUrl) {
