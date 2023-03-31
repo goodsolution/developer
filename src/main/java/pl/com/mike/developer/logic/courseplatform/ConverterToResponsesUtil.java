@@ -2,7 +2,6 @@ package pl.com.mike.developer.logic.courseplatform;
 
 import pl.com.mike.developer.api.courseplatform.*;
 import pl.com.mike.developer.domain.JobOfferData;
-import pl.com.mike.developer.domain.PeopleData;
 import pl.com.mike.developer.domain.courseplatform.*;
 import pl.com.mike.developer.domain.itube.ITubeData;
 import pl.com.mike.developer.domain.itube.ITubeGetResponse;
@@ -120,16 +119,6 @@ public class ConverterToResponsesUtil {
 
         for (JobOfferData jobOffer : jobOffers) {
             list.add(new JobOfferGetResponse(jobOffer));
-        }
-
-        return list;
-    }
-
-    public static List<PeopleElementGetResponse> peopleToResponses(List<PeopleData> people) {
-        List<PeopleElementGetResponse> list = new ArrayList<>();
-
-        for (PeopleData peopleData : people) {
-            list.add(new PeopleElementGetResponse(peopleData));
         }
 
         return list;

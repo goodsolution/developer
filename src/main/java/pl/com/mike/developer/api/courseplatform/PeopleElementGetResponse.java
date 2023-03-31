@@ -1,7 +1,5 @@
 package pl.com.mike.developer.api.courseplatform;
 
-import pl.com.mike.developer.domain.PeopleData;
-
 public class PeopleElementGetResponse {
     private Long id;
     private String firstName;
@@ -9,18 +7,6 @@ public class PeopleElementGetResponse {
     private String email;
     private String phone;
 
-
-    public PeopleElementGetResponse() {
-    }
-
-    public PeopleElementGetResponse(PeopleData people) {
-        this.id = people.getId();
-        this.firstName = people.getFirstName();
-        this.lastName = people.getLastName();
-        this.email = people.getEmail();
-        this.phone = people.getPhone();
-
-    }
 
     public Long getId() {
         return id;

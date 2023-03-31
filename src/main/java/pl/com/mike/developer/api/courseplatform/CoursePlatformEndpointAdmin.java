@@ -5,7 +5,6 @@ import org.springframework.web.multipart.MultipartFile;
 import pl.com.mike.developer.api.PurchasedCoursesAdminRequestGetResponse;
 import pl.com.mike.developer.domain.InvoiceData;
 import pl.com.mike.developer.domain.JobOfferData;
-import pl.com.mike.developer.domain.PeopleData;
 import pl.com.mike.developer.domain.courseplatform.*;
 import pl.com.mike.developer.logic.courseplatform.*;
 import pl.com.mike.developer.logic.courseplatform.notifications.NotificationsFromPanelService;
@@ -38,12 +37,11 @@ public class CoursePlatformEndpointAdmin {
     private NotificationsFromPanelService notificationsFromPanelService;
     private CourseCustomersService courseCustomersService;
     private JobOffersService jobOffersService;
-    private ContactsService contactsService;
     private CustomerGroupsService customerGroupsService;
     private CustomerToGroupService customerToGroupService;
     private TraceService traceService;
 
-    public CoursePlatformEndpointAdmin(CoursesService coursesService, LessonsService lessonsService, AuthorsService authorsService, CourseOrdersService courseOrdersService, InvoicesService invoicesService, PurchasedCoursesService purchasedCoursesService, MemesService memesService, CourseCommentsService courseCommentsService, LessonCommentsService lessonCommentsService, CourseAttachmentsService courseAttachmentsService, StatisticService statisticService, ModulesService modulesService, MarketingService marketingService, LessonAttachmentsService lessonAttachmentsService, NotificationsFromPanelService notificationsFromPanelService, CourseCustomersService courseCustomersService, JobOffersService jobOffersService, ContactsService contactsService, CustomerGroupsService customerGroupsService, CustomerToGroupService customerToGroupService, TraceService traceService) {
+    public CoursePlatformEndpointAdmin(CoursesService coursesService, LessonsService lessonsService, AuthorsService authorsService, CourseOrdersService courseOrdersService, InvoicesService invoicesService, PurchasedCoursesService purchasedCoursesService, MemesService memesService, CourseCommentsService courseCommentsService, LessonCommentsService lessonCommentsService, CourseAttachmentsService courseAttachmentsService, StatisticService statisticService, ModulesService modulesService, MarketingService marketingService, LessonAttachmentsService lessonAttachmentsService, NotificationsFromPanelService notificationsFromPanelService, CourseCustomersService courseCustomersService, JobOffersService jobOffersService, CustomerGroupsService customerGroupsService, CustomerToGroupService customerToGroupService, TraceService traceService) {
         this.coursesService = coursesService;
         this.lessonsService = lessonsService;
         this.authorsService = authorsService;
@@ -61,7 +59,6 @@ public class CoursePlatformEndpointAdmin {
         this.notificationsFromPanelService = notificationsFromPanelService;
         this.courseCustomersService = courseCustomersService;
         this.jobOffersService = jobOffersService;
-        this.contactsService = contactsService;
         this.customerGroupsService = customerGroupsService;
         this.customerToGroupService = customerToGroupService;
         this.traceService = traceService;
@@ -333,23 +330,6 @@ public class CoursePlatformEndpointAdmin {
             @RequestParam(name = "page_size", required = false, defaultValue = "10") Long pageSize) {
         List<JobOfferData> jobOffers = jobOffersService.find(new JobOffersFilter(page, pageSize, false));
         return new JobOffersGetResponse(ConverterToResponsesUtil.jobOffersToResponses(jobOffers));
-    }
-
-    @PostMapping("/contacts-people")
-    public void createJobOffer(@RequestBody PeoplePostRequest request) {
-        contactsService.create(new PeopleData(request.getFirstName(), request.getLastName(), request.getEmail(), request.getPhone()));
-    }
-
-    @GetMapping("/contacts-people")
-    public PeopleGetResponse getContactsPeople(
-            @RequestParam(name = "page", required = false, defaultValue = "1") Long page,
-            @RequestParam(name = "page_size", required = false, defaultValue = "10") Long pageSize) {
-        List<PeopleData> people = contactsService.find(new PeopleFilter(page, pageSize, false));
-        return new PeopleGetResponse(ConverterToResponsesUtil.peopleToResponses(people));
-
-    }
-    @DeleteMapping("/contacts-people/{id}")
-    public void deleteContactsPeople(@PathVariable Long id) { contactsService.delete(id);
     }
 
     @DeleteMapping("/meme/{id}")

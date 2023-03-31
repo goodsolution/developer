@@ -43,11 +43,8 @@ public class ApplicationController {
     private static final Logger log = LoggerFactory.getLogger(ApplicationController.class);
     private CustomersService customersService;
     private DictionariesService dictionariesService;
-    private ProductsService productsService;
     private CacheService cacheService;
     private AuthenticatedUser authenticatedUser;
-    private GalleryService galleryService;
-    private MenuService menuService;
     private CoursesService coursesService;
     private FilesService filesService;
     private LessonsService lessonsService;
@@ -68,14 +65,11 @@ public class ApplicationController {
     private CepikService cepikService;
     private VehicleService vehicleService;
 
-    public ApplicationController( CustomersService customersService, DictionariesService dictionariesService, ProductsService productsService, CacheService cacheService, AuthenticatedUser authenticatedUser, GalleryService galleryService, MenuService menuService, CoursesService coursesService, FilesService filesService, LessonsService lessonsService, BasketService basketService, CourseCustomersService courseCustomersService, ApplicationConfig applicationConfig, EmailService emailService, TemplateEngine templateEngine, InvoicesService invoicesService, CourseOrdersService courseOrdersService, MemesService memesService, AuthorsService authorsService, CourseAttachmentsService courseAttachmentsService, ModulesService modulesService, LessonAttachmentsService lessonAttachmentsService, Environment environment, EmailConfirmationService emailConfirmationService, CepikService cepikService, VehicleService vehicleService) {
+    public ApplicationController( CustomersService customersService, DictionariesService dictionariesService, CacheService cacheService, AuthenticatedUser authenticatedUser, CoursesService coursesService, FilesService filesService, LessonsService lessonsService, BasketService basketService, CourseCustomersService courseCustomersService, ApplicationConfig applicationConfig, EmailService emailService, TemplateEngine templateEngine, InvoicesService invoicesService, CourseOrdersService courseOrdersService, MemesService memesService, AuthorsService authorsService, CourseAttachmentsService courseAttachmentsService, ModulesService modulesService, LessonAttachmentsService lessonAttachmentsService, Environment environment, EmailConfirmationService emailConfirmationService, CepikService cepikService, VehicleService vehicleService) {
         this.customersService = customersService;
         this.dictionariesService = dictionariesService;
-        this.productsService = productsService;
         this.cacheService = cacheService;
         this.authenticatedUser = authenticatedUser;
-        this.galleryService = galleryService;
-        this.menuService = menuService;
         this.coursesService = coursesService;
         this.filesService = filesService;
         this.lessonsService = lessonsService;
@@ -97,22 +91,9 @@ public class ApplicationController {
         this.vehicleService = vehicleService;
     }
 
-    @GetMapping("/confirm-email")
-    public String confirmEmail(@RequestParam(name = "token") String tokenValue) {
-        emailConfirmationService.confirmEmail(tokenValue);
-        return "email-confirmed";
-    }
 
-    @RequestMapping(value = "/robots.txt")
-    public void robots(HttpServletRequest request, HttpServletResponse response) {
 
-        try {
-            String fileContent = "";
-            response.getWriter().write(fileContent);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+
 
     @GetMapping("/mentoring")
     public String mentoring() {
@@ -628,162 +609,6 @@ public class ApplicationController {
     }
 
 
-    @GetMapping({"/building"})
-    public String building(Model model) {
-        return "building";
-    }
-
-    @GetMapping({"/orders"})
-    public String orders(Model model,
-                         @RequestParam(name = "first_and_last_name", required = false) String firstAndLastName,
-                         @RequestParam(name = "order_date_from", required = false) String orderDateFrom,
-                         @RequestParam(name = "order_date_to", required = false) String orderDateTo,
-                         @RequestParam(name = "payment_status_id", required = false) Long paymentStatusId,
-                         @RequestParam(name = "order_id", required = false) String orderId,
-                         @RequestParam(name = "discount_code", required = false) String discountCode,
-                         @RequestParam(name = "payment_method_id", required = false) Long paymentMethodId,
-                         @RequestParam(name = "driver_id", required = false) Long driverId,
-                         @RequestParam(name = "invoice", required = false) String invoice,
-                         @RequestParam(name = "delivery_date_from", required = false) String deliveryDateFrom,
-                         @RequestParam(name = "delivery_date_to", required = false) String deliveryDateTo,
-                         @RequestParam(name = "delivery_method_id", required = false) Long deliveryMethodId,
-                         @RequestParam(name = "diet_id", required = false) Long dietId,
-                         @RequestParam(name = "order_status_id", required = false) Long orderStatusId,
-                         @RequestParam(name = "orders_finishing_in_days", required = false) Long ordersFinishingInDays,
-                         @RequestParam(name = "city", required = false) String city,
-                         @RequestParam(name = "marked_as_paid_date_from", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate markedAsPaidDateFrom,
-                         @RequestParam(name = "marked_as_paid_date_to", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate markedAsPaidDateTo,
-                         @RequestParam(name = "page", required = false) Long page,
-                         @RequestParam(name = "page_size", required = false, defaultValue = "100") Long pageSize
-    ) {
-        if (!authenticatedUser.hasAnyPermission(new Permissions[]{Permissions.ORDERS})) {
-            return "denied";
-        }
-        OrdersFilter filter = prepareFilterForOrders(
-                firstAndLastName,
-                orderDateFrom,
-                orderDateTo,
-                paymentStatusId,
-                orderId,
-                discountCode,
-                paymentMethodId,
-                driverId,
-                "1".equalsIgnoreCase(invoice),
-                deliveryDateFrom,
-                deliveryDateTo,
-                deliveryMethodId,
-                dietId,
-                orderStatusId,
-                ordersFinishingInDays,
-                city,
-                markedAsPaidDateFrom,
-                markedAsPaidDateTo
-        );
-        model.addAttribute("paymentStatuses", dictionariesService.getDictionary(DictionaryType.PAYMENT_STATUSES, Language.PL));
-        model.addAttribute("paymentMethods", dictionariesService.getDictionary(DictionaryType.ORDER_PAYMENT_METHODS, Language.PL));
-        model.addAttribute("drivers", dictionariesService.getDictionary(DictionaryType.DRIVERS, Language.PL));
-        model.addAttribute("shipmentTypes", dictionariesService.getDictionary(DictionaryType.SHIPMENT_TYPES, Language.PL));
-        model.addAttribute("diets", dictionariesService.getDictionary(DictionaryType.DIETS, Language.PL));
-        model.addAttribute("orderStatuses", dictionariesService.getDictionary(DictionaryType.ORDER_STATUSES, Language.PL));
-        model.addAttribute("cities", dictionariesService.getDictionary(DictionaryType.CITIES, Language.PL));
-        model.addAttribute("yesNo", dictionariesService.getDictionary(DictionaryType.YES_NO, Language.PL));
-
-        page = initPageWhenNotSet(page, 1);
-
-        model.addAttribute("selectedPage", page);
-        model.addAttribute("selectedPageSize", pageSize);
-
-        return "orders";
-    }
-
-    private OrdersFilter prepareFilterForOrders(String firstAndLastName,
-                                                String orderDateFrom,
-                                                String orderDateTo,
-                                                Long paymentStatusId,
-                                                String orderId,
-                                                String discountCode,
-                                                Long paymentMethodId,
-                                                Long driverId,
-                                                Boolean invoice,
-                                                String deliveryDateFrom,
-                                                String deliveryDateTo,
-                                                Long deliveryMethodId,
-                                                Long dietId,
-                                                Long orderStatusId,
-                                                Long ordersFinishingInDays,
-                                                String city,
-                                                LocalDate markedAsPaidDateFrom,
-                                                LocalDate markedAsPaidDateTo) {
-        LocalDate ordDateFrom = null;
-        LocalDate ordDateTo = null;
-        if (orderDateFrom == null || orderDateFrom.isEmpty()) {
-            ordDateFrom = LocalDate.now();
-        } else {
-            ordDateFrom = LocalDate.parse(orderDateFrom);
-        }
-        if (orderDateTo != null && !orderDateTo.isEmpty()) {
-            ordDateTo = LocalDate.parse(orderDateFrom);
-        } else {
-            ordDateTo = null;
-        }
-        LocalDate deliveryDtFrom = null;
-        if (deliveryDateFrom != null && !deliveryDateFrom.isEmpty()) {
-            deliveryDtFrom = LocalDate.parse(deliveryDateFrom);
-        }
-        LocalDate deliveryDtTo = null;
-        if (deliveryDateTo != null && !deliveryDateTo.isEmpty()) {
-            deliveryDtTo = LocalDate.parse(deliveryDateTo);
-        }
-        return new OrdersFilter(ordDateFrom, ordDateTo, firstAndLastName, deliveryDtFrom, deliveryDtTo, paymentStatusId, discountCode, paymentMethodId, driverId, deliveryMethodId, dietId, orderStatusId, ordersFinishingInDays, city, markedAsPaidDateFrom, markedAsPaidDateTo, invoice, orderId, null);
-    }
-
-//    @GetMapping({"/order"})
-//    public String order(@RequestParam(name = "id") Long id, @RequestParam(name = "read_only", required = false, defaultValue = "false") boolean readOnly, Model model, HttpServletRequest request) {
-//        if (!authenticatedUser.hasAnyPermission(new Permissions[]{Permissions.ORDERS})) {
-//            return "denied";
-//        }
-//        long startTime = System.currentTimeMillis();
-//        model.addAttribute("orderStatuses", dictionariesService.getDictionary(DictionaryType.ORDER_STATUSES, Language.PL));
-//        model.addAttribute("yesNo", dictionariesService.getDictionary(DictionaryType.YES_NO, Language.PL));
-//        model.addAttribute("paymentStatuses", dictionariesService.getDictionary(DictionaryType.PAYMENT_STATUSES, Language.PL));
-//        model.addAttribute("paymentMethods", dictionariesService.getDictionary(DictionaryType.ORDER_PAYMENT_METHODS, Language.PL));
-//        model.addAttribute("paymentPaymentMethods", dictionariesService.getDictionary(DictionaryType.PAYMENT_PAYMENT_METHODS, Language.PL));
-//        model.addAttribute("diets", dictionariesService.getDictionary(DictionaryType.DIETS, Language.PL));
-//        model.addAttribute("shipmentTypes", dictionariesService.getDictionary(DictionaryType.SHIPMENT_TYPES, Language.PL));
-//        model.addAttribute("cities", dictionariesService.getDictionary(DictionaryType.CITIES, Language.PL));
-//        model.addAttribute("weekendOptions", dictionariesService.getDictionary(DictionaryType.WEEKEND_OPTIONS, Language.PL));
-//
-//        OrderDetailsData data = ordersService.getOrder(id);
-//        model.addAttribute("data", data);
-//        model.addAttribute("customer", data.getCustomerForOrder());
-//        model.addAttribute("weekendAddress", data.getOrderWeekendAddress());
-//        model.addAttribute("invoice", data.getOrderInvoice());
-//
-//        model.addAttribute("paymentResult", ordersService.getPaymentResultForOrder(id, data.getOrderBasketSum()));
-//        model.addAttribute("productResult", ordersService.getProductResultForOrder(id, data.getOrderBasketSumNo(), data.getOrderBasketSum()));
-//        model.addAttribute("deliveries", ordersService.getDeliveryDataForOrder(id, data));
-//        model.addAttribute("changes", ordersService.getChangesForOrder(id));
-//        model.addAttribute("deliveryChanges", ordersService.getDeliveryChangesForOrder(id));
-//        model.addAttribute("emails", ordersService.findOrderSentEmails(id));
-//        long timeTaken = System.currentTimeMillis() - startTime;
-//        log.info("Time Taken by {} is {}", "ApplicationController.order", timeTaken);
-//
-//        if (!readOnly && !authenticatedUser.hasAnyPermission(new Permissions[]{Permissions.ORDERS})) {
-//            readOnly = true;
-//        }
-//        model.addAttribute("readOnly", readOnly);
-//
-////        System.out.println("referrer: " + request.getHeader("referrer"));
-////        System.out.println("getPathInfo: " + request.getPathInfo());
-////        System.out.println("getContextPath: " + request.getContextPath());
-////        System.out.println("getPathTranslated: " + request.getPathTranslated());
-////        System.out.println("getRequestURI: " + request.getRequestURI());
-////        System.out.println("getServletPath: " + request.getServletPath());
-////        System.out.println("referrer: " + request.getHeader("X-Forwarded-Referrer"));
-//
-//
-//        return "order";
-//    }
 
     @GetMapping({"/orders-short"})
     public String ordersShort(Model model,
@@ -813,31 +638,6 @@ public class ApplicationController {
 
 
         return "orders-short";
-    }
-
-
-    @GetMapping({"/products-demand"})
-    public String productsDemand(Model model,
-                                 @RequestParam(name = "dateAt", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateAt,
-                                 @RequestParam(name = "page", required = false) Long page,
-                                 @RequestParam(name = "page_size", required = false, defaultValue = "100") Long pageSize
-    ) {
-        if (!authenticatedUser.hasAnyPermission(new Permissions[]{Permissions.DELIVERY_REQUEST})) {
-            return "denied";
-        }
-        if (dateAt == null) {
-            dateAt = LocalDate.now();
-        }
-        page = initPageWhenNotSet(page, 1);
-
-        ProductDemandResultData result = productsService.findProductDemandsWithSum(dateAt, page, pageSize);
-        model.addAttribute("list", result.getProducts());
-        model.addAttribute("sum", result.getSum());
-
-        model.addAttribute("selectedDate", dateAt.format(DateTimeFormatter.ISO_DATE)); //TODO if no parameter - today's date
-        model.addAttribute("selectedPage", page);
-        model.addAttribute("selectedPageSize", pageSize);
-        return "products-demand";
     }
 
     @GetMapping({"/test-sets"})
@@ -880,31 +680,6 @@ public class ApplicationController {
         return "menu-preview";
     }
 
-    @GetMapping({"/excel-menu-preview"})
-    public ResponseEntity<InputStreamResource> menuPreviewExcel(
-            @RequestParam(name = "from") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate from,
-            @RequestParam(name = "to") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate to,
-            @RequestParam(name = "diet_id") Long dietId,
-            @RequestParam(name = "kind_id") Long kindId) {
-        if (!authenticatedUser.hasAnyPermission(new Permissions[]{Permissions.MENU_PREVIEW})) {
-            return null;
-        }
-        ExcelMenuPreviewData excel = null;
-        try {
-            long startTime = System.currentTimeMillis();
-            excel = menuService.generateMenuPreviewExcel(from, to, dietId, kindId);
-            long timeTaken = System.currentTimeMillis() - startTime;
-            log.info("Time Taken by {} is {}", "generateMenuPreviewExcel", timeTaken);
-        } catch (IOException e) {
-            log.error("Error during excel generation from: " + from + " to: " + to + " dietId: " + dietId + " kindId: " + kindId);
-        }
-        return ResponseEntity.ok()
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + excel.getFileName())
-                .contentType(MediaType.parseMediaType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"))
-                .contentLength(excel.getSize()) //
-                .body(new InputStreamResource(excel.getData()));
-    }
-
     @GetMapping({"/gallery"})
     public String gallery(Model model) {
         if (!authenticatedUser.hasAnyPermission(new Permissions[]{Permissions.GALLERY})) {
@@ -923,16 +698,6 @@ public class ApplicationController {
 
         model.addAttribute("defaultStartDate", LocalDate.now());
         model.addAttribute("defaultEndDate", LocalDate.now());
-    }
-
-    @GetMapping({"/gallery-image"})
-    public String galleryImage(Model model, @RequestParam(name = "id", required = false) Long id) {
-        if (!authenticatedUser.hasAnyPermission(new Permissions[]{Permissions.GALLERY})) {
-            return "denied";
-        }
-        prepareModelForImage(model, id);
-        galleryService.clean();
-        return "gallery-image";
     }
 
     @GetMapping({"/customers-new"})
@@ -998,20 +763,6 @@ public class ApplicationController {
         cacheService.invalidateMenu();
         log.debug(CacheType.MENU + " cache invalidated");
         return "login";
-    }
-
-    @PostMapping({"/upload"})
-    public String upload(Model model, @RequestParam(name = "id", required = false) Long id, @RequestParam("file") MultipartFile file) {
-        String error = null;
-        UploadResult result = null;
-        try {
-            result = galleryService.storeFile(id, file);
-        } catch (RuntimeException | IOException ex) {
-            error = ex.getMessage();
-        }
-        prepareModelForImage(model, id, error, result);
-        System.out.println(error);
-        return "gallery-image";
     }
 
     @GetMapping({"/customers"})
@@ -1083,31 +834,6 @@ public class ApplicationController {
     @GetMapping({"/kurs-sql-i-mysql"})
     public String courseSql(Model model) {
         return "landing/landing-mysql";
-    }
-
-
-    private void prepareModelForImage(Model model, Long id) {
-        prepareModelForImage(model, id, null, null);
-    }
-
-    private void prepareModelForImage(Model model, Long id, String error, UploadResult result) {
-        model.addAttribute("diets", dictionariesService.getDictionary(DictionaryType.DIETS, Language.PL));
-        model.addAttribute("id", id);
-        model.addAttribute("error", error);
-        model.addAttribute("uploadedFileName", result != null ? result.getFileName() : null);
-        model.addAttribute("imageKind", dictionariesService.getDictionary(DictionaryType.GALLERY_IMAGE_KIND, Language.PL));
-        model.addAttribute("data", new ImageData(""));
-        if (isModificationMode(id)) {
-            ImageData image = galleryService.getImage(id);
-            model.addAttribute("data", image);
-            if (result == null) {
-                model.addAttribute("uploadedFileName", image.getFileName());
-            }
-        }
-    }
-
-    private boolean isModificationMode(Long id) {
-        return id != null;
     }
 
     private long initPageWhenNotSet(@RequestParam(name = "page", required = false) Long page, int i) {

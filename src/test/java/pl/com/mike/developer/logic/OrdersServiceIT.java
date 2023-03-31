@@ -7,8 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import pl.com.mike.developer.Application;
-import pl.com.mike.developer.domain.OrderData;
-import pl.com.mike.developer.domain.OrdersFilter;
 
 import java.util.List;
 

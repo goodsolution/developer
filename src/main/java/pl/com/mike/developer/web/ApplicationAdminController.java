@@ -15,7 +15,6 @@ import pl.com.mike.developer.auth.Permissions;
 import pl.com.mike.developer.config.ApplicationConfig;
 import pl.com.mike.developer.domain.ImageData;
 import pl.com.mike.developer.domain.InvoiceData;
-import pl.com.mike.developer.domain.UploadResult;
 import pl.com.mike.developer.domain.courseplatform.*;
 import pl.com.mike.developer.domain.itube.ITubeFilter;
 import pl.com.mike.developer.domain.itube.ITubeGetResponseAdmin;
@@ -29,11 +28,9 @@ public class ApplicationAdminController {
     private static final Logger log = LoggerFactory.getLogger(ApplicationAdminController.class);
     private CustomersService customersService;
     private DictionariesService dictionariesService;
-    private ProductsService productsService;
     private CacheService cacheService;
     private AuthenticatedUser authenticatedUser;
-    private GalleryService galleryService;
-    private MenuService menuService;
+
     private CoursesService coursesService;
     private FilesService filesService;
     private LessonsService lessonsService;
@@ -55,8 +52,8 @@ public class ApplicationAdminController {
     private  CustomerToGroupService customerToGroupService;
     private ITubeService iTubeService;
 
-    public ApplicationAdminController(CustomersService customersService, DictionariesService dictionariesService, ProductsService productsService, CacheService cacheService,
-                                      AuthenticatedUser authenticatedUser, GalleryService galleryService, MenuService menuService, CoursesService coursesService, FilesService filesService,
+    public ApplicationAdminController(CustomersService customersService, DictionariesService dictionariesService, CacheService cacheService,
+                                      AuthenticatedUser authenticatedUser, CoursesService coursesService, FilesService filesService,
                                       LessonsService lessonsService, BasketService basketService, CourseCustomersService courseCustomersService, ApplicationConfig applicationConfig,
                                       EmailService emailService, TemplateEngine templateEngine, InvoicesService invoicesService, CourseOrdersService courseOrdersService,
                                       MemesService memesService, AuthorsService authorsService, CourseAttachmentsService courseAttachmentsService, ModulesService modulesService,
@@ -64,11 +61,8 @@ public class ApplicationAdminController {
                                       CustomerGroupsService customerGroupsService, CustomerToGroupService customerToGroupService, ITubeService iTubeService) {
         this.customersService = customersService;
         this.dictionariesService = dictionariesService;
-        this.productsService = productsService;
         this.cacheService = cacheService;
         this.authenticatedUser = authenticatedUser;
-        this.galleryService = galleryService;
-        this.menuService = menuService;
         this.coursesService = coursesService;
         this.filesService = filesService;
         this.lessonsService = lessonsService;
@@ -337,18 +331,6 @@ public class ApplicationAdminController {
         return "buy-our-code-details";
     }
 
-    @GetMapping({"/admin/lesson/{id}"})
-    public String lesson(@PathVariable Long id, Model model) {
-        LessonData lesson = lessonsService.find(new LessonsFilter(id)).get(0);
-        Language language = LanguagesUtil.getCurrentLanguage();
-        model.addAttribute("lesson", new LessonGetResponse(lesson));
-        model.addAttribute("lessonVisibilityStatusesDict", dictionariesService.getDictionary(DictionaryType.LESSON_VISIBILITY_STATUSES, language));
-        model.addAttribute("modulesInCourse", ConverterToResponsesUtil.modulesToResponses(modulesService.find(new ModulesFilter(lesson.getCourse().getId(), false))));
-        model.addAttribute("lessonTypesDict", dictionariesService.getDictionary(DictionaryType.LESSON_TYPES, language));
-        model.addAttribute("movieLinkTypesDict", dictionariesService.getDictionary(DictionaryType.MOVIE_LINK_TYPES, language));
-        return "lesson";
-    }
-
     @GetMapping({"/admin/module/{id}"})
     public String module(@PathVariable Long id, Model model) {
         ModuleData module = modulesService.get(id);
@@ -600,23 +582,6 @@ public class ApplicationAdminController {
 //    private AccountGetResponse accountToResponses(AccountData data) {
 //        return new AccountGetResponse(data.getId(), data.getName());
 //    }
-
-
-    private void prepareModelForImage(Model model, Long id, String error, UploadResult result) {
-        model.addAttribute("diets", dictionariesService.getDictionary(DictionaryType.DIETS, Language.PL));
-        model.addAttribute("id", id);
-        model.addAttribute("error", error);
-        model.addAttribute("uploadedFileName", result != null ? result.getFileName() : null);
-        model.addAttribute("imageKind", dictionariesService.getDictionary(DictionaryType.GALLERY_IMAGE_KIND, Language.PL));
-        model.addAttribute("data", new ImageData(""));
-        if (isModificationMode(id)) {
-            ImageData image = galleryService.getImage(id);
-            model.addAttribute("data", image);
-            if (result == null) {
-                model.addAttribute("uploadedFileName", image.getFileName());
-            }
-        }
-    }
 
     private boolean isModificationMode(Long id) {
         return id != null;
