@@ -27,13 +27,11 @@ public class CustomersService {
     private static final Logger log = LoggerFactory.getLogger(CustomersService.class);
     private CustomersJdbcRepository customersJdbcRepository;
     private DictionariesService dictionariesService;
-    private DriversService driversService;
 
 
-    public CustomersService(CustomersJdbcRepository customersJdbcRepository, DictionariesService dictionariesService, DriversService driversService) {
+    public CustomersService(CustomersJdbcRepository customersJdbcRepository, DictionariesService dictionariesService) {
         this.customersJdbcRepository = customersJdbcRepository;
         this.dictionariesService = dictionariesService;
-        this.driversService = driversService;
     }
 
     public CustomerNewResultGetResponse findNewCustomersAll(CustomerNewFilter filter) {

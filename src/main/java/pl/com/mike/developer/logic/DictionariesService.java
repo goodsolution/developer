@@ -65,12 +65,8 @@ public class DictionariesService {
             return getExtras(lang);
         } else if (DictionaryType.CUSTOMERS == type) {
             return getCustomers(lang);
-        } else if (DictionaryType.DISH_GROUPS == type) {
-            return getDishGroups(lang);
         } else if (DictionaryType.CUSTOMER_GROUP_STATUSES == type) {
             return getCustomerGroupStatuses(lang);
-        } else if (DictionaryType.ORDER_DAY_STATUS == type) {
-            return getOrderDayStatuses(lang);
         } else if (DictionaryType.CUSTOMER_TYPES == type) {
             return getCustomerTypes(lang);
         } else if (DictionaryType.CUSTOMER_GROUPS == type) {
@@ -140,10 +136,6 @@ public class DictionariesService {
             return null; //TODO
         } else if (DictionaryType.YES_NO == type) {
             return getYesNo(lang).stream().filter(dictElem -> dictElem.getCode().equalsIgnoreCase(code)).findFirst().get();
-        } else if (DictionaryType.ORDER_DAY_STATUS == type) {
-            return getOrderDayStatuses(lang).stream().filter(dictElem -> dictElem.getCode().equalsIgnoreCase(code)).findFirst().get();
-        } else if (DictionaryType.ORDER_DAY_DELIVERY_INFO == type) {
-            return getOrderDayDeliveryInfo(lang).stream().filter(dictElem -> dictElem.getCode().equalsIgnoreCase(code)).findFirst().get();
         } else if (DictionaryType.GALLERY_IMAGE_KIND == type) {
             return getGalleryImageKind(lang).stream().filter(dictElem -> dictElem.getCode().equalsIgnoreCase(code)).findFirst().get();
         } else if (DictionaryType.ROLES == type) {
@@ -346,93 +338,6 @@ public class DictionariesService {
         return dictionaryDataList;
     }
 
-    private List<DictionaryData> getDishGroups(Language lang) {
-        return dictionariesJdbcRepository.getDishGroups(lang);
-    }
-
-    private List<DictionaryData> getOrderDayStatuses(Language lang) {
-        List<DictionaryData> dictionaryDataList = new ArrayList<>();
-
-        DictionaryData dictionaryData = new DictionaryData(
-                0L,
-                Const.ORDER_DAY_STATUS_REMOVED,
-                "Usunięty",
-                lang.getCode()
-        );
-        dictionaryDataList.add(dictionaryData);
-        dictionaryData = new DictionaryData(
-                1L,
-                Const.ORDER_DAY_STATUS_NEW,
-                "Zamówiony",
-                lang.getCode()
-        );
-        dictionaryDataList.add(dictionaryData);
-        dictionaryData = new DictionaryData(
-                2L,
-                Const.ORDER_DAY_STATUS_SUSPENDED,
-                "Wstrzymany",
-                lang.getCode()
-        );
-        dictionaryDataList.add(dictionaryData);
-        dictionaryData = new DictionaryData(
-                2L,
-                Const.ORDER_DAY_STATUS_REACTIVATED,
-                "Wznowiony",
-                lang.getCode()
-        );
-        dictionaryDataList.add(dictionaryData);
-        dictionaryData = new DictionaryData(
-                3L,
-                Const.ORDER_DAY_STATUS_FILLED,
-                "Uzupełniony",
-                lang.getCode()
-        );
-        dictionaryDataList.add(dictionaryData);
-        dictionaryData = new DictionaryData(
-                4L,
-                Const.ORDER_DAY_STATUS_RELEASED,
-                "Zwolniony",
-                lang.getCode()
-        );
-        dictionaryDataList.add(dictionaryData);
-        dictionaryData = new DictionaryData(
-                5L,
-                Const.ORDER_DAY_STATUS_DELIVERED,
-                "Dostarczono",
-                lang.getCode()
-        );
-        dictionaryDataList.add(dictionaryData);
-        dictionaryData = new DictionaryData(
-                6L,
-                Const.ORDER_DAY_STATUS_ADDED,
-                "Dodany",
-                lang.getCode()
-        );
-        dictionaryDataList.add(dictionaryData);
-
-        return dictionaryDataList;
-    }
-
-    private List<DictionaryData> getOrderDayDeliveryInfo(Language lang) {
-        List<DictionaryData> dictionaryDataList = new ArrayList<>();
-
-        DictionaryData dictionaryData = new DictionaryData(
-                0L,
-                Const.ORDER_DAY_DELIVERY_INFO_DELIVERED,
-                "Dostarczono",
-                lang.getCode()
-        );
-        dictionaryDataList.add(dictionaryData);
-        dictionaryData = new DictionaryData(
-                1L,
-                Const.ORDER_DAY_DELIVERY_INFO_NOT_DELIVERED,
-                "Nie dostarczono",
-                lang.getCode()
-        );
-        dictionaryDataList.add(dictionaryData);
-        return dictionaryDataList;
-    }
-
     private List<DictionaryData> getGalleryImageKind(Language lang) {
         List<DictionaryData> dictionaryDataList = new ArrayList<>();
 
@@ -459,7 +364,6 @@ public class DictionariesService {
         dictionaryDataList.add(dictionaryData);
         return dictionaryDataList;
     }
-
 
     private List<DictionaryData> getWeekendOptions(Language lang) {
         List<DictionaryData> dictionaryDataList = new ArrayList<>();
