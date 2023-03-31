@@ -24,10 +24,6 @@ import pl.com.mike.developer.domain.courseplatform.*;
 import pl.com.mike.developer.domain.vin.CarsFilter;
 import pl.com.mike.developer.logic.Language;
 import pl.com.mike.developer.logic.*;
-import pl.com.mike.developer.logic.adviser.AccountsService;
-import pl.com.mike.developer.logic.adviser.AdviserService;
-import pl.com.mike.developer.logic.adviser.ApplicationsService;
-import pl.com.mike.developer.logic.adviser.ContextConfigsService;
 import pl.com.mike.developer.logic.courseplatform.*;
 import pl.com.mike.developer.logic.vin.CepikService;
 import pl.com.mike.developer.logic.vin.VehicleService;
@@ -45,7 +41,6 @@ import java.util.List;
 @Controller
 public class ApplicationController {
     private static final Logger log = LoggerFactory.getLogger(ApplicationController.class);
-    private OrdersService ordersService;
     private CustomersService customersService;
     private DictionariesService dictionariesService;
     private ProductsService productsService;
@@ -53,10 +48,6 @@ public class ApplicationController {
     private AuthenticatedUser authenticatedUser;
     private GalleryService galleryService;
     private MenuService menuService;
-    private AdviserService adviserService;
-    private AccountsService accountsService;
-    private ApplicationsService applicationsService;
-    private ContextConfigsService contextConfigsService;
     private CoursesService coursesService;
     private FilesService filesService;
     private LessonsService lessonsService;
@@ -77,8 +68,7 @@ public class ApplicationController {
     private CepikService cepikService;
     private VehicleService vehicleService;
 
-    public ApplicationController(OrdersService ordersService, CustomersService customersService, DictionariesService dictionariesService, ProductsService productsService, CacheService cacheService, AuthenticatedUser authenticatedUser, GalleryService galleryService, MenuService menuService, AdviserService adviserService, AccountsService accountsService, ApplicationsService applicationsService, ContextConfigsService contextConfigsService, CoursesService coursesService, FilesService filesService, LessonsService lessonsService, BasketService basketService, CourseCustomersService courseCustomersService, ApplicationConfig applicationConfig, EmailService emailService, TemplateEngine templateEngine, InvoicesService invoicesService, CourseOrdersService courseOrdersService, MemesService memesService, AuthorsService authorsService, CourseAttachmentsService courseAttachmentsService, ModulesService modulesService, LessonAttachmentsService lessonAttachmentsService, Environment environment, EmailConfirmationService emailConfirmationService, CepikService cepikService, VehicleService vehicleService) {
-        this.ordersService = ordersService;
+    public ApplicationController( CustomersService customersService, DictionariesService dictionariesService, ProductsService productsService, CacheService cacheService, AuthenticatedUser authenticatedUser, GalleryService galleryService, MenuService menuService, CoursesService coursesService, FilesService filesService, LessonsService lessonsService, BasketService basketService, CourseCustomersService courseCustomersService, ApplicationConfig applicationConfig, EmailService emailService, TemplateEngine templateEngine, InvoicesService invoicesService, CourseOrdersService courseOrdersService, MemesService memesService, AuthorsService authorsService, CourseAttachmentsService courseAttachmentsService, ModulesService modulesService, LessonAttachmentsService lessonAttachmentsService, Environment environment, EmailConfirmationService emailConfirmationService, CepikService cepikService, VehicleService vehicleService) {
         this.customersService = customersService;
         this.dictionariesService = dictionariesService;
         this.productsService = productsService;
@@ -86,10 +76,6 @@ public class ApplicationController {
         this.authenticatedUser = authenticatedUser;
         this.galleryService = galleryService;
         this.menuService = menuService;
-        this.adviserService = adviserService;
-        this.accountsService = accountsService;
-        this.applicationsService = applicationsService;
-        this.contextConfigsService = contextConfigsService;
         this.coursesService = coursesService;
         this.filesService = filesService;
         this.lessonsService = lessonsService;
@@ -751,53 +737,53 @@ public class ApplicationController {
         return new OrdersFilter(ordDateFrom, ordDateTo, firstAndLastName, deliveryDtFrom, deliveryDtTo, paymentStatusId, discountCode, paymentMethodId, driverId, deliveryMethodId, dietId, orderStatusId, ordersFinishingInDays, city, markedAsPaidDateFrom, markedAsPaidDateTo, invoice, orderId, null);
     }
 
-    @GetMapping({"/order"})
-    public String order(@RequestParam(name = "id") Long id, @RequestParam(name = "read_only", required = false, defaultValue = "false") boolean readOnly, Model model, HttpServletRequest request) {
-        if (!authenticatedUser.hasAnyPermission(new Permissions[]{Permissions.ORDERS})) {
-            return "denied";
-        }
-        long startTime = System.currentTimeMillis();
-        model.addAttribute("orderStatuses", dictionariesService.getDictionary(DictionaryType.ORDER_STATUSES, Language.PL));
-        model.addAttribute("yesNo", dictionariesService.getDictionary(DictionaryType.YES_NO, Language.PL));
-        model.addAttribute("paymentStatuses", dictionariesService.getDictionary(DictionaryType.PAYMENT_STATUSES, Language.PL));
-        model.addAttribute("paymentMethods", dictionariesService.getDictionary(DictionaryType.ORDER_PAYMENT_METHODS, Language.PL));
-        model.addAttribute("paymentPaymentMethods", dictionariesService.getDictionary(DictionaryType.PAYMENT_PAYMENT_METHODS, Language.PL));
-        model.addAttribute("diets", dictionariesService.getDictionary(DictionaryType.DIETS, Language.PL));
-        model.addAttribute("shipmentTypes", dictionariesService.getDictionary(DictionaryType.SHIPMENT_TYPES, Language.PL));
-        model.addAttribute("cities", dictionariesService.getDictionary(DictionaryType.CITIES, Language.PL));
-        model.addAttribute("weekendOptions", dictionariesService.getDictionary(DictionaryType.WEEKEND_OPTIONS, Language.PL));
-
-        OrderDetailsData data = ordersService.getOrder(id);
-        model.addAttribute("data", data);
-        model.addAttribute("customer", data.getCustomerForOrder());
-        model.addAttribute("weekendAddress", data.getOrderWeekendAddress());
-        model.addAttribute("invoice", data.getOrderInvoice());
-
-        model.addAttribute("paymentResult", ordersService.getPaymentResultForOrder(id, data.getOrderBasketSum()));
-        model.addAttribute("productResult", ordersService.getProductResultForOrder(id, data.getOrderBasketSumNo(), data.getOrderBasketSum()));
-        model.addAttribute("deliveries", ordersService.getDeliveryDataForOrder(id, data));
-        model.addAttribute("changes", ordersService.getChangesForOrder(id));
-        model.addAttribute("deliveryChanges", ordersService.getDeliveryChangesForOrder(id));
-        model.addAttribute("emails", ordersService.findOrderSentEmails(id));
-        long timeTaken = System.currentTimeMillis() - startTime;
-        log.info("Time Taken by {} is {}", "ApplicationController.order", timeTaken);
-
-        if (!readOnly && !authenticatedUser.hasAnyPermission(new Permissions[]{Permissions.ORDERS})) {
-            readOnly = true;
-        }
-        model.addAttribute("readOnly", readOnly);
-
-//        System.out.println("referrer: " + request.getHeader("referrer"));
-//        System.out.println("getPathInfo: " + request.getPathInfo());
-//        System.out.println("getContextPath: " + request.getContextPath());
-//        System.out.println("getPathTranslated: " + request.getPathTranslated());
-//        System.out.println("getRequestURI: " + request.getRequestURI());
-//        System.out.println("getServletPath: " + request.getServletPath());
-//        System.out.println("referrer: " + request.getHeader("X-Forwarded-Referrer"));
-
-
-        return "order";
-    }
+//    @GetMapping({"/order"})
+//    public String order(@RequestParam(name = "id") Long id, @RequestParam(name = "read_only", required = false, defaultValue = "false") boolean readOnly, Model model, HttpServletRequest request) {
+//        if (!authenticatedUser.hasAnyPermission(new Permissions[]{Permissions.ORDERS})) {
+//            return "denied";
+//        }
+//        long startTime = System.currentTimeMillis();
+//        model.addAttribute("orderStatuses", dictionariesService.getDictionary(DictionaryType.ORDER_STATUSES, Language.PL));
+//        model.addAttribute("yesNo", dictionariesService.getDictionary(DictionaryType.YES_NO, Language.PL));
+//        model.addAttribute("paymentStatuses", dictionariesService.getDictionary(DictionaryType.PAYMENT_STATUSES, Language.PL));
+//        model.addAttribute("paymentMethods", dictionariesService.getDictionary(DictionaryType.ORDER_PAYMENT_METHODS, Language.PL));
+//        model.addAttribute("paymentPaymentMethods", dictionariesService.getDictionary(DictionaryType.PAYMENT_PAYMENT_METHODS, Language.PL));
+//        model.addAttribute("diets", dictionariesService.getDictionary(DictionaryType.DIETS, Language.PL));
+//        model.addAttribute("shipmentTypes", dictionariesService.getDictionary(DictionaryType.SHIPMENT_TYPES, Language.PL));
+//        model.addAttribute("cities", dictionariesService.getDictionary(DictionaryType.CITIES, Language.PL));
+//        model.addAttribute("weekendOptions", dictionariesService.getDictionary(DictionaryType.WEEKEND_OPTIONS, Language.PL));
+//
+//        OrderDetailsData data = ordersService.getOrder(id);
+//        model.addAttribute("data", data);
+//        model.addAttribute("customer", data.getCustomerForOrder());
+//        model.addAttribute("weekendAddress", data.getOrderWeekendAddress());
+//        model.addAttribute("invoice", data.getOrderInvoice());
+//
+//        model.addAttribute("paymentResult", ordersService.getPaymentResultForOrder(id, data.getOrderBasketSum()));
+//        model.addAttribute("productResult", ordersService.getProductResultForOrder(id, data.getOrderBasketSumNo(), data.getOrderBasketSum()));
+//        model.addAttribute("deliveries", ordersService.getDeliveryDataForOrder(id, data));
+//        model.addAttribute("changes", ordersService.getChangesForOrder(id));
+//        model.addAttribute("deliveryChanges", ordersService.getDeliveryChangesForOrder(id));
+//        model.addAttribute("emails", ordersService.findOrderSentEmails(id));
+//        long timeTaken = System.currentTimeMillis() - startTime;
+//        log.info("Time Taken by {} is {}", "ApplicationController.order", timeTaken);
+//
+//        if (!readOnly && !authenticatedUser.hasAnyPermission(new Permissions[]{Permissions.ORDERS})) {
+//            readOnly = true;
+//        }
+//        model.addAttribute("readOnly", readOnly);
+//
+////        System.out.println("referrer: " + request.getHeader("referrer"));
+////        System.out.println("getPathInfo: " + request.getPathInfo());
+////        System.out.println("getContextPath: " + request.getContextPath());
+////        System.out.println("getPathTranslated: " + request.getPathTranslated());
+////        System.out.println("getRequestURI: " + request.getRequestURI());
+////        System.out.println("getServletPath: " + request.getServletPath());
+////        System.out.println("referrer: " + request.getHeader("X-Forwarded-Referrer"));
+//
+//
+//        return "order";
+//    }
 
     @GetMapping({"/orders-short"})
     public String ordersShort(Model model,
@@ -818,7 +804,7 @@ public class ApplicationController {
 
         page = initPageWhenNotSet(page, 1);
 
-        model.addAttribute("list", ordersService.findOrdersShort(new OrdersFilter(firstName, lastName, orderId), page, pageSize));
+//        model.addAttribute("list", ordersService.findOrdersShort(new OrdersFilter(firstName, lastName, orderId), page, pageSize));
         model.addAttribute("selectedPage", page);
         model.addAttribute("selectedPageSize", pageSize);
         model.addAttribute("firstName", firstName);
@@ -983,7 +969,7 @@ public class ApplicationController {
         model.addAttribute("customerStatuses", dictionariesService.getDictionary(DictionaryType.CUSTOMER_STATUSES, Language.PL));
         model.addAttribute("cities", dictionariesService.getDictionary(DictionaryType.CITIES, Language.PL));
         model.addAttribute("yesNo", dictionariesService.getDictionary(DictionaryType.YES_NO, Language.PL));
-        model.addAttribute("customersLastOrderId", ordersService.getCustomersLastOrderId(customerId));
+//        model.addAttribute("customersLastOrderId", ordersService.getCustomersLastOrderId(customerId));
         return "customer";
     }
 

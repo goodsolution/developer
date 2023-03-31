@@ -9,7 +9,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.thymeleaf.TemplateEngine;
-import pl.com.mike.developer.api.adviser.*;
 import pl.com.mike.developer.api.courseplatform.*;
 import pl.com.mike.developer.auth.AuthenticatedUser;
 import pl.com.mike.developer.auth.Permissions;
@@ -17,25 +16,17 @@ import pl.com.mike.developer.config.ApplicationConfig;
 import pl.com.mike.developer.domain.ImageData;
 import pl.com.mike.developer.domain.InvoiceData;
 import pl.com.mike.developer.domain.UploadResult;
-import pl.com.mike.developer.domain.adviser.AccountData;
-import pl.com.mike.developer.domain.adviser.ApplicationData;
-import pl.com.mike.developer.domain.adviser.ContextConfigData;
 import pl.com.mike.developer.domain.courseplatform.*;
 import pl.com.mike.developer.domain.itube.ITubeFilter;
 import pl.com.mike.developer.domain.itube.ITubeGetResponseAdmin;
 import pl.com.mike.developer.logic.Language;
 import pl.com.mike.developer.logic.*;
-import pl.com.mike.developer.logic.adviser.AccountsService;
-import pl.com.mike.developer.logic.adviser.AdviserService;
-import pl.com.mike.developer.logic.adviser.ApplicationsService;
-import pl.com.mike.developer.logic.adviser.ContextConfigsService;
 import pl.com.mike.developer.logic.courseplatform.*;
 import pl.com.mike.developer.logic.itube.ITubeService;
 
 @Controller
 public class ApplicationAdminController {
     private static final Logger log = LoggerFactory.getLogger(ApplicationAdminController.class);
-    private OrdersService ordersService;
     private CustomersService customersService;
     private DictionariesService dictionariesService;
     private ProductsService productsService;
@@ -43,10 +34,6 @@ public class ApplicationAdminController {
     private AuthenticatedUser authenticatedUser;
     private GalleryService galleryService;
     private MenuService menuService;
-    private AdviserService adviserService;
-    private AccountsService accountsService;
-    private ApplicationsService applicationsService;
-    private ContextConfigsService contextConfigsService;
     private CoursesService coursesService;
     private FilesService filesService;
     private LessonsService lessonsService;
@@ -68,15 +55,13 @@ public class ApplicationAdminController {
     private  CustomerToGroupService customerToGroupService;
     private ITubeService iTubeService;
 
-    public ApplicationAdminController(OrdersService ordersService, CustomersService customersService, DictionariesService dictionariesService, ProductsService productsService, CacheService cacheService,
-                                      AuthenticatedUser authenticatedUser, GalleryService galleryService, MenuService menuService, AdviserService adviserService, AccountsService accountsService,
-                                      ApplicationsService applicationsService, ContextConfigsService contextConfigsService, CoursesService coursesService, FilesService filesService,
+    public ApplicationAdminController(CustomersService customersService, DictionariesService dictionariesService, ProductsService productsService, CacheService cacheService,
+                                      AuthenticatedUser authenticatedUser, GalleryService galleryService, MenuService menuService, CoursesService coursesService, FilesService filesService,
                                       LessonsService lessonsService, BasketService basketService, CourseCustomersService courseCustomersService, ApplicationConfig applicationConfig,
                                       EmailService emailService, TemplateEngine templateEngine, InvoicesService invoicesService, CourseOrdersService courseOrdersService,
                                       MemesService memesService, AuthorsService authorsService, CourseAttachmentsService courseAttachmentsService, ModulesService modulesService,
                                       LessonAttachmentsService lessonAttachmentsService, Environment environment, EmailConfirmationService emailConfirmationService,
                                       CustomerGroupsService customerGroupsService, CustomerToGroupService customerToGroupService, ITubeService iTubeService) {
-        this.ordersService = ordersService;
         this.customersService = customersService;
         this.dictionariesService = dictionariesService;
         this.productsService = productsService;
@@ -84,10 +69,6 @@ public class ApplicationAdminController {
         this.authenticatedUser = authenticatedUser;
         this.galleryService = galleryService;
         this.menuService = menuService;
-        this.adviserService = adviserService;
-        this.accountsService = accountsService;
-        this.applicationsService = applicationsService;
-        this.contextConfigsService = contextConfigsService;
         this.coursesService = coursesService;
         this.filesService = filesService;
         this.lessonsService = lessonsService;
@@ -400,26 +381,26 @@ public class ApplicationAdminController {
         return "triggered-advices";
     }
 
-    @GetMapping({"/admin/triggered-advice/{id}"})
-    public String triggeredAdvice(@PathVariable Long id, Model model) {
-//        if (!authenticatedUser.hasAnyPermission(new Permissions[]{Permissions.ADVISER_TRIGGERED_ADVICES})) {
-//            return "denied";
-//        }
-        model.addAttribute("triggeredAdvice", new TriggeredAdviceGetResponse(adviserService.getTriggeredAdvice(id)));
-        return "triggered-advice";
-    }
-
-    @GetMapping({"/admin/advice/{id}"})
-    public String advice(@PathVariable Long id, Model model) {
-
-//        if (!authenticatedUser.hasAnyPermission(new Permissions[]{Permissions.ADVISER_ADVICES})) {
-//            return "denied";
-//        }
-
-        model.addAttribute("advice", new AdviceGetResponse(adviserService.getAdvice(id)));
-
-        return "advice";
-    }
+//    @GetMapping({"/admin/triggered-advice/{id}"})
+//    public String triggeredAdvice(@PathVariable Long id, Model model) {
+////        if (!authenticatedUser.hasAnyPermission(new Permissions[]{Permissions.ADVISER_TRIGGERED_ADVICES})) {
+////            return "denied";
+////        }
+//        model.addAttribute("triggeredAdvice", new TriggeredAdviceGetResponse(adviserService.getTriggeredAdvice(id)));
+//        return "triggered-advice";
+//    }
+//
+//    @GetMapping({"/admin/advice/{id}"})
+//    public String advice(@PathVariable Long id, Model model) {
+//
+////        if (!authenticatedUser.hasAnyPermission(new Permissions[]{Permissions.ADVISER_ADVICES})) {
+////            return "denied";
+////        }
+//
+//        model.addAttribute("advice", new AdviceGetResponse(adviserService.getAdvice(id)));
+//
+//        return "advice";
+//    }
 
     @GetMapping({"/admin/accounts"})
     public String accounts() {
@@ -430,16 +411,16 @@ public class ApplicationAdminController {
         return "accounts";
     }
 
-    @GetMapping({"/admin/account/{id}"})
-    public String account(@PathVariable Long id, Model model) {
-        if (!authenticatedUser.hasAnyPermission(new Permissions[]{Permissions.ADVISER_ACCOUNTS})) {
-            return "denied";
-        }
-
-        model.addAttribute("account", accountToResponses(accountsService.get(id)));
-
-        return "account";
-    }
+//    @GetMapping({"/admin/account/{id}"})
+//    public String account(@PathVariable Long id, Model model) {
+//        if (!authenticatedUser.hasAnyPermission(new Permissions[]{Permissions.ADVISER_ACCOUNTS})) {
+//            return "denied";
+//        }
+//
+//        model.addAttribute("account", accountToResponses(accountsService.get(id)));
+//
+//        return "account";
+//    }
 
     @GetMapping({"/admin/applications"})
     public String applications() {
@@ -450,16 +431,16 @@ public class ApplicationAdminController {
         return "applications";
     }
 
-    @GetMapping({"/admin/application/{id}"})
-    public String application(@PathVariable Long id, Model model) {
-        if (!authenticatedUser.hasAnyPermission(new Permissions[]{Permissions.ADVISER_APPLICATIONS})) {
-            return "denied";
-        }
-
-        model.addAttribute("app", applicationToResponse(applicationsService.get(id)));
-
-        return "application";
-    }
+//    @GetMapping({"/admin/application/{id}"})
+//    public String application(@PathVariable Long id, Model model) {
+//        if (!authenticatedUser.hasAnyPermission(new Permissions[]{Permissions.ADVISER_APPLICATIONS})) {
+//            return "denied";
+//        }
+//
+//        model.addAttribute("app", applicationToResponse(applicationsService.get(id)));
+//
+//        return "application";
+//    }
 
     @GetMapping({"/admin/context-variables"})
     public String contextVariables() {
@@ -481,16 +462,16 @@ public class ApplicationAdminController {
         return "context-configs";
     }
 
-    @GetMapping({"/admin/context-config/{id}"})
-    public String contextConfig(@PathVariable Long id, Model model) {
-        if (!authenticatedUser.hasAnyPermission(new Permissions[]{Permissions.ADVISER_CONTEXT_CONFIGS})) {
-            return "denied";
-        }
-
-        model.addAttribute("contextConfig", contextConfigToResponse(contextConfigsService.get(id)));
-
-        return "context-config";
-    }
+//    @GetMapping({"/admin/context-config/{id}"})
+//    public String contextConfig(@PathVariable Long id, Model model) {
+//        if (!authenticatedUser.hasAnyPermission(new Permissions[]{Permissions.ADVISER_CONTEXT_CONFIGS})) {
+//            return "denied";
+//        }
+//
+//        model.addAttribute("contextConfig", contextConfigToResponse(contextConfigsService.get(id)));
+//
+//        return "context-config";
+//    }
 
     @GetMapping({"/admin/the-newest"})
     public String newestAdvices(Model model) {
@@ -608,17 +589,17 @@ public class ApplicationAdminController {
         return "admin-statistics-trace-per-month";
     }
 
-    private ContextConfigGetResponse contextConfigToResponse(ContextConfigData data) {
-        return new ContextConfigGetResponse(data.getId(), data.getApplicationId(), data.getContext(), data.getName(), data.getType(), data.getValue());
-    }
-
-    private ApplicationGetResponse applicationToResponse(ApplicationData data) {
-        return new ApplicationGetResponse(data.getId(), data.getApplicationId(), data.getDescription(), data.getSecretKey());
-    }
-
-    private AccountGetResponse accountToResponses(AccountData data) {
-        return new AccountGetResponse(data.getId(), data.getName());
-    }
+//    private ContextConfigGetResponse contextConfigToResponse(ContextConfigData data) {
+//        return new ContextConfigGetResponse(data.getId(), data.getApplicationId(), data.getContext(), data.getName(), data.getType(), data.getValue());
+//    }
+//
+//    private ApplicationGetResponse applicationToResponse(ApplicationData data) {
+//        return new ApplicationGetResponse(data.getId(), data.getApplicationId(), data.getDescription(), data.getSecretKey());
+//    }
+//
+//    private AccountGetResponse accountToResponses(AccountData data) {
+//        return new AccountGetResponse(data.getId(), data.getName());
+//    }
 
 
     private void prepareModelForImage(Model model, Long id, String error, UploadResult result) {

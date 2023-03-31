@@ -27,7 +27,6 @@ public class AppEndpoint {
 
     private static final DateTimeFormatter TIME_FORMATTER_SHORT = DateTimeFormatter.ofPattern("H:mm");
 
-    private OrdersService ordersService;
     private CustomersService customersService;
     private StatisticsService statisticsService;
     private ProductsService productsService;
@@ -36,8 +35,7 @@ public class AppEndpoint {
     private GalleryService galleryService;
     private DieteticsService dieteticsService;
 
-    public AppEndpoint(OrdersService ordersService, CustomersService customersService, StatisticsService statisticsService, ProductsService productsService, DictionariesService dictionariesService, DeliveryService deliveryService, GalleryService galleryService, DieteticsService dieteticsService) {
-        this.ordersService = ordersService;
+    public AppEndpoint(CustomersService customersService, StatisticsService statisticsService, ProductsService productsService, DictionariesService dictionariesService, DeliveryService deliveryService, GalleryService galleryService, DieteticsService dieteticsService) {
         this.customersService = customersService;
         this.statisticsService = statisticsService;
         this.productsService = productsService;
@@ -45,67 +43,6 @@ public class AppEndpoint {
         this.deliveryService = deliveryService;
         this.galleryService = galleryService;
         this.dieteticsService = dieteticsService;
-    }
-
-
-    @GetMapping(path = "/api/orders/{id}", produces = "application/json; charset=UTF-8")
-    public OrderGetResponse getOrder(@PathVariable Long id) {
-        log.trace("Getting order details for order: {}", id);
-        return new OrderGetResponse(ordersService.getOrder(id));
-    }
-
-    @GetMapping(path = "/api/orders", produces = "application/json; charset=UTF-8")
-    public OrdersResultGetResponse findOrders(
-            @RequestParam(value = "first_and_last_name", required = false) String firstAndLastName,
-            @RequestParam(value = "date_purchased_from", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate purchasedDateFrom,
-            @RequestParam(value = "date_purchased_to", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate purchasedDateTo,
-            @RequestParam(value = "payment_status_id", required = false) Long paymentStatusId,
-            @RequestParam(value = "order_id", required = false) String orderId,
-
-            @RequestParam(value = "discount_code", required = false) String discountCode,
-            @RequestParam(value = "payment_method_id", required = false) Long paymentMethodId,
-            @RequestParam(value = "driver_id", required = false) Long driverId,
-            @RequestParam(value = "is_invoice", required = false) Boolean isInvoice,
-
-            @RequestParam(value = "date_delivery_from", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate deliveryDateFrom,
-            @RequestParam(value = "date_delivery_to", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate deliveryDateTo,
-            @RequestParam(value = "delivery_method_id", required = false) Long deliveryMethodId,
-            @RequestParam(value = "diet_id", required = false) Long dietId,
-            @RequestParam(value = "order_status_id", required = false) Long orderStatusId,
-            @RequestParam(value = "days_to_finish", required = false) Long daysToFinish,
-            @RequestParam(value = "city", required = false) String city,
-            @RequestParam(name = "date_marked_as_paid_from", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate markedAsPaidDateFrom,
-            @RequestParam(name = "date_marked_as_paid_to", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate markedAsPaidDateTo,
-            @RequestParam(value = "phone", required = false) String phone,
-            @RequestParam(name = "page", required = false, defaultValue = "1") Long page,
-            @RequestParam(name = "page_size", required = false, defaultValue = "100") Long pageSize
-    ) {
-        OrdersFilter filter = prepareOrdersFilter(
-                firstAndLastName,
-                purchasedDateFrom,
-                purchasedDateTo,
-                paymentStatusId,
-                orderId,
-                discountCode,
-                paymentMethodId,
-                driverId,
-                isInvoice,
-                deliveryDateFrom,
-                deliveryDateTo,
-                deliveryMethodId,
-                dietId,
-                orderStatusId,
-                daysToFinish,
-                city,
-                markedAsPaidDateFrom,
-                markedAsPaidDateTo,
-                phone,
-                page,
-                pageSize
-        );
-
-        OrderResultData result = ordersService.findOrdersAll(filter, page, pageSize);
-        return allOrdersToResponse(result);
     }
 
     private OrdersResultGetResponse allOrdersToResponse(OrderResultData result) {
@@ -196,126 +133,7 @@ public class AppEndpoint {
         return new OrderCountGetResponse(1234L);
     }
 
-    @PostMapping(path = "/api/orders", consumes = "application/json; charset=UTF-8", produces = "application/json; charset=UTF-8")
-    public OrderPostResponse createOrder(@RequestBody OrderPostRequest req) {
-        log.trace("Create new order with the following data: ");
-        log.trace("req: " + req);
 
-
-        Map<Long, List<Long>> extrasMap = new HashMap<>();
-        for (long i = 0; i < req.getProducts().getDietId().length; i++) {
-            extrasMap.put(i, new ArrayList<>());
-        }
-        long prd = -1;
-        for (int i = 0; i < req.getProducts().getExtras().length; i++) {
-            String[] parts = req.getProducts().getExtras()[i].split(";");
-            log.debug("parts[0]: " + parts[0] + " parts[1]: " + parts[1] + " parts[2]: " + parts[2]);
-            if (parts[0].equals("ex_0")) {
-                prd++;
-            }
-            if ("true".equals(parts[2])) {
-                extrasMap.get(prd).add(Long.valueOf(parts[1]));
-            }
-        }
-
-        List<OrderProductCreateData> products = new ArrayList<>();
-        for (int i = 0; i < req.getProducts().getDietId().length; i++) {
-            Set<Long> extras = new HashSet<>(extrasMap.get(Long.valueOf(i)));
-            OrderProductCreateData product = new OrderProductCreateData(
-                    null, req.getProducts().getDietId()[i], req.getProducts().getDietTypeId()[i], req.getProducts().getQuantity()[i], req.getProducts().getStartDate()[i], req.getProducts().getDays()[i], req.getProducts().getWeekendOptionId()[i], req.getProducts().getTestDay()[i], null, extras
-            );
-            products.add(product);
-        }
-        if (req.getPurchaseDateTime() == null) {
-            throw new IllegalArgumentException("Uzupełnij datę sprzedaży");//TODO move to service
-        }
-
-        OrderAddData orderAddData = new OrderAddData(req.getCustomerId(), LocalDateTime.of(req.getPurchaseDateTime(), req.getPurchaseTime() == null ? LocalTime.of(0, 0, 0) : req.getPurchaseTime()), req.getPaymentMethodId(), req.getStatus(), req.getSendEmail(), req.getNewOrderGroup(), req.getDriverExclude(), req.getDriverId(), req.getComments(), req.getDeliveryMethodId(), products, req.getDiscountCode());
-        Long id = ordersService.addOrder(orderAddData);
-        return new OrderPostResponse(id);
-    }
-
-    @PutMapping(path = "/api/orders/{orderId}/change/{what}/value/{value}", consumes = "application/json; charset=UTF-8", produces = "application/json; charset=UTF-8")
-    public void changeOrder(@PathVariable Long orderId, @PathVariable String what, @PathVariable String value) {
-        log.debug("Should change " + what + " for order id: " + orderId + " value: " + value);
-        ordersService.changeOrder(orderId, what, value);
-    }
-
-    @PutMapping(path = "/api/orders/{id}/demanding_customer/{customerId}/value/{state}")
-    public void updateOrderDemandingCustomer(@PathVariable Long id, @PathVariable Long customerId, @PathVariable Boolean state) {
-        log.debug("id: " + id + " state: " + state + " customerId: " + customerId);
-        customersService.updateCustomerDemanding(customerId, state);
-        ordersService.updateDemandingCustomer(id, customerId, state);
-    }
-
-    @PutMapping(path = "/api/orders/{id}/stop_diet/{date}")
-    public void orderStopDiet(@PathVariable Long id, @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
-        log.debug("id: " + id + " date: " + date);
-        ordersService.updateOrderStatus(id, 7L, date);
-    }
-
-    @PutMapping(path = "/api/orders/{id}/start_diet/{date}")
-    public void orderStartDiet(@PathVariable Long id, @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
-        log.debug("id: " + id + " date: " + date);
-        ordersService.updateOrderStatus(id, 5L, date);
-    }
-
-    @PutMapping(path = "/api/orders/{orderId}", consumes = "application/json; charset=UTF-8", produces = "application/json; charset=UTF-8")
-    public void updateOrder(@PathVariable Long orderId,
-                            @RequestBody OrderPutRequest req) {
-
-
-        log.debug(req.toString());
-        ordersService.update(new OrderUpdateData(
-                orderId,
-                req.getDeliveryMethodId(),
-                req.getPaymentMethodId(),
-                req.getPaymentStatusId(),
-                req.getOrderStatusId(),
-                req.getDemandingCustomer(),
-                req.getReceipt(),
-                req.getInvoiceIssuedStatus(), //TODO: issued or wanted?
-                req.getEmail(),
-                req.getDriverExclude(),
-                req.getComments(),
-                req.getAdminComments(),
-                req.getPaymentByCard(),
-
-                req.getCustomerFirstName(),
-                req.getCustomerLastName(),
-                req.getCustomerPhone(),
-                req.getCustomerStreet(),
-                req.getCustomerBuildingNumber(),
-                req.getCustomerApartmentNumber(),
-                req.getCustomerPostalCode(),
-                req.getCustomerCityId(),
-
-                req.getWeekendAddress(),
-                req.getWeekendStreet(),
-                req.getWeekendBuildingNumber(),
-                req.getWeekendApartmentNumber(),
-                req.getWeekendPostalCode(),
-                req.getWeekendCityId(),
-
-                req.getInvoiceWanted(),
-                req.getInvoiceCompanyName(),
-                req.getInvoiceNip(),
-                req.getInvoiceStreet(),
-                req.getInvoiceBuildingNumber(),
-                req.getInvoiceApartmentNumber(),
-                req.getInvoicePostalCode(),
-                req.getInvoiceCityName(),
-
-                req.getHoursTo(),
-                req.getWeekendHours(),
-                req.getWeekendHoursTo(),
-                req.getStartDate(),
-                req.getStopDate(),
-                req.getCancelReason(),
-                req.getGroupOrders(),
-                null)
-        );
-    }
 
     private String getTimeWithoutLeadingZeros(LocalTime timeWithLeadingZeros) {
         if (timeWithLeadingZeros == null) {
@@ -325,30 +143,12 @@ public class AppEndpoint {
     }
 
     // from ewidencja zamówień - the usuń button
-    @DeleteMapping(path = "/api/orders/{orderId}")
-    public void deleteOrder(@PathVariable Long orderId) {
-        System.out.println("delete the specified order (" + orderId + ").");
-        ordersService.remove(orderId);
-    }
 
 
     // from order details
-    @PutMapping(path = "/api/orders/{orderId}/discountCode/{discountCode}")
-    public void updateOrderDiscountCode(@PathVariable Long orderId, @PathVariable String discountCode) {
-        System.out.println("update the discount for the order");
-        if ("adr34r4fdscccc4rfff5w54gwwygwgbfdbst544tgstgst4".equals(discountCode)) {
-            discountCode = "";
-        }
-        ordersService.updateDiscountCode(orderId, discountCode);
-    }
 
 
-    @GetMapping(path = "/api/orders/{orderId}/payments", produces = "application/json; charset=UTF-8")
-    public OrderPaymentResultGetResponse getAllOrderPayments(@PathVariable Long orderId) {
-        OrderDetailsData data = ordersService.getOrder(orderId);
-        OrderPaymentResultData result = ordersService.getPaymentResultForOrder(orderId, data.getOrderBasketSum());
-        return allOrdersPaymentsToResponse(result);
-    }
+
 
     private OrderPaymentResultGetResponse allOrdersPaymentsToResponse(OrderPaymentResultData result) {
         List<OrderPaymentGetResponse> list = new ArrayList<>();
@@ -367,79 +167,6 @@ public class AppEndpoint {
         return new OrderPaymentResultGetResponse(list, result.getSum(), result.getToPayLeft(), result.getRefund());
     }
 
-    // from order details (SECTION: Płatności)
-    @PostMapping(path = "/api/orders/{orderId}/payments")
-    public void createOrderPayment(@PathVariable Long orderId,
-                                   @RequestBody OrderPaymentPostRequest request) {
-        ordersService.addPayment(new OrderPaymentCreateData(orderId, request.getAmount(), request.getPaymentMethodId()));
-    }
-
-    // from order details (SECTION: Płatności)
-    @DeleteMapping(path = "/api/orders/{orderId}/payments/{paymentId}")
-    public void deleteOrderPayment(@PathVariable Long orderId,
-                                   @PathVariable Long paymentId) {
-        ordersService.removePayment(new OrderPaymentRemoveData(orderId, paymentId));
-    }
-
-
-    //: from order details (SECTION: produkty w zamówieniu)
-    @GetMapping(path = "/api/orders/{orderId}/products", produces = "application/json; charset=UTF-8")
-    public OrderProductResultGetResponse getAllOrderProducts(
-            @PathVariable Long orderId
-    ) {
-        OrderDetailsData data = ordersService.getOrder(orderId);
-        OrderProductResultData result = ordersService.getProductResultForOrder(orderId, data.getOrderBasketSumNo(), data.getOrderBasketSum());
-        return allOrdersProductsToResponse(result);
-    }
-
-    @GetMapping(path = "/api/orders/{orderId}/products/{productId}", produces = "application/json; charset=UTF-8")
-    public OrderProductGetResponse getOrderProduct(
-            @PathVariable Long orderId,
-            @PathVariable Long productId
-
-    ) {
-        OrderDetailsData data = ordersService.getOrder(orderId);
-        OrderProductResultData result = ordersService.getProductResultForOrder(orderId, data.getOrderBasketSumNo(), data.getOrderBasketSum());
-
-        OrderProductData product = result.getProducts().stream().filter(o -> o.getId().equals(productId)).findFirst().get();
-        List<ExtrasData> extrasList = product.getExtrasList();
-        List<OrderExtrasGetResponse> extras = new ArrayList<>();
-        for (ExtrasData ext : extrasList) {
-            extras.add(new OrderExtrasGetResponse(ext.getId()));
-        }
-        return new OrderProductGetResponse(
-                product.getId(), //id (productId)
-                product.getDietName(),
-                product.getDietId(),
-                product.getTypeName(),
-                product.getQuantity(),
-                product.getDateFrom() != null ? product.getDateFrom().format(DATE_FORMATTER) : "",
-                product.getDays(),
-                product.getExtras(),
-                product.getNetPrice(),
-                product.getVatPercent(),
-                product.getGrossPrice(),
-                product.getPromotion(),
-                product.getGrossValue(),
-                product.getWeekendsIndicator(),
-                product.getTestIndicatorName(),
-                product.getTestIndicatorCode(),
-                product.getProductId(),
-                product.getProductStopped(),
-                product.getWeekendOptionId(),
-                extras);
-    }
-
-
-    @GetMapping(path = "/api/orders/{orderId}/deliveries_released", produces = "application/json; charset=UTF-8")
-    public OrderReleasedDeliveriesGetResponse getAllOrderReleasedDeliveries(
-            @PathVariable Long orderId
-    ) {
-        log.debug("Should return all released deliveries for orderId: " + orderId);
-        OrderDetailsData data = ordersService.getOrder(orderId);
-        List<OrderDeliveryData> list = deliveryService.findReleasedDeliveriesForOrder(orderId, data);
-        return prepareOrderReleasedDeliveriesGetResponse(list);
-    }
 
     private OrderReleasedDeliveriesGetResponse prepareOrderReleasedDeliveriesGetResponse(List<OrderDeliveryData> list) {
         List<OrderReleasedDeliveryGetResponse> deliveries = new ArrayList<>();
@@ -479,116 +206,11 @@ public class AppEndpoint {
         return new OrderProductResultGetResponse(list, result.getPriceBeforeDiscount(), result.getPriceAfterDiscount());
     }
 
-    // from order details (SECTION: produkty w zamówieniu)
-    @PostMapping(path = "/api/orders/{orderId}/products", consumes = "application/json; charset=UTF-8")
-    public void createOrderProduct(@PathVariable Long orderId,
-                                   @RequestBody OrderProductPostRequest request) {
-        log.trace(request.toString());
-        ordersService.addProduct(new OrderProductCreateData(orderId, request.getDietId(), request.getDietTypeId(), request.getQuantity(), request.getDateFrom(), request.getDays(), request.getWeekendOptionId(), request.getTestDay(), request.getExtrasOne(), request.getExtras()));
-    }
-
-    // from order details (SECTION: produkty w zamówieniu)
-    @PutMapping(path = "/api/orders/{orderId}/products/{productId}", consumes = "application/json; charset=UTF-8")
-    public void updateOrderProduct(@PathVariable Long orderId,
-                                   @PathVariable Long productId,
-                                   @RequestBody OrderProductPutRequest request) {
-        log.debug(request.toString());
-        ordersService.updateProduct(new OrderProductUpdateData(orderId, productId, request.getDietId(), request.getTypeId(), request.getQuantity(), request.getDays(), request.getWeekendOptionId(), request.getTestDay(), request.getExtrasOne(), request.getSuspensionDate(), request.getStartDate(), request.getExtras(), request.getChangePrice(), request.getChangePriceValue()));
-    }
-
-    // from order details (SECTION: produkty w zamówieniu)
-    @DeleteMapping(path = "/api/orders/{orderId}/products/{productId}")
-    public void deleteOrderProduct(@PathVariable Long orderId, @PathVariable Long productId) {
-        ordersService.removeProduct(orderId, productId);
-    }
 
 
-    //TODO: from order details (SECTION: Informacje o dostawach)
-    @GetMapping(path = "/api/orders/{orderId}/deliveries/{deliveryId}", produces = "application/json; charset=UTF-8")
-    public OrderDeliveryGetResponse getOrderDelivery(
-            @PathVariable Long orderId,
-            @PathVariable Long deliveryId
-    ) {
-        System.out.println("Should return delivery data for delivery " + deliveryId + " for order " + orderId + ".");
-        OrderDeliveryData data = ordersService.getDeliveryData(orderId, deliveryId);
-
-        return new OrderDeliveryGetResponse(
-                data.getId(),
-                data.getNo(), 1L,
-                "Miasto testowe",
-                "Testowa",
-                "32323",
-                "000AA",
-                "00-000",
-                data.getAddress(),
-                data.getDeliveredDate() == null ? "" : data.getDeliveredDate().format(DATE_TIME_FORMATTER), // remove in future
-                data.getHourFrom().toString(),
-                data.getHourTo().toString(),
-                data.getProductName(),
-                data.getDriver(),
-                data.getDate().format(DATE_FORMATTER),
-                data.getNumberOfPhotos(),
-                null, null, data.getWeekend(), data.getDeliveryDate().format(DATE_FORMATTER));
-    }
-
-    @GetMapping(path = "/api/orders/{orderId}/deliveries", produces = "application/json; charset=UTF-8")
-    public OrderDeliveryResultGetResponse findOrderDeliveries(
-            @PathVariable Long orderId
-    ) {
-
-        OrderDetailsData order = ordersService.getOrder(orderId);
-        List<OrderDeliveryData> deliveries = ordersService.getDeliveryDataForOrder(orderId, order);
-        List<OrderDeliveryGetResponse> list = new ArrayList<>();
-        for (OrderDeliveryData delivery : deliveries) {
-            list.add(new OrderDeliveryGetResponse(delivery.getId(), delivery.getNo(), delivery.getCityId(), null, null, null, null, null, delivery.getAddress(), delivery.getDeliveredDate() == null ? "" : delivery.getDeliveredDate().format(DATE_TIME_FORMATTER), delivery.getHourFrom().toString(),
-                    delivery.getHourTo() != null ? delivery.getHourTo().toString() : null, delivery.getProductName(), delivery.getDriver(), delivery.getDate().format(DATE_FORMATTER), delivery.getNumberOfPhotos(), delivery.getDeliveredDate() == null ? "" : delivery.getDeliveredDate().format(DATE_TIME_FORMATTER), delivery.getStatus(), delivery.getWeekend(), delivery.getDeliveryDate() == null ? "" : delivery.getDeliveryDate().format(DATE_FORMATTER)));
-        }
-        return new OrderDeliveryResultGetResponse(list);
-    }
-
-    //TODO: from order details (SECTION: Informacje o dostawach)
-    @PutMapping(path = "/api/orders/{orderId}/deliveries/{deliveryId}", consumes = "application/json; charset=UTF-8")
-    public void updateOrderDelivery(
-            @PathVariable Long orderId,
-            @PathVariable Long deliveryId,
-            @RequestBody OrderDeliveryPutRequest request, @RequestHeader(value = "User-Agent") String userAgent) {
-        System.out.println("Should change the delivery properties for delivery " + deliveryId + " for order " + orderId + ".");
-        System.out.println("New properties:");
-        System.out.println("cityId: " + request.getCityId());
-        System.out.println("street: " + request.getStreet());
-        System.out.println("building: " + request.getBuildingNumber());
-        System.out.println("apartment: " + request.getApartmentNumber());
-        System.out.println("postal code: " + request.getPostalCode());
-        System.out.println("hourFrom: " + request.getHourFrom());
-        System.out.println("hourTo: " + request.getHourTo());
-        //TODO: on getting complete=true, the service should get the current dateTime as completionDateTime
-        System.out.println("complete: " + request.getComplete());
-        System.out.println("suspensionDate: " + request.getSuspensionDate());
-        System.out.println("getStartDate: " + request.getStartDate());
-        ordersService.updateDelivery(new OrderDeliveryUpdateData(orderId, deliveryId, request.getCityId(), request.getStreet(), request.getBuildingNumber(), request.getApartmentNumber(), request.getPostalCode(), request.getSuspensionDate(), request.getComplete(), request.getHourFrom(), request.getHourTo(), request.getStartDate(), userAgent));
-    }
 
 
-    @GetMapping(path = "/api/orders/{orderId}/delivery_changes", produces = "application/json; charset=UTF-8")
-    public List<OrderDeliveryChangeGetResponse> getOrderDeliveryChanges(
-            @PathVariable Long orderId
-    ) {
-        List<OrderDeliveryChangeData> result = ordersService.getDeliveryChangesForOrder(orderId);
-        return allOrderDeliveryChangesToResponse(result);
-    }
 
-    @GetMapping(path = "/api/orders/{orderId}/delivery_changes/{deliveryChangeId}", produces = "application/json; charset=UTF-8")
-    public OrderDeliveryChangeGetResponse getOrderDeliveryChange(
-            @PathVariable Long orderId,
-            @PathVariable Long deliveryChangeId
-    ) {
-        List<OrderDeliveryChangeData> result = ordersService.getDeliveryChangesForOrder(orderId);
-        OrderDeliveryChangeData data = result.stream().filter(o -> o.getId().equals(deliveryChangeId)).findFirst().get();
-        return new OrderDeliveryChangeGetResponse(data.getId(), data.getNo(), data.getType(),
-                data.getBefore() != null ? data.getBefore() : "",
-                data.getAfter() != null ? data.getAfter() : "", data.getProductName(),
-                data.getUserName(), data.getDateTime().format(DATE_TIME_FORMATTER));
-    }
 
     private List<OrderDeliveryChangeGetResponse> allOrderDeliveryChangesToResponse(List<OrderDeliveryChangeData> result) {
         List<OrderDeliveryChangeGetResponse> list = new ArrayList<>();
@@ -763,23 +385,6 @@ public class AppEndpoint {
         dieteticsService.updateProductType(new ProductTypeData(id, data.getType()));
     }
 
-
-    @GetMapping(path = "/api/orders/{orderId}/emails", produces = "application/json; charset=UTF-8")
-    public OrderEmailResultGetResponse getOrderEmails(@PathVariable Long orderId) {
-        List<OrderEmailData> orderSentEmails = ordersService.findOrderSentEmails(orderId);
-        return new OrderEmailResultGetResponse(prepareOrderEmailGetResponses(orderSentEmails));
-    }
-
-    @GetMapping(path = "/api/orders/{orderId}/order_days", produces = "application/json; charset=UTF-8")
-    public List<OrderDaysGetResponse> getOrderDays(@PathVariable Long orderId) {
-        return prepareOrderDaysGerResponses(orderId, ordersService.findOrderDays(orderId));
-    }
-
-    @GetMapping(path = "/api/orders/{orderId}/order_days_history", produces = "application/json; charset=UTF-8")
-    public List<OrderDaysGetResponse> getOrderDaysHistory(@PathVariable Long orderId) {
-        return prepareOrderDaysGerResponses(orderId, ordersService.findOrderDaysHistory(orderId));
-    }
-
     private List<OrderDaysGetResponse> prepareOrderDaysGerResponses(@PathVariable Long orderId, List<OrderDaysData> listOrderDays) {
         List<OrderDaysGetResponse> list = new ArrayList<>();
         for (OrderDaysData day : listOrderDays) {
@@ -796,55 +401,10 @@ public class AppEndpoint {
         return list;
     }
 
-    @GetMapping(path = "/api/orders/{orderId}/emails/{emailId}", produces = "application/json; charset=UTF-8")
-    public OrderEmailGetResponse getOrderEmail(@PathVariable Long orderId, @PathVariable Long emailId) {
-        List<OrderEmailData> orderSentEmails = ordersService.findOrderSentEmails(orderId);
-        OrderEmailData email = orderSentEmails.stream().filter(o -> o.getId().equals(emailId)).findFirst().get(); //IMP
-        return new OrderEmailGetResponse(email.getNo(), email.getId(), email.getTitle(), email.getSentBy(), email.getDateTime().format(DATE_TIME_FORMATTER), email.getOrderId(), email.getMessage());
-    }
-
-    @GetMapping(path = "/api/orders/{orderId}/changes", produces = "application/json; charset=UTF-8")
-    public OrderChangeResultGetResponse getOrderChanges(@PathVariable Long orderId) {
-        List<OrderChangeData> changesForOrder = ordersService.getChangesForOrder(orderId);
-        List<OrderChangeGetResponse> list = new ArrayList<>();
-        for (OrderChangeData change : changesForOrder) {
-            list.add(new OrderChangeGetResponse(change.getNo(), change.getId(), change.getName(), change.getDateTime().format(DATE_TIME_FORMATTER)));
-        }
-        return new OrderChangeResultGetResponse(list);
-    }
-
-    @GetMapping(path = "/api/orders/{orderId}/changes/{changeId}", produces = "application/json; charset=UTF-8")
-    public OrderChangeGetResponse getOrderChange(@PathVariable Long orderId,
-                                                 @PathVariable Long changeId) {
-        List<OrderChangeData> changesForOrder = ordersService.getChangesForOrder(orderId);
-        OrderChangeData data = changesForOrder.stream().filter(o -> o.getId().equals(changeId)).findFirst().get();
-        List<OrderChangeProductGetResponse> products = new ArrayList<>();
-        for (OrderChangeProductData product : data.getProducts()) {
-            products.add(new OrderChangeProductGetResponse(product.getProductName(), product.getQuantity(), product.getPrice(), product.getDateFrom() != null ? product.getDateFrom().format(DATE_FORMATTER) : "", product.getDaysLeft()));
-        }
-        return new OrderChangeGetResponse(data.getNo(), data.getId(), data.getName(), data.getDateTime().format(DATE_TIME_FORMATTER),
-                data.getFirstName(), data.getLastName(), data.getPhoneNumber(), data.getStreet(), data.getBuildingNumber(), data.getApartmentNumber(), data.getPostalCode(),
-                data.getCityName(), data.getHourFrom() == null ? null : data.getHourFrom().format(TIME_FORMATTER_SHORT), data.getHourTo() == null ? null : data.getHourTo().format(TIME_FORMATTER_SHORT),
-                data.getDemandingCustomerIndicator(), data.getPaymentMethodName(), data.getCardPaymentIndicator(),
-                data.getPaymentStatus(), data.getDeliveryMethodName(), products);
-    }
 
     @GetMapping(path = "/api/dictionary/{name}", produces = "application/json; charset=UTF-8")
     public List<DictionaryData> getDictionary(@PathVariable String name) {
         return dictionariesService.getDictionary(DictionaryType.valueOf(name.toUpperCase()), Language.PL);
-    }
-
-    @PutMapping(path = "/api/orders/{orderId}/cancel_order", consumes = "application/json; charset=UTF-8")
-    public void cancelOrder(@PathVariable Long orderId,
-                            @RequestBody CancelOrderPutRequest req) {
-        log.trace("Should cancel orderId: " + orderId + " with reason: " + req.getReason());
-        ordersService.cancelOrderWithReason(orderId, req.getReason());
-    }
-
-    @PutMapping(path = "/api/orders/{id}/send_order_summary_email")
-    public void sendOrderSummaryEmail(@PathVariable Long id) {
-        log.debug("sendOrderSummaryEmail for orderId: " + id);
-        ordersService.sendOrderSummaryEmail(id);
     }
 
     private List<GetAllergenResponse> prepareAllergenGetResponses(List<AllergenData> allergens) {

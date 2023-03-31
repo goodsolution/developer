@@ -8,13 +8,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
-import pl.com.mike.developer.config.AdviserConfig;
-import pl.com.mike.developer.domain.UserData;
 import pl.com.mike.developer.domain.courseplatform.CustomerData;
 import pl.com.mike.developer.logic.ApplicationConfigService;
 import pl.com.mike.developer.logic.CacheType;
 import pl.com.mike.developer.logic.Language;
-import pl.com.mike.developer.logic.UsersService;
 import pl.com.mike.developer.logic.courseplatform.CourseCustomersService;
 import pl.com.mike.developer.logic.courseplatform.CustomerAuthoritiesService;
 import pl.com.mike.developer.logic.courseplatform.CustomerAuthority;
@@ -25,19 +22,15 @@ import java.util.*;
 @Service
 public class AuthenticatedUser {
     private UserPermissionsJdbcRepository userPermissionsJdbcRepository;
-    private UsersService usersService;
     private ApplicationConfigService applicationConfigService;
     private UserDetailsService userDetailsService;
-    private AdviserConfig adviserConfig;
     private CourseCustomersService courseCustomersService;
     private CustomerAuthoritiesService customerAuthoritiesService;
 
-    public AuthenticatedUser(UserPermissionsJdbcRepository userPermissionsJdbcRepository, UsersService usersService, ApplicationConfigService applicationConfigService, UserDetailsService userDetailsService, AdviserConfig adviserConfig, CourseCustomersService courseCustomersService, CustomerAuthoritiesService customerAuthoritiesService) {
+    public AuthenticatedUser(UserPermissionsJdbcRepository userPermissionsJdbcRepository, ApplicationConfigService applicationConfigService, UserDetailsService userDetailsService, CourseCustomersService courseCustomersService, CustomerAuthoritiesService customerAuthoritiesService) {
         this.userPermissionsJdbcRepository = userPermissionsJdbcRepository;
-        this.usersService = usersService;
         this.applicationConfigService = applicationConfigService;
         this.userDetailsService = userDetailsService;
-        this.adviserConfig = adviserConfig;
         this.courseCustomersService = courseCustomersService;
         this.customerAuthoritiesService = customerAuthoritiesService;
     }
@@ -54,15 +47,11 @@ public class AuthenticatedUser {
         return null;
     }
 
-    public boolean isAdviserActive() {
-        return adviserConfig.getAdviserActive();
-    }
-
-    public Long getUserId() {
-        String userName = getUserName();
-        UserData user = usersService.getUserByLogin(userName);
-        return user.getId();
-    }
+//    public Long getUserId() {
+//        String userName = getUserName();
+//        UserData user = usersService.getUserByLogin(userName);
+//        return user.getId();
+//    }
 
     public boolean hasAnyPermission(Permissions... permissions) {
         if (hasRole("Super administrator")) {
