@@ -28,13 +28,12 @@ public class CustomersService {
     private CustomersJdbcRepository customersJdbcRepository;
     private DictionariesService dictionariesService;
     private DriversService driversService;
-    private ViewersService viewersService;
 
-    public CustomersService(CustomersJdbcRepository customersJdbcRepository, DictionariesService dictionariesService, DriversService driversService, ViewersService viewersService) {
+
+    public CustomersService(CustomersJdbcRepository customersJdbcRepository, DictionariesService dictionariesService, DriversService driversService) {
         this.customersJdbcRepository = customersJdbcRepository;
         this.dictionariesService = dictionariesService;
         this.driversService = driversService;
-        this.viewersService = viewersService;
     }
 
     public CustomerNewResultGetResponse findNewCustomersAll(CustomerNewFilter filter) {
@@ -67,48 +66,6 @@ public class CustomersService {
             list.add(data);
         }
         return list;
-    }
-
-    public CustomerData getCustomer(Long id) {
-        long startTime = System.currentTimeMillis();
-        CustomerData data = customersJdbcRepository.getCustomer(id);
-        long timeTaken = System.currentTimeMillis() - startTime;
-        log.info("Time Taken by {} is {}", "getCustomer", timeTaken);
-        if (data == null) {
-            throw new IllegalArgumentException("Nie mogę pobrać klienta id: " + id);
-        }
-        String city = data.getCity();
-        Long cityId = (city != null && !city.isEmpty()) ? dictionariesService.getDictionaryIdByValue(city, DictionaryType.CITIES, Language.PL) : null;
-        Long defaultDriverId = driversService.getDefaultDriverForCity(cityId).getId();
-        if (defaultDriverId == null) {
-            throw new IllegalArgumentException("defaultDriverId is null");
-        }
-        String weekendCity = data.getWeekendCity();
-        Long weekendCityId = (weekendCity != null && !weekendCity.isEmpty()) ? dictionariesService.getDictionaryIdByValue(weekendCity, DictionaryType.CITIES, Language.PL) : null;
-
-        String customerFrom = prepareCustomerFrom(data.getCustomerFrom());
-
-        return new CustomerData(data, defaultDriverId, cityId, weekendCityId, customerFrom);
-    }
-
-    private String prepareCustomerFrom(String customerFrom) {
-        ViewerData viewerData;
-        if(customerFrom != null) {
-            if(customerFrom.equals("admin")) {
-                return CustomerFrom.ADMINISTRATION_PANEL.getText();
-            } else if(customerFrom.equals("newsletter")) {
-                return CustomerFrom.NEWSLETTER.getText();
-            } else {
-                viewerData = viewersService.get(customerFrom);
-                if(viewerData != null) {
-                    return getCustomerFrom(viewerData);
-                } else {
-                    return CustomerFrom.OTHER.getText();
-                }
-            }
-        } else {
-            return CustomerFrom.OTHER.getText();
-        }
     }
 
     private String getCustomerFrom(ViewerData viewerData) {

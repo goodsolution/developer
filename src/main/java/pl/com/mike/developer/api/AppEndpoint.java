@@ -59,11 +59,6 @@ public class AppEndpoint {
                 1L));
     }
 
-    @GetMapping(path = "/api/customer/{id}", produces = "application/json; charset=UTF-8")
-    public CustomerGetResponse getCustomer(@PathVariable Long id) {
-        return new CustomerGetResponse(customersService.getCustomer(id));
-    }
-
     @GetMapping(path = "/api/customer/substring/{substring}", produces = "application/json; charset=UTF-8")
     public List<CustomerGetResponse> getCustomersBySubstring(@PathVariable String substring) {
         List<DictionaryData> dictionaryCustomers = dictionariesService.getDictionaryCustomers(substring);
@@ -212,11 +207,6 @@ public class AppEndpoint {
         log.trace("Create new customer with the following data: ");
         log.trace("req: " + req);
         return customersService.createCustomer(new CustomerData(req.getName(), req.getSurname(), req.getStreet(), req.getHouseNumber(), req.getApartmentNumber(), req.getPostalCode(), req.getCity(), req.getMail(), req.getGroup(), req.getStatus(), req.getCustomerFrom(), req.getType()));
-    }
-
-    @PutMapping(path = "/api/customer/{id}", produces = "application/json; charset=UTF-8")
-    public void updateCustomer(@PathVariable Long id, @RequestBody CustomerPutRequest req) {
-        customersService.updateCustomer(customerPutRequestToData(req, customersService.getCustomer(id)));
     }
 
     private CustomerData customerPutRequestToData (CustomerPutRequest req, CustomerData oldData) {
