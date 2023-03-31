@@ -3,12 +3,13 @@ package pl.com.mike.developer.logic.courseplatform;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-import pl.com.mike.developer.domain.courseplatform.*;
+import pl.com.mike.developer.domain.courseplatform.AuthorData;
+import pl.com.mike.developer.domain.courseplatform.AuthorsFilter;
+import pl.com.mike.developer.domain.courseplatform.CustomerData;
+import pl.com.mike.developer.domain.courseplatform.CustomersFilter;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 
 @Service

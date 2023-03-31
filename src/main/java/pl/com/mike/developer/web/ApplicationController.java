@@ -7,16 +7,20 @@ import org.springframework.http.MediaType;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.thymeleaf.TemplateEngine;
-import pl.com.mike.developer.api.courseplatform.*;
-import pl.com.mike.developer.auth.Permissions;
+import pl.com.mike.developer.api.courseplatform.MemeGetResponse;
 import pl.com.mike.developer.config.ApplicationConfig;
-import pl.com.mike.developer.domain.courseplatform.*;
+import pl.com.mike.developer.domain.courseplatform.MemeData;
 import pl.com.mike.developer.domain.vin.CarsFilter;
-import pl.com.mike.developer.logic.Language;
 import pl.com.mike.developer.logic.*;
-import pl.com.mike.developer.logic.courseplatform.*;
+import pl.com.mike.developer.logic.courseplatform.AuthorsService;
+import pl.com.mike.developer.logic.courseplatform.FilesService;
+import pl.com.mike.developer.logic.courseplatform.MemesService;
+import pl.com.mike.developer.logic.courseplatform.ModulesService;
 import pl.com.mike.developer.logic.vin.CepikService;
 import pl.com.mike.developer.logic.vin.VehicleService;
 
@@ -24,7 +28,6 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.time.LocalDate;
 
 @Controller
 public class ApplicationController {

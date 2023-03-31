@@ -1,8 +1,6 @@
 package pl.com.mike.developer.logic.courseplatform;
 
 import org.springframework.stereotype.Service;
-import pl.com.mike.developer.domain.courseplatform.CourseData;
-import pl.com.mike.developer.domain.courseplatform.CoursesFilter;
 import pl.com.mike.developer.domain.courseplatform.ModuleData;
 
 import java.time.LocalDateTime;

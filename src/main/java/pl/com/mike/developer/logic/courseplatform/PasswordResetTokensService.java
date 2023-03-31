@@ -3,7 +3,6 @@ package pl.com.mike.developer.logic.courseplatform;
 import org.springframework.stereotype.Service;
 import pl.com.mike.developer.config.ApplicationConfig;
 import pl.com.mike.developer.domain.courseplatform.CustomerData;
-import pl.com.mike.developer.domain.courseplatform.CustomersFilter;
 import pl.com.mike.developer.domain.courseplatform.PasswordResetTokenData;
 import pl.com.mike.developer.domain.courseplatform.PasswordResetTokensFilter;
 

@@ -11,7 +11,6 @@ import pl.com.mike.developer.logic.DictionaryType;
 import pl.com.mike.developer.logic.Language;
 
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -22,13 +21,11 @@ public class AppEndpoint {
     private static final Logger log = LoggerFactory.getLogger(AppEndpoint.class);
     private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-LL-dd HH:mm:ss");
     private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-LL-dd");
-
     private static final DateTimeFormatter TIME_FORMATTER_SHORT = DateTimeFormatter.ofPattern("H:mm");
 
     private CustomersService customersService;
 
     private DictionariesService dictionariesService; //TODO remove from controller
-
 
     public AppEndpoint(CustomersService customersService, DictionariesService dictionariesService) {
         this.customersService = customersService;
