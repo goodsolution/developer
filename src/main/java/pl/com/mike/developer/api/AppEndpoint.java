@@ -209,43 +209,4 @@ public class AppEndpoint {
         return customersService.createCustomer(new CustomerData(req.getName(), req.getSurname(), req.getStreet(), req.getHouseNumber(), req.getApartmentNumber(), req.getPostalCode(), req.getCity(), req.getMail(), req.getGroup(), req.getStatus(), req.getCustomerFrom(), req.getType()));
     }
 
-    private CustomerData customerPutRequestToData (CustomerPutRequest req, CustomerData oldData) {
-        Boolean isAnotherWeekendAddress = req.getAnotherWeekendAddress();
-        Boolean isInvoice = req.getInvoice();
-        Boolean isAnotherHoursWeekend = req.getAnotherHoursWeekend();
-        return new CustomerData(
-                oldData.getId(),
-                req.getFirstName(),
-                req.getLastName(),
-                req.getPhone(),
-                req.getStreet(),
-                req.getHouseNumber(),
-                req.getApartmentNumber(),
-                req.getPostalCode(),
-                req.getCity(),
-                req.getEmail(),
-                req.getGroupId(),
-                req.getStatusId(),
-                req.getDemanding(),
-                isAnotherWeekendAddress,
-                (isAnotherWeekendAddress) ? req.getWeekendStreet() : oldData.getWeekendStreet(),
-                (isAnotherWeekendAddress) ? req.getWeekendHouseNumber() : oldData.getWeekendHouseNo(),
-                (isAnotherWeekendAddress) ? req.getWeekendApartmentNumber() : oldData.getWeekendApartmentNo(),
-                (isAnotherWeekendAddress) ? req.getWeekendPostalCode() : oldData.getWeekendPostalCode(),
-                (isAnotherWeekendAddress) ? req.getWeekendCity() : oldData.getWeekendCity(),
-                isInvoice,
-                (isInvoice) ? req.getInvoiceCompanyName() : oldData.getInvoiceCompanyName(),
-                (isInvoice) ? req.getInvoiceTaxNo() : oldData.getInvoiceTaxNo(),
-                (isInvoice) ? req.getInvoiceStreet() : oldData.getInvoiceStreet(),
-                (isInvoice) ? req.getInvoiceHouseNumber() : oldData.getInvoiceHouseNo(),
-                (isInvoice) ? req.getInvoiceApartmentNumber() : oldData.getInvoiceApartmentNo(),
-                (isInvoice) ? req.getInvoicePostalCode() : oldData.getInvoicePostalCode(),
-                (isInvoice) ? req.getInvoiceCity() : oldData.getInvoiceCity(),
-                req.getWeekPreferredHoursTo(),
-                isAnotherHoursWeekend,
-                (isAnotherHoursWeekend) ? req.getWeekendPreferredHoursTo() : oldData.getWeekendPreferredHoursTo(),
-                req.getComment()
-        );
-    }
-
 }
