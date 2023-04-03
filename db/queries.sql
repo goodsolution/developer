@@ -41,5 +41,13 @@ where (s.id = (select s.id
                where investments_with_sales_offices.investment_id = 1)
           );
 
-select * from premises join buildings b on b.id = premises.building_id where premises.number_of_rooms = 2 AND premises.surface_sq_m BETWEEN 70 AND 200 AND premises.floor = 1
-and b.investment_id = 1 and premises.sales_status = 'available' and premises.type = 'apartment' and premises.is_balcony = 1;
+select premises.id as apartment_id, premises.price_of_sq_m
+from premises
+         join buildings b on b.id = premises.building_id
+where premises.number_of_rooms = 2
+  AND premises.surface_sq_m BETWEEN 70 AND 200
+  AND premises.floor = 1
+  AND b.investment_id = 1
+  AND premises.sales_status = 'available'
+  AND premises.type = 'apartment'
+  AND premises.is_balcony = 1;
