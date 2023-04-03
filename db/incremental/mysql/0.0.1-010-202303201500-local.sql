@@ -25,11 +25,6 @@ create table investments
     address_voivodeship varchar(200),
     address_city        varchar(200) NOT NULL,
     address_street      varchar(200),
-#     address_building_number  varchar(200),
-#     address_postal_code      varchar(200),
-#     address_telephone_number varchar(200),
-#     address_fax_number       varchar(200),
-#     address_email            varchar(200),
     developer_id        int          NOT NULL,
     primary key (id),
     foreign key (developer_id) REFERENCES developers (id)
@@ -132,7 +127,9 @@ create table customers
     company_fax_number                varchar(200),
     company_email                     varchar(200),
     company_tax_identification_number varchar(200),
-    primary key (id)
+    developer_id                      int          NOT NULL,
+    primary key (id),
+    foreign key (developer_id) references developers (id)
 );
 
 create table buildings
@@ -171,6 +168,3 @@ create table premises
     primary key (id),
     foreign key (building_id) references buildings (id)
 );
-# TODO
-# COLLATE = 'utf8_general_ci';
-# ENGINE = InnoDB;
