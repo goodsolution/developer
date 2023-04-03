@@ -16,7 +16,7 @@ $(".dropdown-menu a.dropdown-toggle").on("click", function (e) {
 
 $(document).ready(function () {
   markActiveMenuItem();
-  updateProductsInBasketQuantity();
+  // updateProductsInBasketQuantity();
 });
 
 function markActiveMenuItem() {
@@ -224,26 +224,26 @@ $(document).ready(function() {
 // page.show
 // file.downloaded
 // link.clicked
-function trace(what, value) {
-    $.ajax({
-        url: "/api/crs/trace",
-        method: "post",
-        contentType: "application/json",
-        data: JSON.stringify({
-            what: what,
-            value: value,
-            who: null,
-            browser: getBrowser(),
-            operatingSystem: navigator.platform
-        })
-    })
-        .done(function () {
-
-        })
-        .fail(function (jqxhr, textStatus, errorThrown) {
-            displayErrorInformation(jqxhr.responseText);
-        })
-}
+// function trace(what, value) {
+//     $.ajax({
+//         url: "/api/crs/trace",
+//         method: "post",
+//         contentType: "application/json",
+//         data: JSON.stringify({
+//             what: what,
+//             value: value,
+//             who: null,
+//             browser: getBrowser(),
+//             operatingSystem: navigator.platform
+//         })
+//     })
+//         .done(function () {
+//
+//         })
+//         .fail(function (jqxhr, textStatus, errorThrown) {
+//             displayErrorInformation(jqxhr.responseText);
+//         })
+// }
 
 function getBrowser() {
    if(navigator.userAgent.match('OPR')) {
