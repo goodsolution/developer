@@ -23,50 +23,23 @@ import pl.com.mike.developer.logic.itube.ITubeService;
 @Controller
 public class ApplicationAdminController {
     private static final Logger log = LoggerFactory.getLogger(ApplicationAdminController.class);
-    private CustomersService customersService;
     private DictionariesService dictionariesService;
-    private CacheService cacheService;
-    private FilesService filesService;
-
-    private CourseCustomersService courseCustomersService;
-    private ApplicationConfig applicationConfig;
-
-    private TemplateEngine templateEngine;
 
     private MemesService memesService;
     private AuthorsService authorsService;
 
-    private ModulesService modulesService;
-    private Environment environment;
-
     private ITubeService iTubeService;
 
-    public ApplicationAdminController(CustomersService customersService, DictionariesService dictionariesService, CacheService cacheService,
+    public ApplicationAdminController(DictionariesService dictionariesService, CacheService cacheService,
                                       FilesService filesService,
-                                       CourseCustomersService courseCustomersService, ApplicationConfig applicationConfig,
-                                       TemplateEngine templateEngine,
-                                      MemesService memesService, AuthorsService authorsService,  ModulesService modulesService,
-                                       Environment environment,
-                                       ITubeService iTubeService) {
-        this.customersService = customersService;
+                                      ApplicationConfig applicationConfig,
+                                      TemplateEngine templateEngine,
+                                      MemesService memesService, AuthorsService authorsService, ModulesService modulesService,
+                                      Environment environment,
+                                      ITubeService iTubeService) {
         this.dictionariesService = dictionariesService;
-        this.cacheService = cacheService;
-
-        this.filesService = filesService;
-
-
-        this.courseCustomersService = courseCustomersService;
-        this.applicationConfig = applicationConfig;
-
-        this.templateEngine = templateEngine;
-
         this.memesService = memesService;
         this.authorsService = authorsService;
-
-        this.modulesService = modulesService;
-
-        this.environment = environment;
-
         this.iTubeService = iTubeService;
     }
 
@@ -95,8 +68,6 @@ public class ApplicationAdminController {
         model.addAttribute("meme", new MemeGetResponse(memesService.find(new MemesFilter(id)).get(0)));
         return "meme";
     }
-
-
 
 
     @GetMapping({"/admin"})
@@ -153,6 +124,7 @@ public class ApplicationAdminController {
     public String authors() {
         return "authors";
     }
+
     @GetMapping({"/admin/customer-groups"})
     public String customerGroups() {
         return "crs-customer-groups";
@@ -180,9 +152,6 @@ public class ApplicationAdminController {
     }
 
 
-
-
-
     @GetMapping({"/admin/statistics/new-customers"})
     public String newCustomers() {
         return "admin-statistics-new-customers";
@@ -203,7 +172,6 @@ public class ApplicationAdminController {
         model.addAttribute("author", new AuthorGetResponse(authorsService.find(new AuthorsFilter(id)).get(0)));
         return "author";
     }
-
 
 
     @GetMapping({"/admin/login"})
@@ -228,8 +196,6 @@ public class ApplicationAdminController {
 
         return "triggered-advices";
     }
-
-
 
 
     @GetMapping({"/admin/advice-categories"})

@@ -4,6 +4,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import pl.com.mike.developer.domain.courseplatform.AuthorsFilter;
 import pl.com.mike.developer.domain.courseplatform.CourseData;
+
 import pl.com.mike.developer.domain.courseplatform.CoursesFilter;
 import pl.com.mike.developer.logic.CommonJdbcRepository;
 

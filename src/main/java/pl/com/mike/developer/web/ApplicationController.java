@@ -32,7 +32,6 @@ import javax.servlet.http.HttpSession;
 @Controller
 public class ApplicationController {
     private static final Logger log = LoggerFactory.getLogger(ApplicationController.class);
-    private CustomersService customersService;
     private DictionariesService dictionariesService;
     private CacheService cacheService;
     private FilesService filesService;
@@ -45,8 +44,7 @@ public class ApplicationController {
     private CepikService cepikService;
     private VehicleService vehicleService;
 
-    public ApplicationController(CustomersService customersService, DictionariesService dictionariesService, CacheService cacheService, FilesService filesService, ApplicationConfig applicationConfig, TemplateEngine templateEngine, MemesService memesService, AuthorsService authorsService, ModulesService modulesService, Environment environment, CepikService cepikService, VehicleService vehicleService) {
-        this.customersService = customersService;
+    public ApplicationController(DictionariesService dictionariesService, CacheService cacheService, FilesService filesService, ApplicationConfig applicationConfig, TemplateEngine templateEngine, MemesService memesService, AuthorsService authorsService, ModulesService modulesService, Environment environment, CepikService cepikService, VehicleService vehicleService) {
         this.dictionariesService = dictionariesService;
         this.cacheService = cacheService;
         this.filesService = filesService;

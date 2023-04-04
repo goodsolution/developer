@@ -5,14 +5,9 @@ import com.github.kagkarlsson.scheduler.task.helper.Tasks;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import pl.com.mike.developer.domain.CustomerData;
-import pl.com.mike.developer.domain.CustomersFilter;
-import pl.com.mike.developer.logic.CustomersService;
 
 @Configuration
 public class TaskConfig {
-    @Autowired
-    CustomersService customersService;
 
     @Bean
     public OneTimeTask<Void> myAdhocTask() {
@@ -22,17 +17,17 @@ public class TaskConfig {
                 });
     }
 
-    @Bean
-    public OneTimeTask<Void> myAdhocTask2() {
-        return Tasks.oneTime("my-typed-adhoc-task2", Void.class)
-                .execute((inst, ctx) -> {
-                    System.out.println("Executed! Custom data, Id:2 ");
-                    for (CustomerData customer : customersService.findCustomers(new CustomersFilter(Boolean.FALSE))) {
-                        System.out.println(customer.toString());
-                    }
-                    ;
-                });
-    }
+//    @Bean
+//    public OneTimeTask<Void> myAdhocTask2() {
+//        return Tasks.oneTime("my-typed-adhoc-task2", Void.class)
+//                .execute((inst, ctx) -> {
+//                    System.out.println("Executed! Custom data, Id:2 ");
+//                    for (CustomerData customer : customersService.findCustomers(new CustomersFilter(Boolean.FALSE))) {
+//                        System.out.println(customer.toString());
+//                    }
+//                    ;
+//                });
+//    }
 
 //    @Bean
 //    public RecurringTask<Void> hourlyTask() {
