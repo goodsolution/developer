@@ -14,7 +14,9 @@ create table developers
     email                     varchar(200),
     tax_identification_number varchar(200) NOT NULL,
     primary key (id)
-);
+)
+    ENGINE INNODB
+    COLLATE utf8mb4_general_ci;
 
 create table investments
 (
@@ -28,7 +30,9 @@ create table investments
     developer_id        int          NOT NULL,
     primary key (id),
     foreign key (developer_id) REFERENCES developers (id)
-);
+)
+    ENGINE INNODB
+    COLLATE utf8mb4_general_ci;
 
 create table sales_offices
 (
@@ -44,7 +48,9 @@ create table sales_offices
     fax_number              varchar(200),
     email                   varchar(200),
     primary key (id)
-);
+)
+    ENGINE INNODB
+    COLLATE utf8mb4_general_ci;
 
 create table sales_office_opening_hours
 (
@@ -55,7 +61,9 @@ create table sales_office_opening_hours
     sales_office_id int          NOT NULL,
     foreign key (sales_office_id) REFERENCES sales_offices (id),
     primary key (id)
-);
+)
+    ENGINE INNODB
+    COLLATE utf8mb4_general_ci;
 
 create table investments_with_sales_offices
 (
@@ -65,7 +73,9 @@ create table investments_with_sales_offices
     foreign key (sales_office_id) REFERENCES sales_offices (id),
     foreign key (investment_id) REFERENCES investments (id),
     primary key (id)
-);
+)
+    ENGINE INNODB
+    COLLATE utf8mb4_general_ci;
 
 create table employees
 (
@@ -88,7 +98,9 @@ create table employees
     developer_id              int          NOT NULL,
     foreign key (developer_id) REFERENCES developers (id),
     primary key (id)
-);
+)
+    ENGINE INNODB
+    COLLATE utf8mb4_general_ci;
 
 create table sales_offices_with_employees
 (
@@ -98,7 +110,9 @@ create table sales_offices_with_employees
     primary key (id),
     foreign key (employee_id) references employees (id),
     foreign key (sales_office_id) references sales_offices (id)
-);
+)
+    ENGINE INNODB
+    COLLATE utf8_general_ci;
 
 create table customers
 (
@@ -130,7 +144,9 @@ create table customers
     developer_id                      int          NOT NULL,
     primary key (id),
     foreign key (developer_id) references developers (id)
-);
+)
+    ENGINE INNODB
+    COLLATE utf8mb4_general_ci;
 
 create table buildings
 (
@@ -145,7 +161,9 @@ create table buildings
     investment_id           int          NOT NULL,
     primary key (id),
     foreign key (investment_id) references investments (id)
-);
+)
+    ENGINE INNODB
+    COLLATE utf8mb4_general_ci;
 
 create table premises
 (
@@ -167,4 +185,6 @@ create table premises
     building_id      int            NOT NULL,
     primary key (id),
     foreign key (building_id) references buildings (id)
-);
+)
+    ENGINE INNODB
+    COLLATE utf8mb4_general_ci;

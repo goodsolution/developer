@@ -31,15 +31,11 @@ from buildings
 where buildings.address_city = 'Warszawa3'
   and p.sales_status = 'available';
 
-select e.first_name, e.last_name, e.position, e.business_telephone_number
+select *
 from employees e
          join sales_offices s on e.id = s.id
-where (s.id = (select s.id
-               from sales_offices s
-                        join investments_with_sales_offices
-                             on s.id = investments_with_sales_offices.sales_office_id
-               where investments_with_sales_offices.investment_id = 1)
-          );
+         join investments_with_sales_offices i on s.id = i.sales_office_id
+where i.investment_id = 1;
 
 select premises.id as apartment_id, premises.price_of_sq_m
 from premises
@@ -51,3 +47,17 @@ where premises.number_of_rooms = 2
   AND premises.sales_status = 'available'
   AND premises.type = 'apartment'
   AND premises.is_balcony = 1;
+
+select *
+from premises as p
+         join buildings as b on b.id = p.building_id
+where (
+        b.id = (select b.id
+                from buildings
+                         join investments i on i.id = buildings.investment_id
+                where i.id = 1)
+    )
+  and p.sales_status = 'available'
+  and p.type = 'apartment'
+  and p.number_of_rooms = 2
+  and p.surface_sq_m BETWEEN 70 AND 200;
