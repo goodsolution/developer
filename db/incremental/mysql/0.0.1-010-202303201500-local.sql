@@ -135,7 +135,7 @@ create table customers
     company_address_city              varchar(200),
     company_address_street            varchar(200),
     company_address_building_number   varchar(200),
-    company_address_premise_number    varchar(200),
+    company_address_flat_number       varchar(200),
     company_address_postal_code       varchar(200),
     company_telephone_number          varchar(200),
     company_fax_number                varchar(200),
