@@ -8,7 +8,6 @@ import org.springframework.transaction.annotation.Transactional;
 import pl.com.mike.developer.domain.CustomerData;
 import pl.com.mike.developer.domain.CustomersFilter;
 import pl.com.mike.developer.domain.DictionaryData;
-import pl.com.mike.developer.domain.GalleryImageKind;
 import pl.com.mike.developer.logic.courseplatform.*;
 
 import java.util.*;
@@ -75,9 +74,11 @@ public class DictionariesService {
             return getCustomerStatuses(lang);
         } else if (DictionaryType.ALLERGENS == type) {
             return getAllergens(lang);
-        } else if (DictionaryType.GALLERY_IMAGE_KIND == type) {
-            return getGalleryImageKind(lang);
-        } else if (DictionaryType.LANGUAGES == type) {
+        }
+//        else if (DictionaryType.GALLERY_IMAGE_KIND == type) {
+//            return getGalleryImageKind(lang);
+//      }
+        else if (DictionaryType.LANGUAGES == type) {
             return getLanguages(lang);
         } else if (DictionaryType.ROLES == type) {
             return getRoles(lang);
@@ -136,9 +137,11 @@ public class DictionariesService {
             return null; //TODO
         } else if (DictionaryType.YES_NO == type) {
             return getYesNo(lang).stream().filter(dictElem -> dictElem.getCode().equalsIgnoreCase(code)).findFirst().get();
-        } else if (DictionaryType.GALLERY_IMAGE_KIND == type) {
-            return getGalleryImageKind(lang).stream().filter(dictElem -> dictElem.getCode().equalsIgnoreCase(code)).findFirst().get();
-        } else if (DictionaryType.ROLES == type) {
+        }
+//        else if (DictionaryType.GALLERY_IMAGE_KIND == type) {
+//            return getGalleryImageKind(lang).stream().filter(dictElem -> dictElem.getCode().equalsIgnoreCase(code)).findFirst().get();
+//        }
+        else if (DictionaryType.ROLES == type) {
             return getRoles(lang).stream().filter(dictElem -> dictElem.getCode().equalsIgnoreCase(code)).findFirst().get();
         } else if (DictionaryType.LANGUAGES == type) {
             return getLanguages(lang).stream().filter(dictElem -> dictElem.getCode().equalsIgnoreCase(code)).findFirst().get();
@@ -338,32 +341,32 @@ public class DictionariesService {
         return dictionaryDataList;
     }
 
-    private List<DictionaryData> getGalleryImageKind(Language lang) {
-        List<DictionaryData> dictionaryDataList = new ArrayList<>();
-
-        DictionaryData dictionaryData = new DictionaryData(
-                0L,
-                GalleryImageKind.MENU.code(),
-                "Do menu",
-                lang.getCode()
-        );
-        dictionaryDataList.add(dictionaryData);
-        dictionaryData = new DictionaryData(
-                1L,
-                GalleryImageKind.GALLERY_HORIZONTAL.code(),
-                "Do galerii poziomy",
-                lang.getCode()
-        );
-        dictionaryDataList.add(dictionaryData);
-        dictionaryData = new DictionaryData(
-                1L,
-                GalleryImageKind.GALLERY_VERTICAL.code(),
-                "Do galerii pionowy",
-                lang.getCode()
-        );
-        dictionaryDataList.add(dictionaryData);
-        return dictionaryDataList;
-    }
+//    private List<DictionaryData> getGalleryImageKind(Language lang) {
+//        List<DictionaryData> dictionaryDataList = new ArrayList<>();
+//
+//        DictionaryData dictionaryData = new DictionaryData(
+//                0L,
+//                GalleryImageKind.MENU.code(),
+//                "Do menu",
+//                lang.getCode()
+//        );
+//        dictionaryDataList.add(dictionaryData);
+//        dictionaryData = new DictionaryData(
+//                1L,
+//                GalleryImageKind.GALLERY_HORIZONTAL.code(),
+//                "Do galerii poziomy",
+//                lang.getCode()
+//        );
+//        dictionaryDataList.add(dictionaryData);
+//        dictionaryData = new DictionaryData(
+//                1L,
+//                GalleryImageKind.GALLERY_VERTICAL.code(),
+//                "Do galerii pionowy",
+//                lang.getCode()
+//        );
+//        dictionaryDataList.add(dictionaryData);
+//        return dictionaryDataList;
+//    }
 
     private List<DictionaryData> getWeekendOptions(Language lang) {
         List<DictionaryData> dictionaryDataList = new ArrayList<>();
