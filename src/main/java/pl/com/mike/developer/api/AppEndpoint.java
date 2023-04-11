@@ -26,18 +26,18 @@ public class AppEndpoint {
         this.dictionariesService = dictionariesService;
     }
 
-    @GetMapping(path = "/api/orders/ordersCount", produces = "application/json; charset=UTF-8")
-    public OrderCountGetResponse countOrders() {
-        return new OrderCountGetResponse(1234L);
-    }
-
-    @GetMapping(path = "/api/product/demand", produces = "application/json; charset=UTF-8")
-    public List<DemandsGetResponse> findProductDemands(
-            @RequestParam(value = "date", required = false) String date
-    ) {
-        return Arrays.asList(new DemandsGetResponse(
-                1L));
-    }
+//    @GetMapping(path = "/api/orders/ordersCount", produces = "application/json; charset=UTF-8")
+//    public OrderCountGetResponse countOrders() {
+//        return new OrderCountGetResponse(1234L);
+//    }
+//
+//    @GetMapping(path = "/api/product/demand", produces = "application/json; charset=UTF-8")
+//    public List<DemandsGetResponse> findProductDemands(
+//            @RequestParam(value = "date", required = false) String date
+//    ) {
+//        return Arrays.asList(new DemandsGetResponse(
+//                1L));
+//    }
 
 //    @GetMapping(path = "/api/customer/substring/{substring}", produces = "application/json; charset=UTF-8")
 //    public List<CustomerGetResponse> getCustomersBySubstring(@PathVariable String substring) {
@@ -49,25 +49,25 @@ public class AppEndpoint {
 //        return list;
 //    }
 
-    @GetMapping(path = "/api/customer/group/{id}", produces = "application/json; charset=UTF-8")
-    public CustomerGroupGetResponse getCustomerGroup(@PathVariable Long id) {
-        return new CustomerGroupGetResponse(1L);
-    }
-
-    @GetMapping(path = "/api/user/{id}", produces = "application/json; charset=UTF-8")
-    public UserGetResponse getUser(@PathVariable Long id) {
-        return new UserGetResponse(1L);
-    }
-
-//    @GetMapping(path = "/api/customers-new", produces = "application/json; charset=UTF-8")
-//    public CustomerNewResultGetResponse getNewCustomers(
-//            @RequestParam(name = "date_from", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateFrom,
-//            @RequestParam(name = "date_to", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateTo,
-//            @RequestParam(name = "order_status_id", required = false) Long orderStatusId,
-//            @RequestParam(name = "diet_id", required = false) Long[] dietIds
-//    ) {
-//        return customersService.findNewCustomersAll(new CustomerNewFilter(dateFrom, dateTo, dietIds, orderStatusId));
+//    @GetMapping(path = "/api/customer/group/{id}", produces = "application/json; charset=UTF-8")
+//    public CustomerGroupGetResponse getCustomerGroup(@PathVariable Long id) {
+//        return new CustomerGroupGetResponse(1L);
 //    }
+//
+//    @GetMapping(path = "/api/user/{id}", produces = "application/json; charset=UTF-8")
+//    public UserGetResponse getUser(@PathVariable Long id) {
+//        return new UserGetResponse(1L);
+//    }
+//
+////    @GetMapping(path = "/api/customers-new", produces = "application/json; charset=UTF-8")
+////    public CustomerNewResultGetResponse getNewCustomers(
+////            @RequestParam(name = "date_from", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateFrom,
+////            @RequestParam(name = "date_to", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateTo,
+////            @RequestParam(name = "order_status_id", required = false) Long orderStatusId,
+////            @RequestParam(name = "diet_id", required = false) Long[] dietIds
+////    ) {
+////        return customersService.findNewCustomersAll(new CustomerNewFilter(dateFrom, dateTo, dietIds, orderStatusId));
+////    }
 
     @GetMapping(path = "/api/dictionary/{name}", produces = "application/json; charset=UTF-8")
     public List<DictionaryData> getDictionary(@PathVariable String name) {
