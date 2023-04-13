@@ -1,5 +1,5 @@
 # 1
-
+# 3
 # creates
 
 DROP DATABASE IF EXISTS developer_project;
