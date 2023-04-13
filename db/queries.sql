@@ -501,9 +501,9 @@ where b.address_city = 'Warszawa'
   and p.is_balcony = 1;
 
 select count(p.id)
-from developer_project.buildings
-         join premises p on buildings.id = p.building_id
-where buildings.address_city = 'Warszawa'
+from developer_project.buildings b
+         join premises p on b.id = p.building_id
+where b.address_city = 'Warszawa'
   and p.sales_status = 'r';
 
 select *
