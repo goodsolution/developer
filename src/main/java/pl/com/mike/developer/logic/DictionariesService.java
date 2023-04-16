@@ -56,8 +56,6 @@ public class DictionariesService {
             return getWeekendOptions(lang);
         } else if (DictionaryType.YES_NO == type) {
             return getYesNo(lang);
-        } else if (DictionaryType.CUSTOMER_AUTHORITIES == type) {
-            return getCustomerAuthorities(lang);
         } else if (DictionaryType.PRODUCTS == type) {
             return getProducts(lang);
         } else if (DictionaryType.EXTRAS == type) {
@@ -86,24 +84,10 @@ public class DictionariesService {
             return getAuthors(lang);
         } else if (DictionaryType.COURSE_ORDER_STATUSES == type) {
             return getCourseOrderStatuses(lang);
-        } else if (DictionaryType.INVOICE_TYPES == type) {
-            return getInvoiceTypes(lang);
-        } else if (DictionaryType.BILLING_TYPES == type) {
-            return getBillingTypes(lang);
         } else if (DictionaryType.COUNTRIES == type) {
             return getCountries(lang);
-        } else if (DictionaryType.COURSE_VISIBILITY_STATUSES == type) {
-            return getCourseVisibilityStatuses(lang);
-        } else if (DictionaryType.LESSON_COMMENT_STATUSES == type) {
-            return getLessonCommentStatuses(lang);
-        } else if (DictionaryType.LESSON_VISIBILITY_STATUSES == type) {
-            return getLessonVisibilityStatuses(lang);
         } else if (DictionaryType.MODULE_VISIBILITY_STATUSES == type) {
             return getModuleVisibilityStatuses(lang);
-        } else if (DictionaryType.COURSE_SALE_STATUSES == type) {
-            return getCourseSaleStatuses(lang);
-        } else if (DictionaryType.LESSON_TYPES == type) {
-            return getLessonTypes(lang);
         } else if (DictionaryType.MOVIE_LINK_TYPES == type) {
             return getMovieLinkTypes(lang);
         } else if (DictionaryType.VOIVODESHIP == type) {
@@ -199,27 +183,6 @@ public class DictionariesService {
         return Language.PL == lang ?
                 Arrays.asList(new DictionaryData("true", "Tak", lang.getCode()), new DictionaryData("false", "Nie", lang.getCode())) :
                 Arrays.asList(new DictionaryData("true", "Yes", lang.getCode()), new DictionaryData("false", "No", lang.getCode()));
-    }
-
-    private List<DictionaryData> getCustomerAuthorities(Language lang) {
-
-        List<DictionaryData> list = new ArrayList<>();
-
-        if (Language.US == lang || Language.EN == lang) {
-            list.add(new DictionaryData(CustomerAuthority.ADMIN.getCode(), "Admin", lang.getCode()));
-            list.add(new DictionaryData(CustomerAuthority.USER.getCode(), "User", lang.getCode()));
-            list.add(new DictionaryData(CustomerAuthority.EMPLOYER.getCode(), "Employer", lang.getCode()));
-            list.add(new DictionaryData(CustomerAuthority.TEACHER.getCode(), "Teacher", lang.getCode()));
-            list.add(new DictionaryData(CustomerAuthority.STUDENT.getCode(), "Student", lang.getCode()));
-        } else if (Language.PL == lang) {
-            list.add(new DictionaryData(CustomerAuthority.ADMIN.getCode(), "Admin", lang.getCode()));
-            list.add(new DictionaryData(CustomerAuthority.USER.getCode(), "Użytkownik", lang.getCode()));
-            list.add(new DictionaryData(CustomerAuthority.EMPLOYER.getCode(), "Pracodawca", lang.getCode()));
-            list.add(new DictionaryData(CustomerAuthority.TEACHER.getCode(), "Nauczyciel", lang.getCode()));
-            list.add(new DictionaryData(CustomerAuthority.STUDENT.getCode(), "Kursant", lang.getCode()));
-        }
-
-        return list;
     }
 
 
@@ -456,34 +419,6 @@ public class DictionariesService {
         return list;
     }
 
-    private List<DictionaryData> getInvoiceTypes(Language lang) {
-
-        List<DictionaryData> list = new ArrayList<>();
-
-        if (Language.US == lang || Language.EN == lang) {
-            list.add(new DictionaryData(InvoiceType.STANDARD.getCode(), "Standard", lang.getCode()));
-            list.add(new DictionaryData(InvoiceType.CORRECTION.getCode(), "Correction", lang.getCode()));
-        } else if (Language.PL == lang) {
-            list.add(new DictionaryData(InvoiceType.STANDARD.getCode(), "Standardowa", lang.getCode()));
-            list.add(new DictionaryData(InvoiceType.CORRECTION.getCode(), "Korekcyjna", lang.getCode()));
-        }
-
-        return list;
-    }
-
-    private List<DictionaryData> getBillingTypes(Language lang) {
-        List<DictionaryData> list = new ArrayList<>();
-
-        if (Language.US == lang || Language.EN == lang) {
-            list.add(new DictionaryData(BillingType.PRIVATE_PERSON.getCode(), "Private person", lang.getCode()));
-            list.add(new DictionaryData(BillingType.COMPANY.getCode(), "Company", lang.getCode()));
-        } else if (Language.PL == lang) {
-            list.add(new DictionaryData(BillingType.PRIVATE_PERSON.getCode(), "Osoba prywatna", lang.getCode()));
-            list.add(new DictionaryData(BillingType.COMPANY.getCode(), "Firma", lang.getCode()));
-        }
-
-        return list;
-    }
 
     private List<DictionaryData> getCountries(Language lang) {
         List<DictionaryData> list = new ArrayList<>();
@@ -499,48 +434,6 @@ public class DictionariesService {
         return list;
     }
 
-    private List<DictionaryData> getCourseVisibilityStatuses(Language lang) {
-        List<DictionaryData> list = new ArrayList<>();
-
-        if (lang == Language.PL) {
-            list.add(new DictionaryData(CourseVisibilityStatus.INVISIBLE.getValue(), "Niewidoczny", lang.getCode()));
-            list.add(new DictionaryData(CourseVisibilityStatus.VISIBLE.getValue(), "Widoczny", lang.getCode()));
-        } else {
-            list.add(new DictionaryData(CourseVisibilityStatus.INVISIBLE.getValue(), "Invisible", lang.getCode()));
-            list.add(new DictionaryData(CourseVisibilityStatus.VISIBLE.getValue(), "Visible", lang.getCode()));
-        }
-
-        return list;
-    }
-
-    private List<DictionaryData> getLessonCommentStatuses(Language lang) {
-        List<DictionaryData> list = new ArrayList<>();
-
-        if (Language.PL == lang) {
-            list.add(new DictionaryData(LessonCommentStatus.INVISIBLE.getValue(), "Niewidoczny", lang.getCode()));
-            list.add(new DictionaryData(LessonCommentStatus.VISIBLE.getValue(), "Widoczny", lang.getCode()));
-        } else {
-            list.add(new DictionaryData(LessonCommentStatus.INVISIBLE.getValue(), "Invisible", lang.getCode()));
-            list.add(new DictionaryData(LessonCommentStatus.VISIBLE.getValue(), "Visible", lang.getCode()));
-        }
-
-        return list;
-    }
-
-    private List<DictionaryData> getLessonVisibilityStatuses(Language lang) {
-        List<DictionaryData> list = new ArrayList<>();
-
-        if (Language.PL == lang) {
-            list.add(new DictionaryData(LessonVisibilityStatus.INVISIBLE.getValue(), "Niewidoczny", lang.getCode()));
-            list.add(new DictionaryData(LessonVisibilityStatus.VISIBLE.getValue(), "Widoczny", lang.getCode()));
-        } else {
-            list.add(new DictionaryData(LessonVisibilityStatus.INVISIBLE.getValue(), "Invisible", lang.getCode()));
-            list.add(new DictionaryData(LessonVisibilityStatus.VISIBLE.getValue(), "Visible", lang.getCode()));
-        }
-
-        return list;
-    }
-
     private List<DictionaryData> getModuleVisibilityStatuses(Language lang) {
         List<DictionaryData> list = new ArrayList<>();
 
@@ -550,34 +443,6 @@ public class DictionariesService {
         } else {
             list.add(new DictionaryData(ModuleVisibilityStatus.INVISIBLE.getValue(), "Invisible", lang.getCode()));
             list.add(new DictionaryData(ModuleVisibilityStatus.VISIBLE.getValue(), "Visible", lang.getCode()));
-        }
-
-        return list;
-    }
-
-    private List<DictionaryData> getCourseSaleStatuses(Language lang) {
-        List<DictionaryData> list = new ArrayList<>();
-
-        if (lang == Language.PL) {
-            list.add(new DictionaryData(CourseSaleStatus.OPEN.getCode(), "Otwarta", lang.getCode()));
-            list.add(new DictionaryData(CourseSaleStatus.CLOSED.getCode(), "Zamknięta", lang.getCode()));
-        } else {
-            list.add(new DictionaryData(CourseSaleStatus.OPEN.getCode(), "Open", lang.getCode()));
-            list.add(new DictionaryData(CourseSaleStatus.CLOSED.getCode(), "Closed", lang.getCode()));
-        }
-
-        return list;
-    }
-
-    private List<DictionaryData> getLessonTypes(Language lang) {
-        List<DictionaryData> list = new ArrayList<>();
-
-        if (lang == Language.PL) {
-            list.add(new DictionaryData(LessonType.STANDARD.getCode(), "Standardowa", lang.getCode()));
-            list.add(new DictionaryData(LessonType.TASK.getCode(), "Zadanie", lang.getCode()));
-        } else {
-            list.add(new DictionaryData(LessonType.STANDARD.getCode(), "Standard", lang.getCode()));
-            list.add(new DictionaryData(LessonType.TASK.getCode(), "Task", lang.getCode()));
         }
 
         return list;

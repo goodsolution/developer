@@ -25,21 +25,15 @@ public class ApplicationAdminController {
     private static final Logger log = LoggerFactory.getLogger(ApplicationAdminController.class);
     private DictionariesService dictionariesService;
 
-    private MemesService memesService;
-    private AuthorsService authorsService;
 
     private ITubeService iTubeService;
 
     public ApplicationAdminController(DictionariesService dictionariesService, CacheService cacheService,
-                                      FilesService filesService,
                                       ApplicationConfig applicationConfig,
                                       TemplateEngine templateEngine,
-                                      MemesService memesService, AuthorsService authorsService, ModulesService modulesService,
                                       Environment environment,
                                       ITubeService iTubeService) {
         this.dictionariesService = dictionariesService;
-        this.memesService = memesService;
-        this.authorsService = authorsService;
         this.iTubeService = iTubeService;
     }
 
@@ -60,13 +54,6 @@ public class ApplicationAdminController {
     public String memes(Model model) {
         model.addAttribute("languagesDict", dictionariesService.getDictionary(DictionaryType.LANGUAGES, Language.US));
         return "memes";
-    }
-
-    @GetMapping({"/admin/meme/{id}"})
-    public String meme(Model model, @PathVariable Long id) {
-        model.addAttribute("languagesDict", dictionariesService.getDictionary(DictionaryType.LANGUAGES, Language.US));
-        model.addAttribute("meme", new MemeGetResponse(memesService.find(new MemesFilter(id)).get(0)));
-        return "meme";
     }
 
 
@@ -166,13 +153,6 @@ public class ApplicationAdminController {
     public String courseCompletion() {
         return "admin-statistics-completion";
     }
-
-    @GetMapping({"/admin/author/{id}"})
-    public String author(Model model, @PathVariable Long id) {
-        model.addAttribute("author", new AuthorGetResponse(authorsService.find(new AuthorsFilter(id)).get(0)));
-        return "author";
-    }
-
 
     @GetMapping({"/admin/login"})
     public String adminLogin() {

@@ -3,26 +3,17 @@ package pl.com.mike.developer.web;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.env.Environment;
-import org.springframework.http.MediaType;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.thymeleaf.TemplateEngine;
-import pl.com.mike.developer.api.courseplatform.MemeGetResponse;
 import pl.com.mike.developer.config.ApplicationConfig;
-import pl.com.mike.developer.domain.courseplatform.MemeData;
-import pl.com.mike.developer.domain.vin.CarsFilter;
-import pl.com.mike.developer.logic.*;
-import pl.com.mike.developer.logic.courseplatform.AuthorsService;
-import pl.com.mike.developer.logic.courseplatform.FilesService;
-import pl.com.mike.developer.logic.courseplatform.MemesService;
-import pl.com.mike.developer.logic.courseplatform.ModulesService;
-import pl.com.mike.developer.logic.vin.CepikService;
-import pl.com.mike.developer.logic.vin.VehicleService;
+import pl.com.mike.developer.logic.CacheService;
+import pl.com.mike.developer.logic.CacheType;
+import pl.com.mike.developer.logic.DictionariesService;
+import pl.com.mike.developer.logic.DictionaryType;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -34,28 +25,12 @@ public class ApplicationController {
     private static final Logger log = LoggerFactory.getLogger(ApplicationController.class);
     private DictionariesService dictionariesService;
     private CacheService cacheService;
-    private FilesService filesService;
     private ApplicationConfig applicationConfig;
-    private TemplateEngine templateEngine;
-    private MemesService memesService;
-    private AuthorsService authorsService;
-    private ModulesService modulesService;
-    private Environment environment;
-    private CepikService cepikService;
-    private VehicleService vehicleService;
 
-    public ApplicationController(DictionariesService dictionariesService, CacheService cacheService, FilesService filesService, ApplicationConfig applicationConfig, TemplateEngine templateEngine, MemesService memesService, AuthorsService authorsService, ModulesService modulesService, Environment environment, CepikService cepikService, VehicleService vehicleService) {
+    public ApplicationController(DictionariesService dictionariesService, CacheService cacheService, ApplicationConfig applicationConfig) {
         this.dictionariesService = dictionariesService;
         this.cacheService = cacheService;
-        this.filesService = filesService;
         this.applicationConfig = applicationConfig;
-        this.templateEngine = templateEngine;
-        this.memesService = memesService;
-        this.authorsService = authorsService;
-        this.modulesService = modulesService;
-        this.environment = environment;
-        this.cepikService = cepikService;
-        this.vehicleService = vehicleService;
     }
 
     @GetMapping("/mentoring")
@@ -76,13 +51,6 @@ public class ApplicationController {
     @GetMapping("/itube")
     public String iTube() {
         return "itube";
-    }
-
-    @GetMapping({"/meme/{code}"})
-    public String memePage(Model model, @PathVariable String code) {
-        MemeData meme = memesService.findByCode(code);
-        model.addAttribute("meme", new MemeGetResponse(meme));
-        return "meme-page";
     }
 
     @GetMapping({"/reset-password"})
@@ -115,25 +83,6 @@ public class ApplicationController {
     public String rodo() {
         return "rodo";
     }
-
-    @GetMapping(
-            value = "/get-image/{name}",
-            produces = MediaType.IMAGE_GIF_VALUE
-    )
-    public @ResponseBody
-    byte[] getImage(@PathVariable String name) {
-        return filesService.getImage(name);
-    }
-
-    @GetMapping(
-            value = "/meme/file/{name}",
-            produces = MediaType.IMAGE_GIF_VALUE
-    )
-    public @ResponseBody
-    byte[] getMemeFile(@PathVariable(name = "name") String fileName) {
-        return filesService.getMemeFile(fileName);
-    }
-
 
     @GetMapping({"/payments"})
     public String payments(Model model) {
@@ -220,22 +169,22 @@ public class ApplicationController {
         return "selections";
     }
 
-    @GetMapping({"/check-vin"})
-    public String checkVin(Model model) {
-        model.addAttribute("voivodeship", cepikService.getVoivodeshipDictionaryTransformed());
-        model.addAttribute("brand", cepikService.getBrandDictionaryTransformed());
-        model.addAttribute("carKind", cepikService.getVehicleKindDictionaryTransformed());
-        model.addAttribute("carOrigin", cepikService.getVehicleOriginDictionaryTransformed());
-        model.addAttribute("carProductionMethod", cepikService.getVehicleProductionMethodDictionaryTransformed());
-        model.addAttribute("fuelType", cepikService.getVehicleFuelKindDictionaryTransformed());
-        return "check-vin";
-    }
-
-    @GetMapping({"/vehicle/{id}"})
-    public String vehicle(Model model, @PathVariable Long id) {
-        model.addAttribute("vehicle", vehicleService.findVehicles(new CarsFilter(id)).get(0));
-        return "vehicle";
-    }
+//    @GetMapping({"/check-vin"})
+//    public String checkVin(Model model) {
+//        model.addAttribute("voivodeship", cepikService.getVoivodeshipDictionaryTransformed());
+//        model.addAttribute("brand", cepikService.getBrandDictionaryTransformed());
+//        model.addAttribute("carKind", cepikService.getVehicleKindDictionaryTransformed());
+//        model.addAttribute("carOrigin", cepikService.getVehicleOriginDictionaryTransformed());
+//        model.addAttribute("carProductionMethod", cepikService.getVehicleProductionMethodDictionaryTransformed());
+//        model.addAttribute("fuelType", cepikService.getVehicleFuelKindDictionaryTransformed());
+//        return "check-vin";
+//    }
+//
+//    @GetMapping({"/vehicle/{id}"})
+//    public String vehicle(Model model, @PathVariable Long id) {
+//        model.addAttribute("vehicle", vehicleService.findVehicles(new CarsFilter(id)).get(0));
+//        return "vehicle";
+//    }
 
     @GetMapping({"/test-sets"})
     public String testSets(Model model) {

@@ -14,7 +14,6 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import pl.com.mike.developer.auth.ShaPasswordEncoder;
-import pl.com.mike.developer.logic.courseplatform.CustomerAuthority;
 
 import javax.sql.DataSource;
 import java.util.Arrays;
@@ -46,14 +45,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-
-                .antMatchers("/admin/**").hasAnyRole(CustomerAuthority.ADMIN.getCode(), CustomerAuthority.TEACHER.getCode())
-                .antMatchers("/actuator/**").hasRole(CustomerAuthority.ADMIN.getCode())
-
-                .antMatchers("/my-account/**").hasRole(CustomerAuthority.USER.getCode())
-                .antMatchers("/my-courses").hasRole(CustomerAuthority.USER.getCode())
-                .antMatchers("/payments").hasRole(CustomerAuthority.USER.getCode())
-                .antMatchers("/watch/**").hasRole(CustomerAuthority.USER.getCode())
 
                 .antMatchers("/api/adviser/**").authenticated()
                 .antMatchers("/api/crs/change-email").authenticated()
