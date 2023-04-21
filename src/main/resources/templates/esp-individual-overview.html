@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <div th:replace="fragments/front-head"></div>
+    <title th:text="#{esp.individual.overview.title} + ' · ' + ${@applicationConfig.getAppNameFront()}"></title>
+    <meta th:if="${#arrays.contains(@environment.getActiveProfiles(),'prod')}" name="robots" content="noindex">
+    <script>
+        trace('page.show', 'esp-individual-overview');
+    </script>
+</head>
+<body class="p-5 bg-info">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <h2 class="text-white text-center">ELITARNA SZKOŁA DLA PROGRAMISTÓW</h2>
+                <h3 class="text-white text-center">Kurs Indywidaulny</h3>
+                <br><h5>Jaki jest zakres kursu?</h5>
+                <ul>
+                    <li>Java</li>
+                    <li>SQL</li>
+                    <li>Spring Boot</li>
+                    <li>Bazy danych na przykładzie MySQL</li>
+                    <li>Elementy frontu: HTML, CSS, Javascript, JQuery, Ajax</li>
+                    <li>Ze względu na specyfikę kursu indywidualnego zakres można dostosować do potrzeb kursanta.</li>
+                    <li>Możliwość przygotowania pod kątem pracy jako programista lub tester</li>
+                </ul>
+                <br><h5>Jak to wygląda?</h5>
+                <ul>
+                    <li>Spotkania 2h zegarowe co tydzień lub co 2 tygodnie lub raz na miesiąc (do wyboru)</li>
+                    <li>Zajęcia online za pomocą komunikatora z możliwością udostępniania pulpitu np. Skype</li>
+                    <li>Godziny ustalamy indywidualnie</li>
+                    <li>Nastawienie na praktykę, kodujemy od pierwszych zajęć</li>
+                    <li>Najpierw piszemy małe programiki, wraz z poszerzaniem wiedzy większe, a pod koniec kursu piszemy dużą aplikację</li>
+                    <li>Po każdych zajęciach praca domowa a podczas lekcji podsyłam niezbędne materiały</li>
+                    <li>Code review pisanych programów</li>
+                    <li>Nauka projektowania architektury aplikacji</li>
+                    <li>Nauka projektowania i tworzenia API REST</li>
+                    <li>Poznawanie popularnych formatów danych jak np. JSON, XML, YAML</li>
+                    <li>Przygotowanie do rozmów o pracę</li>
+                    <li>Rozliczenia za każdą godzinę. Płatność po każdych zajęciach</li>
+                    <li>W każdym momencie możesz przerwać kurs po wcześniejszym poinformowaniu</li>
+                    <li>Jak dotąd 100% kursantów, którzy uczestniczyli w kursie znalazło pracę w IT</li>
+                </ul>
+                <br><h5>Co ważne?</h5>
+                <ul>
+                    <li>Programowanie nie jest trudne wbrew powszechnym opiniom ale sporo trzeba zapamiętywać i logicznie myśleć</li>
+                    <li>Aby być dobrym programistą nie wystarczy czas na kursie – trzeba dużo ćwiczyć po zajęciach tzw. „dupogodziny” &#128522;</li>
+                    <li>Najlepszych kursantów polecam zaprzyjaźnionym firmom</li>
+                    <li>Tak! Doświadczony programista Java może zarobić 50 000 PLN i więcej. Dowiesz się jak to osiągnąć!</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        <div class="row"></div>
+    </div>
+</body>
+</html>

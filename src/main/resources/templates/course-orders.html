@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <div th:replace="fragments/head"></div>
+    <script th:src="@{/js/course-orders.js}"></script>
+    <script th:inline="javascript">
+        var orderStatusesDict = [[${ordersStatusesDict}]];
+        var yesNoDict = [[${yesNoDict}]];
+    </script>
+</head>
+
+<body>
+<div th:replace="fragments/menu :: menu"></div>
+
+<h5>Orders</h5>
+
+<form id="filter" class="bg-light border m-0 p-0 my-3">
+    <div class="form-row m-0 p-0">
+
+        <div class="form-group row col-12 col-lg-6 col-xl-3 border m-0 p-0 py-2">
+            <label class="col-12 col-sm-3 col-md-2 col-xl-3 my-auto text-center">ID:</label>
+            <div class="col-12 col-sm-9 col-md-10 col-xl-9 my-auto">
+                <input type="number" id="id" class="form-control"/>
+            </div>
+        </div>
+
+        <div class="form-group row col-12 col-lg-6 col-xl-3 border m-0 p-0 py-2">
+            <label class="col-12 col-sm-3 col-md-2 col-xl-3 my-auto text-center">Number:</label>
+            <div class="col-12 col-sm-9 col-md-10 col-xl-9 my-auto">
+                <input type="text" id="number" class="form-control"/>
+            </div>
+        </div>
+
+        <div class="form-group row col-12 col-lg-6 col-xl-3 border m-0 p-0 py-2">
+            <label class="col-12 col-sm-3 col-md-2 col-xl-3 my-auto text-center">Status:</label>
+            <div class="col-12 col-sm-9 col-md-10 col-xl-9 my-auto">
+                <select id="status" class="form-control">
+                    <option value="">---</option>
+                    <option th:each="orderStatus : ${ordersStatusesDict}"
+                            th:value="${orderStatus.code}"
+                            th:text="${orderStatus.value}">
+                    </option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group row col-12 col-lg-6 col-xl-2 border m-0 p-0 py-2">
+            <label class="col-12 col-sm-3 col-md-2 col-xl-3 my-auto text-center">Invoice issued:</label>
+            <div class="col-12 col-sm-9 col-md-10 col-xl-9 my-auto">
+                <select id="invoice-issued" class="form-control">
+                    <option value="">---</option>
+                    <option th:each="yesNo : ${yesNoDict}"
+                            th:value="${yesNo.code}"
+                            th:text="${yesNo.value}">
+                    </option>
+                </select>
+            </div>
+        </div>
+
+        <div class="col-12 col-sm-12 col-lg-12 col-xl-1 border text-center m-0 p-0 py-2">
+            <button class="btn btn-primary" type="button" onclick="clearSearchFilters()">Clear</button>
+        </div>
+
+    </div>
+</form>
+
+<div id="result-container" class="my-4">
+    <div class="table-responsive mb-0 pb-0">
+        <table class="table bg-light table-bordered table-hover table-sm mb-0 pb-0">
+            <thead class="thead-light">
+            <tr>
+                <th class="align-middle">ID</th>
+                <th class="align-middle">Number</th>
+                <th class="align-middle">Customer</th>
+                <th class="align-middle">Purchase date</th>
+                <th class="align-middle">Total price</th>
+                <th class="align-middle">Status</th>
+                <th class="align-middle">Details</th>
+            </tr>
+            </thead>
+            <tbody id="records">
+
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div th:replace="fragments/pagination :: pagination"></div>
+
+</body>
+
+</html>

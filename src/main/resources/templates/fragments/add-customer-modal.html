@@ -1,0 +1,88 @@
+<html xmlns:th="http://www.thymeleaf.org">
+    <body>
+        <div th:fragment="modal" class="modal" id="add-customer-modal">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content bg-light">
+                    <div class="modal-header w-100">
+                        <h4 class="modal-title">
+                            Dodawanie nowego klienta
+                        </h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+
+                    <div class="modal-body w-100">
+                        <form th:action="@{/api/customers}" method="POST" class="mr-2">
+
+                            <div class="form-row pb-1">
+                                <label class="col-md-6 text-center pt-1" for="new-customer-mail">Email:</label>
+                                <input class="col-md-6 " type="text" required id="new-customer-mail">
+                            </div>
+
+                            <div class="form-row pb-1">
+                                <label class="col-md-6 text-center pt-1" for="new-customer-group-id">Grupa:</label>
+                                <select id="new-customer-group-id" class="mb-1 col-md-6" >
+                                </select>
+                            </div>
+
+                            <div class="form-row pb-1">
+                                <label class="col-md-6 text-center pt-1" for="new-customer-status-id">Status:</label>
+                                <select id="new-customer-status-id" class="mb-1 col-md-6" >
+                                </select>
+                            </div>
+
+                            <div class="form-row pb-1">
+                                <label class="col-md-6 text-center pt-1" for="new-customer-name">Imię:</label>
+                                <input class="col-md-6 " type="text" required id="new-customer-name">
+                            </div>
+
+                            <div class="form-row pb-1">
+                                <label class="col-md-6 text-center pt-1" for="new-customer-surname">Nazwisko:</label>
+                                <input class="col-md-6 " type="text" required id="new-customer-surname">
+                            </div>
+
+                            <div class="form-row pb-1">
+                                <label class="col-md-6 text-center pt-1" for="new-customer-street">Ulica:</label>
+                                <input class="col-md-6 " type="text" required id="new-customer-street">
+                            </div>
+
+                            <div class="form-row pb-1">
+                                <label class="col-md-6 text-center pt-1" for="new-customer-house-number">Numer domu:</label>
+                                <input class="col-md-6 " type="text" required id="new-customer-house-number">
+                            </div>
+
+                            <div class="form-row pb-1">
+                                <label class="col-md-6 text-center pt-1" for="new-customer-apartment-number">Numer lokalu:</label>
+                                <input class="col-md-6 " type="text" required id="new-customer-apartment-number">
+                            </div>
+
+                            <div class="form-row pb-1">
+                                <label class="col-md-6 text-center pt-1" for="new-customer-postal-code">Kod pocztowy:</label>
+                                <input class="col-md-6 " type="text" required id="new-customer-postal-code">
+                            </div>
+
+                            <div class="form-row pb-1">
+                                <label class="col-md-6 text-center pt-1" for="new-customer-city">Miejscowość:</label>
+                                <input class="col-md-6 " type="text" required id="new-customer-city">
+                            </div>
+
+                        </form>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button"
+                                onclick="postNewCustomer()">
+                            Dodaj nowego klienta
+                        </button>
+                        <button type="button"
+                                onclick="postNewCustomerAndGoToDetailsPage()">
+                            Dodaj nowego klienta i przejdź do edycji
+                        </button>
+                        <button type="button" data-dismiss="modal">
+                            Anuluj
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

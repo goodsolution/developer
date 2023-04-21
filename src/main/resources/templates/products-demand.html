@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <div th:replace="fragments/head"></div>
+    <div th:replace="fragments/datepicker :: imports"></div>
+    <script th:src="@{/js/products-demand.js}"></script>
+</head>
+
+<body>
+    <div th:replace="fragments/menu :: menu"></div>
+    <h5>Zapotrzebowanie produktów</h5>
+    <form id="filter" th:action="@{/products-demand}" method="GET">
+        <p class="py-3">Na dzień:
+            <input type="text" th:value="${selectedDate}" id="dateAt" name="dateAt" autocomplete="off"  />
+            <button id="print" type="button" onClick="window.open('/api/product/demand/pdf/' + document.getElementById('dateAt').value);">Drukuj</button>
+        </p>
+    </form>
+
+    <table class="table bg-light table-bordered mb-4 table-sm">
+        <thead class="thead-light">
+            <tr>
+                <th>Lp.</th>
+                <th>Dieta</th>
+                <th>Produkt</th>
+                <th>Sztuk</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="elem: ${list}">
+                <td th:text="${elem.no}" class="align-middle"></td>
+                <td th:text="${elem.diet}" class="align-middle"></td>
+                <td>
+                    <table class="table table-sm mb-0">
+                        <tr th:each="prod: ${elem.products}">
+                            <td th:text="${prod.name}"></td>
+                        </tr>
+                    </table>
+                </td>
+                <td>
+                    <table class="table table-sm mb-0">
+                        <tr th:each="prod: ${elem.products}" >
+                            <td th:text="${prod.quantity}"></td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="2"></td>
+                <th>Suma:</th>
+                <td th:text="${sum}"></td>
+            </tr>
+        </tfoot>
+    </table>
+
+    <div th:replace="fragments/pagination :: pagination"></div>
+    <div th:replace="fragments/datepicker :: code"></div>
+</body>
+
+</html>

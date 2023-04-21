@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <div th:replace="fragments/head"></div>
+    <div th:replace="fragments/datepicker :: imports"></div>
+    <div th:replace="fragments/timepicker :: imports"></div>
+
+    <script th:src="@{/js/gallery-image.js}"></script>
+    <script th:inline="javascript">
+    /*<![CDATA[*/
+        var image_id = /*[[${id}]]*/;
+    /*]]>*/
+    </script>
+</head>
+
+<body>
+<div th:replace="fragments/menu :: menu"></div>
+<h5 th:if="${id == null}">Dodawanie zdjęcia do galerii</h5>
+<h5 th:if="${id != null}">Modyfikacja zdjęcia w galerii</h5>
+<span id="currentId"
+      th:text="${''}" th:data-id="${id}">
+</span>
+
+    <div class="bg-light border mb-5">
+        <div class="row p-0 m-0">
+            <!--                <div class="col-lg-9 col-md-8 col-sm-6 col-12">-->
+            <!--                    <div class="row d-flex align-items-stretch h-50">-->
+            <!--                        <div class="col-md-4 col-12 d-flex align-items-center border p-0">-->
+            <!--                            <div class="w-100 px-2 py-3">-->
+            <!--                                <h6 class="text-center">Data od</h6>-->
+            <!--                                <input type="text" class="form-control form-control-sm" id="dateFrom" name="dateFrom"-->
+            <!--                                    autocomplete="off" th:value="${defaultStartDate}" />-->
+            <!--                            </div>-->
+            <!--                        </div>-->
+            <!--                        <div class="col-md-4 col-12 d-flex align-items-center border p-0">-->
+            <!--                            <div class="w-100 px-2 py-3">-->
+            <!--                                <h6 class="text-center">Data do</h6>-->
+            <!--                                <input type="text" class="form-control form-control-sm" id="dateTo" name="dateTo"-->
+            <!--                                    autocomplete="off" th:value="${defaultEndDate}" />-->
+            <!--                            </div>-->
+            <!--                        </div>-->
+            <!--                        <div class="col-md-4 col-12 d-flex align-items-center border p-0">-->
+            <!--                            <div class="w-100 px-2 py-3">-->
+            <!--                                <h6 class="text-center">Kierowca</h6>-->
+            <!--                                <select class="form-control form-control-sm" id="drivers">-->
+            <!--                                    <option value="">Wszyscy</option>-->
+            <!--                                    <option th:each="driver : ${drivers}" th:value="${driver.id}"-->
+            <!--                                        th:text="${driver.value}">-->
+            <!--                                    </option>-->
+            <!--                                </select>-->
+            <!--                            </div>-->
+            <!--                        </div>-->
+            <!--                    </div>-->
+
+            <!--                    <div class="row d-flex align-items-stretch h-50">-->
+            <!--                        <div class="col-md-4 col-12 d-flex align-items-center border p-0">-->
+            <!--                            <div class="w-100 px-2 py-3">-->
+            <!--                                <h6 class="text-center">Sposób płatności</h6>-->
+            <!--                                <select class="form-control form-control-sm" id="paymentMethod">-->
+            <!--                                    <option value="">Wszystkie</option>-->
+            <!--                                    <option th:each="method: ${paymentMethods}" th:value="${method.id}"-->
+            <!--                                        th:text="${method.value}">-->
+            <!--                                    </option>-->
+            <!--                                </select>-->
+            <!--                            </div>-->
+            <!--                        </div>-->
+            <!--                        <div class="col-md-4 col-12 d-flex align-items-center border p-0">-->
+            <!--                            <div class="w-100 px-2 py-3">-->
+            <!--                                <h6 class="text-center">Status płatności</h6>-->
+            <!--                                <select class="form-control form-control-sm" id="paymentStatus">-->
+            <!--                                    <option value="">-&#45;&#45;</option>-->
+            <!--                                    <option th:each="status: ${paymentStatuses}" th:value="${status.id}"-->
+            <!--                                        th:text="${status.value}">-->
+            <!--                                    </option>-->
+            <!--                                </select>-->
+            <!--                            </div>-->
+            <!--                        </div>-->
+            <!--                        <div class="col-md-4 col-12 d-flex align-items-center border p-0">-->
+            <!--                            <div class="w-100 px-2 py-3">-->
+            <!--                                <h6 class="text-center">Sposób dostawy</h6>-->
+            <!--                                <select class="form-control form-control-sm" id="shipmentType">-->
+            <!--                                    <option value="">Wszystkie</option>-->
+            <!--                                    <option th:each="type: ${shipmentTypes}" th:value="${type.id}"-->
+            <!--                                        th:text="${type.value}"></option>-->
+            <!--                                </select>-->
+            <!--                            </div>-->
+            <!--                        </div>-->
+            <!--                    </div>-->
+            <!--                </div>-->
+            <div class="col-lg-3 col-md-4 col-sm-6 col-12 d-flex justify-content-center border p-0">
+                <div class="mw-75 px-2 py-3">
+                    <form  th:action="@{${'/upload?id=' + (id == null ? '' : id)}}" method="post" enctype="multipart/form-data">
+                        <input type="file" name="file">
+                        <input type="submit" value="Wgraj zdjęcie"/>
+                        <!--<input type="text" id="file_name_uploaded" th:value="${uploadedFileName}">-->
+                        <label id="file_name_uploaded" th:text="${uploadedFileName}"></label>
+                    </form>
+                    <div th:if="${uploadedFileName != null}">
+                        <img style="width: 300px" th:src="@{${'gallery/' + uploadedFileName}}">
+                    </div>
+
+<!--                    <button type="button" onclick="window.location.href='gallery-image'">Wgraj zdjęcie</button>-->
+<!--                    <img style="width: 100px" src="gallery/bg.jpg">-->
+                </div>
+
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6 col-12 d-flex justify-content-center border p-0">
+                <div class="mw-75 px-2 py-3">
+                    <h6 class="text-center">Diety</h6>
+                    <div class="form-check" id="dietId" th:each="diet: ${diets}">
+                        <input type="checkbox" class="form-check-input" th:value="${diet.id}" th:checked="${#arrays.contains(data.dietIds, diet.id)}">
+                        <label class="form-check-label" th:text="${diet.value}"></label>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6 col-12 d-flex justify-content-center border p-0">
+                <div class="mw-75 px-2 py-3">
+                    <h6 class="text-center">Rodzaj</h6>
+                    <select class="form-control form-control-sm" id="imageKind" th:if="${id == null}">
+                        <option th:each="kind : ${imageKind}" th:value="${kind.code}"
+                                th:text="${kind.value}">
+                        </option>
+                    </select>
+
+                    <select class="form-control form-control-sm" id="imageKind" th:if="${id != null}">
+                        <option th:each="kind : ${imageKind}" th:value="${kind.code}"
+                                th:text="${kind.value}" th:selected="${kind.code == data.kind.code()}">
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6 col-12 d-flex justify-content-center border p-0">
+                <div class="mw-75 px-2 py-3">
+                    <button type="button" onclick="save(image_id)">Zapisz</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+<div th:replace="fragments/operation-successful-modal :: modal"></div>
+
+
+</body>
+
+</html>

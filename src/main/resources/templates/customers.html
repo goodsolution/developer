@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+    <head>
+        <div th:replace="fragments/head"></div>
+        <div th:replace="fragments/datepicker :: imports"></div>
+        <div th:replace="fragments/timepicker :: imports"></div>
+        <script th:src="@{/js/add-order.js}"></script>
+        <script th:src="@{/js/customers.js}"></script>
+        <script th:inline="javascript">
+            var customerTypesDict = [[${customerTypes}]];
+            var customerGroupsDict = [[${customerGroups}]];
+            var customerStatusesDict = [[${customerStatuses}]];
+        </script>
+    </head>
+
+    <body>
+        <div th:replace="fragments/menu :: menu"></div>
+
+        <h5>Ewidencja klientów</h5>
+
+        <p>Wszystkich klientów: <span id="count">0</span></p>
+
+        <button type="button" onclick="showClearedAddCustomerModal()">Dodaj nowego klienta</button>
+
+        <form id="filter" class="bg-light border m-0 p-0 my-3">
+            <div class="form-row m-0 p-0">
+
+                <div class="form-group row col-12 col-lg-6 col-xl-3 border m-0 p-0 py-2">
+                    <label class="col-12 col-sm-3 col-md-2 col-xl-3 my-auto text-center">Imię i nazwisko:</label>
+                    <div class="col-12 col-sm-9 col-md-10 col-xl-9 my-auto">
+                        <input type="text" id="name-and-surname" class="form-control"/>
+                    </div>
+                </div>
+
+                <div class="form-group row col-12 col-lg-6 col-xl-3 border m-0 p-0 py-2">
+                    <label class="col-12 col-sm-3 col-md-2 col-xl-3 my-auto text-center">Email:</label>
+                    <div class="col-12 col-sm-9 col-md-10 col-xl-9 my-auto">
+                        <input type="text" id="email" class="form-control"/>
+                    </div>
+                </div>
+
+                <div class="form-group row col-12 col-lg-6 col-xl-3 border m-0 p-0 py-2">
+                    <label class="col-12 col-sm-3 col-md-2 col-xl-3 my-auto text-center">Grupa:</label>
+                    <div class="col-12 col-sm-9 col-md-10 col-xl-9 my-auto">
+                        <select id="group-id" class="form-control">
+                            <option value="0">---</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group row col-12 col-lg-6 col-xl-2 border m-0 p-0 py-2">
+                    <label class="col-12 col-sm-3 col-md-2 col-xl-3 my-auto text-center">Status:</label>
+                    <div class="col-12 col-sm-9 col-md-10 col-xl-9 my-auto">
+                        <select id="status-id" class="form-control">
+                            <option value="0">---</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-12 col-sm-12 col-lg-12 col-xl-1 border text-center m-0 p-0 py-2">
+                    <button type="button" onclick="clearSearchFiltersAndRefresh()">Wyczyść filrty</button>
+                </div>
+
+            </div>
+        </form>
+
+        <div id="result-container" class="my-4">
+            <div class="table-responsive mb-0 pb-0">
+                <table class="table bg-light table-bordered table-hover table-sm mb-0 pb-0">
+                    <thead class="thead-light">
+                        <tr>
+                            <th class="align-middle"><input type="checkbox"></th>
+                            <th class="align-middle" onclick="setSortPropsAndRefresh('name')">Imię i nazwisko<img id="name-and-surname-sorting-arrow-image" class="sorting-arrow-image" src="" width="10px" height="10px"></th>
+                            <th class="align-middle" onclick="setSortPropsAndRefresh('address_line_1')">Adres<img id="address-sorting-arrow-image" class="sorting-arrow-image" src="" width="10px" height="10px"></th>
+                            <th class="align-middle" onclick="setSortPropsAndRefresh('email')">Adres Email<img id="email-sorting-arrow-image" class="sorting-arrow-image" src="" width="10px" height="10px"></th>
+                            <th class="align-middle" onclick="setSortPropsAndRefresh('registration_date')">Data Rejestracji<img id="registration-date-sorting-arrow-image" class="sorting-arrow-image" src="" width="10px" height="10px"></th>
+                            <th class="align-middle" onclick="setSortPropsAndRefresh('type')">Typ<img id="type-sorting-arrow-image" class="sorting-arrow-image" src="" width="10px" height="10px"></th>
+                            <th class="align-middle" onclick="setSortPropsAndRefresh('group_id')">Grupa<img id="group-id-sorting-arrow-image" class="sorting-arrow-image" src="" width="10px" height="10px"></th>
+                            <th class="align-middle" onclick="setSortPropsAndRefresh('orders_count')">Zamówienia<img id="orders-count-sorting-arrow-image" class="sorting-arrow-image" src="" width="10px" height="10px"></th>
+                            <th class="align-middle" onclick="setSortPropsAndRefresh('active')">Status<img id="active-count-sorting-arrow-image" class="sorting-arrow-image" src="" width="10px" height="10px"></th>
+                            <th class="align-middle"></th>
+                        </tr>
+                    </thead>
+                    <tbody id="records">
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div th:replace="fragments/pagination :: pagination"></div>
+        <div th:replace="fragments/delete-customer-modal :: modal"></div>
+        <div th:replace="fragments/add-customer-modal :: modal"></div>
+        <div th:replace="fragments/operation-successful-modal :: modal"></div>
+
+        <div th:replace="fragments/add-order-modal-js :: modal"></div>
+        <div th:replace="fragments/datepicker :: code"></div>
+        <div th:replace="fragments/timepicker :: code"></div>
+    </body>
+
+</html>

@@ -1,0 +1,233 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<body>
+
+<div th:fragment="modal" class="modal" id="add-order-modal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content bg-light">
+            <div class="modal-header w-100">
+                <h4 class="modal-title">
+                    Dodawanie nowego zamówienia
+                </h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <div class="modal-body w-100">
+                <form th:action="@{/api/orders}" method="POST" class="mr-2">
+                    <div class="form-row pb-1" id="new_order_search_line">
+                        <label class="col-md-6 text-center pt-1" for="new_order_search_customer">
+                            Szukaj klienta:
+                        </label>
+                        <input class="col-md-6 " type="text"
+                               name="new_order_search_customer" id="new_order_search_customer" onkeyup="reloadCustomers(this.value)">
+                    </div>
+                    <div class="form-row pb-1">
+                        <label class="col-md-6 text-center pt-1" for="new_order_customer">
+                            Klient:
+                        </label>
+                        <select id="new_order_customer" name="new_order_customer" onchange="setDefaultDriver()"
+                                class="mb-1 col-md-6" >
+
+                        </select>
+                    </div>
+                    <div class="form-row pb-1">
+                        <label class="col-md-6 text-center pt-1" for="new_order_purchase_datetime">
+                            Data sprzedaży:
+                        </label>
+
+                        <input class="col-md-4 modal-datepicker" type="text" required
+                               name="new_order_purchase_datetime" id="new_order_purchase_datetime">
+                        <input class="col-md-2 modal-datepicker" type="text" required
+                               name="new_order_purchase_time" id="new_order_purchase_time">
+
+                    </div>
+                    <div class="form-row pb-1">
+                        <label class="col-md-6 text-center pt-1" for="new_order_delivery">
+                            Dostawa:
+                        </label>
+                        <select id="new_order_delivery" name="new_order_delivery"
+                                class="mb-1 col-md-6" >
+
+                        </select>
+                    </div>
+                    <div class="form-row pb-1">
+                        <label class="col-md-6 text-center pt-1" for="new_order_payment">
+                            Płatność:
+                        </label>
+                        <select id="new_order_payment" name="new_order_payment"
+                                class="mb-1 col-md-6" >
+
+                        </select>
+                    </div>
+                    <div class="form-row pb-1">
+                        <label class="col-md-6 text-center pt-1" for="new_order_driver">
+                            Kierowca:
+                        </label>
+                        <select id="new_order_driver" name="new_order_driver"
+                                class="mb-1 col-md-6" >
+
+                        </select>
+                    </div>
+                    <div class="form-row pb-1">
+                        <label class="col-md-6 text-center pt-1" for="new_order_status">
+                            Status:
+                        </label>
+                        <select id="new_order_status" name="new_order_status"
+                                class="mb-1 col-md-6" >
+
+                        </select>
+                    </div>
+
+                    <div id="new-order-products">
+
+                    </div>
+                    <div class="form-row pb-1">
+                        <p class="col-md-6 text-center">
+                            <span>Dodaj produkt</span>
+                            <button type="button" onclick="addAnotherProduct()">
+                                +
+                            </button>
+                        </p>
+                    </div>
+
+                    <div id="product-container">
+                        <div class="product border">
+                            <div class="p-1">
+                                <div class="form-row pb-1">
+                                    <label class="col-md-6 text-center pt-1">
+                                        Wybierz dietę:
+                                    </label>
+                                    <select name="newOrderDiet"
+                                            class="mb-1 col-md-6 newOrderDiet" >
+
+                                    </select>
+                                </div>
+                                <div class="form-row pb-1">
+                                    <label class="col-md-6 text-center pt-1" >
+                                        Wybierz rodzaj:
+                                    </label>
+                                        <select name="newOrderType"
+                                            class="mb-1 col-md-6 newOrderType" >
+
+                                    </select>
+                                </div>
+                                <div class="form-row pb-1">
+                                    <label class="col-md-6 text-center pt-1">
+                                        Wpisz liczbę dni:
+                                    </label>
+                                    <input class="col-md-6 newOrderDays" type="number" required
+                                           name="newOrderDays">
+                                </div>
+                                <div class="form-row pb-1">
+                                    <label class="col-md-6 text-center pt-1">
+                                        Jeden dzień testowy:
+                                    </label>
+                                    <select name="newOrderTestDay"
+                                            class="mb-1 col-md-6 newOrderTestDay" >
+
+                                    </select>
+                                </div>
+                                <div class="form-row pb-1">
+                                    <label class="col-md-6 text-center pt-1 ">
+                                        Data rozpoczęcia diety:
+                                    </label>
+                                    <input class="col-md-6 dateNewOrderStart" type="text" required
+                                           name="dateNewOrderStart" id="dateNewOrderStart">
+                                </div>
+                                <div class="form-row pb-1">
+                                    <label class="col-md-6 text-center pt-1">
+                                        Weekendy:
+                                    </label>
+                                    <select name="newOrderWeekendOptionId"
+                                            class="mb-1 col-md-6 newOrderWeekendOptionId" >
+                                    </select>
+                                </div>
+                                <div class="form-row pb-1">
+                                    <label class="col-md-6 text-center pt-1">
+                                        Dodatki:
+                                    </label>
+                                    <p class="col-md-6 align-middle">
+                                        <input class="extrasOne " type="checkbox"
+                                               name="extrasOne" >
+                                        <span>Woda Java 1,5l (6 PLN/dzień)</span>
+                                    </p>
+                                </div>
+                                <div class="form-row pb-1">
+                                    <label class="col-md-6 text-center pt-1">
+                                        Liczba zestawów:
+                                    </label>
+                                    <input class="col-md-6 quantity" type="number" required
+                                           name="quantity" id="quantity">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row pb-1">
+                        <label class="col-md-6 text-center pt-1" for="new_order_discount_code">
+                            Kod rabatowy/voucher:
+                        </label>
+                        <input class="col-md-6 " type="text"
+                               name="new_order_discount_code" id="new_order_discount_code">
+                    </div>
+                    <div class="form-row pb-1">
+                        <label class="col-md-6 text-center pt-1" for="new_order_comments">
+                            Uwagi:
+                        </label>
+                        <input class="col-md-6 " type="text"
+                               name="new_order_comments" id="new_order_comments">
+                    </div>
+                    <div class="form-row pb-1">
+                        <label class="col-md-6 text-center pt-1" for="new_order_demanding_customer">
+                            Klient wymagający:
+                        </label>
+                        <select id="new_order_demanding_customer" name="new_order_demanding_customer"
+                                class="mb-1 col-md-6" >
+
+                        </select>
+                    </div>
+                    <div class="form-row">
+                        <label class="col-md-6"> </label>
+                        <p class="col-md-6">
+                            <input class=" " type="checkbox"
+                                   name="sendMail" id="sendMail">
+                            <span class="">Wyślij email do klienta</span>
+                        </p>
+                    </div>
+                    <div class="form-row">
+                        <label class="col-md-6"> </label>
+                        <p class="col-md-6">
+                            <input class=" " type="checkbox"
+                                   id="newOrderDriverExclude" name="newOrderDriverExclude">
+                            <span>Wyklucz z naliczania dla kierowców</span>
+                        </p>
+                    </div>
+                    <div class="form-row">
+                        <label class="col-md-6"> </label>
+                        <p class="col-md-6">
+                            <input class=" " type="checkbox"
+                                   name="newOrderGroup" id="newOrderGroup">
+                            <span>Grupuj zamówienie</span>
+                        </p>
+                    </div>
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button"
+                        onclick="postNewOrderAndReturn()">
+                    Dodaj zamówienie
+                </button>
+                <button type="button"
+                        onclick="postNewOrderAndEdit()">
+                    Dodaj zamówienie i przejdź do edycji
+                </button>
+                <button type="button" data-dismiss="modal">
+                    Anuluj
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

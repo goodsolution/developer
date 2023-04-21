@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html th:lang="${#locale.getLanguage()}" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta name="description" th:content="#{meme.content.description}">
+    <meta name="keywords" th:content="#{meme.content.keywords}">
+    <title th:text="'Formaty danych' + ' · ' + ${@applicationConfig.getAppNameFront()}"></title>
+    <div th:replace="fragments/front-head"></div>
+    <script>
+        trace('page.show', 'find-job');
+    </script>
+    <!--<script th:src="@{/js/meme-page.js}"></script>-->
+</head>
+
+<body>
+<nav th:replace="${@courseCustomersService.getLoggedCustomer()} ? 'fragments/logged-in-navbar' : 'fragments/logged-out-navbar'"></nav>
+
+<div class="container my-5">
+    <div class="row">
+        Formaty danych
+
+    </div>
+    <div>
+        <strong>XML:</strong>
+        <ul>
+            <li><a href="https://en.wikipedia.org/wiki/XML" target="_blank">https://en.wikipedia.org/wiki/XML</a></li>
+            <li><a href="https://pl.wikipedia.org/wiki/XML" target="_blank">https://pl.wikipedia.org/wiki/XML</a></li>
+            <li><a href="https://www.w3schools.com/xml/default.asp" target="_blank">https://www.w3schools.com/xml/default.asp</a></li>
+        </ul>
+        Formatters:
+        <ul>
+            <li><a href="https://jsonformatter.org/xml-formatter" target="_blank">https://jsonformatter.org/xml-formatter</a></li>
+        </ul>
+    </div>
+    <div>
+        <strong>JSON:</strong>
+        <ul>
+            <li><a href="https://www.json.org/json-en.html" target="_blank">https://www.json.org/json-en.html</a></li>
+            <li><a href="https://en.wikipedia.org/wiki/JSON" target="_blank">https://en.wikipedia.org/wiki/JSON</a></li>
+            <li><a href="https://www.w3schools.com/js/js_json_intro.asp" target="_blank">https://www.w3schools.com/js/js_json_intro.asp</a></li>
+        </ul>
+        Formatters:
+        <ul>
+            <li><a href="https://jsonformatter.org/" target="_blank">https://jsonformatter.org/</a></li>
+        </ul>
+    </div>
+    <div>
+        <strong>YAML:</strong>
+        <ul>
+            <li><a href="https://yaml.org/" target="_blank">https://yaml.org/</a></li>
+            <li><a href="https://en.wikipedia.org/wiki/YAML" target="_blank">https://en.wikipedia.org/wiki/YAML</a></li>
+            <li><a href="https://pl.wikipedia.org/wiki/YAML" target="_blank">https://pl.wikipedia.org/wiki/YAML</a></li>
+            <li><a href="https://learn.getgrav.org/16/advanced/yaml" target="_blank">https://learn.getgrav.org/16/advanced/yaml</a></li>
+        </ul>
+        Formatters:
+        <ul>
+            <li><a href="https://jsonformatter.org/yaml-formatter" target="_blank">https://jsonformatter.org/yaml-formatter</a></li>
+        </ul>
+    </div>
+    <div id="records">
+
+    </div>
+
+
+</div>
+
+<footer th:replace="fragments/footer"></footer>
+
+</body>
+
+</html>

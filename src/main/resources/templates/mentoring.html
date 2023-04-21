@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <div th:replace="fragments/front-head"></div>
+    <script th:replace="fragments/languages-script"></script>
+    <script>
+        trace('page.show', 'mentoring');
+    </script>
+</head>
+
+    <body>
+        <nav th:replace="${@courseCustomersService.getLoggedCustomer()} ? 'fragments/logged-in-navbar' : 'fragments/logged-out-navbar'"></nav>
+
+        <div class="container my-5">
+            <h3 class="text-center">Mentoring / Lekcje indywidualne</h3>
+            <div class="text-center mt-3">
+                Możemy zostać Twoimi mentorami i poprowadzić Cię przez świat informatyki! Dzięki nam dużo szybciej osiągniesz swoje cele jak np. dostanie się do pierwszej pracy czy awans.
+                Na regularnych spotkaniach doradzimy Ci w jakim kierunku się rozwijać, wytłumaczymy materiał, skorygujemy błędy w nauce lub pomożemy rozwiązać programistyczne problemy.
+                <br><br>
+                Doświadczony mentor znacznie przyśpieszy Twój rozwój, ponieważ zapewni Ci coś, o co bardzo trudno w kursach online - pomoże zdiagnozować popełniane błędy oraz nauczy jak ich unikać.
+                Nauczenie się dobrych praktyk samemu jest bardzo trudne, ponieważ zazwyczaj nawet nie wiemy co robimy źle! A warto pamiętać, że jest to kluczowa umiejętność, która oddziela specjalistów od przeciętnych programistów.
+                <br><br>
+                Oczywiście nie musimy spotykać się regularnie - możesz wykupić tylko jednorazową konsultację.
+                <br><br>
+                W jakich technologiach się specjalizujemy?<br>
+                <b>-HTML</b><br>
+                <b>-CSS</b><br>
+                <b>-JavaScript</b><br>
+                <b>-Java</b><br>
+                <b>-Spring</b><br>
+                <b>-Bazy danych SQL i NoSQL</b><br>
+
+                <br>
+                Zainteresowany? Zapraszamy do kontaktu:
+                <a class="d-block text-info" onclick="trace('link.clicked', 'contact-mail')" th:href="${@applicationConfig.getCompanyContactMailto()}" th:text="${@applicationConfig.getCompanyContactMail()}"></a>
+            </div>
+        </div>
+
+
+        <footer th:replace="fragments/footer"></footer>
+
+    </body>
+
+</html>

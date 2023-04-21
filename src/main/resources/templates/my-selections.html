@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title th:text="#{my.courses.header.selections} + ' · ' + ${@applicationConfig.getAppNameFront()}"></title>
+    <div th:replace="fragments/front-head"></div>
+    <script th:replace="fragments/languages-script"></script>
+    <script th:src="@{/js/my-selections.js}"></script>
+</head>
+
+<body>
+
+<nav th:replace="${@courseCustomersService.getLoggedCustomer()} ? 'fragments/logged-in-navbar' : 'fragments/logged-out-navbar'"></nav>
+
+<div id="container" class="container my-5">
+
+    <div class="text-center">
+        <h1 th:text="#{my.courses.header.selections}"></h1>
+    </div>
+
+    <div id="results" class="row my-5">
+
+    </div>
+
+</div>
+<footer th:replace="fragments/footer"></footer>
+</body>
+
+</html>

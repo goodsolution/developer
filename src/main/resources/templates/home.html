@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html th:lang="${#locale.getLanguage()}" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta name="description" th:content="#{home.content.description}">
+    <meta name="keywords" th:content="#{home.content.keywords}">
+    <title th:text="#{home.tab.title} + ' · ' + ${@applicationConfig.getAppNameFront()}"></title>
+
+    <div th:replace="fragments/front-head"></div>
+    <script th:src="@{/js/home.js}"></script>
+    <script th:replace="fragments/languages-script"></script>
+</head>
+
+    <body>
+        <nav th:replace="${@courseCustomersService.getLoggedCustomer()} ? 'fragments/logged-in-navbar' : 'fragments/logged-out-navbar'"></nav>
+
+        <div class="container my-5">
+
+            <div class="card p-3 bg-light">
+                <h5 class="text-center" th:text="#{home.courses.description}"></h5>
+
+                <div class="row mt-3">
+                    <div class="col-lg-10 text-center p-3">
+                        <input type="text" class="form-control" id="search" th:placeholder="#{home.search.course}">
+                    </div>
+                    <div class="col-lg-2 text-center p-3">
+                        <button class="btn btn-primary" onclick="refreshCourses()"><span><i class="fas fa-search"></i></span> <span th:text="#{home.search}"></span></button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="results" class="row my-5">
+
+            </div>
+
+        </div>
+
+        <div th:replace="fragments/successfully-added-to-basket-modal :: modal"></div>
+
+
+        <footer th:replace="fragments/footer"></footer>
+
+    </body>
+
+</html>

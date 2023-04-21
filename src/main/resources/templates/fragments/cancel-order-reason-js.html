@@ -1,0 +1,26 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<body>
+
+    <div th:fragment="modal" class="modal"
+         th:id="'cancel-order-reason-modal'">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+            <div class="modal-content bg-light">
+                <div class="modal-header w-100">
+                    <h4 class="modal-title">Podaj powód anulowania zamówienia</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body w-100">
+                    <textarea class="form-control" id="cancel_reason"></textarea>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" onclick="cancelOrderWithReason(document.getElementById('cancel_reason').value)">
+                        Zapisz
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

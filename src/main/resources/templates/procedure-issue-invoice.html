@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <div th:replace="fragments/head"></div>
+</head>
+
+<body>
+<div th:replace="fragments/menu :: menu"></div>
+
+<div class="container">
+    <div class="text-center">
+        <h4>Procedure to issuing invoice for course</h4>
+    </div>
+
+    <div class="text-center">
+
+        <div>1. Go to orders page</div>
+        <div>2. Set filters (Status - paid, Invoice issued - NO)</div>
+        <br>
+        <div>Now for every record which we found:</div>
+        <br>
+        <div>1. Click details button</div>
+        <div>2. In wFirma create invoice and download on computer. Use billing details.</div>
+        <div>3. Upload invoice as PDF to order.</div>
+        <div>4. Notify customer about new invoice by email.</div>
+    </div>
+
+</div>
+
+</body>
+
+</html>

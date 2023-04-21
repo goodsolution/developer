@@ -1,0 +1,13 @@
+
+1. use this command
+keytool -genkey -v -keystore course-platform.keystore -alias cp -keyalg RSA -sigalg SHA1withRSA -keysize 2048 -validity 10000
+2. Then this command:
+keytool -importkeystore -srckeystore course-platform.keystore -destkeystore course-platform.keystore -deststoretype pkcs12
+
+3. Open file "course-platform" in program like "KeyStore Explorer"
+4. Right click >> Import Key Pair
+5. Choose PKCS8
+6. Add required files
+7. Click import
+8. Choose alias
+9. Choose password

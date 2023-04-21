@@ -1,0 +1,493 @@
+<nav class="navbar navbar-expand-xl navbar-light bg-light shadow" xmlns:th="http://www.thymeleaf.org">
+
+    <a class="navbar-brand d-flex align-items-center" href="/">
+        <img th:src="${@applicationConfig.getLogoFrontPath()}" width="50" height="50" class="d-inline-block align-top" alt="Computing College Logo">
+        <span class="ml-2" th:text="${@applicationConfig.getAppNameFront()}"></span>
+    </a>
+
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto my-2 my-lg-0">
+            <!--
+            <li th:if="${!@applicationConfig.getMenuCoursesDisabled() && @courseCustomersService.isLoggedCustomerUser()}" class="nav-item">
+                <a class="nav-link" href="/courses">
+                    <span><i class="fas fa-video"></i></span>
+                    <span th:text="#{navbar.courses}"></span>
+                </a>
+            </li>
+            <li th:if="${@courseCustomersService.isLoggedCustomerUser()}" class="nav-item">
+                <a class="nav-link" href="/buy-our-code">
+                    <span><i class="fas fa-code"></i></span>
+                    <span th:text="#{navbar.buy.our.code}"></span>
+                </a>
+            </li>
+            -->
+            <li class="nav-item" th:if="${!@environment.getProperty('course-platform.menu.check-vin.disabled')}">
+                <a class="nav-link" href="/check-vin">
+                    <span><i class="fas fa fa-bullhorn"></i></span>
+                    <span th:text="#{navbar.check.vin}"></span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/itube">
+                    <span><i class="fas fa-video"></i></span>
+                    <span th:text="#{navbar.itube}"></span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/memes">
+                    <span><i class="fas fa-laugh-squint"></i></span>
+                    <span th:text="#{navbar.memes}"></span>
+                </a>
+            </li>
+            <li th:if="${@courseCustomersService.isLifeAdviserUser()}" class="nav-item">
+                <a class="nav-link" href="/adviser">
+                    <span><i class="fas fa-hand-pointer"></i></span>
+                    <span th:text="#{navbar.life.adviser}"></span>
+                </a>
+            </li>
+            <li th:if="${@courseCustomersService.isLifeAdviserUser()}" class="nav-item">
+                <a class="nav-link" href="/my-advises">
+                    <span><i class="fas fa-hand-pointer"></i></span>
+                    <span th:text="#{navbar.my.advises}"></span>
+                </a>
+            </li>
+            <li th:if="${@courseCustomersService.isLifeAdviserUser()}" class="nav-item">
+                <a class="nav-link" href="/my-advise-answers">
+                    <span><i class="fas fa-hand-pointer"></i></span>
+                    <span th:text="#{navbar.my.advise.answers}"></span>
+                </a>
+            </li>
+            <li th:if="${@courseCustomersService.isLifeAdviserUser()}" class="nav-item">
+                <a class="nav-link" href="/my-advise-categories">
+                    <span><i class="fas fa-hand-pointer"></i></span>
+                    <span th:text="#{navbar.my.advise.categories}"></span>
+                </a>
+            </li>
+            <li th:if="${@courseCustomersService.isLoggedCustomerUser()}" class="nav-item">
+                <a class="nav-link" href="/selections">
+                    <span><i class="fas fa-hand-pointer"></i></span>
+                    <span th:text="#{navbar.selections}"></span>
+                </a>
+            </li>
+            <li th:if="${@courseCustomersService.isLoggedCustomerStudent()}" class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" role="button" href="#" data-toggle="dropdown">
+                    <span><i class="fas fa-graduation-cap"></i></span>
+                    <span th:text="#{navbar.student.area}"></span>
+                </a>
+                <!--
+                https://fontawesome.com/v4.7/icon/question-circle
+                -->
+                <div class="dropdown-menu dropdown-menu-right">
+                    <a class="dropdown-item" href="/nice-to-read">
+                        <span><i class="fas fa-question-circle"></i></span>
+                        <span th:text="#{navbar.student.area.nice.to.read}"></span>
+                    </a>
+<!--                    <a class="dropdown-item" href="/no-content">-->
+<!--                        <span><i class="fas fa-calendar"></i></span>-->
+<!--                        <span th:text="#{navbar.student.area.calendar}"></span>-->
+<!--                    </a>-->
+                    <a class="dropdown-item" href="/no-content">
+                        <span><i class="fas fa-question-circle"></i></span>
+                        <span th:text="#{navbar.student.area.how.to.read}"></span>
+                    </a>
+                    <a class="dropdown-item" href="/cv">
+                        <span><i class="fas fa-question-circle"></i></span>
+                        <span th:text="${'Dobre CV'}"></span>
+                    </a>
+                    <a class="dropdown-item" href="/find-job">
+                        <span><i class="fas fa-question-circle"></i></span>
+                        <span th:text="${'Gdzie szukać pracy'}"></span>
+                    </a>
+                    <a class="dropdown-item" href="/interview">
+                        <span><i class="fas fa-question-circle"></i></span>
+                        <span th:text="${'Rozmowa o prace'}"></span>
+                    </a>
+                    <a class="dropdown-item" href="/no-content">
+                        <span><i class="fas fa-question-circle"></i></span>
+                        <span th:text="${'Firmy IT'}"></span>
+                    </a>
+                    <a class="dropdown-item" href="/algorithms">
+                        <span><i class="fas fa-question-circle"></i></span>
+                        <span th:text="${'Algorytmy'}"></span>
+                    </a>
+                    <a class="dropdown-item" href="/no-content">
+                        <span><i class="fas fa-question-circle"></i></span>
+                        <span th:text="${'Języki programowania'}"></span>
+                    </a>
+                    <a class="dropdown-item" href="/data-format">
+                        <span><i class="fas fa-question-circle"></i></span>
+                        <span th:text="${'Formaty danych'}"></span>
+                    </a>
+                    <a class="dropdown-item" href="/form-of-employment">
+                        <span><i class="fas fa-question-circle"></i></span>
+                        <span th:text="${'Formy zatrudnienia'}"></span>
+                    </a>
+                    <a class="dropdown-item" href="/no-content">
+                        <span><i class="fas fa-question-circle"></i></span>
+                        <span th:text="${'Architektura systemów'}"></span>
+                    </a>
+                    <a class="dropdown-item" href="/dictionary">
+                        <span><i class="fas fa-question-circle"></i></span>
+                        <span th:text="#{navbar.student.area.dictionary}"></span>
+                    </a>
+                    <a class="dropdown-item" href="/at-work">
+                        <span><i class="fas fa-question-circle"></i></span>
+                        <span th:text="${'W pracy'}"></span>
+                    </a>
+                    <a class="dropdown-item" href="/benefits">
+                        <span><i class="fas fa-question-circle"></i></span>
+                        <span th:text="${'Benefity'}"></span>
+                    </a>
+
+                    <!--
+                    <a class="dropdown-item" href="/my-codes">
+                        <span><i class="fas fa-code"></i></span>
+                        <span th:text="#{navbar.my.codes}"></span>
+                    </a>
+                    <a class="dropdown-item" href="/my-selections">
+                        <span><i class="fas fa-hand-pointer"></i></span>
+                        <span th:text="#{navbar.my.selections}"></span>
+                    </a>
+                    -->
+                </div>
+            <li>
+            <li th:if="${@courseCustomersService.isLoggedCustomerStudent()}" class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" role="button" href="#" data-toggle="dropdown">
+                    <span><i class="fas fa-graduation-cap"></i></span>
+                    <span th:text="${'Java'}"></span>
+                </a>
+                <!--
+                https://fontawesome.com/v4.7/icon/question-circle
+                -->
+                <div class="dropdown-menu dropdown-menu-right">
+                    <a class="dropdown-item" href="/java-topics">
+                        <span><i class="fas fa-question-circle"></i></span>
+                        <span th:text="${'Zagadnienia'}"></span>
+                    </a>
+                    <a class="dropdown-item" href="/java-libraries">
+                        <span><i class="fas fa-question-circle"></i></span>
+                        <span th:text="${'Biblioteki'}"></span>
+                    </a>
+                    <a class="dropdown-item" href="/java-frameworks">
+                        <span><i class="fas fa-question-circle"></i></span>
+                        <span th:text="${'Frameworki'}"></span>
+                    </a>
+                    <a class="dropdown-item" href="/java-test">
+                        <span><i class="fas fa-question-circle"></i></span>
+                        <span th:text="${'Testowanie'}"></span>
+                    </a>
+                    <a class="dropdown-item" href="/java-architecture">
+                        <span><i class="fas fa-question-circle"></i></span>
+                        <span th:text="${'Architektura kodu'}"></span>
+                    </a>
+                    <a class="dropdown-item" href="/java-tasks">
+                        <span><i class="fas fa-question-circle"></i></span>
+                        <span th:text="${'Zadania'}"></span>
+                    </a>
+<!--                    <a class="dropdown-item" href="/java-tasks">-->
+<!--                        <span><i class="fas fa-question-circle"></i></span>-->
+<!--                        <span th:text="${'Code review'}"></span>-->
+<!--                    </a>-->
+<!--                    <a class="dropdown-item" href="/java-tasks">-->
+<!--                        <span><i class="fas fa-question-circle"></i></span>-->
+<!--                        <span th:text="${'Refaktoryzacja'}"></span>-->
+<!--                    </a>-->
+                    <a class="dropdown-item" href="/java-tools">
+                        <span><i class="fas fa-question-circle"></i></span>
+                        <span th:text="${'Narzędzia'}"></span>
+                    </a>
+                    <a class="dropdown-item" href="/java-code">
+                        <span><i class="fas fa-question-circle"></i></span>
+                        <span th:text="${'Kody'}"></span>
+                    </a>
+                    <a class="dropdown-item" href="/java-codility">
+                        <span><i class="fas fa-question-circle"></i></span>
+                        <span th:text="${'Codility'}"></span>
+                    </a>
+                    <a class="dropdown-item" href="/java-interview-questions">
+                        <span><i class="fas fa-question-circle"></i></span>
+                        <span th:text="${'Pytania rekrutacyjne'}"></span>
+                    </a>
+                    <a class="dropdown-item" href="/java-links">
+                        <span><i class="fas fa-question-circle"></i></span>
+                        <span th:text="${'Linki'}"></span>
+                    </a>
+                </div>
+            <li>
+            <li th:if="${@courseCustomersService.isLoggedCustomerStudent() and !@environment.getProperty('course-platform.menu.sql.disabled')}" class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" role="button" href="#" data-toggle="dropdown">
+                    <span><i class="fas fa-graduation-cap"></i></span>
+                    <span th:text="${'SQL'}"></span>
+                </a>
+                <!--
+                https://fontawesome.com/v4.7/icon/question-circle
+                -->
+                <div class="dropdown-menu dropdown-menu-right">
+                    <a class="dropdown-item" href="/no-content">
+                        <span><i class="fas fa-question-circle"></i></span>
+                        <span th:text="${'Zagadnienia'}"></span>
+                    </a>
+                    <a class="dropdown-item" href="/no-content">
+                        <span><i class="fas fa-question-circle"></i></span>
+                        <span th:text="${'Zadania'}"></span>
+                    </a>
+                    <a class="dropdown-item" href="/no-content">
+                        <span><i class="fas fa-question-circle"></i></span>
+                        <span th:text="${'Kody'}"></span>
+                    </a>
+                    <a class="dropdown-item" href="/sql-interview-questions">
+                        <span><i class="fas fa-question-circle"></i></span>
+                        <span th:text="${'Pytania rekrutacyjne'}"></span>
+                    </a>
+                    <a class="dropdown-item" href="/no-content">
+                        <span><i class="fas fa-question-circle"></i></span>
+                        <span th:text="${'Linki'}"></span>
+                    </a>
+                </div>
+            <li>
+            <li th:if="${@courseCustomersService.isLoggedCustomerStudent() and !@environment.getProperty('course-platform.menu.spring-boot.disabled')}" class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" role="button" href="#" data-toggle="dropdown">
+                    <span><i class="fas fa-graduation-cap"></i></span>
+                    <span th:text="${'Spring Boot'}"></span>
+                </a>
+                <!--
+                https://fontawesome.com/v4.7/icon/question-circle
+                -->
+                <div class="dropdown-menu dropdown-menu-right">
+                    <a class="dropdown-item" href="/no-content">
+                        <span><i class="fas fa-question-circle"></i></span>
+                        <span th:text="${'Zagadnienia'}"></span>
+                    </a>
+                    <a class="dropdown-item" href="/no-content">
+                        <span><i class="fas fa-question-circle"></i></span>
+                        <span th:text="${'Zadania'}"></span>
+                    </a>
+                    <a class="dropdown-item" href="/no-content">
+                        <span><i class="fas fa-question-circle"></i></span>
+                        <span th:text="${'Kody'}"></span>
+                    </a>
+                    <a class="dropdown-item" href="/no-content">
+                        <span><i class="fas fa-question-circle"></i></span>
+                        <span th:text="${'Pytania rekrutacyjne'}"></span>
+                    </a>
+                    <a class="dropdown-item" href="/no-content">
+                        <span><i class="fas fa-question-circle"></i></span>
+                        <span th:text="${'Linki'}"></span>
+                    </a>
+                </div>
+            <li>
+            <li th:if="${(@courseCustomersService.isLoggedCustomerStudent() or @courseCustomersService.isLoggedWithRole('JAVA_SCRIPT')) and !@environment.getProperty('course-platform.menu.java-script.disabled')}" class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" role="button" href="#" data-toggle="dropdown">
+                    <span><i class="fas fa-graduation-cap"></i></span>
+                    <span th:text="${'Java Script'}"></span>
+                </a>
+                <!--
+                https://fontawesome.com/v4.7/icon/question-circle
+                -->
+                <div class="dropdown-menu dropdown-menu-right">
+                    <a class="dropdown-item" href="/java-script-topics">
+                        <span><i class="fas fa-question-circle"></i></span>
+                        <span th:text="${'Zagadnienia'}"></span>
+                    </a>
+<!--                    <a class="dropdown-item" href="/no-content">-->
+<!--                        <span><i class="fas fa-question-circle"></i></span>-->
+<!--                        <span th:text="${'Zadania'}"></span>-->
+<!--                    </a>-->
+<!--                    <a class="dropdown-item" href="/no-content">-->
+<!--                        <span><i class="fas fa-question-circle"></i></span>-->
+<!--                        <span th:text="${'Kody'}"></span>-->
+<!--                    </a>-->
+<!--                    <a class="dropdown-item" href="/no-content">-->
+<!--                        <span><i class="fas fa-question-circle"></i></span>-->
+<!--                        <span th:text="${'Pytania rekrutacyjne'}"></span>-->
+<!--                    </a>-->
+                    <a class="dropdown-item" href="/java-script-links">
+                        <span><i class="fas fa-question-circle"></i></span>
+                        <span th:text="${'Linki'}"></span>
+                    </a>
+                </div>
+            <li>
+<!--            <li th:if="${@courseCustomersService.isLoggedCustomerStudent() and !@environment.getProperty('course-platform.menu.java-script.disabled')}" class="nav-item dropdown">-->
+<!--                <a class="nav-link dropdown-toggle" role="button" href="#" data-toggle="dropdown">-->
+<!--                    <span><i class="fas fa-graduation-cap"></i></span>-->
+<!--                    <span th:text="${'Java Script'}"></span>-->
+<!--                </a>-->
+<!--                &lt;!&ndash;-->
+<!--                https://fontawesome.com/v4.7/icon/question-circle-->
+<!--                &ndash;&gt;-->
+<!--                <div class="dropdown-menu dropdown-menu-right">-->
+<!--                    <a class="dropdown-item" href="/no-content">-->
+<!--                        <span><i class="fas fa-question-circle"></i></span>-->
+<!--                        <span th:text="${'Zagadnienia'}"></span>-->
+<!--                    </a>-->
+<!--                    <a class="dropdown-item" href="/no-content">-->
+<!--                        <span><i class="fas fa-question-circle"></i></span>-->
+<!--                        <span th:text="${'Zadania'}"></span>-->
+<!--                    </a>-->
+<!--                    <a class="dropdown-item" href="/no-content">-->
+<!--                        <span><i class="fas fa-question-circle"></i></span>-->
+<!--                        <span th:text="${'Kody'}"></span>-->
+<!--                    </a>-->
+<!--                    <a class="dropdown-item" href="/no-content">-->
+<!--                        <span><i class="fas fa-question-circle"></i></span>-->
+<!--                        <span th:text="${'Pytania rekrutacyjne'}"></span>-->
+<!--                    </a>-->
+<!--                    <a class="dropdown-item" href="/no-content">-->
+<!--                        <span><i class="fas fa-question-circle"></i></span>-->
+<!--                        <span th:text="${'Linki'}"></span>-->
+<!--                    </a>-->
+<!--                </div>-->
+<!--            <li>-->
+            <li th:if="${@courseCustomersService.isLoggedCustomerStudent() and !@environment.getProperty('course-platform.menu.methodology.disabled')}" class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" role="button" href="#" data-toggle="dropdown">
+                    <span><i class="fas fa-graduation-cap"></i></span>
+                    <span th:text="${'Metodyki'}"></span>
+                </a>
+                <!--
+                https://fontawesome.com/v4.7/icon/question-circle
+                -->
+                <div class="dropdown-menu dropdown-menu-right">
+                    <a class="dropdown-item" href="/methodology-scrum">
+                        <span><i class="fas fa-question-circle"></i></span>
+                        <span th:text="${'Scrum'}"></span>
+                    </a>
+                    <a class="dropdown-item" href="/methodology-kanban">
+                        <span><i class="fas fa-question-circle"></i></span>
+                        <span th:text="${'Kanban'}"></span>
+                    </a>
+                    <a class="dropdown-item" href="/methodology-waterfall">
+                        <span><i class="fas fa-question-circle"></i></span>
+                        <span th:text="${'Waterfall'}"></span>
+                    </a>
+                </div>
+            <li>
+            <li th:if="${@courseCustomersService.isLoggedCustomerStudent()}" class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" role="button" href="#" data-toggle="dropdown">
+                    <span><i class="fas fa-graduation-cap"></i></span>
+                    <span th:text="${'Kreatywność'}"></span>
+                </a>
+                <!--
+                https://fontawesome.com/v4.7/icon/question-circle
+                -->
+                <div class="dropdown-menu dropdown-menu-right">
+                    <a class="dropdown-item" href="/creativity">
+                        <span><i class="fas fa-question-circle"></i></span>
+                        <span th:text="${'Czym jest'}"></span>
+                    </a>
+                    <a class="dropdown-item" href="/how-to-develop-creativity">
+                        <span><i class="fas fa-question-circle"></i></span>
+                        <span th:text="${'Jak ją rozwijać'}"></span>
+                    </a>
+                </div>
+            <li>
+            <li th:if="${@courseCustomersService.isLoggedCustomerStudent()}" class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" role="button" href="#" data-toggle="dropdown">
+                    <span><i class="fas fa-graduation-cap"></i></span>
+                    <span th:text="${'Zdrowie'}"></span>
+                </a>
+                <!--
+                https://fontawesome.com/v4.7/icon/question-circle
+                -->
+                <div class="dropdown-menu dropdown-menu-right">
+                    <a class="dropdown-item" href="/stress">
+                        <span><i class="fas fa-question-circle"></i></span>
+                        <span th:text="${'Stres'}"></span>
+                    </a>
+                    <a class="dropdown-item" href="/meditation">
+                        <span><i class="fas fa-question-circle"></i></span>
+                        <span th:text="${'Medytacja'}"></span>
+                    </a>
+                    <a class="dropdown-item" href="/treatment">
+                        <span><i class="fas fa-question-circle"></i></span>
+                        <span th:text="${'Leczenie chorób'}"></span>
+                    </a>
+                    <a class="dropdown-item" href="/depression">
+                        <span><i class="fas fa-question-circle"></i></span>
+                        <span th:text="${'Depresja'}"></span>
+                    </a>
+                    <a class="dropdown-item" href="/trauma">
+                        <span><i class="fas fa-question-circle"></i></span>
+                        <span th:text="${'Trauma'}"></span>
+                    </a>
+                </div>
+            <li>
+<!--            <span class="border"></span>-->
+            <li th:if="${@courseCustomersService.isLoggedCustomerUser()}" class="nav-item">
+                <a class="nav-link" href="/basket">
+                    <span><i class="fas fa-shopping-cart"></i></span>
+                    <span th:text="#{navbar.basket}"></span>
+                    <span id="products-in-basket-counter" style="display: none;" class="badge badge-pill bg-danger"><span id="products-in-basket-quantity"></span></span>
+                </a>
+            </li>
+            <span th:if="${@courseCustomersService.isLoggedCustomerUser()}" class="border"></span>
+            <li th:if="${@courseCustomersService.isLoggedCustomerUser()}" class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown">
+                    <span><i class="fas fa-database"></i></span>
+                    <span th:text="#{navbar.my.products}"></span>
+                </a>
+                <div class="dropdown-menu dropdown-menu-right">
+                    <!--
+                    <a class="dropdown-item" href="/my-courses">
+                        <span><i class="fas fa-video"></i></span>
+                        <span th:text="#{navbar.my.courses}"></span>
+                    </a>
+                    <a class="dropdown-item" href="/my-codes">
+                        <span><i class="fas fa-code"></i></span>
+                        <span th:text="#{navbar.my.codes}"></span>
+                    </a>-->
+                    <a class="dropdown-item" href="/my-selections">
+                        <span><i class="fas fa-hand-pointer"></i></span>
+                        <span th:text="#{navbar.my.selections}"></span>
+                    </a>
+
+                </div>
+            </li>
+            <li th:if="${@courseCustomersService.isLoggedCustomerUser()}" class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown">
+                    <span><i class="fas fa-user-alt"></i></span>
+                    <span th:text="#{navbar.my.account}"></span>
+                </a>
+                <div class="dropdown-menu dropdown-menu-right">
+                    <a class="dropdown-item" href="/account-settings">
+                        <i class="fas fa-cog"></i>
+                        <span th:text="#{navbar.settings}"></span>
+                    </a>
+                    <a class="dropdown-item" href="/payments">
+                        <span><i class="fas fa-coins"></i></span>
+                        <span th:text="#{navbar.payments}"></span>
+                    </a>
+                </div>
+            </li>
+            <li th:if="${@courseCustomersService.isLoggedCustomerAdmin() or @courseCustomersService.isLoggedCustomerTeacher()}" class="nav-item"><a class="nav-link" href="/admin" th:text="#{navbar.admin}"></a></li>
+
+            <li id="notifications-dropdown" class="nav-item dropdown">
+                <a class="nav-link hidden-arrow" href="#" role="button" data-toggle="dropdown">
+                    <span><i class="fas fa-bell"></i></span>
+                    <span id="notifications-badge" class="badge rounded-pill badge-notification bg-danger" style="display: none;" notifications-active="true"><span id="notifications-counter"></span></span>
+                </a>
+                <div id="notifications-dropdown-body" class="dropdown-menu dropdown-menu-xl-right">
+                    <div class="text-center">
+                        <div class="spinner-border" role="status">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                    </div>
+                </div>
+            </li>
+
+            <span class="border"></span>
+            <li class="nav-item">
+                <a class="nav-link" href="/perform/logout">
+                    <span><i class="fas fa-sign-out-alt"></i></span>
+                    <span th:text="#{navbar.logout}"></span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<!--
+<div>
+    Cześć! Witaj w Elitarnej Szkole Programistów
+</div>
+-->

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <div th:replace="fragments/head"></div>
+    <div th:replace="fragments/datepicker :: imports"></div>
+    <script th:src="@{/js/orders-short.js}"></script>
+</head>
+
+<body>
+    <div th:replace="fragments/menu :: menu"></div>
+    <h5>Ewidencja zamówień (Uproszczona)</h5>
+
+    <form id="filter" th:action="@{/orders-short}" method="GET" class="mb-4">
+        <div class="bg-light border d-flex flex-md-row flex-column flex-xl-nowrap flex-wrap">
+            <div class="flex-fill p-2 border text-center">
+                Imię: <input name="first_name" id="first_name" type="text" value="" th:value="${firstName ?: null}">
+            </div>
+            <div class=" flex-fill p-2 border text-center">
+                Nazwisko: <input name="last_name" id="last_name" type="text" value="" th:value="${lastName ?: null}">
+            </div>
+            <div class="flex-fill p-2 border text-center">
+                Numer zamówienia: <input name="order_id" id="order_id" type="text" value=""
+                    th:value="${orderId ?: null}">
+            </div>
+            <div class="flex-fill p-2 border text-center">
+                <button id="reset_button" type="reset" class="btn-block">
+                    Wyczyść filtry
+                </button>
+            </div>
+        </div>
+    </form>
+
+    <div class="table-responsive mb-4">
+        <table class="table bg-light table-hover table-bordered table-sm">
+            <thead class="thead-light">
+                <tr>
+                    <th class="align-middle">Lp.</th>
+                    <th class="align-middle">ID zamówienia</th>
+                    <th class="align-middle">Imię i nazwisko</th>
+                    <th class="align-middle">Data sprzedaży</th>
+                    <th class="align-middle">Wartość</th>
+                    <th class="align-middle">Sposób dostawy</th>
+                    <th class="align-middle">Płatność</th>
+                    <th class="align-middle">Status płatności</th>
+                    <th class="align-middle">Ilość pozostałych dni</th>
+                    <th class="align-middle">Status zamówienia</th>
+                    <th class="align-middle">Rabat</th>
+                    <th class="align-middle">Wym.K.</th>
+                    <th class="align-middle"></th>
+                    <th class="align-middle"></th>
+                </tr>
+            </thead>
+            <tbody class="records">
+                <tr th:each="order: ${list}">
+                    <td th:text="${order.no}" class="align-middle" />
+                    <td th:text="${order.orderId}" class="align-middle" />
+                    <td th:text="${order.firstName} + ' ' + ${order.lastName}" class="align-middle" />
+                    <td th:text="${#temporals.format(order.purchaseDate, 'yyyy-MM-dd HH:mm:ss')}" class="align-middle" />
+                    <td th:text="${#numbers.formatDecimal(order.value, 1, 'COMMA', 2, 'POINT') + ' ' + order.currency}" class="align-middle" />
+                    <td class="align-middle">
+                        <select th:name="deliveryMethod" th:data-id="${order.id}">
+                            <option th:each="option : ${shipmentTypes}" th:value="${option.id}"
+                                    th:text="${option.value}" th:selected="${option.id == order.deliveryMethodId}"></option>
+                        </select>
+                    </td>
+                    <td class="align-middle" >
+                        <span th:text="${order.paymentMethodName}"></span>
+                    </td>
+
+                    <td class="align-middle" th:styleappend="${order.paymentStyle != null} ? ${order.paymentStyle} : ''">
+                        <span
+                             th:text="${order.paymentStatusName}"></span>
+                    </td>
+
+                    <td th:text="${order.daysLeft} + ' (' +  ${order.nextOrderIndicator} + ')'" class="align-middle" th:styleappend="${order.daysLeftStyle != null} ? ${order.daysLeftStyle} : ''"></td>
+
+
+                    <td class="align-middle" th:styleappend="${order.orderStatusStyle != null} ? ${order.orderStatusStyle} : ''">
+                        <span th:unless="${order.orderStatusId == 5 || order.orderStatusId == 7}"
+                        th:text="${order.orderStatusName}"></span>
+                        <select th:if="${order.orderStatusId == 5 || order.orderStatusId == 7}" th:name="orderStatus" th:data-id="${order.id}" th:data-statusId="${order.orderStatusId}">
+                            <option th:if="${option.id == 5 || option.id == 7}" th:each="option : ${orderStatuses}" th:value="${option.id}"
+                                    th:text="${option.value}" th:selected="${option.id == order.orderStatusId}"></option>
+                        </select>
+                    </td>
+                    <td th:text="${order.discountName}" class="align-middle" /></td>
+                    <td class="align-middle">
+                        <select id="demandingCustomer" name="demandingCustomer"
+                                th:data-id="${order.id}" th:data-customer-id="${order.customerId}">
+                            <option th:each="option: ${yesNo}" th:value="${option.code}"
+                                    th:text="${option.value}" th:selected="${option.code == '' + order.demandingCustomer}">
+                            </option>
+                        </select>
+                    </td>
+                    <td class="align-middle">
+                        <a th:href="@{/order(id=${order.id},  read_only=true)}">
+                            <span class="badge badge-secondary">
+                            Podgląd
+                            </span>
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div th:replace="fragments/pagination :: pagination"></div>
+    <div th:replace="fragments/datepicker :: code"></div>
+    <div th:replace="fragments/start-order-js :: modal"></div>
+    <div th:replace="fragments/stop-order-js :: modal"></div>
+    <div th:replace="fragments/operation-successful-modal :: modal"></div>
+
+</body>
+
+</html>

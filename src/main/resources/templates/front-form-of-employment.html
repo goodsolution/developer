@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html th:lang="${#locale.getLanguage()}" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta name="description" th:content="#{meme.content.description}">
+    <meta name="keywords" th:content="#{meme.content.keywords}">
+    <title th:text="'Formy zatrudnienia w IT' + ' · ' + ${@applicationConfig.getAppNameFront()}"></title>
+    <div th:replace="fragments/front-head"></div>
+    <script>
+        trace('page.show', 'form-of-employment');
+    </script>
+    <!--<script th:src="@{/js/meme-page.js}"></script>-->
+</head>
+
+<body>
+<nav th:replace="${@courseCustomersService.getLoggedCustomer()} ? 'fragments/logged-in-navbar' : 'fragments/logged-out-navbar'"></nav>
+
+<div class="container my-5">
+    <div>
+        <strong>Formy zatrudnienia w IT</strong>
+    </div>
+    <div>
+        <ul>
+            <li>Umowa o pracę</li>
+            <li>B2B</li>
+            <li>Kontrakt</li>
+            <li>Umowa o dzieło</li>
+            <li>Umowa zlecenie</li>
+        </ul>
+    </div>
+    <div>
+        <br>
+    </div>
+    <div>
+        <ul>
+            <li><a href="https://nofluffjobs.com/blog/jaka-forme-zatrudnienia-preferuja-programisci/" target="_blank">nofluffjobs.com/blog/jaka-forme-zatrudnienia-preferuja-programisci/</a></li>
+        </ul>
+    </div>
+</div>
+
+<footer th:replace="fragments/footer"></footer>
+
+</body>
+
+</html>

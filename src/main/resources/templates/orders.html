@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <div th:replace="fragments/head"></div>
+    <div th:replace="fragments/datepicker :: imports"></div>
+    <div th:replace="fragments/timepicker :: imports"></div>
+    <script th:src="@{/js/add-order.js}"></script>
+    <script th:src="@{/js/orders.js}"></script>
+
+    <script th:inline="javascript">
+        var shipmentTypes = [[${shipmentTypes}]];
+        var paymentMethods = [[${paymentMethods}]];
+        var paymentStatuses = [[${paymentStatuses}]];
+        var orderStatuses = [[${orderStatuses}]];
+        var yesNo = [[${yesNo}]];
+    </script>
+    <style>
+        body {
+            width: 95%;
+        }
+        .table-responsive {
+            overflow-x: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <div th:replace="fragments/menu :: menu"></div>
+    <h5>Ewidencja zamówień</h5>
+
+    <p>Wszystkich zamówień: <span id="count">0</span></p>
+
+    <form id="filter" action="#" th:action="@{/orders}" method="get"
+          class="bg-light border m-0 p-0 mb-3">
+
+        <div class="form-row m-0 p-0">
+            <div class="form-group col-lg-3 col-sm-6 col-12 border my-0 py-0">
+                <h6 class="text-center">Imię i&nbsp;nazwisko: </h6>
+                <input name="first_and_last_name" id="first_and_last_name"
+                       type="text" class="form-control form-control-sm mb-1" />
+            </div>
+            <div class="form-group col-lg-3 col-sm-6 col-12 border my-0 py-0">
+                <h6 class="text-center">Data sprzedaży od: </h6>
+                <input name="date_purchased_from" id="date_purchased_from" type="text"
+                       class="form-control form-control-sm mb-1" autocomplete="off"/>
+            </div>
+            <div class="form-group col-lg-3 col-sm-6 col-12 border my-0 py-0">
+                <h6 class="text-center">Data sprzedaży do: </h6>
+                <input name="date_purchased_to" id="date_purchased_to" type="text" value=""
+                    class="form-control form-control-sm mb-1" autocomplete="off" />
+            </div>
+            <div class="form-group col-lg-3 col-sm-6 col-12 border my-0 py-0">
+                <h6 class="text-center">Status płatności: </h6>
+                <select class="form-control form-control-sm mb-1" id="payment_status_id">
+                    <option value="">---</option>
+                    <option th:each="status: ${paymentStatuses}" th:value="${status.id}" th:text="${status.value}">
+                    </option>
+                </select>
+            </div>
+        </div>
+        <div class="form-row m-0 p-0">
+            <div class="form-group col-lg-3 col-sm-6 col-12 border my-0 py-0">
+                <h6 class="text-center">Numer zamówienia: </h6>
+                <input name="order_id" id="order_id" type="text" value="" class="form-control form-control-sm mb-1" />
+            </div>
+            <div class="form-group col-lg-3 col-sm-6 col-12 border my-0 py-0">
+                <h6 class="text-center">Kod rabatowy / voucher: </h6>
+                <input name="discount_code" id="discount_code" type="text" value=""
+                    class="form-control form-control-sm mb-1" />
+            </div>
+            <div class="form-group col-lg-3 col-sm-6 col-12 border my-0 py-0">
+                <h6 class="text-center">Płatność: </h6>
+                <select class="form-control form-control-sm mb-1" id="payment_method_id">
+                    <option value="">---</option>
+                    <option th:each="method : ${paymentMethods}" th:value="${method.id}" th:text="${method.value}">
+                    </option>
+                </select>
+            </div>
+            <div class="form-group col-lg-3 col-sm-6 col-12 border my-0 py-0">
+                <h6 class="text-center">Kierowca: </h6>
+                <select class="form-control form-control-sm mb-1" id="driver_id">
+                    <option value="">---</option>
+                    <option th:each="driver : ${drivers}" th:value="${driver.id}" th:text="${driver.value}">
+                    </option>
+                </select>
+            </div>
+        </div>
+        <div class="form-row m-0 p-0">
+            <div class="form-group col-lg-3 col-sm-6 col-12 border my-0 py-0">
+                <h6 class="text-center">Faktura: </h6>
+                <select class="form-control form-control-sm mb-1" id="is_invoice">
+                    <option value="">---</option>
+                    <option th:each="option : ${yesNo}" th:value="${option.code}" th:text="${option.value}">
+                    </option>
+                </select>
+            </div>
+            <div class="form-group col-lg-3 col-sm-6 col-12 border my-0 py-0">
+                <h6 class="text-center">Data dostawy od: </h6>
+                <input name="date_delivery_from" id="date_delivery_from" type="text" value=""
+                    class="form-control form-control-sm mb-1" autocomplete="off" />
+            </div>
+            <div class="form-group col-lg-3 col-sm-6 col-12 border my-0 py-0">
+                <h6 class="text-center">Data dostawy do: </h6>
+                <input name="date_delivery_to" id="date_delivery_to" type="text" value=""
+                    class="form-control form-control-sm mb-1" autocomplete="off" />
+            </div>
+            <div class="form-group col-lg-3 col-sm-6 col-12 border my-0 py-0">
+                <h6 class="text-center">Sposób dostawy: </h6>
+                <select class="form-control form-control-sm mb-1" id="delivery_method_id">
+                    <option value="">---</option>
+                    <option th:each="type : ${shipmentTypes}" th:value="${type.id}" th:text="${type.value}">
+                    </option>
+                </select>
+            </div>
+        </div>
+        <div class="form-row m-0 p-0">
+            <div class="form-group col-lg-3 col-sm-6 col-12 border my-0 py-0">
+                <h6 class="text-center">Dieta: </h6>
+                <select class="form-control form-control-sm mb-1" id="diet_id">
+                    <option value="">---</option>
+                    <option th:each="diet : ${diets}" th:value="${diet.id}" th:text="${diet.value}">
+                    </option>
+                </select>
+            </div>
+            <div class="form-group col-lg-3 col-sm-6 col-12 border my-0 py-0">
+                <h6 class="text-center">Status zamówienia: </h6>
+                <select class="form-control form-control-sm mb-1" id="order_status_id">
+                    <option value="">---</option>
+                    <option value="100" selected>Nowe + Zaakceptowane</option>
+                    <option th:if="${status.id != 2 && status.id != 3}" th:each="status : ${orderStatuses}" th:value="${status.id}" th:text="${status.value}">
+                    </option>
+                </select>
+            </div>
+            <div class="form-group col-lg-3 col-sm-6 col-12 border my-0 py-0">
+                <h6 class="text-center">Koniec zamówienia za:</h6>
+                <div class="input-group input-group-sm">
+                    <input name="days_to_finish" id="days_to_finish" type="text" value=""
+                    class="form-control mb-1" />
+                    <div class="input-group-append mb-1">
+                        <span class="input-group-text">dni</span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group col-lg-3 col-sm-6 col-12 border my-0 py-0">
+                <h6 class="text-center">Miejscowość: </h6>
+                <select class="form-control form-control-sm mb-1" id="city">
+                    <option value="">---</option>
+                    <option th:each="city : ${cities}" th:value="${city.value}" th:text="${city.value}">
+                    </option>
+                </select>
+            </div>
+        </div>
+        <div class="form-row m-0 p-0">
+            <div class="form-group col-lg-3 col-sm-6 col-12 border my-0 py-0">
+                <h6 class="text-center">Oznaczone jako opłacone od: </h6>
+                <input name="date_marked_as_paid_from" id="date_marked_as_paid_from" type="text" value=""
+                    class="form-control form-control-sm mb-1" autocomplete="off" />
+            </div>
+            <div class="form-group col-lg-3 col-sm-6 col-12 border my-0 py-0">
+                <h6 class="text-center">Oznaczone jako opłacone do: </h6>
+                <input name="date_marked_as_paid_to" id="date_marked_as_paid_to" type="text" value=""
+                    class="form-control form-control-sm mb-1" autocomplete="off" />
+            </div>
+            <div class="form-group col-lg-3 col-sm-6 col-12 border my-0 py-0">
+                <h6 class="text-center">Nr telefonu klienta: </h6>
+                <input name="date_delivery_to" id="phone" type="text" value=""
+                       class="form-control form-control-sm mb-1" autocomplete="off" />
+            </div>
+            <div class="form-group col-lg-3 col-sm-6 col-12 border my-0 py-1 align-middle">
+
+            </div>
+        </div>
+
+
+        <div class="form-row m-0 p-0">
+            <div class="form-group col-lg-3 col-sm-6 col-12 border my-0 py-0">
+
+            </div>
+            <div class="form-group col-lg-3 col-sm-6 col-12 border my-0 py-0">
+
+            </div>
+            <div class="form-group col-lg-3 col-sm-6 col-12 border my-0 py-1">
+                <button id="reset_button" type="reset" class="btn-block h-100">
+                    Wyczyść filtry
+                </button>
+            </div>
+
+            <div class="form-group col-lg-3 col-sm-6 col-12 border my-0 py-1 align-middle">
+                <button id="new_order" class="btn-block h-100" type="button" href="#" onclick="openAddOrderModal(null)"
+                        data-toggle="modal" >
+                    Dodaj nowe zamówienie
+                </button>
+            </div>
+        </div>
+    </form>
+
+    <div id="result-container" class=" my-4">
+    <div class="table-responsive mb-0 pb-0">
+        <table class="table bg-light table-bordered table-hover table-sm mb-0 pb-0">
+            <thead class="thead-light">
+                <tr>
+                    <th class="align-middle">Lp.</th>
+                    <th class="align-middle">ID zamówienia</th>
+                    <th class="align-middle">Imię i&nbsp;nazwisko</th>
+                    <th class="align-middle">Data sprzedaży</th>
+                    <th class="align-middle">Wartość</th>
+                    <th class="align-middle">Sposób dostawy</th>
+                    <th class="align-middle">Płatność</th>
+                    <th class="align-middle">Status płatności</th>
+                    <th class="align-middle">Ilość pozostałych dni</th>
+                    <th class="align-middle">Status zamówienia</th>
+                    <th class="align-middle">Rabat</th>
+                    <th class="align-middle">Faktura</th>
+                    <th class="align-middle">Parag.</th>
+                    <th class="align-middle">Wym.K.</th>
+                    <th class="align-middle"></th>
+                </tr>
+            </thead>
+            <tbody id="records">
+
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="3"></td>
+                    <th class="align-middle">Suma:</th>
+                    <td><span id="total"></span> PLN</td>
+                    <td colspan="10"></td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+    </div>
+    <div th:replace="fragments/pagination :: pagination"></div>
+    <div th:replace="fragments/operation-successful-modal :: modal"></div>
+    <div th:replace="fragments/datepicker :: code"></div>
+    <div th:replace="fragments/timepicker :: code"></div>
+    <div th:replace="fragments/cancel-order-reason-js :: modal"></div>
+    <div th:replace="fragments/start-order-js :: modal"></div>
+    <div th:replace="fragments/stop-order-js :: modal"></div>
+    <div th:replace="fragments/add-order-modal-js :: modal"></div>
+    <div th:replace="fragments/receipt-confirmation-modal-js :: modal"></div>
+    <div th:replace="fragments/invoice-confirmation-modal-js :: modal"></div>
+    <div th:replace="fragments/order-status-confirmation-modal-js :: modal"></div>
+    <div th:replace="fragments/order-payment-status-confirmation-modal-js :: modal"></div>
+    <div th:replace="fragments/order-payment-method-confirmation-modal-js :: modal"></div>
+    <div th:replace="fragments/order-delivery-method-confirmation-modal-js :: modal"></div>
+    <div th:replace="fragments/order-demanding-customer-confirmation-modal-js :: modal"></div>
+</body>
+
+</html>

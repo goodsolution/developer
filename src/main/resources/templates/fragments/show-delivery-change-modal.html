@@ -1,0 +1,48 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<body>
+
+    <div th:fragment="modal" class="modal"
+         th:id="'show-delivery-change-modal-' + ${change.no}">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content bg-light">
+                <div class="modal-header w-100">
+                    <h4 class="modal-title">Terminarz dostaw - szczegóły</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body w-100">
+
+                    <table class="table table-bordered bg-light">
+                        <tr>
+                            <td>Typ zmiany</td>
+                            <td th:text="${change.type}"></td>
+                        </tr>
+                        <tr>
+                            <td>Z dnia</td>
+                            <td th:text="${change.dateFrom}"></td>
+                        </tr>
+                        <tr>
+                            <td>Na dzień</td>
+                            <td th:text="${change.dateTo}"></td>
+                        </tr>
+                        <tr>
+                            <td>Na produkt</td>
+                            <td th:text="${change.productName}" ></td>
+                        </tr>
+                        <tr>
+                            <td>Przez</td>
+                            <td th:text="${change.userName}"></td>
+                        </tr>
+                        <tr>
+                            <td>Na produkt</td>
+                            <td th:text="${#temporals.format(change.dateTime, 'yyyy-MM-dd HH:mm:ss')}" ></td>
+                        </tr>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

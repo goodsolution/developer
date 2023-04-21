@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html th:lang="${#locale.getLanguage()}" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta name="description" th:content="#{meme.content.description}">
+    <meta name="keywords" th:content="#{meme.content.keywords}">
+    <title th:text="'Codility' + ' · ' + ${@applicationConfig.getAppNameFront()}"></title>
+    <div th:replace="fragments/front-head"></div>
+    <script>
+        trace('page.show', 'codility');
+    </script>
+    <!--<script th:src="@{/js/meme-page.js}"></script>-->
+</head>
+
+<body>
+<nav th:replace="${@courseCustomersService.getLoggedCustomer()} ? 'fragments/logged-in-navbar' : 'fragments/logged-out-navbar'"></nav>
+
+<div class="container my-5">
+    <div class="row">
+        Codility:
+
+    </div>
+    <div>
+        Linki do stron z codility:
+        <ul>
+            <li><a href="https://www.codingame.com" target="_blank">codingame.com</a></li>
+            <li><a href="https://studio.code.org/" target="_blank">studio.code.org</a></li>
+            <li><a href="https://projecteuler.net/" target="_blank">projecteuler.net</a></li>
+            <li><a href="https://codility.com/" target="_blank">codility.com</a></li>
+            <li><a href="https://codefights.com" target="_blank">codefights.com</a></li>
+            <li><a href="https://www.codechef.com" target="_blank">codechef.com</a></li>
+            <li><a href="http://www.codeabbey.com/" target="_blank">codeabbey.com/</a></li>
+            <li><a href="https://www.hackerrank.com" target="_blank">hackerrank.com</a></li>
+            <li><a href="https://www.codewars.com/" target="_blank">codewars.com/</a></li>
+            <li><a href="https://codecombat.com/" target="_blank">codecombat.com</a></li>
+            <li><a href="https://coderbyte.com" target="_blank">coderbyte.com</a></li>
+            <li><a href="https://www.topcoder.com/" target="_blank">topcoder.com</a></li>
+            <li><a href="http://exercism.io/" target="_blank">exercism.io</a></li>
+            <li><a href="http://codingbat.com/" target="_blank">codingbat.com</a></li>
+            <li><a href="https://www.codecademy.com" target="_blank">codecademy.com</a></li>
+            <li><a href="https://www.udacity.com/" target="_blank">udacity.com</a></li>
+            <li><a href="http://thecodeplayer.com/" target="_blank">thecodeplayer.com</a></li>
+            <li><a href="https://www.coursera.org/" target="_blank">coursera.org</a></li>
+            <li><a href="https://pl.khanacademy.org/" target="_blank">pl.khanacademy.org</a></li>
+            <li><a href="https://pl.spoj.com/" target="_blank">pl.spoj.com</a></li>
+        </ul>
+    </div>
+    <div id="records">
+    </div>
+
+
+</div>
+
+<footer th:replace="fragments/footer"></footer>
+
+</body>
+
+</html>

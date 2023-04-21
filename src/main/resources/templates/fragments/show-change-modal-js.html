@@ -1,0 +1,104 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<body>
+
+    <div th:fragment="modal" class="modal"
+         th:id="'show-change-modal'">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+            <div class="modal-content bg-light">
+                <div class="modal-header w-100">
+                    <h4 class="modal-title">Historia zmian - podgląd</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body w-100">
+
+                    <table class="table table-bordered bg-light">
+                        <tr>
+                            <td>Klient wymagający</td>
+                            <td><span id = "chg_demanding_customer_indicator"></span></td>
+                        </tr>
+                        <tr>
+                            <td>Rodzaj płatności</td>
+                            <td><span id = "chg_payment_method_name"></span></td>
+                        </tr>
+                        <tr>
+                            <td>Płatność kartą</td>
+                            <td><span id = "chg_card_payment_indicator"></span></td>
+                        </tr>
+                        <tr>
+                            <td>Status płatności</td>
+                            <td><span id = "chg_payment_status"></span></td>
+                        </tr>
+                        <tr>
+                            <td>Sposób dostawy</td>
+                            <td><span id = "chg_delivery_method_name"></span></td>
+                        </tr>
+                        <tr>
+                            <td>Imię</td>
+                            <td><span id = "chg_first_name"></span></td>
+                        </tr>
+                        <tr>
+                            <td>Nazwisko</td>
+                            <td><span id = "chg_last_name"></span></td>
+                        </tr>
+                        <tr>
+                            <td>Telefon</td>
+                            <td><span id = "chg_phone_number"></span></td>
+                        </tr>
+                        <tr>
+                            <td>Ulica</td>
+                            <td><span id = "chg_street"></span></td>
+                        </tr>
+                        <tr>
+                            <td>Numer domu</td>
+                            <td><span id = "chg_building_number"></span></td>
+                        </tr>
+                        <tr>
+                            <td>Numer mieszkania</td>
+                            <td><span id = "chg_apartment_number"></span></td>
+                        </tr>
+                        <tr>
+                            <td>Kod pocztowy</td>
+                            <td><span id = "chg_postal_code"></span></td>
+                        </tr>
+                        <tr>
+                            <td>Miejscowość</td>
+                            <td><span id = "chg_city_mame"></span></td>
+                        </tr>
+                        <tr>
+                            <td>Godziny dostawy</td>
+                            <td><span id = "chg_hours"></span></td>
+                        </tr>
+                    </table>
+
+                    <p class="lead">Produkty w zamówieniu:</p>
+                    <table class="chg-prd-table table table-bordered bg-light">
+                        <thead class="thead-light">
+                            <tr>
+                                <th>Produkt</th>
+                                <th>Ilość</th>
+                                <th>Cena</th>
+                                <th>Od dnia</th>
+                                <th>Ilość dni</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!--
+                            <tr th:each="product : ${change.products}">
+                                <td th:text="${product.productName}"></td>
+                                <td th:text="${product.quantity}"></td>
+                                <td th:text="${product.price} + ' PLN'"></td>
+                                <td th:text="${product.dateFrom}"></td>
+                                <td th:text="${product.daysLeft}"></td>
+
+                            </tr> -->
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

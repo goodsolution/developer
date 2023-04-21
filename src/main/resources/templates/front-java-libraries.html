@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html th:lang="${#locale.getLanguage()}" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta name="description" th:content="#{meme.content.description}">
+    <meta name="keywords" th:content="#{meme.content.keywords}">
+    <title th:text="'Testowanie w Java' + ' · ' + ${@applicationConfig.getAppNameFront()}"></title>
+    <div th:replace="fragments/front-head"></div>
+    <script>
+        trace('page.show', 'java-libraries');
+    </script>
+    <!--<script th:src="@{/js/meme-page.js}"></script>-->
+</head>
+
+<body>
+<nav th:replace="${@courseCustomersService.getLoggedCustomer()} ? 'fragments/logged-in-navbar' : 'fragments/logged-out-navbar'"></nav>
+
+<div class="container my-5">
+    <div>
+        <strong>Biblioteki w Java</strong>
+    </div>
+    <div>
+        Biblioteka to zbiór różnych funkcjonalności, programów, typów danych a nawet API ułatwiających rozwiązanie konkretnego problemu. Programista wykorzystując bibliotekę w swoim kodzie źródłowym może wykorzystać jakieś rozwiązanie zaproponowane przez kogoś innego. Języki programowania zawierają podstawowe lub często wykorzystywane struktury w tzw. Bibliotece standardowej. Przykładem takiej biblioteki jest klasa String w Javie. Zawiera mnóstwo przydatnych metod do pracy na łańcuchami znakowymi. Przykładem zewnętrznej biblioteki może być biblioteka do obsługi formatu JSON, która zawiera metodę parsowania dokumentu oraz tworzenia go. Zatem przedstawiając to bardziej prozaicznie – piszemy własny kod, a do biblioteki (np. metody klasy) odwołujemy się wyłącznie wtedy, gdy jest akurat potrzebna.<br>
+        lub inna definicja<br>
+        Biblioteka programistyczna – plik dostarczający podprogramy, dane oraz typy danych, które mogą zostać wykorzystane z poziomu kodu źródłowego programu. Użycie bibliotek to sposób na ponowne wykorzystanie tego samego kodu.
+
+        Dobór odpowiedniej biblioteki programistycznej może ułatwić zaimplementowanie niemalże dowolnego zadania. Pisanie programów jedynie za pomocą czystych elementów języka programowania jest czasochłonne, a czasami nawet niemożliwe.
+        Wiecej tu:
+    </div>
+    <div>
+        <ul>
+            <li><a href="https://pl.wikipedia.org/wiki/Biblioteka_programistyczna" target="_blank">pl.wikipedia.org/wiki/Biblioteka_programistyczna</a></li>
+        </ul>
+    </div>
+
+</div>
+
+<footer th:replace="fragments/footer"></footer>
+
+</body>
+
+</html>

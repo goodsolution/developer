@@ -1,0 +1,12 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<body>
+<div th:fragment="adviser-panel" class="hide center" id="adviser-panel">
+    <script th:if="${@authenticatedUser.isAdviserActive() == true}" th:src="@{/js/adviser.js}"></script>
+    <div class="center">
+    Adviser
+    </div>
+</div>
+
+</body>
+</html>

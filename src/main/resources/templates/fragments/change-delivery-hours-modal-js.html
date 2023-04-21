@@ -1,0 +1,49 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<body>
+
+<div th:fragment="modal" class="modal"
+     th:id="'change-delivery-hours-modal'">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content bg-light">
+            <div class="modal-header w-100">
+                <h4 class="modal-title">Zmiana godzin dostawy</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <div class="modal-body w-100">
+                <form method="POST" class="mr-2"
+                    id="changeDeliveryHoursForm">
+                    <div class="form-row py-1">
+                        <label class="col-sm-6 text-center pt-1" for="changeDeliveryHoursFrom">
+                            Od:
+                        </label>
+                        <input type="text" class="col-md-6 timepicker"
+                               id="changeDeliveryHoursFrom" name="changeDeliveryHoursFrom">
+                    </div>
+                    <div class="form-row pb-1">
+                        <label class="col-sm-6 text-center pt-1" for="changeDeliveryHoursTo">
+                            Do:
+                        </label>
+                        <input type="text" class="col-md-6 timepicker"
+                               id="changeDeliveryHoursTo" name="changeDeliveryHoursTo">
+                    </div>
+                    <input type="hidden" id="change_hours_delivery_id" name="change_hours_delivery_id">
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" form="changeDeliveryHoursForm"
+                    onclick="changeDeliveryHours(document.getElementById('change_hours_delivery_id').value);">
+                    Zmień godziny
+                </button>
+                <button type="button" data-dismiss="modal">
+                    Anuluj
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

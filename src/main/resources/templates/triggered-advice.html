@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+    <head>
+        <div th:replace="fragments/head"></div>
+        <script th:src="@{/js/triggered-advice.js}"></script>
+        <script th:inline="javascript">
+            var triggeredAdvice = [[${triggeredAdvice}]];
+        </script>
+    </head>
+
+    <body>
+        <div th:replace="fragments/menu :: menu"></div>
+
+        <div class="container">
+            <div class="text-center">
+                <h4>Triggered advice details</h4>
+
+                <p class="my-2">ID: <span id="customer-id" th:text="${triggeredAdvice.id}"></span></p>
+            </div>
+
+            <form class="bg-light p-5 border">
+                <div class="form-row">
+                    <div class="form-group col-md-4 text-center">
+                        <label for="advice-id">Advice id</label>
+                        <input type="text" class="form-control" id="advice-id" th:value="${triggeredAdvice.adviceId}" readonly>
+                    </div>
+                    <div class="form-group col-md-4 text-center">
+                        <label for="app-id">Application id</label>
+                        <input type="text" class="form-control" id="app-id" th:value="${triggeredAdvice.appId}" readonly>
+                    </div>
+                    <div class="form-group col-md-4 text-center">
+                        <label for="domain">Domain</label>
+                        <input type="text" class="form-control" id="domain" th:value="${triggeredAdvice.domain}" readonly>
+                    </div>
+                    <div class="form-group col-md-4 text-center">
+                        <label for="domain-id">Domain id</label>
+                        <input type="text" class="form-control" id="domain-id" th:value="${triggeredAdvice.domainId}" readonly>
+                    </div>
+                    <div class="form-group col-md-4 text-center">
+                        <label for="content">Content</label>
+                        <input type="text" class="form-control" id="content" th:value="${triggeredAdvice.content}" readonly>
+                    </div>
+                    <div class="form-group col-md-4 text-center">
+                        <label for="type">Type</label>
+                        <input type="text" class="form-control" id="type" th:value="${triggeredAdvice.type}" readonly>
+                    </div>
+                    <div class="form-group col-md-4 text-center">
+                        <label for="lang">Lang</label>
+                        <input type="text" class="form-control" id="lang" th:value="${triggeredAdvice.lang}" readonly>
+                    </div>
+                    <div class="form-group col-md-4 text-center">
+                        <label for="scope">Scope</label>
+                        <input type="text" class="form-control" id="scope" th:value="${triggeredAdvice.scope}" readonly>
+                    </div>
+                    <div class="form-group col-md-4 text-center">
+                        <label for="action">Action</label>
+                        <input type="text" class="form-control" id="action" th:value="${triggeredAdvice.action}" readonly>
+                    </div>
+                    <div class="form-group col-md-4 text-center">
+                        <label for="data-type">Data type</label>
+                        <input type="text" class="form-control" id="data-type" th:value="${triggeredAdvice.dataType}" readonly>
+                    </div>
+                    <div class="form-group col-md-4 text-center">
+                        <label for="component">Component</label>
+                        <input type="text" class="form-control" id="component" th:value="${triggeredAdvice.component}" readonly>
+                    </div>
+                    <div class="form-group col-md-4 text-center">
+                        <label for="score">Score</label>
+                        <input type="text" class="form-control" id="score" th:value="${triggeredAdvice.score}" readonly>
+                    </div>
+                    <div class="form-group col-md-4 text-center">
+                        <label for="status">Status</label>
+                        <input type="text" class="form-control" id="status" th:value="${triggeredAdvice.status}" readonly>
+                    </div>
+                    <div class="form-group col-md-4 text-center">
+                        <label for="trigger-date-time">Trigger date time</label>
+                        <input type="text" class="form-control" id="trigger-date-time" readonly>
+                    </div>
+                    <div class="form-group col-md-4 text-center">
+                        <label for="name">Name</label>
+                        <input type="text" class="form-control" id="name" th:value="${triggeredAdvice.name}" readonly>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <button type="button" class="btn btn-danger mt-3" onclick="showDeleteModal()">Delete this trigger advice</button>
+                </div>
+            </form>
+        </div>
+
+        <div th:replace="fragments/delete-triggered-advice-modal :: modal"></div>
+    </body>
+
+</html>

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <div th:replace="fragments/head"></div>
+    <script th:inline="javascript">
+        var customer = [[${customer}]];
+        var authorityDict = [[${authoritiesDict}]];
+        var customerGroups = [[${customerGroups}]];
+    </script>
+    <script th:src="@{/js/customers-admin.js}"></script>
+    <script th:src="@{/libs/sha.js}"></script>
+</head>
+
+<body>
+<div th:replace="fragments/menu :: menu"></div>
+
+<h5 th:text="#{customers.admin.header}"></h5>
+
+<button type="button" class="btn btn-success btn-lg btn-block" data-toggle="modal" data-target="#create-modal" th:text="#{Create}"></button>
+
+<form id="filter" class="bg-light border m-0 p-0 my-3">
+    <div class="form-row m-0 p-0">
+        <div class="form-group row col-12 col-lg-6 border m-0 p-0 py-2">
+            <label class="col-12 col-sm-3 col-md-2 col-xl-3 my-auto text-center"  th:text="#{customers.admin.first.and.last.name}"></label>
+            <div class="col-12 col-sm-9 col-md-10 col-xl-9 my-auto">
+                <input type="text" id="invoice-first-last-name" class="form-control"/>
+            </div>
+        </div>
+        <div class="form-group row col-12 col-lg-6 border m-0 p-0 py-2">
+            <label class="col-12 col-sm-3 col-md-2 col-xl-3 my-auto text-center" th:text="#{customers.admin.login}"></label>
+            <div class="col-12 col-sm-9 col-md-10 col-xl-9 my-auto">
+                <input type="text" id="login" class="form-control"/>
+            </div>
+        </div>
+    </div>
+</form>
+
+<div id="result-container" class="my-4">
+    <div class="table-responsive mb-0 pb-0">
+        <table class="table bg-light table-bordered table-hover table-sm mb-0 pb-0">
+            <thead class="thead-light">
+            <tr>
+                <th class="align-middle" th:text="#{customers.admin.first.and.last.name}"></th>
+                <th class="align-middle" th:text="#{customers.admin.login}"></th>
+                <th class="align-middle" th:text="#{Language}"></th>
+                <th class="align-middle" th:text="#{customers.admin.registration.date}"></th>
+                <th class="align-middle" th:text="#{customers.admin.details}"></th>
+                <th class="align-middle" th:text="#{Delete}"></th>
+            </tr>
+            </thead>
+            <tbody id="records">
+
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="modal fade" id="create-modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel" th:text="#{customers.admin.create.header}"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form class="text-center">
+                    <div class="form-group">
+                        <label for="create-login" th:text="#{customers.admin.login}"></label>
+                        <input id="create-login" type="text" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="password" th:text="#{register.password}"></label>
+                        <input id="password" class="form-control" type="password" placeholder="********">
+                        <small class="form-text text-muted" th:text="#{password.requirements}"></small>
+                    </div>
+                    <div class="form-group">
+                        <label for="repeated-password" th:text="#{register.repeat.password}"></label>
+                        <input id="repeated-password" class="form-control" type="password" placeholder="********">
+                    </div>
+                    <div class="form-group">
+                        <label for="create-first-and-last-name" th:text="#{customers.admin.first.and.last.name}"></label>
+                        <input id="create-first-and-last-name" type="text" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="language" th:text="#{Language}"></label>
+                        <select id="language" class="form-control">
+                            <option th:each="language : ${languagesDict}"
+                                    th:value="${language.code}"
+                                    th:text="${language.value}">
+                            </option>
+                        </select>
+                    </div>
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="regulation">
+                        <label class="form-check-label" for="regulation">
+                            <span th:text="#{register.regulation.accept.accept}"></span>
+                            <a href="/regulation" th:text="#{register.regulation.accept.regulation}"></a>
+                            <span th:text="#{register.regulation.accept.and}"></span>
+                            <a href="/privacy-policy" th:text="#{register.regulation.accept.privacy.policy}"></a>
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="newsletter">
+                        <label class="form-check-label" for="newsletter" th:text="#{register.newsletter.accept.label}"></label>
+                    </div>
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="is-enabled">
+                        <label class="form-check-label" for="is-enabled" th:text="#{customers.admin.enabled}"></label>
+                    </div>
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="email-confirmed">
+                        <label class="form-check-label" for="email-confirmed" th:text="#{customer.admin.email.confirmed}"></label>
+                    </div>
+                    <br>
+                    <form  class="text-center">
+                        <h6 th:text="#{customer.admin.choose.role}"></h6>
+                        <th:block th:each="authority: ${authoritiesDict}">
+                            <input type="checkbox" name= "authorities" th:value="${authority.code}">
+                            <label class="form-check-label"  th:text="${authority.value}"></label>
+                        </th:block>
+                        <h6><br>Grupy:</br></h6>
+                        <th:block th:each="customerGroup: ${customerGroups}">
+                            <input type="checkbox" th:id="${'customer-group-' + customerGroup.id}" name="customerGroup"
+                                   th:value="${customerGroup.id}">
+                            <label class="form-check-label" th:text="${customerGroup.name}"></label>
+                        </th:block>
+                    </form>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="create-button" class="btn btn-success" onclick="performUserRegistration()" th:text="#{Create}"></button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" th:text="#{Cancel}"></button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div th:replace="fragments/pagination :: pagination"></div>
+<div th:replace="fragments/operation-successful-modal :: modal"></div>
+<div th:replace="fragments/delete-object-modal :: modal"></div>
+</body>
+
+</html>

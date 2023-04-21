@@ -1,0 +1,20 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<div th:fragment="imports" th:remove="tag">
+    <link rel="stylesheet" th:href="@{/libs/jquery-ui.css}" />
+    <link rel="stylesheet" th:href="@{/libs/jquery-ui.theme.css}" />
+
+    <script th:src="@{/libs/jquery-ui.js}"></script>
+    <script th:src="@{/libs/jquery.ui.datepicker-pl.js}"></script>
+</div>
+
+<script th:fragment="code">
+    $(document).ready(function(){
+        $.datepicker.setDefaults( $.datepicker.regional[ "pl" ] );
+        $("input[id^='date']").datepicker({
+            dateFormat: "yy-mm-dd"
+        });
+    });
+</script>
+
+</html>

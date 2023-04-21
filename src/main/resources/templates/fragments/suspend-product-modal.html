@@ -1,0 +1,47 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<body>
+
+    <div th:fragment="modal" class="modal"
+         id="suspend-product-modal">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content bg-light">
+                <div class="modal-header">
+                    <h4>
+                        Wstrzymywanie produktu
+                    </h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body w-100">
+<!--                    <div class="row">-->
+<!--                        <div class="col-sm-6">-->
+<!--                            <p class="font-weight-bold text-center">Data wstrzymania</p>-->
+<!--                        </div>-->
+<!--                        <div class="col-sm-6">-->
+<!--                            <input type="text" id="suspendProductDate" class="btn-block modal-datepicker">-->
+<!--                        </div>-->
+<!--                    </div>-->
+                    <label class="col-md-6 text-center pt-1" for="suspendProductDate">
+                        Data wstrzymania:
+                    </label>
+
+                    <input class="col-md-4 modal-datepicker" type="text" required
+                           name="suspendProductDate" id="suspendProductDate">
+
+                    <p class="text-center mt-3">
+                        <button type="button" class="confirmButton"
+                            data-orderId="" data-productId=""
+                            onclick="suspendProduct(this.getAttribute('data-orderId'), this.getAttribute('data-productId'));">
+                            Wstrzymaj
+                        </button>
+                        <button type="button" data-dismiss="modal">
+                            Anuluj
+                        </button>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

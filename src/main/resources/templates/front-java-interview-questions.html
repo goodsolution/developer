@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html th:lang="${#locale.getLanguage()}" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta name="description" th:content="#{meme.content.description}">
+    <meta name="keywords" th:content="#{meme.content.keywords}">
+    <title th:text="'Pytania rekrutacyjne Java' + ' · ' + ${@applicationConfig.getAppNameFront()}"></title>
+    <div th:replace="fragments/front-head"></div>
+    <script>
+        trace('page.show', 'java-interview-questions');
+    </script>
+    <!--<script th:src="@{/js/meme-page.js}"></script>-->
+</head>
+
+<body>
+<nav th:replace="${@courseCustomersService.getLoggedCustomer()} ? 'fragments/logged-in-navbar' : 'fragments/logged-out-navbar'"></nav>
+
+<div class="container my-5">
+    <div class="row">
+        Pytania rekrutacyjne:
+
+    </div>
+<div>
+    Pytania z realnych rozmów o pracę:<br>
+    CORE JAVA<br>
+    <ul>
+        <li>Jakie znasz typy proste/prymitywne w java?</li>
+        <li>Co to jest JIT?</li>
+
+    </ul>
+    TESTOWANIE<br>
+    <ul>
+        <li>Co to jest/na czym polega TDD (Test Driven Devlopment)?</li>
+        <li>Jakie znasz  biblioteki do  testowania?</li>
+        <li>Co to mock?</li>
+        <li>Co to spy?</li>
+        <li>Co to stub?</li>
+
+    </ul>
+</div>
+
+<div>
+        Linki do stron z pytaniami rekrutacyjnymi
+        <ul>
+            <li><a href="https://bulldogjob.pl/readme/java-developer-pytania-rekrutacyjne-odpowiedzi" target="_blank">bulldogjob.pl</a></li>
+            <li><a href="https://teamquest.pl/blog/2433_dziesiec-pytan-rekrutacyjnych-z-javy-wraz-z-odpowiedziami" target="_blank">teamquest.pl</a></li>
+            <li><a href="https://codegym.cc/pl/groups/posts/pytania-rekrutacyjne-dotyczce-jzyka-java" target="_blank">codegym.cc</a></li>
+            <li><a href="https://kodilla.com/pl/blog/java-pytania-rekrutacyjne" target="_blank">kodilla.com</a></li>
+            <li><a href="https://blog.it-leaders.pl/rozmowa-kwalifikacyjna-javy-zaden-problem-cz-string/" target="_blank">blog.it</a></li>
+            <li><a href="https://stormit.pl/pytania-rekrutacyjne-developer/" target="_blank">stormit.pl</a></li>
+            <li><a href="https://nullpointerexception.pl/tag/java-pytania/" target="_blank">nullpointerexception.pl</a></li>
+            <li><a href="https://ailleron.com/pl/blog/rozmowa-java-pytania-zadania/" target="_blank">ailleron.com</a></li>
+            <li><a href="https://nofluffjobs.com/pl/juniors/pytania-rekrutacyjne/" target="_blank">nofluffjobs.com</a></li>
+            <li><a href="https://programuj.pl/blog/najpopularniejsze-pytania-rekrutacyjne" target="_blank">programuj.pl</a></li>
+            <li><a href="https://howtointerview.pl/kurs/pytania-rekrutacyjne-java-core/" target="_blank">howtointerview.pl</a></li>
+            <li><a href="https://4programmers.net/Forum/Java/357210-java_pytania_rekrutacyjne_midsenior" target="_blank">4programmers.net</a></li>
+            <li><a href="https://howtointerview.pl/kurs/pytania-rekrutacyjne-java-core/" target="_blank">howtointerview.pl</a></li>
+        </ul>
+    </div>
+
+
+</div>
+
+<footer th:replace="fragments/footer"></footer>
+
+</body>
+
+</html>

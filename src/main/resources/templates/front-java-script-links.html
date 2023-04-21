@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html th:lang="${#locale.getLanguage()}" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta name="description" th:content="#{meme.content.description}">
+    <meta name="keywords" th:content="#{meme.content.keywords}">
+    <title th:text="'Linki o Java Script' + ' · ' + ${@applicationConfig.getAppNameFront()}"></title>
+    <div th:replace="fragments/front-head"></div>
+    <script>
+        trace('page.show', 'java-script-links');
+    </script>
+    <!--<script th:src="@{/js/meme-page.js}"></script>-->
+</head>
+
+<body>
+<nav th:replace="${@courseCustomersService.getLoggedCustomer()} ? 'fragments/logged-in-navbar' : 'fragments/logged-out-navbar'"></nav>
+
+<div class="container my-5">
+    <div>
+        <strong>Linki o Java Script</strong>
+    </div>
+    <div>
+<!--        https://www.youtube.com/watch?v=PkZNo7MFNFg-->
+<!--        https://www.youtube.com/watch?v=W6NZfCO5SIk-->
+<!--        https://www.youtube.com/watch?v=Qqx_wzMmFeA-->
+<!--        https://www.youtube.com/watch?v=hdI2bqOjy3c-->
+<!--        https://javascript.works-hub.com/learn/front-end-development-roadmap-b08ed-->
+        <ul>
+            <li><a href="https://www.w3schools.com/js/default.asp" target="_blank">www.w3schools.com/js</a></li>
+            <li><a href="https://javascript.info/" target="_blank">javascript.info/</a></li>
+            <li><a href="https://www.javascripttutorial.net/" target="_blank">www.javascripttutorial.net/</a></li>
+            <li><a href="https://www.tutorialspoint.com/javascript/index.htm" target="_blank">www.tutorialspoint.com/javascript/</a></li>
+            <li><a href="https://www.javatpoint.com/javascript-tutorial" target="_blank">www.javatpoint.com/javascript-tutorial</a></li>
+            <br>
+            <li><a href="https://www.google.pl/search?q=javascript+tutorial" target="_blank">Więcej w google...</a></li>
+        </ul>
+
+
+    </div>
+</div>
+
+<footer th:replace="fragments/footer"></footer>
+
+</body>
+
+</html>

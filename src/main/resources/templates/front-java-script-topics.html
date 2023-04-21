@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html th:lang="${#locale.getLanguage()}" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta name="description" th:content="#{meme.content.description}">
+    <meta name="keywords" th:content="#{meme.content.keywords}">
+    <title th:text="'Java Script - zagadnienia' + ' · ' + ${@applicationConfig.getAppNameFront()}"></title>
+    <div th:replace="fragments/front-head"></div>
+    <script>
+        trace('page.show', 'java-script-topics');
+    </script>
+    <!--<script th:src="@{/js/meme-page.js}"></script>-->
+</head>
+
+<body>
+<nav th:replace="${@courseCustomersService.getLoggedCustomer()} ? 'fragments/logged-in-navbar' : 'fragments/logged-out-navbar'"></nav>
+
+<div class="container my-5">
+    <div class="row">
+        <strong>Java Script zagadnienia</strong>
+    </div>
+    <div id="start">
+        <ul>
+            <li><a href="#java-script-what-is">Czym jest</a></li>
+            <li><a href="#java-script-history">Historia</a></li>
+            <li><a href="#java-script-useful-links">Przydatne linki na wstępie</a></li>
+            <li><a href="#variables">Zmienne</a></li>
+            <li><a href="#data-types">Typy danych</a></li>
+            <li><a href="#operators">Operatory matematyczne i logiczne</a></li>
+            <li><a href="#comparisons">Porównania</a></li>
+            <li><a href="#conditionals">Instrukcje warunkowe</a></li>
+            <li><a href="#loops">Pętle</a></li>
+            <li><a href="#functions">Funkcje</a></li>
+            <li><a href="#debugging">Debugging</a></li>
+            <li><a href="#comments">Komentarze</a></li>
+            <li><a href="#objects">Obiekty</a></li>
+            <li><a href="#class">Klasy</a></li>
+            <li><a href="#errors">Obsługa błędów</a></li>
+            <li><a href="#java-script-promises">Promises</a></li>
+            <li><a href="#modules">Moduły</a></li>
+            <li><a href="#miscellaneous">Pozostałe zagadnienia</a></li>
+        </ul>
+    </div>
+    <hr>
+    <div id="java-script-what-is">
+        Czym jest
+        <ul>
+            <li><a href="https://javascript.info/intro" target="_blank">javascript.info/intro</a></li>
+            <li><a href="https://www.javascripttutorial.net/what-is-javascript/" target="_blank">www.javascripttutorial.net/what-is-javascript/</a>
+            </li>
+            <li>
+                <div class="row d-flex justify-content-center" style="padding-bottom: 5px;">
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/kMvmdWs6ny0"
+                            title="YouTube video player" frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen></iframe>
+                </div>
+            </li>
+        </ul>
+        <a href="#start">Do góry..</a>
+    </div>
+    <hr>
+    <div id="java-script-history">
+        Historia
+        <ul>
+            <li><a href="https://www.w3schools.com/js/js_history.asp"
+                   target="_blank">w3schools.com/js/js_history.asp</a></li>
+            <li><a href="https://dev.to/dboatengx/history-of-javascript-how-it-all-began-92a" target="_blank">dev.to/dboatengx/history-of-javascript-how-it-all-began-92a</a>
+            </li>
+            <li><a href="https://www.itmagination.com/blog/the-complete-history-of-javascript-typescript-and-node-js"
+                   target="_blank">itmagination.com/blog/the-complete-history-of-javascript-typescript-and-node-js</a>
+            </li>
+        </ul>
+        <a href="#start">Do góry..</a>
+    </div>
+    <hr>
+    <div id="java-script-useful-links">
+        Przydatne linki na wstępie
+        <ul>
+            <li><a href="https://kursjs.pl/kurs/wstep/narzedzia" target="_blank">kursjs.pl/kurs/wstep/narzedzia</a></li>
+            <li><a href="https://github.com/iLoveCodingOrg/javascript-cheatsheet/raw/master/js-cheatsheet.pdf"
+                   target="_blank">zbiór najważniejszych komend i pojęć w PDF</a></li>
+            <li><a href="https://eloquentjavascript.net/" target="_blank">Eloquent JavaScript 3rd edition (2018)</a>
+            </li>
+            <li>
+                <div class="row d-flex justify-content-center" style="padding-bottom: 5px;">
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/PkZNo7MFNFg"
+                            title="YouTube video player" frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen></iframe>
+                </div>
+            </li>
+        </ul>
+        <a href="#start">Do góry..</a>
+    </div>
+    <hr>
+    <div id="variables">
+        Zmienne
+        <ul>
+            <li><a href="https://javascript.info/variables" target="_blank">javascript.info/variables</a></li>
+            <li><a href="https://javascript.info/var" target="_blank">javascript.info/var</a></li>
+        </ul>
+        <a href="#start">Do góry..</a>
+    </div>
+    <hr>
+    <div id="data-types">
+        Typy danych
+        <ul>
+            <li><a href="https://javascript.info/types" target="_blank">javascript.info/types</a></li>
+            <li><a href="https://javascript.info/number" target="_blank">javascript.info/number</a></li>
+            <li><a href="https://javascript.info/string" target="_blank">javascript.info/string</a></li>
+            <li><a href="https://javascript.info/logical-operators"
+                   target="_blank">javascript.info/logical-operators</a></li>
+            <li><a href="https://javascript.info/primitives-methods"
+                   target="_blank">javascript.info/primitives-methods</a></li>
+            <li><a href="https://javascript.info/array" target="_blank">javascript.info/array</a></li>
+            <li><a href="https://javascript.info/array-methods" target="_blank">javascript.info/array-methods</a></li>
+            <li><a href="https://javascript.info/iterable" target="_blank">javascript.info/iterable</a></li>
+            <li><a href="https://javascript.info/map-set" target="_blank">javascript.info/map-set</a></li>
+            <li><a href="https://javascript.info/weakmap-weakset" target="_blank">javascript.info/weakmap-weakset</a>
+            </li>
+            <li><a href="https://javascript.info/date" target="_blank">javascript.info/date</a></li>
+            <li><a href="https://javascript.info/json" target="_blank">javascript.info/json</a></li>
+            <li><a href="https://javascript.info/object" target="_blank">javascript.info/object</a></li>
+        </ul>
+        <a href="#start">Do góry..</a>
+    </div>
+    <hr>
+    <div id="operators">
+        Operatory matematyczne i logiczne
+        <ul>
+            <li><a href="https://javascript.info/operators" target="_blank">javascript.info/operators</a></li>
+            <li><a href="https://javascript.info/logical-operators"
+                   target="_blank">javascript.info/logical-operators</a></li>
+        </ul>
+        <a href="#start">Do góry..</a>
+    </div>
+    <hr>
+    <div id="comparisons">
+        Porównania
+        <ul>
+            <li><a href="https://javascript.info/comparison" target="_blank">javascript.info/comparison</a></li>
+            <li><a href="https://dorey.github.io/JavaScript-Equality-Table/" target="_blank">dorey.github.io/JavaScript-Equality-Table/</a>
+            </li>
+        </ul>
+        <a href="#start">Do góry..</a>
+    </div>
+    <hr>
+    <div id="conditionals">
+        Instrukcje warunkowe
+        <ul>
+            <li><a href="https://javascript.info/ifelse" target="_blank">javascript.info/ifelse</a></li>
+            <li><a href="http://kursjs.pl/kurs/super-podstawy/instrukcje-warunkowe" target="_blank">kursjs.pl/kurs/super-podstawy/instrukcje-warunkowe</a>
+            </li>
+            <li><a href="https://javascript.info/switch" target="_blank">javascript.info/switch</a></li>
+        </ul>
+        <a href="#start">Do góry..</a>
+    </div>
+    <hr>
+    <div id="loops">
+        Pętle
+        <ul>
+            <li><a href="https://javascript.info/while-for" target="_blank">javascript.info/while-for</a></li>
+            <li><a href="https://javascript.info/object#forin" target="_blank">javascript.info/object#forin</a></li>
+            <li><a href="https://javascript.info/array#loops" target="_blank">javascript.info/array#loops</a></li>
+            <li><a href="https://javascript.info/iterable" target="_blank">javascript.info/iterable</a></li>
+        </ul>
+        <a href="#start">Do góry..</a>
+    </div>
+    <hr>
+    <div id="functions">
+        Funkcje
+        <ul>
+            <li><a href="https://javascript.info/function-basics" target="_blank">javascript.info/function-basics</a>
+            </li>
+            <li><a href="https://javascript.info/function-expressions" target="_blank">javascript.info/function-expressions</a>
+            </li>
+            <li><a href="https://javascript.info/arrow-functions-basics" target="_blank">javascript.info/arrow-functions-basics</a>
+            </li>
+            <li><a href="https://blog.hubspot.com/website/call-function-javascript" target="_blank">blog.hubspot.com/website/call-function-javascript</a>
+            </li>
+            <li><a href="https://javascript.info/recursion" target="_blank">javascript.info/recursion</a></li>
+            <li><a href="https://javascript.info/closure" target="_blank">javascript.info/closure</a></li>
+            <li><a href="https://javascript.info/var" target="_blank">javascript.info/var</a></li>
+            <li><a href="https://javascript.info/new-function" target="_blank">javascript.info/new-function</a></li>
+            <li><a href="https://javascript.info/settimeout-setinterval" target="_blank">javascript.info/settimeout-setinterval</a>
+            </li>
+        </ul>
+        <a href="#start">Do góry..</a>
+    </div>
+    <hr>
+    <div id="debugging">
+        Debugging
+        <ul>
+            <li><a href="https://javascript.info/debugging-chrome" target="_blank">javascript.info/debugging-chrome</a>
+            </li>
+            <li><a href="https://raygun.com/learn/javascript-debugging-tips" target="_blank">raygun.com/learn/javascript-debugging-tips</a>
+            </li>
+        </ul>
+        <a href="#start">Do góry..</a>
+    </div>
+    <hr>
+    <div id="comments">
+        Komentarze
+        <ul>
+            <li><a href="https://javascript.info/comments" target="_blank">javascript.info/comments</a></li>
+            <li><a href="https://www.programiz.com/javascript/comments" target="_blank">programiz.com/javascript/comments</a>
+            </li>
+        </ul>
+        <a href="#start">Do góry..</a>
+    </div>
+    <hr>
+    <div id="objects">
+        Obiekty
+        <ul>
+            <li><a href="https://javascript.info/object" target="_blank">javascript.info/object</a></li>
+            <li><a href="https://javascript.info/object-copy" target="_blank">javascript.info/object-copy</a></li>
+            <li><a href="https://javascript.info/object-methods" target="_blank">javascript.info/object-methods</a></li>
+            <li><a href="https://javascript.info/constructor-new" target="_blank">javascript.info/constructor-new</a>
+            </li>
+            <li><a href="https://javascript.info/property-descriptors" target="_blank">javascript.info/property-descriptors</a>
+            </li>
+            <li><a href="https://javascript.info/property-accessors"
+                   target="_blank">javascript.info/property-accessors</a></li>
+        </ul>
+        <a href="#start">Do góry..</a>
+    </div>
+    <hr>
+    <div id="class">
+        Klasy
+        <ul>
+            <li><a href="https://javascript.info/class" target="_blank">javascript.info/class</a></li>
+            <li><a href="https://javascript.info/class-inheritance"
+                   target="_blank">javascript.info/class-inheritance</a></li>
+            <li><a href="https://javascript.info/static-properties-methods" target="_blank">javascript.info/static-properties-methods</a>
+            </li>
+            <li><a href="https://javascript.info/private-protected-properties-methods" target="_blank">javascript.info/private-protected-properties-methods</a>
+            </li>
+            <li><a href="https://javascript.info/extend-natives" target="_blank">javascript.info/extend-natives</a></li>
+            <li><a href="https://javascript.info/instanceof" target="_blank">javascript.info/instanceof</a></li>
+        </ul>
+        <a href="#start">Do góry..</a>
+    </div>
+    <hr>
+    <div id="errors">
+        Obsługa błędów
+        <ul>
+            <li><a href="https://javascript.info/try-catch" target="_blank">javascript.info/try-catch</a></li>
+            <li><a href="https://javascript.info/custom-errors" target="_blank">javascript.info/custom-errors</a></li>
+        </ul>
+        <a href="#start">Do góry..</a>
+    </div>
+    <hr>
+    <div id="java-script-promises">
+        Promises
+        <ul>
+            <li><a href="https://javascript.info/callbacks" target="_blank">javascript.info/callbacks</a></li>
+            <li><a href="https://javascript.info/promise-basics" target="_blank">javascript.info/promise-basics</a></li>
+            <li><a href="http://kursjs.pl/kurs/ajax/promise" target="_blank">kursjs.pl/kurs/ajax/promise</a></li>
+            <li><a href="https://typeofweb.com/kilka-faktow-na-temat-promise" target="_blank">typeofweb.com/kilka-faktow-na-temat-promise</a>
+            </li>
+            <li>
+                <div class="row d-flex justify-content-center" style="padding-bottom: 5px;">
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/zu6I2FXakLI"
+                            title="YouTube video player" frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen></iframe>
+                </div>
+            </li>
+        </ul>
+        <a href="#start">Do góry..</a>
+    </div>
+    <hr>
+    <div id="modules">
+        Moduły
+        <ul>
+            <li><a href="http://kursjs.pl/kurs/es6/moduly" target="_blank">kursjs.pl/kurs/es6/moduly</a></li>
+            <li><a href="https://javascript.info/modules-intro" target="_blank">javascript.info/modules-intro</a></li>
+            <li><a href="https://javascript.info/import-export" target="_blank">javascript.info/import-export</a></li>
+            <li><a href="https://javascript.info/modules-dynamic-imports" target="_blank">javascript.info/modules-dynamic-imports</a>
+            </li>
+            <li>
+                <div class="row d-flex justify-content-center" style="padding-bottom: 5px;">
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/M_FHjyhwNSY"
+                            title="YouTube video player" frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen></iframe>
+                </div>
+            </li>
+        </ul>
+        <a href="#start">Do góry..</a>
+    </div>
+    <hr>
+    <div id="miscellaneous">
+        Pozostałe zagadnienia
+        <ul>
+            <li><a href="https://javascript.info/proxy" target="_blank">javascript.info/proxy</a></li>
+            <li><a href="https://javascript.info/currying-partials" target="_blank">javascript.info/currying-partials</a></li>
+            <li><a href="https://javascript.info/reference-type" target="_blank">javascript.info/reference-type</a></li>
+            <li><a href="https://javascript.info/bigint" target="_blank">javascript.info/bigint</a></li>
+        </ul>
+        <a href="#start">Do góry..</a>
+    </div>
+    <hr>
+</div>
+<footer th:replace="fragments/footer"></footer>
+</body>
+
+</html>

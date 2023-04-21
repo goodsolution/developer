@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html th:lang="${#locale.getLanguage()}" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta name="description" th:content="#{basket.content.description}">
+    <meta name="keywords" th:content="#{basket.content.keywords}">
+    <title th:text="#{basket.tab.title} + ' · ' + ${@applicationConfig.getAppNameFront()}"></title>
+    <div th:replace="fragments/front-head"></div>
+    <meta th:if="${#arrays.contains(@environment.getActiveProfiles(),'prod')}" name="robots" content="noindex">
+    <script th:replace="fragments/languages-script"></script>
+    <script th:src="@{/js/basket.js}"></script>
+    <script th:inline="javascript">
+        var pathToGallery = [[${pathToGallery}]];
+        var loggedCustomer = [[${loggedCustomer}]];
+    </script>
+</head>
+
+<body>
+    <nav th:replace="${@courseCustomersService.getLoggedCustomer()} ? 'fragments/logged-in-navbar' : 'fragments/logged-out-navbar'"></nav>
+
+    <div class="container my-5">
+
+        <div class="text-center">
+            <h1 th:text="#{basket.header}"></h1>
+        </div>
+
+        <div class="p-5">
+
+
+            <div id="results" class="my-3">
+            </div>
+
+            <div id="summary" style="display: none;">
+
+                <div class="text-center">
+                    <h5><span th:text="#{basket.total.price}"></span><span>: </span><b><span id="total-price">0</span> PLN </b></h5>
+                </div>
+
+                <form id="form-data" class="mt-5">
+
+                    <h3 class="mb-3 text-center" th:text="#{basket.data.to.invoice}"></h3>
+
+                    <div class="text-center">
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="private-person" onclick="displayPrivatePersonInvoiceForm()" checked>
+                            <label class="form-check-label" for="private-person" th:text="#{basket.private.person}"></label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="company" onclick="displayCompanyInvoiceForm()">
+                            <label class="form-check-label" for="company" th:text="#{basket.company}"></label>
+                        </div>
+                    </div>
+
+                    <div class="form-group my-2" id="first-and-last-name-field">
+                        <label for="first-and-last-name" th:text="#{basket.first.and.last.name}"></label>
+                        <input type="text" id="first-and-last-name" class="form-control" />
+                    </div>
+                    <div class="form-group my-2" id="company-name-field" style="display: none;">
+                        <label for="company-name" th:text="#{basket.company.name}"></label>
+                        <input type="text" id="company-name" class="form-control"/>
+                    </div>
+                    <div class="form-group my-2" id="street-field">
+                        <label for="street" th:text="#{basket.street}"></label>
+                        <input type="text" id="street" class="form-control" />
+                    </div>
+                    <div class="form-group my-2" id="postal-code-field">
+                        <label for="postal-code" th:text="#{basket.postal.code}"></label>
+                        <input type="text" id="postal-code" class="form-control" />
+                    </div>
+                    <div class="form-group my-2" id="city-field">
+                        <label for="city" th:text="#{basket.city}"></label>
+                        <input type="text" id="city" class="form-control" />
+                    </div>
+                    <div class="form-group my-2" id="country-field">
+                        <label for="country" th:text="#{basket.country}"></label>
+                        <select type="text" id="country" class="form-control">
+                            <option value=""></option>
+                            <option th:each="country : ${countriesDict}"
+                                    th:value="${country.code}"
+                                    th:text="${country.value}">
+                            </option>
+                        </select>
+                    </div>
+                    <div class="form-group my-2" id="nip-field" style="display: none;">
+                        <label for="nip" th:text="#{basket.nip}"></label>
+                        <input type="text" id="nip" class="form-control"/>
+                    </div>
+
+                </form>
+
+                <div class="text-center mt-3">
+                    <button id="buy-button" type="button" class="btn btn-outline-success" onclick="orderCoursesInBasket()" style="display: none;"><span><i class="far fa-credit-card"></i> </span><span th:text="#{basket.buy}"></span></button>
+                    <button id="buy-free-button" type="button" class="btn btn-outline-success" onclick="orderCoursesInBasket()" th:text="#{basket.buy.free}" style="display: none;"></button>
+                </div>
+
+                <img id="payment-methods" src="img/payments-methods.png" class="img-fluid mt-5">
+
+            </div>
+
+            <div id="not-logged-info" style="display: none;">
+                <h5 class="text-center" th:text="#{basket.login.or.register}"></h5>
+                <div class="row text-center">
+                    <div class="col-md-4"></div>
+                    <div class="col-md-2 my-2">
+                        <a href="/login" type="button" class="btn btn-success" th:text="#{basket.login}"></a>
+                    </div>
+                    <div class="col-md-2 my-2">
+                        <a href="/register" type="button" class="btn btn-success" th:text="#{basket.register}"></a>
+                    </div>
+                    <div class="col-md-4"></div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <footer th:replace="fragments/footer"></footer>
+</body>
+
+</html>
