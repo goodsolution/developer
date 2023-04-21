@@ -1,11 +1,5 @@
 package pl.com.mike.developer.logic.courseplatform;
 
-import pl.com.mike.developer.api.courseplatform.*;
-import pl.com.mike.developer.domain.JobOfferData;
-import pl.com.mike.developer.domain.courseplatform.MemeData;
-import pl.com.mike.developer.domain.courseplatform.StatisticCourseCompletionData;
-import pl.com.mike.developer.domain.courseplatform.StatisticNewCustomerData;
-import pl.com.mike.developer.domain.courseplatform.TraceData;
 import pl.com.mike.developer.domain.itube.ITubeData;
 import pl.com.mike.developer.domain.itube.ITubeGetResponse;
 import pl.com.mike.developer.domain.itube.ITubeGetResponseAdmin;
