@@ -29,13 +29,13 @@ public class ConverterToResponsesUtil {
 //        return list;
 //    }
 
-    public static List<StatisticCourseCompletionGetResponse> courseCompletionToResponses(List<StatisticCourseCompletionData> courseCompletion) {
-        List<StatisticCourseCompletionGetResponse> list = new ArrayList<>();
-        for (StatisticCourseCompletionData course : courseCompletion) {
-            list.add(new StatisticCourseCompletionGetResponse(course));
-        }
-        return list;
-    }
+//    public static List<StatisticCourseCompletionGetResponse> courseCompletionToResponses(List<StatisticCourseCompletionData> courseCompletion) {
+//        List<StatisticCourseCompletionGetResponse> list = new ArrayList<>();
+//        for (StatisticCourseCompletionData course : courseCompletion) {
+//            list.add(new StatisticCourseCompletionGetResponse(course));
+//        }
+//        return list;
+//    }
 
 
 
@@ -90,26 +90,26 @@ public class ConverterToResponsesUtil {
         return list;
     }
 
-    public static List<StatisticNewCustomerGetResponse> statisticNewCustomersToResponses(List<StatisticNewCustomerData> statisticNewCustomers) {
-        List<StatisticNewCustomerGetResponse> list = new ArrayList<>();
-        statisticNewCustomers.forEach(element -> list.add(new StatisticNewCustomerGetResponse(element)));
-        return list;
-    }
+//    public static List<StatisticNewCustomerGetResponse> statisticNewCustomersToResponses(List<StatisticNewCustomerData> statisticNewCustomers) {
+//        List<StatisticNewCustomerGetResponse> list = new ArrayList<>();
+//        statisticNewCustomers.forEach(element -> list.add(new StatisticNewCustomerGetResponse(element)));
+//        return list;
+//    }
 
-    public static List<TracePerDayGetResponse> traceToResponses(List<TraceData> traceData) {
-        List<TracePerDayGetResponse> list = new ArrayList<>();
-        traceData.forEach(element -> list.add(
-                        new TracePerDayGetResponse(
-                                new TraceData(
-                                    element.getId(),
-                                    element.getWhat(),
-                                    element.getValue(),
-                                    element.getLocalDateTime()
-                                ),
-                                DATE_TIME_FORMATTER_FULL
-                        )
-                )
-        );
-        return list;
-    }
+//    public static List<TracePerDayGetResponse> traceToResponses(List<TraceData> traceData) {
+//        List<TracePerDayGetResponse> list = new ArrayList<>();
+//        traceData.forEach(element -> list.add(
+//                        new TracePerDayGetResponse(
+//                                new TraceData(
+//                                    element.getId(),
+//                                    element.getWhat(),
+//                                    element.getValue(),
+//                                    element.getLocalDateTime()
+//                                ),
+//                                DATE_TIME_FORMATTER_FULL
+//                        )
+//                )
+//        );
+//        return list;
+//    }
 }
