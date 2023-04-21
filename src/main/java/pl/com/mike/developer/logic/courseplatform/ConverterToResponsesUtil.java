@@ -19,15 +19,15 @@ public class ConverterToResponsesUtil {
     private final static DateTimeFormatter DATE_TIME_FORMATTER_FULL = DateTimeFormatter.ofPattern("yyyy-LL-dd");
 
 
-    public static List<MemeGetResponse> memesToResponses(List<MemeData> memes) {
-        List<MemeGetResponse> list = new ArrayList<>();
-
-        for (MemeData meme : memes) {
-            list.add(new MemeGetResponse(meme));
-        }
-
-        return list;
-    }
+//    public static List<MemeGetResponse> memesToResponses(List<MemeData> memes) {
+//        List<MemeGetResponse> list = new ArrayList<>();
+//
+//        for (MemeData meme : memes) {
+//            list.add(new MemeGetResponse(meme));
+//        }
+//
+//        return list;
+//    }
 
     public static List<StatisticCourseCompletionGetResponse> courseCompletionToResponses(List<StatisticCourseCompletionData> courseCompletion) {
         List<StatisticCourseCompletionGetResponse> list = new ArrayList<>();
@@ -39,15 +39,15 @@ public class ConverterToResponsesUtil {
 
 
 
-    public static List<JobOfferGetResponse> jobOffersToResponses(List<JobOfferData> jobOffers) {
-        List<JobOfferGetResponse> list = new ArrayList<>();
-
-        for (JobOfferData jobOffer : jobOffers) {
-            list.add(new JobOfferGetResponse(jobOffer));
-        }
-
-        return list;
-    }
+//    public static List<JobOfferGetResponse> jobOffersToResponses(List<JobOfferData> jobOffers) {
+//        List<JobOfferGetResponse> list = new ArrayList<>();
+//
+//        for (JobOfferData jobOffer : jobOffers) {
+//            list.add(new JobOfferGetResponse(jobOffer));
+//        }
+//
+//        return list;
+//    }
 
     public static List<ITubeGetResponse> iTubesToResponses(List<ITubeData> iTubes) {
         List<ITubeGetResponse> list = new ArrayList<>();
