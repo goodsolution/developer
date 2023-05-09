@@ -148,10 +148,17 @@ public class ApplicationConfig {
     @Value("${company.page.url}")
     private String companyPageUrl;
 
+    @Value("${developer.code}")
+    private String developerCode;
+
     private String templateNameProductsDemandPdf = "products-demand-pdf.html";
 
     public String getUrl() {
         return url;
+    }
+
+    public String getDeveloperCode() {
+        return developerCode;
     }
 
     public String getPathToProductsDemandPdf() {

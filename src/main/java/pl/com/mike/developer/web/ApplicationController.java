@@ -27,10 +27,13 @@ public class ApplicationController {
     private CacheService cacheService;
     private ApplicationConfig applicationConfig;
 
+    private String themePath;
+
     public ApplicationController(DictionariesService dictionariesService, CacheService cacheService, ApplicationConfig applicationConfig) {
         this.dictionariesService = dictionariesService;
         this.cacheService = cacheService;
         this.applicationConfig = applicationConfig;
+        this.themePath = "themes/" + applicationConfig.getDeveloperCode();
     }
 
     @GetMapping("/mentoring")
@@ -99,7 +102,7 @@ public class ApplicationController {
 
     @GetMapping({"/", "/home"})
     public String home(Model model) {
-        return "home-page";
+        return themePath + "/home-page";
     }
 
     @GetMapping({"/buy-our-code"})
