@@ -3,10 +3,7 @@ package pl.com.mike.developer.logic.developer;
 import org.springframework.stereotype.Service;
 import pl.com.mike.developer.domain.developer.PremiseData;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class PremiseService {
@@ -26,4 +23,5 @@ public class PremiseService {
         }
         return premises;
     }
+
 }

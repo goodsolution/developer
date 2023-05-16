@@ -457,21 +457,33 @@ INSERT INTO premises (TYPE, NUMBER, FLOOR, SURFACE_SQ_M, PRICE_OF_SQ_M, PRICE_TO
                       SALES_STATUS, EXPOSURE, IS_BALCONY, IS_GARDEN, IS_TERRACE, IS_LOGGIA, BUILDING_ID)
 VALUES ('b', '1', '1', '50', '1000', '50000', '2', 'a', 'r', 'w', '1', '1', '0', '0', 8);
 
-INSERT INTO customers (first_name, last_name, private_address_country, private_address_voivodeship, private_address_city, private_address_street,
-                       private_address_building_number, private_address_flat_number, private_address_postal_code, private_telephone_number, private_fax_number,
-                       private_email, personal_id_number, company_name, company_address_country, company_address_city, company_address_street, company_address_building_number,
-                       company_address_flat_number, company_address_postal_code, company_telephone_number, company_fax_number, company_email,
+INSERT INTO customers (first_name, last_name, private_address_country, private_address_voivodeship,
+                       private_address_city, private_address_street,
+                       private_address_building_number, private_address_flat_number, private_address_postal_code,
+                       private_telephone_number, private_fax_number,
+                       private_email, personal_id_number, company_name, company_address_country, company_address_city,
+                       company_address_street, company_address_building_number,
+                       company_address_flat_number, company_address_postal_code, company_telephone_number,
+                       company_fax_number, company_email,
                        company_tax_identification_number, developer_id)
-VALUES ('Jan', 'Kowalski1', 'Polska', 'Mazowieckie', 'Warszawa', 'Koszykowa', '1', '1', '00-001', '123456789', '123456789',
-        'private@wp.pl', '123456789', 'Firma', 'Polska', 'Warszawa', 'Koszykowa', '1', '1', '00-001', '123456789', '123456789', 'business@wp.pl',
+VALUES ('Jan', 'Kowalski1', 'Polska', 'Mazowieckie', 'Warszawa', 'Koszykowa', '1', '1', '00-001', '123456789',
+        '123456789',
+        'private@wp.pl', '123456789', 'Firma', 'Polska', 'Warszawa', 'Koszykowa', '1', '1', '00-001', '123456789',
+        '123456789', 'business@wp.pl',
         '123456789', 1);
-INSERT INTO customers (first_name, last_name, private_address_country, private_address_voivodeship, private_address_city, private_address_street,
-                       private_address_building_number, private_address_flat_number, private_address_postal_code, private_telephone_number, private_fax_number,
-                       private_email, personal_id_number, company_name, company_address_country, company_address_city, company_address_street, company_address_building_number,
-                       company_address_flat_number, company_address_postal_code, company_telephone_number, company_fax_number, company_email,
+INSERT INTO customers (first_name, last_name, private_address_country, private_address_voivodeship,
+                       private_address_city, private_address_street,
+                       private_address_building_number, private_address_flat_number, private_address_postal_code,
+                       private_telephone_number, private_fax_number,
+                       private_email, personal_id_number, company_name, company_address_country, company_address_city,
+                       company_address_street, company_address_building_number,
+                       company_address_flat_number, company_address_postal_code, company_telephone_number,
+                       company_fax_number, company_email,
                        company_tax_identification_number, developer_id)
-VALUES ('Jan', 'Kowalski2', 'Polska', 'Mazowieckie', 'Warszawa', 'Koszykowa', '1', '1', '00-001', '123456789', '123456789',
-        'private@wp.pl', '123456789', 'Firma', 'Polska', 'Warszawa', 'Koszykowa', '1', '1', '00-001', '123456789', '123456789', 'business@wp.pl',
+VALUES ('Jan', 'Kowalski2', 'Polska', 'Mazowieckie', 'Warszawa', 'Koszykowa', '1', '1', '00-001', '123456789',
+        '123456789',
+        'private@wp.pl', '123456789', 'Firma', 'Polska', 'Warszawa', 'Koszykowa', '1', '1', '00-001', '123456789',
+        '123456789', 'business@wp.pl',
         '123456789', 2);
 
 # selected queries
@@ -532,3 +544,16 @@ where i.id = 1
   and p.type = 'a'
   and p.number_of_rooms = 2
   and p.surface_sq_m BETWEEN 40 AND 200;
+
+select investments.address_city, count(investments.address_city)
+from investments
+where investments.developer_id = 1
+group by investments.address_city;
+
+select investments.address_city, COUNT(p.sales_status)
+from investments
+         join buildings b on investments.id = b.investment_id
+         join premises p on b.id = p.building_id
+where p.sales_status = 'a'
+  and investments.developer_id = 1
+group by investments.address_city;

@@ -6,7 +6,7 @@ import java.math.BigDecimal;
 import java.util.Objects;
 
 @Entity
-@Table(name = "premises", schema = "developer_project")
+@Table(name = "premises")
 public class PremiseData implements Serializable {
     @Id
     @GeneratedValue
@@ -17,8 +17,7 @@ public class PremiseData implements Serializable {
     @Column(name = "surface_sq_m")
     private Double surfacePerSqMeter;
     @Column(name = "price_of_sq_m")
-
-    private Double pricePerSqMeter;
+    private BigDecimal pricePerSqMeter;
     @Column(name = "price_total")
     private BigDecimal totalPrice;
     @Column(name = "number_of_rooms")
@@ -36,8 +35,11 @@ public class PremiseData implements Serializable {
     private Boolean isTerrace;
     @Column(name = "is_loggia")
     private Boolean isLoggia;
-    @Column(name = "building_id")
-    private Integer buildingId;
+
+    @ManyToOne
+    @JoinColumn(name = "building_id", nullable = false)
+    private BuildingData buildingData;
+
 
     public PremiseData() {
     }
@@ -82,11 +84,11 @@ public class PremiseData implements Serializable {
         this.surfacePerSqMeter = surfacePerSqMeter;
     }
 
-    public Double getPricePerSqMeter() {
+    public BigDecimal getPricePerSqMeter() {
         return pricePerSqMeter;
     }
 
-    public void setPricePerSqMeter(Double pricePerSqMeter) {
+    public void setPricePerSqMeter(BigDecimal pricePerSqMeter) {
         this.pricePerSqMeter = pricePerSqMeter;
     }
 
@@ -162,24 +164,24 @@ public class PremiseData implements Serializable {
         isLoggia = loggia;
     }
 
-    public Integer getBuildingId() {
-        return buildingId;
+    public BuildingData getBuildingData() {
+        return buildingData;
     }
 
-    public void setBuildingId(Integer buildingId) {
-        this.buildingId = buildingId;
+    public void setBuildingData(BuildingData buildingData) {
+        this.buildingData = buildingData;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof PremiseData)) return false;
         PremiseData that = (PremiseData) o;
-        return Objects.equals(id, that.id) && Objects.equals(type, that.type) && Objects.equals(number, that.number) && Objects.equals(floor, that.floor) && Objects.equals(surfacePerSqMeter, that.surfacePerSqMeter) && Objects.equals(pricePerSqMeter, that.pricePerSqMeter) && Objects.equals(totalPrice, that.totalPrice) && Objects.equals(numberOfRooms, that.numberOfRooms) && Objects.equals(technicalStatus, that.technicalStatus) && Objects.equals(salesStatus, that.salesStatus) && Objects.equals(exposure, that.exposure) && Objects.equals(isBalcony, that.isBalcony) && Objects.equals(isGarden, that.isGarden) && Objects.equals(isTerrace, that.isTerrace) && Objects.equals(isLoggia, that.isLoggia) && Objects.equals(buildingId, that.buildingId);
+        return Objects.equals(getId(), that.getId()) && Objects.equals(getType(), that.getType()) && Objects.equals(getNumber(), that.getNumber()) && Objects.equals(getFloor(), that.getFloor()) && Objects.equals(getSurfacePerSqMeter(), that.getSurfacePerSqMeter()) && Objects.equals(getPricePerSqMeter(), that.getPricePerSqMeter()) && Objects.equals(getTotalPrice(), that.getTotalPrice()) && Objects.equals(getNumberOfRooms(), that.getNumberOfRooms()) && Objects.equals(getTechnicalStatus(), that.getTechnicalStatus()) && Objects.equals(getSalesStatus(), that.getSalesStatus()) && Objects.equals(getExposure(), that.getExposure()) && Objects.equals(isBalcony, that.isBalcony) && Objects.equals(isGarden, that.isGarden) && Objects.equals(isTerrace, that.isTerrace) && Objects.equals(isLoggia, that.isLoggia) && Objects.equals(getBuildingData(), that.getBuildingData());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, type, number, floor, surfacePerSqMeter, pricePerSqMeter, totalPrice, numberOfRooms, technicalStatus, salesStatus, exposure, isBalcony, isGarden, isTerrace, isLoggia, buildingId);
+        return Objects.hash(getId(), getType(), getNumber(), getFloor(), getSurfacePerSqMeter(), getPricePerSqMeter(), getTotalPrice(), getNumberOfRooms(), getTechnicalStatus(), getSalesStatus(), getExposure(), isBalcony, isGarden, isTerrace, isLoggia, getBuildingData());
     }
 }

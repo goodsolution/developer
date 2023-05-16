@@ -151,7 +151,14 @@ public class ApplicationConfig {
     @Value("${developer.code}")
     private String developerCode;
 
+    @Value("developers")
+    private String developers;
+
     private String templateNameProductsDemandPdf = "products-demand-pdf.html";
+
+    public String getDevelopers() {
+        return developers;
+    }
 
     public String getUrl() {
         return url;
