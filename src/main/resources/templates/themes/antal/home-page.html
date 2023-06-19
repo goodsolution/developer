@@ -6,21 +6,21 @@
     <meta name="keywords" th:content="#{home.page.content.keywords}">
     <title th:text="#{home.page.tab.title} + ' · ' + ${@applicationConfig.getAppNameFront()}"></title>
     <div th:replace="fragments/front-head"></div>
-    <script th:src="@{/js/home-page.js}"></script>
+    <script th:src="@{/js/themes/antal/home-page.js}"></script>
     <script th:replace="fragments/languages-script"></script>
     <!--    <script>trace('page.show', 'home')</script>-->
 </head>
 
 <body>
-<div>ANTAL</div>
-<div>Nowe mieszkania na sprzedaż w Warszawie- sprawdzony deweloper</div>
+
+<br>
+<div th:text="${@applicationConfig.getDeveloperCode()}"></div>
 <br>
 <div class="card-deck" id="cities">
 </div>
+<br>
 
-<div id="investment-number">
 </div>
-
     <nav th:replace="${@courseCustomersService.getLoggedCustomer()} ? 'fragments/logged-in-navbar' : 'fragments/logged-out-navbar'"></nav>
 
     <!-- Header -->

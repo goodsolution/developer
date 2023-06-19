@@ -16,17 +16,6 @@ public class InvestmentSearchFilter {
 
     private Long developerId;
 
-    public InvestmentSearchFilter(Long id, String name, String description, String addressCountry, String addressVoivodeship, String addressCity, String addressStreet, Long developerId) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
-        this.addressCountry = addressCountry;
-        this.addressVoivodeship = addressVoivodeship;
-        this.addressCity = addressCity;
-        this.addressStreet = addressStreet;
-        this.developerId = developerId;
-    }
-
     public InvestmentSearchFilter(Long developerId) {
         this.developerId = developerId;
     }

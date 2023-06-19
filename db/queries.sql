@@ -1,16 +1,32 @@
 # creates
 
-DROP DATABASE IF EXISTS developer_project;
-CREATE DATABASE developer_project;
-use developer_project;
+CREATE TABLE IF NOT EXISTS voivodeships
+(
+    id   int auto_increment,
+    name varchar(200),
+    PRIMARY KEY (id)
+)
+    ENGINE INNODB
+    COLLATE utf8mb4_general_ci;
+
+CREATE TABLE IF NOT EXISTS cities
+(
+    id             int auto_increment,
+    name           varchar(200) NOT NULL,
+    voivodeship_id int          NOT NULL,
+    PRIMARY KEY (id),
+    foreign key (voivodeship_id) references voivodeships (id)
+)
+    ENGINE INNODB
+    COLLATE utf8mb4_general_ci;
 
 create table developers
 (
     id                        int auto_increment,
     name                      varchar(200) NOT NULL,
     address_country           varchar(200) NOT NULL,
-    address_voivodeship       varchar(200),
-    address_city              varchar(200) NOT NULL,
+#     address_voivodeship       varchar(200),
+#     address_city              varchar(200) NOT NULL,
     address_street            varchar(200) NOT NULL,
     address_building_number   varchar(200) NOT NULL,
     address_flat_number       varchar(200),
@@ -19,22 +35,30 @@ create table developers
     fax_number                varchar(200),
     email                     varchar(200),
     tax_identification_number varchar(200) NOT NULL,
-    primary key (id)
+    city_id                   int          NOT NULL,
+    voivodeship_id            int          NOT NULL,
+    primary key (id),
+    foreign key (city_id) references cities (id),
+    foreign key (voivodeship_id) references voivodeships (id)
 )
     ENGINE INNODB
     COLLATE utf8mb4_general_ci;
 
 create table investments
 (
-    id                  int auto_increment,
-    name                varchar(200),
-    description         varchar(5000),
-    address_country     varchar(200),
-    address_voivodeship varchar(200),
-    address_city        varchar(200) NOT NULL,
-    address_street      varchar(200),
-    developer_id        int          NOT NULL,
+    id              int auto_increment,
+    name            varchar(200),
+    description     varchar(5000),
+    address_country varchar(200),
+#     address_voivodeship varchar(200),
+#     address_city        varchar(200) NOT NULL,
+    address_street  varchar(200),
+    developer_id    int NOT NULL,
+    city_id         int NOT NULL,
+    voivodeship_id  int NOT NULL,
     primary key (id),
+    foreign key (city_id) references cities (id),
+    foreign key (voivodeship_id) references voivodeships (id),
     foreign key (developer_id) REFERENCES developers (id)
 )
     ENGINE INNODB
@@ -44,8 +68,8 @@ create table sales_offices
 (
     id                      int auto_increment,
     address_country         varchar(200),
-    address_voivodeship     varchar(200),
-    address_city            varchar(200) NOT NULL,
+#     address_voivodeship     varchar(200),
+#     address_city            varchar(200) NOT NULL,
     address_street          varchar(200) NOT NULL,
     address_building_number varchar(200) NOT NULL,
     address_flat_number     varchar(200),
@@ -53,7 +77,11 @@ create table sales_offices
     telephone_number        varchar(200),
     fax_number              varchar(200),
     email                   varchar(200),
-    primary key (id)
+    city_id                 int          NOT NULL,
+    voivodeship_id          int          NOT NULL,
+    primary key (id),
+    foreign key (city_id) references cities (id),
+    foreign key (voivodeship_id) references voivodeships (id)
 )
     ENGINE INNODB
     COLLATE utf8mb4_general_ci;
@@ -159,14 +187,18 @@ create table buildings
     id                      int auto_increment,
     name                    varchar(200),
     address_country         varchar(200),
-    address_voivodeship     varchar(200),
-    address_city            varchar(200),
+#     address_voivodeship     varchar(200),
+#     address_city            varchar(200),
     address_street          varchar(200) NOT NULL,
     address_building_number varchar(200),
     address_postal_code     varchar(200),
     investment_id           int          NOT NULL,
+    city_id                 int          NOT NULL,
+    voivodeship_id          int          NOT NULL,
     primary key (id),
-    foreign key (investment_id) references investments (id)
+    foreign key (investment_id) references investments (id),
+    foreign key (city_id) references cities (id),
+    foreign key (voivodeship_id) references voivodeships (id)
 )
     ENGINE INNODB
     COLLATE utf8mb4_general_ci;
@@ -195,163 +227,93 @@ create table premises
     ENGINE INNODB
     COLLATE utf8mb4_general_ci;
 
-
 # inserts
+INSERT INTO voivodeships (name)
+VALUES ('DOLNOŚLĄSKIE'),
+       ('KUJAWSKO-POMORSKIE'),
+       ('LUBELSKIE'),
+       ('LUBUSKIE'),
+       ('ŁÓDZKIE'),
+       ('MAŁOPOLSKIE'),
+       ('MAZOWIECKIE'),
+       ('OPOLSKIE'),
+       ('PODKARPACKIE'),
+       ('PODLASKIE'),
+       ('POMORSKIE'),
+       ('ŚLĄSKIE'),
+       ('ŚWIĘTOKRZYSKIE'),
+       ('WARMIŃSKO-MAZURSKIE'),
+       ('WIELKOPOLSKIE'),
+       ('ZACHODNIOPOMORSKIE');
 
-INSERT INTO developers (name, address_country, address_voivodeship, address_city, address_street,
-                        address_building_number, address_flat_number, address_postal_code, telephone_number, fax_number,
-                        email, tax_identification_number)
-VALUES ('Developer_01', 'Poland', 'Mazowieckie', 'Warszawa', 'ul. Testowa', '1', '1', '00-001', '123456789',
-        '123456789', 'dev_01@wp.pl', '1234567890');
-INSERT INTO developers (name, address_country, address_voivodeship, address_city, address_street,
-                        address_building_number, address_flat_number, address_postal_code, telephone_number, fax_number,
-                        email, tax_identification_number)
-VALUES ('Developer_02', 'Poland', 'Mazowieckie', 'Warszawa', 'ul. Testowa', '2', '2', '00-002', '123456789',
-        '123456789', 'dev_02@wp.pl', '1234567890');
+INSERT INTO cities (voivodeship_id, name)
+VALUES (1, 'WROCŁAW'),
+       (2, 'BYDGOSZCZ'),
+       (3, 'LUBLIN'),
+       (4, 'ZIELONA GÓRA'),
+       (5, 'ŁÓDŹ'),
+       (6, 'KRAKÓW'),
+       (7, 'WARSZAWA'),
+       (8, 'OPOLE'),
+       (9, 'RZESZÓW'),
+       (10, 'BIAŁYSTOK'),
+       (11, 'GDAŃSK'),
+       (12, 'KATOWICE'),
+       (13, 'KIELCE'),
+       (14, 'OLSZTYN'),
+       (15, 'POZNAŃ'),
+       (16, 'SZCZECIN');
 
-INSERT INTO investments (name, description, address_country, address_voivodeship, address_city, address_street,
-                         developer_id)
-VALUES ('Investment_01', 'Description_01', 'Poland', 'Mazowieckie', 'Warszawa', 'ul. Testowa', 1);
-INSERT INTO investments (name, description, address_country, address_voivodeship, address_city, address_street,
-                         developer_id)
-VALUES ('Investment_02', 'Description_02', 'Poland', 'Mazowieckie', 'Warszawa', 'ul. Testowa', 1);
-INSERT INTO investments (name, description, address_country, address_voivodeship, address_city, address_street,
-                         developer_id)
-VALUES ('Investment_03', 'Description_03', 'Poland', 'Mazowieckie', 'Warszawa', 'ul. Testowa', 2);
-INSERT INTO investments (name, description, address_country, address_voivodeship, address_city, address_street,
-                         developer_id)
-VALUES ('Investment_04', 'Description_04', 'Poland', 'Mazowieckie', 'Warszawa', 'ul. Testowa', 2);
+INSERT INTO developers (name, address_country, address_street,
+                        address_building_number, address_flat_number, address_postal_code,
+                        telephone_number, fax_number,
+                        email, tax_identification_number, city_id, voivodeship_id)
+VALUES ('Antal', 'Poland', 'ul. Testowa', '1', '1', '00-001', '123456789', '123456789', 'dev_01@wp.pl', '123456789', 7,
+        7);
 
-INSERT INTO sales_offices (address_country, address_voivodeship, address_city, address_street, address_building_number,
-                           address_flat_number, address_postal_code, telephone_number, fax_number, email)
-VALUES ('Poland', 'Mazowieckie', 'Warszawa', 'ul. Testowa', '1', '1', '00-001', '123456789', '123456789',
-        'sales_office_01@wp.pl');
-INSERT INTO sales_offices (address_country, address_voivodeship, address_city, address_street, address_building_number,
-                           address_flat_number, address_postal_code, telephone_number, fax_number, email)
-VALUES ('Poland', 'Mazowieckie', 'Warszawa', 'ul. Testowa', '2', '1', '00-001', '123456789', '123456789',
-        'sales_office_02@wp.pl');
-INSERT INTO sales_offices (address_country, address_voivodeship, address_city, address_street, address_building_number,
-                           address_flat_number, address_postal_code, telephone_number, fax_number, email)
-VALUES ('Poland', 'Mazowieckie', 'Warszawa', 'ul. Testowa', '1', '1', '00-001', '123456789', '123456789',
-        'sales_office_03@wp.pl');
-INSERT INTO sales_offices (address_country, address_voivodeship, address_city, address_street, address_building_number,
-                           address_flat_number, address_postal_code, telephone_number, fax_number, email)
-VALUES ('Poland', 'Mazowieckie', 'Warszawa', 'ul. Testowa', '2', '1', '00-001', '123456789', '123456789',
-        'sales_office_04@wp.pl');
+INSERT INTO developers (name, address_country, address_street,
+                        address_building_number, address_flat_number, address_postal_code,
+                        telephone_number, fax_number,
+                        email, tax_identification_number, city_id, voivodeship_id)
+VALUES ('Murapol', 'Poland', 'ul. Testowa', '1', '1', '00-001', '123456789', '123456789', 'dev_01@wp.pl', '123456789',
+        6, 6);
 
-INSERT INTO sales_office_opening_hours (day_of_week, time_open, time_closed, sales_office_id)
-VALUES ('Monday', '09:00:00', '17:00:00', 1);
-INSERT INTO sales_office_opening_hours (day_of_week, time_open, time_closed, sales_office_id)
-VALUES ('Tuesday', '09:00:00', '17:00:00', 1);
-INSERT INTO sales_office_opening_hours (day_of_week, time_open, time_closed, sales_office_id)
-VALUES ('Wednesday', '09:00:00', '17:00:00', 1);
-INSERT INTO sales_office_opening_hours (day_of_week, time_open, time_closed, sales_office_id)
-VALUES ('Thursday', '09:00:00', '17:00:00', 1);
-INSERT INTO sales_office_opening_hours (day_of_week, time_open, time_closed, sales_office_id)
-VALUES ('Friday', '09:00:00', '17:00:00', 1);
-INSERT INTO sales_office_opening_hours (day_of_week, time_open, time_closed, sales_office_id)
-VALUES ('Saturday', '10:00:00', '15:00:00', 1);
-INSERT INTO sales_office_opening_hours (day_of_week, time_open, time_closed, sales_office_id)
-VALUES ('Monday', '09:00:00', '17:00:00', 2);
-INSERT INTO sales_office_opening_hours (day_of_week, time_open, time_closed, sales_office_id)
-VALUES ('Tuesday', '09:00:00', '17:00:00', 2);
-INSERT INTO sales_office_opening_hours (day_of_week, time_open, time_closed, sales_office_id)
-VALUES ('Wednesday', '09:00:00', '17:00:00', 2);
-INSERT INTO sales_office_opening_hours (day_of_week, time_open, time_closed, sales_office_id)
-VALUES ('Thursday', '09:00:00', '17:00:00', 2);
-INSERT INTO sales_office_opening_hours (day_of_week, time_open, time_closed, sales_office_id)
-VALUES ('Friday', '09:00:00', '17:00:00', 2);
-INSERT INTO sales_office_opening_hours (day_of_week, time_open, time_closed, sales_office_id)
-VALUES ('Saturday', '10:00:00', '15:00:00', 2);
-INSERT INTO sales_office_opening_hours (day_of_week, time_open, time_closed, sales_office_id)
-VALUES ('Monday', '09:00:00', '17:00:00', 3);
-INSERT INTO sales_office_opening_hours (day_of_week, time_open, time_closed, sales_office_id)
-VALUES ('Tuesday', '09:00:00', '17:00:00', 3);
-INSERT INTO sales_office_opening_hours (day_of_week, time_open, time_closed, sales_office_id)
-VALUES ('Wednesday', '09:00:00', '17:00:00', 3);
-INSERT INTO sales_office_opening_hours (day_of_week, time_open, time_closed, sales_office_id)
-VALUES ('Thursday', '09:00:00', '17:00:00', 3);
-INSERT INTO sales_office_opening_hours (day_of_week, time_open, time_closed, sales_office_id)
-VALUES ('Friday', '09:00:00', '17:00:00', 3);
-INSERT INTO sales_office_opening_hours (day_of_week, time_open, time_closed, sales_office_id)
-VALUES ('Saturday', '10:00:00', '15:00:00', 3);
-INSERT INTO sales_office_opening_hours (day_of_week, time_open, time_closed, sales_office_id)
-VALUES ('Monday', '09:00:00', '17:00:00', 4);
-INSERT INTO sales_office_opening_hours (day_of_week, time_open, time_closed, sales_office_id)
-VALUES ('Tuesday', '09:00:00', '17:00:00', 4);
-INSERT INTO sales_office_opening_hours (day_of_week, time_open, time_closed, sales_office_id)
-VALUES ('Wednesday', '09:00:00', '17:00:00', 4);
-INSERT INTO sales_office_opening_hours (day_of_week, time_open, time_closed, sales_office_id)
-VALUES ('Thursday', '09:00:00', '17:00:00', 4);
-INSERT INTO sales_office_opening_hours (day_of_week, time_open, time_closed, sales_office_id)
-VALUES ('Friday', '09:00:00', '17:00:00', 4);
-INSERT INTO sales_office_opening_hours (day_of_week, time_open, time_closed, sales_office_id)
-VALUES ('Saturday', '10:00:00', '15:00:00', 4);
+INSERT INTO investments (name, description, address_country, address_street, developer_id, city_id, voivodeship_id)
+VALUES ('Investment_01', 'Description_01', 'Poland', 'ul. Testowa', 1, 7, 7);
+INSERT INTO investments (name, description, address_country, address_street, developer_id, city_id, voivodeship_id)
+VALUES ('Investment_02', 'Description_01', 'Poland', 'ul. Testowa', 1, 7, 7);
+INSERT INTO investments (name, description, address_country, address_street, developer_id, city_id, voivodeship_id)
+VALUES ('Investment_03', 'Description_01', 'Poland', 'ul. Testowa', 2, 7, 7);
+INSERT INTO investments (name, description, address_country, address_street, developer_id, city_id, voivodeship_id)
+VALUES ('Investment_04', 'Description_01', 'Poland', 'ul. Testowa', 1, 12, 12);
+INSERT INTO investments (name, description, address_country, address_street, developer_id, city_id, voivodeship_id)
+VALUES ('Investment_05', 'Description_01', 'Poland', 'ul. Testowa', 1, 4, 4);
 
-INSERT INTO employees(first_name, last_name, position, business_email, business_telephone_number, address_country,
-                      address_voivodeship, address_city, address_street, address_building_number, address_flat_number,
-                      address_postal_code, private_telephone_number, private_email, personal_id_number, developer_id)
-VALUES ('Jan', 'Kowalski', 'manager', 'manager_01@wp.pl', '123456789', 'Poland', 'Mazowieckie', 'Warszawa',
-        'ul. Testowa', '2', '1', '00-001', '123456789', 'private_01@wp.pl', '123456789', 1);
-INSERT INTO employees(first_name, last_name, position, business_email, business_telephone_number, address_country,
-                      address_voivodeship, address_city, address_street, address_building_number, address_flat_number,
-                      address_postal_code, private_telephone_number, private_email, personal_id_number, developer_id)
-VALUES ('Jan', 'Kowalski2', 'manager', 'manager_01@wp.pl', '123456789', 'Poland', 'Mazowieckie', 'Warszawa',
-        'ul. Testowa', '2', '1', '00-001', '123456789', 'private_01@wp.pl', '123456789', 1);
-INSERT INTO employees(first_name, last_name, position, business_email, business_telephone_number, address_country,
-                      address_voivodeship, address_city, address_street, address_building_number, address_flat_number,
-                      address_postal_code, private_telephone_number, private_email, personal_id_number, developer_id)
-VALUES ('Jan', 'Kowalski3', 'manager', 'manager_01@wp.pl', '123456789', 'Poland', 'Mazowieckie', 'Warszawa',
-        'ul. Testowa', '2', '1', '00-001', '123456789', 'private_01@wp.pl', '123456789', 2);
-INSERT INTO employees(first_name, last_name, position, business_email, business_telephone_number, address_country,
-                      address_voivodeship, address_city, address_street, address_building_number, address_flat_number,
-                      address_postal_code, private_telephone_number, private_email, personal_id_number, developer_id)
-VALUES ('Jan', 'Kowalski4', 'manager', 'manager_01@wp.pl', '123456789', 'Poland', 'Mazowieckie', 'Warszawa',
-        'ul. Testowa', '2', '1', '00-001', '123456789', 'private_01@wp.pl', '123456789', 2);
+INSERT INTO buildings (name, address_country, address_street, address_building_number, address_postal_code,
+                       investment_id, city_id, voivodeship_id)
+VALUES ('Building_01', 'Poland', 'ul. Testowa', '1', '00-001', 1, 7, 7);
+INSERT INTO buildings (name, address_country, address_street, address_building_number, address_postal_code,
+                       investment_id, city_id, voivodeship_id)
+VALUES ('Building_02', 'Poland', 'ul. Testowa', '1', '00-001', 1, 7, 7);
+INSERT INTO buildings (name, address_country, address_street, address_building_number, address_postal_code,
+                       investment_id, city_id, voivodeship_id)
+VALUES ('Building_03', 'Poland', 'ul. Testowa', '1', '00-001', 1, 4, 4);
+INSERT INTO buildings (name, address_country, address_street, address_building_number, address_postal_code,
+                       investment_id, city_id, voivodeship_id)
+VALUES ('Building_04', 'Poland', 'ul. Testowa', '1', '00-001', 2, 7, 7);
+INSERT INTO buildings (name, address_country, address_street, address_building_number, address_postal_code,
+                       investment_id, city_id, voivodeship_id)
+VALUES ('Building_05', 'Poland', 'ul. Testowa', '1', '00-001', 2, 7, 7);
+INSERT INTO buildings (name, address_country, address_street, address_building_number, address_postal_code,
+                       investment_id, city_id, voivodeship_id)
+VALUES ('Building_06', 'Poland', 'ul. Testowa', '1', '00-001', 2, 7, 7);
+INSERT INTO buildings (name, address_country, address_street, address_building_number, address_postal_code,
+                       investment_id, city_id, voivodeship_id)
+VALUES ('Building_07', 'Poland', 'ul. Testowa', '1', '00-001', 2, 7, 7);
+INSERT INTO buildings (name, address_country, address_street, address_building_number, address_postal_code,
+                       investment_id, city_id, voivodeship_id)
+VALUES ('Building_08', 'Poland', 'ul. Testowa', '1', '00-001', 2, 7, 7);
 
-INSERT INTO sales_offices_with_employees(sales_office_id, employee_id)
-VALUES (1, 1);
-INSERT INTO sales_offices_with_employees(sales_office_id, employee_id)
-VALUES (2, 2);
-INSERT INTO sales_offices_with_employees(sales_office_id, employee_id)
-VALUES (3, 3);
-INSERT INTO sales_offices_with_employees(sales_office_id, employee_id)
-VALUES (4, 4);
-
-INSERT INTO investments_with_sales_offices(investment_id, sales_office_id)
-VALUES (1, 1);
-INSERT INTO investments_with_sales_offices(investment_id, sales_office_id)
-VALUES (2, 2);
-INSERT INTO investments_with_sales_offices(investment_id, sales_office_id)
-VALUES (3, 3);
-INSERT INTO investments_with_sales_offices(investment_id, sales_office_id)
-VALUES (4, 4);
-
-
-INSERT INTO buildings (name, address_country, address_voivodeship, address_city, address_street,
-                       address_building_number, address_postal_code, investment_id)
-VALUES ('Budynek 1', 'Poland', 'Mazowieckie', 'Warszawa', 'ul. Testowa', '2', '00-001', 1);
-INSERT INTO buildings (name, address_country, address_voivodeship, address_city, address_street,
-                       address_building_number, address_postal_code, investment_id)
-VALUES ('Budynek 2', 'Poland', 'Mazowieckie', 'Warszawa', 'ul. Testowa', '2', '00-001', 1);
-INSERT INTO buildings (name, address_country, address_voivodeship, address_city, address_street,
-                       address_building_number, address_postal_code, investment_id)
-VALUES ('Budynek 3', 'Poland', 'Mazowieckie', 'Warszawa', 'ul. Testowa', '2', '00-001', 2);
-INSERT INTO buildings (name, address_country, address_voivodeship, address_city, address_street,
-                       address_building_number, address_postal_code, investment_id)
-VALUES ('Budynek 4', 'Poland', 'Mazowieckie', 'Warszawa', 'ul. Testowa', '2', '00-001', 2);
-INSERT INTO buildings (name, address_country, address_voivodeship, address_city, address_street,
-                       address_building_number, address_postal_code, investment_id)
-VALUES ('Budynek 5', 'Poland', 'Mazowieckie', 'Warszawa', 'ul. Testowa', '2', '00-001', 3);
-INSERT INTO buildings (name, address_country, address_voivodeship, address_city, address_street,
-                       address_building_number, address_postal_code, investment_id)
-VALUES ('Budynek 6', 'Poland', 'Mazowieckie', 'Warszawa', 'ul. Testowa', '2', '00-001', 3);
-INSERT INTO buildings (name, address_country, address_voivodeship, address_city, address_street,
-                       address_building_number, address_postal_code, investment_id)
-VALUES ('Budynek 7', 'Poland', 'Mazowieckie', 'Warszawa', 'ul. Testowa', '2', '00-001', 4);
-INSERT INTO buildings (name, address_country, address_voivodeship, address_city, address_street,
-                       address_building_number, address_postal_code, investment_id)
-VALUES ('Budynek 8', 'Poland', 'Mazowieckie', 'Warszawa', 'ul. Testowa', '2', '00-001', 4);
 
 INSERT INTO premises (TYPE, NUMBER, FLOOR, SURFACE_SQ_M, PRICE_OF_SQ_M, PRICE_TOTAL, NUMBER_OF_ROOMS, TECHNICAL_STATUS,
                       SALES_STATUS, EXPOSURE, IS_BALCONY, IS_GARDEN, IS_TERRACE, IS_LOGGIA, BUILDING_ID)
@@ -457,34 +419,6 @@ INSERT INTO premises (TYPE, NUMBER, FLOOR, SURFACE_SQ_M, PRICE_OF_SQ_M, PRICE_TO
                       SALES_STATUS, EXPOSURE, IS_BALCONY, IS_GARDEN, IS_TERRACE, IS_LOGGIA, BUILDING_ID)
 VALUES ('b', '1', '1', '50', '1000', '50000', '2', 'a', 'r', 'w', '1', '1', '0', '0', 8);
 
-INSERT INTO customers (first_name, last_name, private_address_country, private_address_voivodeship,
-                       private_address_city, private_address_street,
-                       private_address_building_number, private_address_flat_number, private_address_postal_code,
-                       private_telephone_number, private_fax_number,
-                       private_email, personal_id_number, company_name, company_address_country, company_address_city,
-                       company_address_street, company_address_building_number,
-                       company_address_flat_number, company_address_postal_code, company_telephone_number,
-                       company_fax_number, company_email,
-                       company_tax_identification_number, developer_id)
-VALUES ('Jan', 'Kowalski1', 'Polska', 'Mazowieckie', 'Warszawa', 'Koszykowa', '1', '1', '00-001', '123456789',
-        '123456789',
-        'private@wp.pl', '123456789', 'Firma', 'Polska', 'Warszawa', 'Koszykowa', '1', '1', '00-001', '123456789',
-        '123456789', 'business@wp.pl',
-        '123456789', 1);
-INSERT INTO customers (first_name, last_name, private_address_country, private_address_voivodeship,
-                       private_address_city, private_address_street,
-                       private_address_building_number, private_address_flat_number, private_address_postal_code,
-                       private_telephone_number, private_fax_number,
-                       private_email, personal_id_number, company_name, company_address_country, company_address_city,
-                       company_address_street, company_address_building_number,
-                       company_address_flat_number, company_address_postal_code, company_telephone_number,
-                       company_fax_number, company_email,
-                       company_tax_identification_number, developer_id)
-VALUES ('Jan', 'Kowalski2', 'Polska', 'Mazowieckie', 'Warszawa', 'Koszykowa', '1', '1', '00-001', '123456789',
-        '123456789',
-        'private@wp.pl', '123456789', 'Firma', 'Polska', 'Warszawa', 'Koszykowa', '1', '1', '00-001', '123456789',
-        '123456789', 'business@wp.pl',
-        '123456789', 2);
 
 # selected queries
 
@@ -550,10 +484,51 @@ from investments
 where investments.developer_id = 1
 group by investments.address_city;
 
-select investments.address_city, COUNT(p.sales_status)
+# home page display
+SELECT COUNT(city_id) AS city_count
+FROM investments
+WHERE developer_id = 1
+GROUP BY city_id;
+
+SELECT c.name, COUNT(premises.sales_status) AS sales_status_count
+FROM investments
+         JOIN cities c on investments.city_id = c.id
+         JOIN buildings ON investments.id = buildings.investment_id
+         JOIN premises ON buildings.id = premises.building_id
+WHERE premises.sales_status = 'a'
+  AND investments.developer_id = 1
+GROUP BY c.id;
+
+# query to get available premises and number of invstms in city
+SELECT c.name, city_count, COUNT(premises.id) AS sales_status_count
+FROM (SELECT city_id, COUNT(city_id) AS city_count
+      FROM investments
+      WHERE developer_id = 1
+      GROUP BY city_id) AS subquery
+         JOIN investments ON subquery.city_id = investments.city_id
+         JOIN cities c on c.id = investments.city_id
+         JOIN buildings ON investments.id = buildings.investment_id
+         JOIN premises ON buildings.id = premises.building_id
+    AND premises.sales_status = 'a'
+GROUP BY investments.city_id;
+
+select distinct cities.name
+from cities
+         join investments i on cities.id = i.city_id
+         join developers d on i.developer_id = d.id
+where d.id = 1;
+
+select c.name, count(investments.id)
 from investments
+         join cities c on c.id = investments.city_id
+where developer_id = 1
+group by investments.city_id;
+
+select c.name, count(p.id)
+from investments
+    join cities c on investments.city_id = c.id
          join buildings b on investments.id = b.investment_id
          join premises p on b.id = p.building_id
-where p.sales_status = 'a'
-  and investments.developer_id = 1
-group by investments.address_city;
+where developer_id = 1
+  and p.sales_status = 'a'
+group by investments.city_id;

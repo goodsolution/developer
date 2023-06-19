@@ -17,10 +17,6 @@ public class InvestmentData implements Serializable {
     private String description;
     @Column(name = "address_country")
     private String addressCountry;
-    @Column(name = "address_voivodeship")
-    private String addressVoivodeship;
-    @Column(name = "address_city")
-    private String addressCity;
     @Column(name = "address_street")
     private String addressStreet;
     @ManyToOne
@@ -28,6 +24,13 @@ public class InvestmentData implements Serializable {
     private DeveloperData developerData;
     @OneToMany(mappedBy = "investmentData")
     private Set<BuildingData> buildings;
+
+    @ManyToOne
+    @JoinColumn(name = "city_id", nullable = false)
+    private CityData cityData;
+    @ManyToOne
+    @JoinColumn(name = "voivodeship_id", nullable = false)
+    private VoivodeshipData voivodeshipData;
 
     public InvestmentData() {
     }
@@ -64,22 +67,6 @@ public class InvestmentData implements Serializable {
         this.addressCountry = addressCountry;
     }
 
-    public String getAddressVoivodeship() {
-        return addressVoivodeship;
-    }
-
-    public void setAddressVoivodeship(String addressVoivodeship) {
-        this.addressVoivodeship = addressVoivodeship;
-    }
-
-    public String getAddressCity() {
-        return addressCity;
-    }
-
-    public void setAddressCity(String addressCity) {
-        this.addressCity = addressCity;
-    }
-
     public String getAddressStreet() {
         return addressStreet;
     }
@@ -104,16 +91,32 @@ public class InvestmentData implements Serializable {
         this.buildings = buildings;
     }
 
+    public CityData getCityData() {
+        return cityData;
+    }
+
+    public void setCityData(CityData cityData) {
+        this.cityData = cityData;
+    }
+
+    public VoivodeshipData getVoivodeshipData() {
+        return voivodeshipData;
+    }
+
+    public void setVoivodeshipData(VoivodeshipData voivodeshipData) {
+        this.voivodeshipData = voivodeshipData;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof InvestmentData)) return false;
         InvestmentData data = (InvestmentData) o;
-        return Objects.equals(getId(), data.getId()) && Objects.equals(getName(), data.getName()) && Objects.equals(getDescription(), data.getDescription()) && Objects.equals(getAddressCountry(), data.getAddressCountry()) && Objects.equals(getAddressVoivodeship(), data.getAddressVoivodeship()) && Objects.equals(getAddressCity(), data.getAddressCity()) && Objects.equals(getAddressStreet(), data.getAddressStreet()) && Objects.equals(getDeveloperData(), data.getDeveloperData()) && Objects.equals(getBuildings(), data.getBuildings());
+        return Objects.equals(getId(), data.getId()) && Objects.equals(getName(), data.getName()) && Objects.equals(getDescription(), data.getDescription()) && Objects.equals(getAddressCountry(), data.getAddressCountry()) && Objects.equals(getAddressStreet(), data.getAddressStreet()) && Objects.equals(getDeveloperData(), data.getDeveloperData()) && Objects.equals(getBuildings(), data.getBuildings()) && Objects.equals(getCityData(), data.getCityData()) && Objects.equals(getVoivodeshipData(), data.getVoivodeshipData());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getName(), getDescription(), getAddressCountry(), getAddressVoivodeship(), getAddressCity(), getAddressStreet(), getDeveloperData(), getBuildings());
+        return Objects.hash(getId(), getName(), getDescription(), getAddressCountry(), getAddressStreet(), getDeveloperData(), getBuildings(), getCityData(), getVoivodeshipData());
     }
 }

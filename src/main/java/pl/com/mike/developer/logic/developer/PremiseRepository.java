@@ -7,4 +7,6 @@ import pl.com.mike.developer.domain.developer.PremiseData;
 @Repository
 public interface PremiseRepository extends JpaRepository<PremiseData, Long> {
 
+
+
 }

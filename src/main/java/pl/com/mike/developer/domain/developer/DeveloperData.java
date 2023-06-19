@@ -15,10 +15,6 @@ public class DeveloperData implements Serializable {
     private String name;
     @Column(name = "address_country")
     private String addressCountry;
-    @Column(name = "address_voivodeship")
-    private String addressVoivodeship;
-    @Column(name = "address_city")
-    private String addressCity;
     @Column(name = "address_street")
     private String addressStreet;
     @Column(name = "address_building_number")
@@ -34,6 +30,12 @@ public class DeveloperData implements Serializable {
     private String email;
     @Column(name = "tax_identification_number")
     private String taxIdentificationNumber;
+    @ManyToOne
+    @JoinColumn(name = "city_id", nullable = false)
+    private CityData cityData;
+    @ManyToOne
+    @JoinColumn(name = "voivodeship_id", nullable = false)
+    private VoivodeshipData voivodeshipData;
     @OneToMany(mappedBy = "developerData")
     private Set<InvestmentData> investments;
 
@@ -62,22 +64,6 @@ public class DeveloperData implements Serializable {
 
     public void setAddressCountry(String addressCountry) {
         this.addressCountry = addressCountry;
-    }
-
-    public String getAddressVoivodeship() {
-        return addressVoivodeship;
-    }
-
-    public void setAddressVoivodeship(String addressVoivodeship) {
-        this.addressVoivodeship = addressVoivodeship;
-    }
-
-    public String getAddressCity() {
-        return addressCity;
-    }
-
-    public void setAddressCity(String addressCity) {
-        this.addressCity = addressCity;
     }
 
     public String getAddressStreet() {
@@ -144,6 +130,22 @@ public class DeveloperData implements Serializable {
         this.taxIdentificationNumber = taxIdentificationNumber;
     }
 
+    public CityData getCityData() {
+        return cityData;
+    }
+
+    public void setCityData(CityData cityData) {
+        this.cityData = cityData;
+    }
+
+    public VoivodeshipData getVoivodeshipData() {
+        return voivodeshipData;
+    }
+
+    public void setVoivodeshipData(VoivodeshipData voivodeshipData) {
+        this.voivodeshipData = voivodeshipData;
+    }
+
     public Set<InvestmentData> getInvestments() {
         return investments;
     }
@@ -157,11 +159,11 @@ public class DeveloperData implements Serializable {
         if (this == o) return true;
         if (!(o instanceof DeveloperData)) return false;
         DeveloperData that = (DeveloperData) o;
-        return Objects.equals(getId(), that.getId()) && Objects.equals(getName(), that.getName()) && Objects.equals(getAddressCountry(), that.getAddressCountry()) && Objects.equals(getAddressVoivodeship(), that.getAddressVoivodeship()) && Objects.equals(getAddressCity(), that.getAddressCity()) && Objects.equals(getAddressStreet(), that.getAddressStreet()) && Objects.equals(getAddressBuildingNumber(), that.getAddressBuildingNumber()) && Objects.equals(getAddressFlatNumber(), that.getAddressFlatNumber()) && Objects.equals(getAddressPostalCode(), that.getAddressPostalCode()) && Objects.equals(getTelephoneNumber(), that.getTelephoneNumber()) && Objects.equals(getFaxNumber(), that.getFaxNumber()) && Objects.equals(getEmail(), that.getEmail()) && Objects.equals(getTaxIdentificationNumber(), that.getTaxIdentificationNumber()) && Objects.equals(getInvestments(), that.getInvestments());
+        return Objects.equals(getId(), that.getId()) && Objects.equals(getName(), that.getName()) && Objects.equals(getAddressCountry(), that.getAddressCountry()) && Objects.equals(getAddressStreet(), that.getAddressStreet()) && Objects.equals(getAddressBuildingNumber(), that.getAddressBuildingNumber()) && Objects.equals(getAddressFlatNumber(), that.getAddressFlatNumber()) && Objects.equals(getAddressPostalCode(), that.getAddressPostalCode()) && Objects.equals(getTelephoneNumber(), that.getTelephoneNumber()) && Objects.equals(getFaxNumber(), that.getFaxNumber()) && Objects.equals(getEmail(), that.getEmail()) && Objects.equals(getTaxIdentificationNumber(), that.getTaxIdentificationNumber()) && Objects.equals(getCityData(), that.getCityData()) && Objects.equals(getVoivodeshipData(), that.getVoivodeshipData()) && Objects.equals(getInvestments(), that.getInvestments());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getName(), getAddressCountry(), getAddressVoivodeship(), getAddressCity(), getAddressStreet(), getAddressBuildingNumber(), getAddressFlatNumber(), getAddressPostalCode(), getTelephoneNumber(), getFaxNumber(), getEmail(), getTaxIdentificationNumber(), getInvestments());
+        return Objects.hash(getId(), getName(), getAddressCountry(), getAddressStreet(), getAddressBuildingNumber(), getAddressFlatNumber(), getAddressPostalCode(), getTelephoneNumber(), getFaxNumber(), getEmail(), getTaxIdentificationNumber(), getCityData(), getVoivodeshipData(), getInvestments());
     }
 }

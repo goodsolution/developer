@@ -4,8 +4,6 @@ public class DeveloperGetResponse {
     private Long id;
     private String name;
     private String addressCountry;
-    private String addressVoivodeship;
-    private String addressCity;
     private String addressStreet;
     private String addressBuildingNumber;
     private String addressFlatNumber;
@@ -14,13 +12,13 @@ public class DeveloperGetResponse {
     private String faxNumber;
     private String email;
     private String taxIdentificationNumber;
+    private Long city_id;
+    private Long voivodeship_id;
 
-    public DeveloperGetResponse(Long id, String name, String addressCountry, String addressVoivodeship, String addressCity, String addressStreet, String addressBuildingNumber, String addressFlatNumber, String addressPostalCode, String telephoneNumber, String faxNumber, String email, String taxIdentificationNumber) {
+    public DeveloperGetResponse(Long id, String name, String addressCountry, String addressStreet, String addressBuildingNumber, String addressFlatNumber, String addressPostalCode, String telephoneNumber, String faxNumber, String email, String taxIdentificationNumber, Long city_id, Long voivodeship_id) {
         this.id = id;
         this.name = name;
         this.addressCountry = addressCountry;
-        this.addressVoivodeship = addressVoivodeship;
-        this.addressCity = addressCity;
         this.addressStreet = addressStreet;
         this.addressBuildingNumber = addressBuildingNumber;
         this.addressFlatNumber = addressFlatNumber;
@@ -29,6 +27,8 @@ public class DeveloperGetResponse {
         this.faxNumber = faxNumber;
         this.email = email;
         this.taxIdentificationNumber = taxIdentificationNumber;
+        this.city_id = city_id;
+        this.voivodeship_id = voivodeship_id;
     }
 
     public Long getId() {
@@ -53,22 +53,6 @@ public class DeveloperGetResponse {
 
     public void setAddressCountry(String addressCountry) {
         this.addressCountry = addressCountry;
-    }
-
-    public String getAddressVoivodeship() {
-        return addressVoivodeship;
-    }
-
-    public void setAddressVoivodeship(String addressVoivodeship) {
-        this.addressVoivodeship = addressVoivodeship;
-    }
-
-    public String getAddressCity() {
-        return addressCity;
-    }
-
-    public void setAddressCity(String addressCity) {
-        this.addressCity = addressCity;
     }
 
     public String getAddressStreet() {
@@ -133,5 +117,21 @@ public class DeveloperGetResponse {
 
     public void setTaxIdentificationNumber(String taxIdentificationNumber) {
         this.taxIdentificationNumber = taxIdentificationNumber;
+    }
+
+    public Long getCity_id() {
+        return city_id;
+    }
+
+    public void setCity_id(Long city_id) {
+        this.city_id = city_id;
+    }
+
+    public Long getVoivodeship_id() {
+        return voivodeship_id;
+    }
+
+    public void setVoivodeship_id(Long voivodeship_id) {
+        this.voivodeship_id = voivodeship_id;
     }
 }
