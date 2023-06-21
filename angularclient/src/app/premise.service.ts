@@ -1,6 +1,5 @@
 import {Injectable} from "@angular/core";
 import {Premise} from "./premise";
-import {PREMISES} from "./mock-premises";
 import {catchError, Observable, of, tap} from "rxjs";
 import {MessageService} from "./message.service";
 import {HttpClient} from "@angular/common/http";
@@ -9,7 +8,7 @@ import {HttpClient} from "@angular/common/http";
   providedIn: 'root'
 })
 export class PremiseService {
-  private premisesUrl = 'https://localhost:8081/api/dev/premises/';
+  private premisesUrl = 'https://localhost:8081/api/dev/premises';
 
   constructor(
     private messageService: MessageService,
@@ -17,7 +16,6 @@ export class PremiseService {
   ) {
   }
 
-  /** Log a PremiseService message with the MessageService */
   private log(message: string) {
     this.messageService.add(`PremiseService: ${message}`);
   }
@@ -28,8 +26,6 @@ export class PremiseService {
         tap(_ => this.log('fetched premises')),
         catchError(this.handleError<Premise[]>('getPremises', []))
       );
-    // this.messageService.add('PremiseService: fetched premises');
-    // return of(PREMISES);
   }
 
   private handleError<T>(operation = 'operation', result?: T) {

@@ -2,7 +2,7 @@
 <ul>
   <li *ngFor="let premise of premises">
     <a routerLink="/premises/{{premise.id}}">
-      <span>{{premise.id}}</span> {{premise.name}}
+      id: {{premise.id}} type: {{premise.type}} surface: {{premise.surfacePerSqMeter}} m2
     </a>
   </li>
 </ul>

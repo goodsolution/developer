@@ -9,7 +9,6 @@ import {PremiseService} from "../premise.service";
 })
 export class DashboardComponent implements OnInit{
   premises: Premise[] = [];
-
   constructor(private premiseService: PremiseService) {
   }
 

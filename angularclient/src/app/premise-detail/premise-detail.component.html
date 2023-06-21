@@ -1,9 +1,9 @@
 <div *ngIf="premise">
-  <h2>{{premise.name |uppercase}} Details</h2>
+  <h2>Premise number: {{premise.number}}</h2>
   <div><span>id: </span>{{premise.id}}</div>
   <div>
-    <label for="premise-name">Premise name: </label>
-    <input id="premise-name" [(ngModel)]="premise.name" placeholder="name">
+    <label for="premise-type">Premise type: </label>
+    <input id="premise-type" [(ngModel)]="premise.type" placeholder="type">
   </div>
   <button type="button" (click)="goBack()">go back</button>
 </div>

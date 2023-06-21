@@ -1,8 +1,18 @@
 export interface Premise {
-  id: number;
-  name: string;
-  address: string;
-  city: string;
-  country: string;
-  owner: string;
+  id: number,
+  type: string,
+  number: number,
+  floor: number,
+  surfacePerSqMeter: number,
+  pricePerSqMeter: number,
+  totalPrice: number,
+  numberOfRooms: number,
+  technicalStatus: string,
+  salesStatus: string,
+  exposure: string,
+  buildingId: number,
+  garden: number,
+  loggia: number,
+  balcony: number,
+  terrace: number,
 }
