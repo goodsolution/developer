@@ -29,7 +29,3 @@ import {HttpClientModule} from "@angular/common/http";
 })
 export class AppModule { }
 
-//TODO port 4200 - change
-//TODO ng
-//TODO ng serve --port 4401 - find configuration file -change port when starts
-

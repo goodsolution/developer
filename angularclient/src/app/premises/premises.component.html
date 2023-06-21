@@ -9,7 +9,7 @@
       </tr>
       </thead>
       <tbody>
-      <tr class="link-primary" routerLink="/premises/{{premise.id}}" *ngFor="let premise of premises">
+      <tr routerLink="/premises/{{premise.id}}" *ngFor="let premise of premises">
         <td>{{premise.id}}</td>
         <td>{{premise.type}}</td>
         <td>{{premise.surfacePerSqMeter}}m2</td>
