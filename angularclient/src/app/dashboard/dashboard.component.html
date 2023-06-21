@@ -1,0 +1,7 @@
+<br>
+<h3>Best Offer Premises</h3>
+<div>
+  <a *ngFor="let premise of premises" routerLink="/premises/{{premise.id}}">
+    {{premise.name}}<br>
+  </a>
+</div>
