@@ -8,12 +8,13 @@ import {HttpClient} from "@angular/common/http";
   providedIn: 'root'
 })
 export class PremiseService {
-  private premisesUrl = 'https://localhost:8081/api/dev/premises';
+  private readonly premisesUrl: string;
 
   constructor(
     private messageService: MessageService,
     private http: HttpClient,
   ) {
+    this.premisesUrl = 'https://localhost:8081/api/dev/premises';
   }
 
   private log(message: string) {
