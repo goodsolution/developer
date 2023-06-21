@@ -1,9 +1,21 @@
-<h1>{{title}}</h1>
-<br>
-<nav>
-  <a routerLink="/dashboard">Dashboard</a><br>
-  <a routerLink="/premises">Premises</a>
-</nav>
-<hr style="width:50%;text-align:left;margin-left:0">
-<router-outlet></router-outlet>
-<app-messages></app-messages>
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card bg-dark my-5">
+        <div class="card-body">
+          <h2 class="card-title text-center text-white py-3">{{ title }}</h2>
+          <ul class="text-center list-inline py-3">
+            <li class="list-inline-item">
+              <a routerLink="/dashboard" class="btn btn-info">Dashboard</a>
+            </li>
+            <li class="list-inline-item">
+              <a routerLink="/premises" class="btn btn-info">Premises</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <router-outlet></router-outlet>
+      <app-messages></app-messages>
+    </div>
+  </div>
+</div>

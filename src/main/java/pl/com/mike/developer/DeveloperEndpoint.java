@@ -1,18 +1,15 @@
 package pl.com.mike.developer;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import pl.com.mike.developer.domain.developer.PremiseData;
 import pl.com.mike.developer.logic.developer.PremiseSearchFilter;
 import pl.com.mike.developer.logic.developer.PremiseService;
-import pl.com.mike.developer.web.ConverterToResponse;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("api/dev/")
+@CrossOrigin(origins = "http://localhost:4200")
 public class DeveloperEndpoint {
 
     private final PremiseService premiseService;
@@ -28,6 +25,7 @@ public class DeveloperEndpoint {
 //        );
 //    }
 
+    @CrossOrigin
     @GetMapping("premises")
     public List<PremiseData> getAllPremisesData() {
         return premiseService.getAllPremisesData();

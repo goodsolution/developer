@@ -3,7 +3,6 @@ package pl.com.mike.developer.logic.developer;
 import org.springframework.stereotype.Service;
 import pl.com.mike.developer.domain.developer.PremiseData;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
