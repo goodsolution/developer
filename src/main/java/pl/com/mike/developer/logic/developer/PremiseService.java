@@ -38,4 +38,10 @@ public class PremiseService {
             throw new NoSuchElementException();
         }
     }
+
+
+    public void update(PremiseData premiseData) {
+        premiseRepository.save(premiseData);
+    }
+
 }

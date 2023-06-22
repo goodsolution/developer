@@ -29,6 +29,13 @@ export class PremiseDetailComponent {
       .subscribe(premise => this.premise = premise);
   }
 
+  save(): void {
+    if (this.premise) {
+      this.premiseService.updatePremise(this.premise)
+        .subscribe(() => this.goBack());
+    }
+  }
+
   goBack(): void {
     this.location.back();
   }

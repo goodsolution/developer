@@ -9,7 +9,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api/dev/")
-@CrossOrigin(origins = "http://localhost:4200")
 public class DeveloperEndpoint {
 
     private final PremiseService premiseService;
@@ -25,7 +24,7 @@ public class DeveloperEndpoint {
 //        );
 //    }
 
-    @CrossOrigin
+
     @GetMapping("premises")
     public List<PremiseData> getAllPremisesData() {
         return premiseService.getAllPremisesData();
@@ -35,5 +34,11 @@ public class DeveloperEndpoint {
     public PremiseData getPremiseDataById(@PathVariable Long id) {
         return premiseService.getPremiseDataById(new PremiseSearchFilter(id));
     }
+
+    @PatchMapping("/premise/")
+    public void updatePremise(@RequestBody PremiseData request) {
+        premiseService.update(new PremiseData(                ));
+    }
+
 
 }
