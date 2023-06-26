@@ -1,0 +1,9 @@
+<h2>My Premises</h2>
+<ul>
+  <li *ngFor="let premise of premises">
+    <a routerLink="/premises/{{premise.id}}">
+      <span>{{premise.id}}</span> {{premise.type}}
+    </a>
+  </li>
+</ul>
+<!--<app-premise-detail [premise]="selectedPremise"></app-premise-detail>-->
