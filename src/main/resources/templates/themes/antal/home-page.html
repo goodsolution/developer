@@ -8,13 +8,15 @@
     <div th:replace="fragments/front-head"></div>
     <script th:replace="fragments/languages-script"></script>
     <script>trace('page.show', 'home')</script>
-    <link rel="stylesheet" th:href="@{/css/styles.ef46db3751d8e999.css}"></head>
+    <link rel="stylesheet" th:href="@{/angular/styles.css}">
 </head>
 
 <body>
 <app-root></app-root>
-<script th:src="@{/js/runtime.da1244049c3a2c79.js}" type="module"></script><script th:src="@{/js/polyfills.f2ea7c5fcc11f2a1.js}" type="module"></script><script th:src="@{/js/main.b6894c519cafb953.js}" type="module"></script>
-<!--<script th:src="@{/js/admin-marketing-newsletter.js}"></script>-->
+<script th:src="@{/angular/runtime.js}" type=text/javascript></script>
+<script th:src="@{/angular/polyfills.js}" type=text/javascript></script>
+<script th:src="@{/angular/main.js}" type=text/javascript></script>
+
 ANTAL
 <nav th:replace="${@courseCustomersService.getLoggedCustomer()} ? 'fragments/logged-in-navbar' : 'fragments/logged-out-navbar'"></nav>
 

@@ -10,7 +10,7 @@ import java.io.File;
 @Configuration
 @EnableWebMvc
 public class WebConfig implements WebMvcConfigurer {
-    private ApplicationConfig applicationConfig;
+    private final ApplicationConfig applicationConfig;
 
     public WebConfig(ApplicationConfig applicationConfig) {
         this.applicationConfig = applicationConfig;
@@ -23,13 +23,16 @@ public class WebConfig implements WebMvcConfigurer {
                 "/css/**",
                 "/libs/**",
                 "/fonts/**",
-                "/js/**")
+                "/js/**",
+                "/angular/**"
+                )
                 .addResourceLocations(
                         "classpath:/static/img/",
                         "classpath:/static/css/",
                         "classpath:/static/libs/",
                         "classpath:/static/fonts/",
-                        "classpath:/static/js/");
+                        "classpath:/static/js/",
+                        "classpath:/static/angular/");
 
         registry.addResourceHandler("/gallery/**")
                 .addResourceLocations(new File(applicationConfig.getPathToGallery()).toURI().toString());
