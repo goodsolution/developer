@@ -1,7 +1,5 @@
 package pl.com.mike.developer;
 
-import pl.com.mike.developer.domain.developer.PremiseData;
-
 import java.math.BigDecimal;
 
 public class PremiseGetResponse {
@@ -22,9 +20,6 @@ public class PremiseGetResponse {
     private Boolean isLoggia;
     private Integer buildingId;
 
-    public PremiseGetResponse() {
-    }
-
     public PremiseGetResponse(Long id, String type, Integer number, Integer floor, Double surfacePerSqMeter, Double pricePerSqMeter, BigDecimal totalPrice, Integer numberOfRooms, String technicalStatus, String salesStatus, String exposure, Boolean isBalcony, Boolean isGarden, Boolean isTerrace, Boolean isLoggia, Integer buildingId) {
         this.id = id;
         this.type = type;
@@ -43,25 +38,6 @@ public class PremiseGetResponse {
         this.isLoggia = isLoggia;
         this.buildingId = buildingId;
     }
-
-//    public PremiseGetResponse(PremiseData premiseData) {
-//        this.id = premiseData.getId();
-//        this.type = premiseData.getType();
-//        this.number = premiseData.getNumber();
-//        this.floor = premiseData.getFloor();
-//        this.surfacePerSqMeter = premiseData.getSurfacePerSqMeter();
-//        this.pricePerSqMeter = premiseData.getPricePerSqMeter();
-//        this.totalPrice = premiseData.getTotalPrice();
-//        this.numberOfRooms = premiseData.getNumberOfRooms();
-//        this.technicalStatus = premiseData.getTechnicalStatus();
-//        this.salesStatus = premiseData.getSalesStatus();
-//        this.exposure = premiseData.getExposure();
-//        this.isBalcony = premiseData.getBalcony();
-//        this.isGarden = premiseData.getGarden();
-//        this.isTerrace = premiseData.getTerrace();
-//        this.isLoggia = premiseData.getLoggia();
-//        this.buildingId = premiseData.getBuildingId();
-//    }
 
     public Long getId() {
         return id;
