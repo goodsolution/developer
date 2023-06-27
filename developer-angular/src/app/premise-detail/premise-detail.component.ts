@@ -3,6 +3,7 @@ import {Premise} from "../premise";
 import {ActivatedRoute} from "@angular/router";
 import {PremiseService} from "../premise.service";
 import { Location } from '@angular/common';
+import {SearchResultPremises} from "../searchResultPremises";
 
 @Component({
   selector: 'app-premise-detail',
@@ -26,7 +27,7 @@ export class PremiseDetailComponent {
   getPremise(): void {
     const id = Number(this.route.snapshot.paramMap.get('id'));
     this.premiseService.getPremise(id)
-      .subscribe(premise => this.premise = premise);
+      .subscribe(searchResultPremises => this.premise = searchResultPremises.premisesGetResponse[0]);
   }
 
   goBack(): void {

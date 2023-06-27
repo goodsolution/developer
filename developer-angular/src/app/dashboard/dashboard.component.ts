@@ -18,7 +18,7 @@ export class DashboardComponent implements OnInit{
   }
 
   getChosenPremises(): void {
-    this.premiseService.getPremises().subscribe(premises => this.premises = premises.slice(1, 5));
+      this.premiseService.getPremises().subscribe(searchResultPremises => this.premises = searchResultPremises.premisesGetResponse.slice(1, 5));
   }
 
 }

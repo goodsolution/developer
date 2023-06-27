@@ -1,11 +1,46 @@
 <div *ngIf="premise">
-  <h2>{{premise.type |uppercase}} Details</h2>
-  <div><span>id: </span>{{premise.id}}</div>
-  <div>
-    <label for="premise-name">Premise name: </label>
-    <input id="premise-name" [(ngModel)]="premise.type" placeholder="name">
-  </div>
+  <h3>id: {{premise.id}} Premise Details</h3>
+  <table class="table">
+    <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">type</th>
+      <th scope="col">number</th>
+      <th scope="col">floor</th>
+      <th scope="col">surface</th>
+      <th scope="col">price</th>
+      <th scope="col">price total</th>
+      <th scope="col">rooms number</th>
+      <th scope="col">technical status</th>
+      <th scope="col">sales status</th>
+      <th scope="col">exposure</th>
+      <th scope="col">balcony</th>
+      <th scope="col">garden</th>
+      <th scope="col">terrace</th>
+      <th scope="col">loggia</th>
+      <th scope="col">building</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <th scope="row">{{premise.id}}</th>
+      <td>{{premise.type}}</td>
+      <td>{{premise.number}}</td>
+      <td>{{premise.floor}}</td>
+      <td>{{premise.surfacePerSqMeter}}</td>
+      <td>{{premise.pricePerSqMeter}}</td>
+      <td>{{premise.totalPrice}}</td>
+      <td>{{premise.numberOfRooms}}</td>
+      <td>{{premise.technicalStatus}}</td>
+      <td>{{premise.salesStatus}}</td>
+      <td>{{premise.exposure}}</td>
+      <td>{{premise.isBalcony}}</td>
+      <td>{{premise.isGarden}}</td>
+      <td>{{premise.isTerrace}}</td>
+      <td>{{premise.isLoggia}}</td>
+      <td>{{premise.buildingId}}</td>
+    </tr>
+    </tbody>
+  </table>
   <button type="button" (click)="goBack()">go back</button>
 </div>
-
-

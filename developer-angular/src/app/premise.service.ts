@@ -1,14 +1,15 @@
 import {Injectable} from "@angular/core";
-import {Premise} from "./premise";
 import {catchError, Observable, of, tap} from "rxjs";
 import {MessageService} from "./message.service";
 import {HttpClient} from "@angular/common/http";
+import {SearchResultPremises} from "./searchResultPremises";
 
 @Injectable({
   providedIn: 'root'
 })
 export class PremiseService {
-  private premisesUrl = 'https://localhost:8081/api/dev/premises';  // URL to web api
+
+    private premisesUrl = 'https://localhost:8081/api/dev/premises';
 
   constructor(
     private messageService: MessageService,
@@ -16,12 +17,20 @@ export class PremiseService {
   ) {
   }
 
-  getPremises(): Observable<Premise[]> {
-    return this.http.get<Premise[]>(this.premisesUrl)
+  getPremises(): Observable<SearchResultPremises> {
+    return this.http.get<SearchResultPremises>(this.premisesUrl)
       .pipe(
         tap(_ => this.log('fetched premises')),
-        catchError(this.handleError<Premise[]>('getPremises', []))
+        catchError(this.handleError<SearchResultPremises>('getPremises', {premisesGetResponse: []}))
       );
+  }
+
+  getPremise(id: number): Observable<SearchResultPremises> {
+    const url = `${this.premisesUrl}/${id}`;
+    return this.http.get<SearchResultPremises>(url).pipe(
+      tap(_ => this.log(`fetched premise id=${id}`)),
+      catchError(this.handleError<SearchResultPremises>(`getPremise id=${id}`))
+    );
   }
 
   private handleError<T>(operation = 'operation', result?: T) {
@@ -30,14 +39,6 @@ export class PremiseService {
       this.log(`${operation} failed: ${error.message}`);
       return of(result as T);
     };
-  }
-
-  getPremise(id: number): Observable<Premise> {
-    const url = `${this.premisesUrl}/${id}`;
-    return this.http.get<Premise>(url).pipe(
-      tap(_ => this.log(`fetched premise id=${id}`)),
-      catchError(this.handleError<Premise>(`getPremise id=${id}`))
-    );
   }
 
   private log(message: string) {
