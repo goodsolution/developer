@@ -16,19 +16,12 @@ export class PremiseService {
   ) {
   }
 
-  /** Log a PremiseService message with the MessageService */
-  private log(message: string) {
-    this.messageService.add(`PremiseService: ${message}`);
-  }
-
   getPremises(): Observable<Premise[]> {
     return this.http.get<Premise[]>(this.premisesUrl)
       .pipe(
         tap(_ => this.log('fetched premises')),
         catchError(this.handleError<Premise[]>('getPremises', []))
       );
-    // this.messageService.add('PremiseService: fetched premises');
-    // return of(PREMISES);
   }
 
   private handleError<T>(operation = 'operation', result?: T) {
@@ -45,6 +38,10 @@ export class PremiseService {
       tap(_ => this.log(`fetched premise id=${id}`)),
       catchError(this.handleError<Premise>(`getPremise id=${id}`))
     );
+  }
+
+  private log(message: string) {
+    this.messageService.add(`PremiseService: ${message}`);
   }
 
 }

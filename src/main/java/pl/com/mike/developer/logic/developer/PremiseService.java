@@ -15,6 +15,16 @@ public class PremiseService {
         this.premiseRepository = premiseRepository;
     }
 
+
+    public PremiseData getPremiseById(PremiseSearchFilter filter) {
+        Optional<PremiseData> premise = premiseRepository.findById(filter.getId());
+        if(premise.isPresent()){
+            return premise.get();
+        } else{
+            throw new NoSuchElementException();
+        }
+    }
+
 //    public List<PremiseData> getPremiseDataById(PremiseSearchFilter filter) {
 //        List<PremiseData> premises = new ArrayList<>();
 //        Optional<PremiseData> list = premiseRepository.findById(filter.getId());
@@ -26,18 +36,18 @@ public class PremiseService {
 //        return premises;
 //    }
 
-    public List<PremiseData> getAllPremisesData() {
+    public List<PremiseData> getAllPremises() {
         return premiseRepository.findAll();
     }
 
-    public PremiseData getPremiseDataById(PremiseSearchFilter filter) {
-        Optional<PremiseData> premise = premiseRepository.findById(filter.getId());
-        if(premise.isPresent()){
-            return premise.get();
-        } else{
-            throw new NoSuchElementException();
-        }
-    }
+//    public PremiseData getPremiseDataById(PremiseSearchFilter filter) {
+//        Optional<PremiseData> premise = premiseRepository.findById(filter.getId());
+//        if(premise.isPresent()){
+//            return premise.get();
+//        } else{
+//            throw new NoSuchElementException();
+//        }
+//    }
 
 
     public void update(PremiseData premiseData) {
