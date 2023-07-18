@@ -20,9 +20,6 @@ public class PremiseGetResponse {
     private Boolean isLoggia;
     private Integer buildingId;
 
-    public PremiseGetResponse() {
-    }
-
     public PremiseGetResponse(Long id, String type, Integer number, Integer floor, Double surfacePerSqMeter, Double pricePerSqMeter, BigDecimal totalPrice, Integer numberOfRooms, String technicalStatus, String salesStatus, String exposure, Boolean isBalcony, Boolean isGarden, Boolean isTerrace, Boolean isLoggia, Integer buildingId) {
         this.id = id;
         this.type = type;

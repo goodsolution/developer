@@ -1,0 +1,10 @@
+<div *ngIf="premise">
+  <h2>Premise number: {{premise.number}}</h2>
+  <div><span>id: </span>{{premise.id}}</div>
+  <div>
+    <label for="premise-type">Premise type: </label>
+    <input id="premise-type" [(ngModel)]="premise.type" placeholder="type">
+  </div>
+  <button type="button" (click)="save()">save</button>
+  <button type="button" (click)="goBack()">go back</button>
+</div>

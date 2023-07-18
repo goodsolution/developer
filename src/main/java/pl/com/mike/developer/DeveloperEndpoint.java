@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pl.com.mike.developer.logic.developer.PremiseSearchFilter;
 import pl.com.mike.developer.logic.developer.PremiseService;
-import pl.com.mike.developer.web.ConverterToResponse;
+import pl.com.mike .developer.web.ConverterToResponse;
 
 @RestController
 @RequestMapping("api/dev/")
@@ -18,11 +18,20 @@ public class DeveloperEndpoint {
         this.premiseService = premiseService;
     }
 
-    @GetMapping("premise/{id}")
-    public PremisesGetResponse getPremiseDataById(@PathVariable Long id) {
-        return new PremisesGetResponse(ConverterToResponse.premiseDataToResponse(
-                premiseService.getPremiseDataById(new PremiseSearchFilter(id)))
-        );
+    @GetMapping("premises")
+    public PremisesGetResponse getAllPremises() {
+        return new PremisesGetResponse(
+                ConverterToResponse.premisesDataToResponse(
+                        premiseService.getAllPremises()
+                ));
+    }
+
+    @GetMapping("premises/{id}")
+    public PremisesGetResponse getPremiseById(@PathVariable Long id) {
+        return new PremisesGetResponse(
+                ConverterToResponse.premisesDataToResponse(
+                        premiseService.getPremiseDataById(new PremiseSearchFilter(id))
+                ));
     }
 
 }

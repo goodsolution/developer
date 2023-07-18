@@ -1,0 +1,19 @@
+<h2>My Premises</h2>
+<div class="card my-5">
+  <div class="card-body">
+    <table class="table table-bordered table-striped">
+      <thead class="thead-dark">
+      <tr>
+        <th scope="col">Id</th>
+        <th scope="col">Type</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let premise of premises" routerLink="/premises/{{premise.id}}">
+        <td>{{ premise.id }}</td>
+        <td>{{ premise.type }}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -2,15 +2,14 @@ package pl.com.mike.developer.web;
 
 import pl.com.mike.developer.PremiseGetResponse;
 import pl.com.mike.developer.domain.developer.PremiseData;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class ConverterToResponse {
 
-    public static List<PremiseGetResponse> premiseDataToResponse(List<PremiseData> premiseData) {
+    public static List<PremiseGetResponse> premisesDataToResponse(List<PremiseData> premises){
         List<PremiseGetResponse> premisesGetResponse = new ArrayList<>();
-        for (PremiseData list : premiseData) {
+        for (PremiseData list : premises) {
             premisesGetResponse.add(
                     new PremiseGetResponse(
                             list.getId(),

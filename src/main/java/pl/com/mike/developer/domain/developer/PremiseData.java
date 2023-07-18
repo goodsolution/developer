@@ -42,6 +42,25 @@ public class PremiseData implements Serializable {
     public PremiseData() {
     }
 
+    public PremiseData(Long id, String type, Integer number, Integer floor, Double surfacePerSqMeter, Double pricePerSqMeter, BigDecimal totalPrice, Integer numberOfRooms, String technicalStatus, String salesStatus, String exposure, Boolean isBalcony, Boolean isGarden, Boolean isTerrace, Boolean isLoggia, Integer buildingId) {
+        this.id = id;
+        this.type = type;
+        this.number = number;
+        this.floor = floor;
+        this.surfacePerSqMeter = surfacePerSqMeter;
+        this.pricePerSqMeter = pricePerSqMeter;
+        this.totalPrice = totalPrice;
+        this.numberOfRooms = numberOfRooms;
+        this.technicalStatus = technicalStatus;
+        this.salesStatus = salesStatus;
+        this.exposure = exposure;
+        this.isBalcony = isBalcony;
+        this.isGarden = isGarden;
+        this.isTerrace = isTerrace;
+        this.isLoggia = isLoggia;
+        this.buildingId = buildingId;
+    }
+
     public Long getId() {
         return id;
     }
