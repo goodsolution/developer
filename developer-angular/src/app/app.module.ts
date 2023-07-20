@@ -9,6 +9,13 @@ import {MessagesComponent} from "./messages/messages.component";
 import {AppRoutingModule} from "./routing.module";
 import {DashboardComponent} from "./dashboard/dashboard.component";
 import {HttpClientModule} from "@angular/common/http";
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MatToolbarModule} from "@angular/material/toolbar";
+import {MatIconModule} from "@angular/material/icon";
+import {MatButtonModule} from "@angular/material/button";
+import {MatListModule} from "@angular/material/list";
+import {Toolbar} from "./toolbar/toolbar.component";
+
 
 @NgModule({
   declarations: [
@@ -16,13 +23,19 @@ import {HttpClientModule} from "@angular/common/http";
     PremisesComponent,
     PremiseDetailComponent,
     MessagesComponent,
-    DashboardComponent
+    DashboardComponent,
+    Toolbar,
   ],
   imports: [
     BrowserModule,
     FormsModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    BrowserAnimationsModule,
+    MatToolbarModule,
+    MatIconModule,
+    MatButtonModule,
+    MatListModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
