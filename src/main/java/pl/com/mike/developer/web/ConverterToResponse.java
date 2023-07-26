@@ -1,6 +1,8 @@
 package pl.com.mike.developer.web;
 
+import pl.com.mike.developer.DeveloperGetResponse;
 import pl.com.mike.developer.PremiseGetResponse;
+import pl.com.mike.developer.domain.developer.DeveloperData;
 import pl.com.mike.developer.domain.developer.PremiseData;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,4 +36,28 @@ public class ConverterToResponse {
         return premisesGetResponse;
     }
 
+    public static List<DeveloperGetResponse> developerDataToResponse(List<DeveloperData> developers) {
+        List<DeveloperGetResponse> developersGetResponse = new ArrayList<>();
+        for (DeveloperData developer : developers) {
+            developersGetResponse.add(
+                    new DeveloperGetResponse(
+                            developer.getId(),
+                            developer.getName(),
+                            developer.getAddressCountry(),
+                            developer.getAddressStreet(),
+                            developer.getAddressBuildingNumber(),
+                            developer.getAddressFlatNumber(),
+                            developer.getAddressPostalCode(),
+                            developer.getTelephoneNumber(),
+                            developer.getFaxNumber(),
+                            developer.getEmail(),
+                            developer.getTaxIdentificationNumber(),
+                            developer.getCityId(),
+                            developer.getVoivodeshipId(),
+                            developer.getLogoUrl()
+                    )
+            );
+        }
+        return developersGetResponse;
+    }
 }

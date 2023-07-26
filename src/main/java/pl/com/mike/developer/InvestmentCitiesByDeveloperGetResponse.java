@@ -1,19 +1,21 @@
 package pl.com.mike.developer;
 
+import pl.com.mike.developer.domain.developer.CityData;
+
 import java.util.List;
 
 public class InvestmentCitiesByDeveloperGetResponse {
-    List<String> cities;
+    List<CityData> cities;
 
-    public InvestmentCitiesByDeveloperGetResponse(List<String> cities) {
+    public InvestmentCitiesByDeveloperGetResponse(List<CityData> cities) {
         this.cities = cities;
     }
 
-    public List<String> getCities() {
+    public List<CityData> getCities() {
         return cities;
     }
 
-    public void setCities(List<String> cities) {
+    public void setCities(List<CityData> cities) {
         this.cities = cities;
     }
 }

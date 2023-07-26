@@ -1,6 +1,12 @@
 package pl.com.mike.developer.logic.developer;
 
 import org.springframework.stereotype.Service;
+import pl.com.mike.developer.domain.developer.DeveloperData;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 public class DeveloperService {
@@ -10,7 +16,11 @@ public class DeveloperService {
         this.developerRepository = developerRepository;
     }
 
-
-
+    public List<DeveloperData> getDeveloperById(DeveloperSearchFilter filter) {
+        List<DeveloperData> developers = new ArrayList<>();
+        DeveloperData developerData = developerRepository.findById(filter.getId()).orElseThrow(NoSuchElementException::new);
+        developers.add(developerData);
+        return developers;
+    }
 
 }

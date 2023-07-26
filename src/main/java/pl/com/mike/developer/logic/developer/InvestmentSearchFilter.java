@@ -1,18 +1,18 @@
 package pl.com.mike.developer.logic.developer;
 
 public class InvestmentSearchFilter {
-    private Long id;
+    private Long developerId;
 
-    public InvestmentSearchFilter(Long id) {
-        this.id = id;
+    public InvestmentSearchFilter(Long developerId) {
+        this.developerId = developerId;
     }
 
-    public Long getId() {
-        return id;
+    public Long getDeveloperId() {
+        return developerId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setDeveloperId(Long developerId) {
+        this.developerId = developerId;
     }
 
 }

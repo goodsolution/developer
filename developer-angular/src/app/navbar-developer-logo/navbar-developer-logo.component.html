@@ -1,0 +1,7 @@
+<a *ngIf="developers.length > 0" class="navbar-brand" href="#">
+  <a *ngFor="let developer of developers">
+    <img src="{{developer.logoUrl}}" alt="logo">
+    {{developer.name}}
+  </a>
+</a>
+

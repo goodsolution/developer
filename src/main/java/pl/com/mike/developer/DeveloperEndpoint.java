@@ -4,10 +4,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import pl.com.mike.developer.logic.developer.InvestmentSearchFilter;
-import pl.com.mike.developer.logic.developer.InvestmentService;
-import pl.com.mike.developer.logic.developer.PremiseSearchFilter;
-import pl.com.mike.developer.logic.developer.PremiseService;
+import pl.com.mike.developer.logic.developer.*;
 import pl.com.mike .developer.web.ConverterToResponse;
 
 @RestController
@@ -16,10 +13,12 @@ public class DeveloperEndpoint {
 
     private final PremiseService premiseService;
     private final InvestmentService investmentService;
+    private final DeveloperService developerService;
 
-    public DeveloperEndpoint(PremiseService premiseService, InvestmentService investmentService) {
+    public DeveloperEndpoint(PremiseService premiseService, InvestmentService investmentService, DeveloperService developerService) {
         this.premiseService = premiseService;
         this.investmentService = investmentService;
+        this.developerService = developerService;
     }
 
     @GetMapping("premises")
@@ -42,5 +41,11 @@ public class DeveloperEndpoint {
     public InvestmentCitiesByDeveloperGetResponse getInvestmentCitiesByDeveloperId(@PathVariable Long id) {
         return new InvestmentCitiesByDeveloperGetResponse(investmentService.getInvestmentCitiesByDeveloperId(new InvestmentSearchFilter(id)));
     }
+
+    @GetMapping("developers/{id}")
+    public DevelopersGetResponse getDeveloperById(@PathVariable Long id) {
+        return new DevelopersGetResponse(ConverterToResponse.developerDataToResponse(developerService.getDeveloperById(new DeveloperSearchFilter(id))));
+    }
+
 
 }

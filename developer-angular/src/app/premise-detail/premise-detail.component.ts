@@ -2,8 +2,7 @@ import {Component, Input} from "@angular/core";
 import {Premise} from "../premise";
 import {ActivatedRoute} from "@angular/router";
 import {PremiseService} from "../premise.service";
-import { Location } from '@angular/common';
-import {SearchResultPremises} from "../searchResultPremises";
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'app-premise-detail',
