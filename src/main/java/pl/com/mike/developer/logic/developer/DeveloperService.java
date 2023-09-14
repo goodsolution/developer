@@ -4,7 +4,6 @@ import org.springframework.stereotype.Service;
 import pl.com.mike.developer.domain.developer.DeveloperData;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.NoSuchElementException;
 

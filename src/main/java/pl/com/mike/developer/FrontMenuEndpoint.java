@@ -5,22 +5,25 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pl.com.mike.developer.domain.developer.CityData;
+import pl.com.mike.developer.domain.developer.DeveloperData;
+import pl.com.mike.developer.logic.developer.DeveloperSearchFilter;
+import pl.com.mike.developer.logic.developer.DeveloperService;
 import pl.com.mike.developer.logic.developer.InvestmentSearchFilter;
 import pl.com.mike.developer.logic.developer.InvestmentService;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("api/dev/")
 public class FrontMenuEndpoint {
 
     InvestmentService investmentService;
+    DeveloperService developerService;
 
-    public FrontMenuEndpoint(InvestmentService investmentService) {
+    public FrontMenuEndpoint(InvestmentService investmentService, DeveloperService developerService) {
         this.investmentService = investmentService;
+        this.developerService = developerService;
     }
 
     @GetMapping("developers/{id}/front-menu")
@@ -28,24 +31,44 @@ public class FrontMenuEndpoint {
         return getFrontMenusGetResponse(id);
     }
 
-
     private FrontMenusGetResponse getFrontMenusGetResponse(Long id) {
-        List<CityData> investmentCitiesByDeveloperId = investmentService.getInvestmentCitiesByDeveloperId(new InvestmentSearchFilter(id));
-
         return new FrontMenusGetResponse(
-                new ArrayList<>(
-                        Collections.singletonList(
-                                new FrontMenuGetResponse(
-                                        null, null, new ArrayList<>(
-                                        Arrays.asList(
-                                                new FrontMenuGetResponse("Cities", null, Collections.singletonList(investmentCitiesByDeveloperId)),
-                                                new FrontMenuGetResponse("Contact", "/contact", null)
-                                        )
-                                )
-                                )
-                        )
-                )
+                new ArrayList<>(Arrays.asList(
+                        new FrontMenuGetResponse("logo", getDeveloperLogoUrl(id), Collections.emptyList()),
+                        new FrontMenuGetResponse(getDeveloperName(id), "/name", Collections.emptyList()),
+                        new FrontMenuGetResponse("Cities", "/", getCities(id)),
+                        new FrontMenuGetResponse("Contact", "/contact", Collections.emptyList()),
+                        new FrontMenuGetResponse("Language", "/language", Collections.emptyList())
+                ))
         );
+    }
+
+    private String getDeveloperName(Long id) {
+        List<DeveloperData> developerById = developerService.getDeveloperById(new DeveloperSearchFilter(id));
+        if (developerById.stream().findFirst().isPresent()) {
+            return developerById.stream().findFirst().get().getName();
+        } else {
+            throw new NoSuchElementException();
+        }
+
+    }
+
+    private String getDeveloperLogoUrl(Long id) {
+        List<DeveloperData> developerById = developerService.getDeveloperById(new DeveloperSearchFilter(id));
+        if (developerById.stream().findFirst().isPresent()) {
+            return developerById.stream().findFirst().get().getLogoUrl();
+        } else {
+            throw new NoSuchElementException();
+        }
+
+    }
+
+    private List<FrontMenuGetResponse> getCities(Long id) {
+        List<CityData> investmentCitiesByDeveloperId = investmentService.getInvestmentCitiesByDeveloperId(
+                new InvestmentSearchFilter(id));
+        return investmentCitiesByDeveloperId.stream()
+                .map(x -> new FrontMenuGetResponse(
+                        x.getName(), "", Collections.emptyList())).collect(Collectors.toList());
     }
 
 }

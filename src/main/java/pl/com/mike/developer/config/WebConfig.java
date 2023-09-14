@@ -32,7 +32,9 @@ public class WebConfig implements WebMvcConfigurer {
                         "classpath:/static/libs/",
                         "classpath:/static/fonts/",
                         "classpath:/static/js/",
-                        "classpath:/static/angular/");
+                        "classpath:/static/angular/",
+                        "classpath:/static/angular/assets/img/"
+                );
 
         registry.addResourceHandler("/gallery/**")
                 .addResourceLocations(new File(applicationConfig.getPathToGallery()).toURI().toString());

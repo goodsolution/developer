@@ -5,14 +5,13 @@ import java.util.List;
 public class FrontMenuGetResponse {
     private String name;
     private String url;
-    private List<Object> children;
+    private List<FrontMenuGetResponse> children;
 
-    public FrontMenuGetResponse(String name, String url, List<Object> menus) {
+    public FrontMenuGetResponse(String name, String url, List<FrontMenuGetResponse> menus) {
         this.name = name;
         this.url = url;
         this.children = menus;
     }
-
 
     public String getName() {
         return name;
@@ -22,7 +21,7 @@ public class FrontMenuGetResponse {
         return url;
     }
 
-    public List<Object> getChildren() {
+    public List<FrontMenuGetResponse> getChildren() {
         return children;
     }
 

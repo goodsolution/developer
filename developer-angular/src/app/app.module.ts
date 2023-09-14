@@ -15,8 +15,6 @@ import {MatIconModule} from "@angular/material/icon";
 import {MatButtonModule} from "@angular/material/button";
 import {MatListModule} from "@angular/material/list";
 import {NgOptimizedImage} from "@angular/common";
-import {NavbarDeveloperLogoComponent} from "./navbar-developer-logo/navbar-developer-logo.component";
-import {NavbarDeveloperCitiesComponent} from "./navbar-developer-cities/navbar-developer-cities.component";
 import {NavbarDeveloper} from "./navbar-developer/navbar-developer.component";
 @NgModule({
   declarations: [
@@ -25,9 +23,7 @@ import {NavbarDeveloper} from "./navbar-developer/navbar-developer.component";
     PremiseDetailComponent,
     MessagesComponent,
     DashboardComponent,
-    NavbarDeveloper,
-    NavbarDeveloperLogoComponent,
-    NavbarDeveloperCitiesComponent,
+    NavbarDeveloper
   ],
   imports: [
     BrowserModule,

@@ -23,10 +23,11 @@
             "assets": [
               "src/favicon.ico",
               "src/assets",
+              "src/assets/img",
               {
                 "glob": "**/*",
-                "input": "../src/main/resources/static/img",
-                "output": "/files/"
+                "input": "../src/main/resources/static/img/developer",
+                "output": "/assets/img/"
               }
             ],
             "styles": [
