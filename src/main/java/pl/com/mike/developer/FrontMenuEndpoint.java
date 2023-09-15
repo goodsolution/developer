@@ -18,8 +18,8 @@ import java.util.stream.Collectors;
 @RequestMapping("api/dev/")
 public class FrontMenuEndpoint {
 
-    InvestmentService investmentService;
-    DeveloperService developerService;
+    private final InvestmentService investmentService;
+    private final DeveloperService developerService;
 
     public FrontMenuEndpoint(InvestmentService investmentService, DeveloperService developerService) {
         this.investmentService = investmentService;
@@ -60,7 +60,6 @@ public class FrontMenuEndpoint {
         } else {
             throw new NoSuchElementException();
         }
-
     }
 
     private List<FrontMenuGetResponse> getCities(Long id) {

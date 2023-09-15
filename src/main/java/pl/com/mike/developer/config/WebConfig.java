@@ -19,12 +19,12 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler(
-                "/img/**",
-                "/css/**",
-                "/libs/**",
-                "/fonts/**",
-                "/js/**",
-                "/angular/**"
+                        "/img/**",
+                        "/css/**",
+                        "/libs/**",
+                        "/fonts/**",
+                        "/js/**",
+                        "/angular/**"
                 )
                 .addResourceLocations(
                         "classpath:/static/img/",
@@ -32,10 +32,10 @@ public class WebConfig implements WebMvcConfigurer {
                         "classpath:/static/libs/",
                         "classpath:/static/fonts/",
                         "classpath:/static/js/",
-                        "classpath:/static/angular/",
-                        "classpath:/static/angular/assets/img/"
+                        "classpath:/static/angular/"
                 );
 
+        //TODO analyze and delete
         registry.addResourceHandler("/gallery/**")
                 .addResourceLocations(new File(applicationConfig.getPathToGallery()).toURI().toString());
 
