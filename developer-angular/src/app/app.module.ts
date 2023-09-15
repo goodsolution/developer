@@ -16,6 +16,7 @@ import {MatButtonModule} from "@angular/material/button";
 import {MatListModule} from "@angular/material/list";
 import {NgOptimizedImage} from "@angular/common";
 import {NavbarDeveloper} from "./navbar-developer/navbar-developer.component";
+import { NavbarLogoComponent } from './navbar-logo/navbar-logo.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -23,7 +24,8 @@ import {NavbarDeveloper} from "./navbar-developer/navbar-developer.component";
     PremiseDetailComponent,
     MessagesComponent,
     DashboardComponent,
-    NavbarDeveloper
+    NavbarDeveloper,
+    NavbarLogoComponent
   ],
   imports: [
     BrowserModule,

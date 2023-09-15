@@ -19,11 +19,13 @@ public class DeveloperLogoEndpoint {
     }
 
     @GetMapping("developers/{id}/logo")
-    public String getLogoUrl(@PathVariable Long id) {
-        return developerService.getDeveloperById(new DeveloperSearchFilter(id)).stream()
-                .findFirst()
-                .orElseThrow(NoSuchElementException::new)
-                .getLogoUrl();
+    public LogoUrlGetResponse getLogoUrl(@PathVariable Long id) {
+        return new LogoUrlGetResponse(
+                developerService.getDeveloperById(new DeveloperSearchFilter(id)).stream()
+                        .findFirst()
+                        .orElseThrow(NoSuchElementException::new)
+                        .getLogoUrl()
+        );
     }
 
 }

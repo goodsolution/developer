@@ -45,29 +45,24 @@ public class FrontMenuEndpoint {
 
     private String getDeveloperName(Long id) {
         List<DeveloperData> developerById = developerService.getDeveloperById(new DeveloperSearchFilter(id));
-        if (developerById.stream().findFirst().isPresent()) {
-            return developerById.stream().findFirst().get().getName();
-        } else {
-            throw new NoSuchElementException();
-        }
-
+        return developerById.stream()
+                .findFirst()
+                .orElseThrow(NoSuchElementException::new)
+                .getName();
     }
 
     private String getDeveloperLogoUrl(Long id) {
         List<DeveloperData> developerById = developerService.getDeveloperById(new DeveloperSearchFilter(id));
-        if (developerById.stream().findFirst().isPresent()) {
-            return developerById.stream().findFirst().get().getLogoUrl();
-        } else {
-            throw new NoSuchElementException();
-        }
+        return developerById.stream()
+                .findFirst()
+                .orElseThrow(NoSuchElementException::new)
+                .getLogoUrl();
     }
 
     private List<FrontMenuGetResponse> getCities(Long id) {
-        List<CityData> investmentCitiesByDeveloperId = investmentService.getInvestmentCitiesByDeveloperId(
-                new InvestmentSearchFilter(id));
-        return investmentCitiesByDeveloperId.stream()
-                .map(x -> new FrontMenuGetResponse(
-                        x.getName(), "", Collections.emptyList())).collect(Collectors.toList());
+        return investmentService.getInvestmentCitiesByDeveloperId(new InvestmentSearchFilter(id)).stream()
+                .map(x -> new FrontMenuGetResponse(x.getName(), "", Collections.emptyList()))
+                .collect(Collectors.toList());
     }
 
 }
