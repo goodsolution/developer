@@ -7,7 +7,7 @@
     <app-navbar-logo></app-navbar-logo>
     <ul *ngFor="let menu of menus" class="navbar-nav">
       <li class="nav-item active">
-        <a *ngIf="menu.children.length === 0 && menu.name != 'logo'" class="nav-link" href="{{menu.url}}">{{menu.name}}
+        <a *ngIf="menu.children.length === 0" class="nav-link" routerLink="{{menu.url}}">{{menu.name}}
           <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item dropdown">

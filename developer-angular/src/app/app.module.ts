@@ -17,6 +17,7 @@ import {MatListModule} from "@angular/material/list";
 import {NgOptimizedImage} from "@angular/common";
 import {NavbarDeveloper} from "./navbar-developer/navbar-developer.component";
 import { NavbarLogoComponent } from './navbar-logo/navbar-logo.component';
+import {DeveloperContactComponent} from "./developer-contact/developer-contact.component";
 @NgModule({
   declarations: [
     AppComponent,
@@ -25,7 +26,8 @@ import { NavbarLogoComponent } from './navbar-logo/navbar-logo.component';
     MessagesComponent,
     DashboardComponent,
     NavbarDeveloper,
-    NavbarLogoComponent
+    NavbarLogoComponent,
+    DeveloperContactComponent
   ],
   imports: [
     BrowserModule,

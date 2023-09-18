@@ -34,10 +34,9 @@ public class FrontMenuEndpoint {
     private FrontMenusGetResponse getFrontMenusGetResponse(Long id) {
         return new FrontMenusGetResponse(
                 new ArrayList<>(Arrays.asList(
-                        new FrontMenuGetResponse("logo", getDeveloperLogoUrl(id), Collections.emptyList()),
                         new FrontMenuGetResponse(getDeveloperName(id), "/name", Collections.emptyList()),
                         new FrontMenuGetResponse("Cities", "/", getCities(id)),
-                        new FrontMenuGetResponse("Contact", "/contact", Collections.emptyList()),
+                        new FrontMenuGetResponse("Contact", "developer/contact", Collections.emptyList()),
                         new FrontMenuGetResponse("Language", "/language", Collections.emptyList())
                 ))
         );
@@ -49,14 +48,6 @@ public class FrontMenuEndpoint {
                 .findFirst()
                 .orElseThrow(NoSuchElementException::new)
                 .getName();
-    }
-
-    private String getDeveloperLogoUrl(Long id) {
-        List<DeveloperData> developerById = developerService.getDeveloperById(new DeveloperSearchFilter(id));
-        return developerById.stream()
-                .findFirst()
-                .orElseThrow(NoSuchElementException::new)
-                .getLogoUrl();
     }
 
     private List<FrontMenuGetResponse> getCities(Long id) {

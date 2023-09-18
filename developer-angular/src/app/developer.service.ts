@@ -2,7 +2,6 @@ import {Injectable} from "@angular/core";
 import {catchError, Observable, of, tap} from "rxjs";
 import {MessageService} from "./message.service";
 import {HttpClient} from "@angular/common/http";
-import {SearchResultPremises} from "./searchResultPremises";
 import {SearchResultDevelopers} from "./searchResultDevelopers";
 
 @Injectable({

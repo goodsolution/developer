@@ -7,21 +7,20 @@ import {FrontMenu} from "../front-menu";
   templateUrl: './navbar-developer.component.html',
   styleUrls: ['./navbar-developer.component.css']
 })
-export class NavbarDeveloper implements  OnInit {
+export class NavbarDeveloper implements OnInit {
 
   menus: FrontMenu[] = [];
 
   constructor(private frontMenuService: FrontMenuService) {
   }
 
-  getMenu(){
+  getMenu() {
     this.frontMenuService.getMenu().subscribe(menu => this.menus = menu.menus);
   }
 
   ngOnInit(): void {
     this.getMenu();
   }
-
 
 
 }

@@ -1,4 +1,4 @@
-import {Component, Input} from "@angular/core";
+import {Component, Input, OnInit} from "@angular/core";
 import {Premise} from "../premise";
 import {ActivatedRoute} from "@angular/router";
 import {PremiseService} from "../premise.service";
@@ -9,7 +9,7 @@ import {Location} from '@angular/common';
   templateUrl: './premise-detail.component.html',
   styleUrls: ['./premise-detail.component.css']
 })
-export class PremiseDetailComponent {
+export class PremiseDetailComponent implements  OnInit {
   @Input() premise?: Premise;
 
   constructor(
