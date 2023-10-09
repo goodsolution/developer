@@ -6,7 +6,7 @@ import java.math.BigDecimal;
 import java.util.Objects;
 
 @Entity
-@Table(name = "premises", schema = "developer_project")
+@Table(name = "premises", schema = "course_platform")
 public class PremiseData implements Serializable {
     @Id
     @GeneratedValue
