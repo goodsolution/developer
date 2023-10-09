@@ -1,6 +1,6 @@
 import {Component, OnInit} from "@angular/core";
-import {Premise} from "../premise";
-import {PremiseService} from "../premise.service";
+import {Premise} from "../interfaces/premise";
+import {PremiseService} from "../services/premise.service";
 
 @Component({
   selector: 'app-premises',

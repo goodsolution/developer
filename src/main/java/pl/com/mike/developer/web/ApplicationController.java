@@ -31,7 +31,7 @@ public class ApplicationController {
         this.dictionariesService = dictionariesService;
         this.cacheService = cacheService;
         this.applicationConfig = applicationConfig;
-        this.themePath = "themes/" + applicationConfig.getDeveloperCode();
+        this.themePath = "themes/" + applicationConfig.getSystemCode();
     }
 
     @GetMapping("/mentoring")
@@ -101,6 +101,11 @@ public class ApplicationController {
     @GetMapping({"/", "/home"})
     public String home(Model model) {
         return themePath + "/home-page";
+    }
+
+    @GetMapping({ "/developer/contact"})
+    public String contact(Model model) {
+        return "contact";
     }
 
     @GetMapping({"/buy-our-code"})

@@ -36,7 +36,7 @@ public class ConverterToResponse {
         return premisesGetResponse;
     }
 
-    public static List<DeveloperGetResponse> developerDataToResponse(List<DeveloperData> developers) {
+    public static List<DeveloperGetResponse> developersDataToResponse(List<DeveloperData> developers) {
         List<DeveloperGetResponse> developersGetResponse = new ArrayList<>();
         for (DeveloperData developer : developers) {
             developersGetResponse.add(
@@ -60,4 +60,30 @@ public class ConverterToResponse {
         }
         return developersGetResponse;
     }
+
+
+    public static List<DeveloperGetResponse> developerDataToResponse(DeveloperData developer) {
+        List<DeveloperGetResponse> developersGetResponse = new ArrayList<>();
+             developersGetResponse.add(
+                    new DeveloperGetResponse(
+                            developer.getId(),
+                            developer.getName(),
+                            developer.getAddressCountry(),
+                            developer.getAddressStreet(),
+                            developer.getAddressBuildingNumber(),
+                            developer.getAddressFlatNumber(),
+                            developer.getAddressPostalCode(),
+                            developer.getTelephoneNumber(),
+                            developer.getFaxNumber(),
+                            developer.getEmail(),
+                            developer.getTaxIdentificationNumber(),
+                            developer.getCityId(),
+                            developer.getVoivodeshipId(),
+                            developer.getLogoUrl()
+                    )
+            );
+        return developersGetResponse;
+    }
+
+
 }

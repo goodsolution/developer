@@ -1,6 +1,7 @@
 package pl.com.mike.developer.logic.developer;
 
 import org.springframework.stereotype.Service;
+import pl.com.mike.developer.config.ApplicationConfig;
 import pl.com.mike.developer.domain.developer.CityData;
 
 import java.util.List;
@@ -8,13 +9,15 @@ import java.util.List;
 @Service
 public class InvestmentService {
     private final InvestmentRepository investmentRepository;
+    private final ApplicationConfig applicationConfig;
 
-    public InvestmentService(InvestmentRepository investmentRepository) {
+    public InvestmentService(InvestmentRepository investmentRepository, ApplicationConfig applicationConfig) {
         this.investmentRepository = investmentRepository;
+        this.applicationConfig = applicationConfig;
     }
 
-    public List<CityData> getInvestmentCitiesByDeveloperId(InvestmentSearchFilter filter) {
-        return investmentRepository.getInvestmentCitiesByDeveloperId(filter.getDeveloperId());
+    public List<CityData> getInvestmentCitiesByDeveloperCode() {
+        return investmentRepository.getInvestmentCitiesByDeveloperCode(applicationConfig.getSystemCode());
     }
 
 }

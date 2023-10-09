@@ -13,14 +13,15 @@ import pl.com.mike.developer.web.ConverterToResponse;
 public class DeveloperEndpoint {
 
     private final PremiseService premiseService;
-    private final InvestmentService investmentService;
+
     private final DeveloperService developerService;
+    private final ApplicationConfig applicationConfig;
 
 
-    public DeveloperEndpoint(PremiseService premiseService, InvestmentService investmentService, DeveloperService developerService) {
+    public DeveloperEndpoint(PremiseService premiseService, DeveloperService developerService, ApplicationConfig applicationConfig) {
         this.premiseService = premiseService;
-        this.investmentService = investmentService;
         this.developerService = developerService;
+        this.applicationConfig = applicationConfig;
     }
 
     @GetMapping("premises")
@@ -39,14 +40,23 @@ public class DeveloperEndpoint {
                 ));
     }
 
-    @GetMapping("developers/{id}/investments/cities")
-    public InvestmentCitiesByDeveloperGetResponse getInvestmentCitiesByDeveloperId(@PathVariable Long id) {
-        return new InvestmentCitiesByDeveloperGetResponse(investmentService.getInvestmentCitiesByDeveloperId(new InvestmentSearchFilter(id)));
-    }
-
     @GetMapping("developers/{id}")
     public DevelopersGetResponse getDeveloperById(@PathVariable Long id) {
-        return new DevelopersGetResponse(ConverterToResponse.developerDataToResponse(developerService.getDeveloperById(new DeveloperSearchFilter(id))));
+        return new DevelopersGetResponse(
+                ConverterToResponse.developersDataToResponse(
+                        developerService.getDeveloperById(new DeveloperSearchFilter(id))
+                )
+        );
     }
+
+    @GetMapping("developers/code")
+    public DevelopersGetResponse getDeveloperByCode() {
+        return new DevelopersGetResponse(
+                ConverterToResponse.developerDataToResponse(
+                        developerService.getDeveloperByCode(new DeveloperSearchFilter(applicationConfig.getSystemCode()))
+                )
+        );
+    }
+
 
 }

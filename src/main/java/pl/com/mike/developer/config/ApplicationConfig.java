@@ -148,14 +148,14 @@ public class ApplicationConfig {
     @Value("${company.page.url}")
     private String companyPageUrl;
 
-    @Value("${developer.code}")
-    private String developerCode;
+    @Value("${system.code}")
+    private String systemCode;
 
-    @Value("${developer.id}")
-    private String developerId;
+    @Value("angular/pl/assets/img/")
+    private String systemAsset;
 
-    public String getDeveloperId() {
-        return developerId;
+    public String getSystemAsset() {
+        return systemAsset;
     }
 
     private String templateNameProductsDemandPdf = "products-demand-pdf.html";
@@ -164,8 +164,8 @@ public class ApplicationConfig {
         return url;
     }
 
-    public String getDeveloperCode() {
-        return developerCode;
+    public String getSystemCode() {
+        return systemCode;
     }
 
     public String getPathToProductsDemandPdf() {

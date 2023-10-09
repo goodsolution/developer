@@ -1,14 +1,11 @@
 package pl.com.mike.developer;
 
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import pl.com.mike.developer.domain.developer.CityData;
-import pl.com.mike.developer.domain.developer.DeveloperData;
+import pl.com.mike.developer.config.ApplicationConfig;
 import pl.com.mike.developer.logic.developer.DeveloperSearchFilter;
 import pl.com.mike.developer.logic.developer.DeveloperService;
-import pl.com.mike.developer.logic.developer.InvestmentSearchFilter;
 import pl.com.mike.developer.logic.developer.InvestmentService;
 
 import java.util.*;
@@ -21,37 +18,35 @@ public class FrontMenuEndpoint {
     private final InvestmentService investmentService;
     private final DeveloperService developerService;
 
-    public FrontMenuEndpoint(InvestmentService investmentService, DeveloperService developerService) {
+    private final ApplicationConfig applicationConfig;
+
+    public FrontMenuEndpoint(InvestmentService investmentService, DeveloperService developerService, ApplicationConfig applicationConfig) {
         this.investmentService = investmentService;
         this.developerService = developerService;
+        this.applicationConfig = applicationConfig;
     }
 
-    @GetMapping("developers/{id}/front-menu")
-    public FrontMenusGetResponse getFrontMenu(@PathVariable Long id) {
-        return getFrontMenusGetResponse(id);
+    @GetMapping("developers/front-menu")
+    public FrontMenusGetResponse getFrontMenu() {
+        return getFrontMenusGetResponse();
     }
 
-    private FrontMenusGetResponse getFrontMenusGetResponse(Long id) {
+    private FrontMenusGetResponse getFrontMenusGetResponse() {
         return new FrontMenusGetResponse(
                 new ArrayList<>(Arrays.asList(
-                        new FrontMenuGetResponse(getDeveloperName(id), "/name", Collections.emptyList()),
-                        new FrontMenuGetResponse("Cities", "/", getCities(id)),
-                        new FrontMenuGetResponse("Contact", "developer/contact", Collections.emptyList()),
-                        new FrontMenuGetResponse("Language", "/language", Collections.emptyList())
+                        new FrontMenuGetResponse(getDeveloperName(applicationConfig.getSystemCode()), "/name", Collections.emptyList()),
+                        new FrontMenuGetResponse("Cities", "/", getCities()),
+                        new FrontMenuGetResponse("Contact", "/developer/contact", Collections.emptyList())
                 ))
         );
     }
 
-    private String getDeveloperName(Long id) {
-        List<DeveloperData> developerById = developerService.getDeveloperById(new DeveloperSearchFilter(id));
-        return developerById.stream()
-                .findFirst()
-                .orElseThrow(NoSuchElementException::new)
-                .getName();
+    private String getDeveloperName(String code) {
+        return developerService.getDeveloperByCode(new DeveloperSearchFilter(code)).getName();
     }
 
-    private List<FrontMenuGetResponse> getCities(Long id) {
-        return investmentService.getInvestmentCitiesByDeveloperId(new InvestmentSearchFilter(id)).stream()
+    private List<FrontMenuGetResponse> getCities() {
+        return investmentService.getInvestmentCitiesByDeveloperCode().stream()
                 .map(x -> new FrontMenuGetResponse(x.getName(), "", Collections.emptyList()))
                 .collect(Collectors.toList());
     }

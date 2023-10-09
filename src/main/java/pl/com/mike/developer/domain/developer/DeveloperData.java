@@ -35,9 +35,14 @@ public class DeveloperData implements Serializable {
     @Column(name = "logo_url")
     private String logoUrl;
 
+    private String code;
+
     public DeveloperData() {
     }
 
+    public String getCode() {
+        return code;
+    }
 
     public Long getId() {
         return id;

@@ -12,9 +12,7 @@ import java.util.List;
 @Repository
 public interface InvestmentRepository extends JpaRepository<InvestmentData, Long> {
 
-    @Query("SELECT DISTINCT c FROM InvestmentData i JOIN CityData c ON i.cityId = c.id WHERE i.developerId = ?1")
-    List<CityData> getInvestmentCitiesByDeveloperId(
-            @Param("id") Long id
-    );
+    @Query(nativeQuery = true, value = "select distinct c.name from investments join cities c on c.id = investments.city_id where developer_id = (select developers.id from developers where developers.code = :code)")
+    List<CityData> getInvestmentCitiesByDeveloperCode(@Param("code") String code);
 
 }

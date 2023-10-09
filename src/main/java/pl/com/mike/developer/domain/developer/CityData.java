@@ -17,6 +17,10 @@ public class CityData implements Serializable {
     public CityData() {
     }
 
+    public CityData(String name) {
+        this.name = name;
+    }
+
     public CityData(Long id, String name, Integer voivodeshipId) {
         this.id = id;
         this.name = name;

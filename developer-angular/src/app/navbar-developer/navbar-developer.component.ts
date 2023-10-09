@@ -1,6 +1,6 @@
 import {Component, OnInit} from "@angular/core";
-import {FrontMenuService} from "../front-menu.service";
-import {FrontMenu} from "../front-menu";
+import {FrontMenuService} from "../services/front-menu.service";
+import {FrontMenu} from "../interfaces/front-menu";
 
 @Component({
   selector: 'app-navbar-developer',
@@ -10,7 +10,6 @@ import {FrontMenu} from "../front-menu";
 export class NavbarDeveloper implements OnInit {
 
   menus: FrontMenu[] = [];
-
   constructor(private frontMenuService: FrontMenuService) {
   }
 
@@ -21,6 +20,5 @@ export class NavbarDeveloper implements OnInit {
   ngOnInit(): void {
     this.getMenu();
   }
-
 
 }
