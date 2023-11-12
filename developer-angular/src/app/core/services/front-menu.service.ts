@@ -2,8 +2,8 @@ import {Injectable} from '@angular/core';
 import {MessageService} from "./message.service";
 import {HttpClient} from "@angular/common/http";
 import {catchError, Observable, of, tap} from "rxjs";
-import {SearchResultFrontMenu} from "../interfaces/searchResultFrontMenu";
-import {environment} from "../../environments/environment.development";
+import {SearchResultFrontMenu} from "../../shared/interfaces/searchResultFrontMenu";
+import {environment} from "../../../environments/environment.development";
 
 @Injectable({
   providedIn: 'root'

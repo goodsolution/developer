@@ -1,0 +1,22 @@
+{
+  "member": [
+    {
+      "id": 1,
+      "firstName": "adam",
+      "lastName": "nowak",
+      "isMember": true
+    },
+    {
+      "id": 2,
+      "firstName": "kasia",
+      "lastName": "kowalska",
+      "isMember": true
+    },
+    {
+      "id": 3,
+      "firstName": "paweł",
+      "lastName": "witczak",
+      "isMember": false
+    }
+  ]
+}

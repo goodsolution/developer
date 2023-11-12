@@ -11,12 +11,12 @@
           <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item dropdown">
-        <a *ngIf="menu.children.length != 0" class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink"
+        <a *ngIf="menu.children.length != 0" class="nav-link dropdown-toggle" routerLink="#" id="navbarDropdownMenuLink"
            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           {{menu.name}}
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-          <a *ngFor="let submenu of menu.children" class="dropdown-item" href="{{submenu.url}}">{{submenu.name}}</a>
+          <a *ngFor="let submenu of menu.children" class="dropdown-item" routerLink="{{submenu.url}}">{{submenu.name}}</a>
         </div>
       </li>
     </ul>

@@ -2,15 +2,15 @@ import {Injectable} from "@angular/core";
 import {catchError, Observable, of, tap} from "rxjs";
 import {MessageService} from "./message.service";
 import {HttpClient} from "@angular/common/http";
-import {SearchResultPremises} from "../interfaces/searchResultPremises";
-import {SearchResultCity} from "../interfaces/searchResultCities";
+import {SearchResultDevelopers} from "../../shared/interfaces/searchResultDevelopers";
+import {environment} from "../../../environments/environment.development";
 
 @Injectable({
   providedIn: 'root'
 })
-export class CityService {
+export class DeveloperService {
 
-    private cityUrl = 'https://localhost:8081/api/dev/developers/1/investments/cities';
+  private developerUrl = environment.developerEndpoint
 
   constructor(
     private messageService: MessageService,
@@ -18,16 +18,16 @@ export class CityService {
   ) {
   }
 
-  getCities(): Observable<SearchResultCity> {
-    return this.http.get<SearchResultCity>(this.cityUrl)
+  getDevelopers(): Observable<SearchResultDevelopers> {
+    return this.http.get<SearchResultDevelopers>(this.developerUrl)
       .pipe(
         tap(_ => this.log('fetched premises')),
-        catchError(this.handleError<SearchResultCity>('getCities', {cities: []}))
+        catchError(this.handleError<SearchResultDevelopers>('getDevelopers', {developers: []}))
       );
   }
 
   // getPremise(id: number): Observable<SearchResultPremises> {
-  //   const url = `${this.cityUrl}/${id}`;
+  //   const url = `${this.developerUrl}/${id}`;
   //   return this.http.get<SearchResultPremises>(url).pipe(
   //     tap(_ => this.log(`fetched premise id=${id}`)),
   //     catchError(this.handleError<SearchResultPremises>(`getPremise id=${id}`))
@@ -43,7 +43,7 @@ export class CityService {
   }
 
   private log(message: string) {
-    this.messageService.add(`CityService: ${message}`);
+    this.messageService.add(`DeveloperService: ${message}`);
   }
 
 }
