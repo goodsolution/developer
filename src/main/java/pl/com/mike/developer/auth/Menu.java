@@ -3,7 +3,7 @@ package pl.com.mike.developer.auth;
 import java.util.Arrays;
 import java.util.List;
 
-class Menu {
+public class Menu {
     private String name;
     private String url;
     private Permissions[] permissions;
@@ -14,6 +14,12 @@ class Menu {
         this.name = name;
         this.url = url;
         this.permissions = permissions;
+        this.children = children;
+    }
+
+    public Menu(String name, String url, List<Menu> children) {
+        this.name = name;
+        this.url = url;
         this.children = children;
     }
 

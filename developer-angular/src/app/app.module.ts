@@ -16,7 +16,10 @@ import {NgOptimizedImage} from "@angular/common";
 import {NavbarDeveloper} from "./navbar-developer/navbar-developer.component";
 import {NavbarLogoComponent} from './navbar-developer/navbar-logo/navbar-logo.component';
 import {NavbarLangComponent} from "./navbar-developer/navbar-lang/navbar-lang.component";
-import {NavbarContactComponent} from "./navbar-developer/navbar-contact/navbar-contact.component";
+import {ContactComponent} from "./contact/contact.component";
+import {MemberListComponent} from "./member-list/member-list.component";
+import {AddMemberComponent} from "./member-list/add-member/add-member.component";
+import {MemberComponent} from "./member-list/member/member.component";
 
 @NgModule({
   declarations: [
@@ -26,7 +29,10 @@ import {NavbarContactComponent} from "./navbar-developer/navbar-contact/navbar-c
     NavbarDeveloper,
     NavbarLogoComponent,
     NavbarLangComponent,
-    NavbarContactComponent
+    ContactComponent,
+    MemberListComponent,
+    AddMemberComponent,
+    MemberComponent
   ],
   imports: [
     BrowserModule,

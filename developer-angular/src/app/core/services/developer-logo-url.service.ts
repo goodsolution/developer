@@ -2,8 +2,8 @@ import {Injectable} from '@angular/core';
 import {MessageService} from "./message.service";
 import {HttpClient} from "@angular/common/http";
 import {catchError, Observable, of, tap} from "rxjs";
-import {DeveloperLogoUrl} from "../interfaces/developerLogoUrl";
-import {environment} from "../../environments/environment.development";
+import {DeveloperLogoUrl} from "../../shared/interfaces/developerLogoUrl";
+import {environment} from "../../../environments/environment.development";
 
 @Injectable({
   providedIn: 'root'

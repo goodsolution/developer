@@ -1,0 +1,26 @@
+
+<h2 class="mx-2">Deklaracja Członkowska</h2>
+<h3 class="mx-2">Dane osobowe dziecka</h3>
+
+<form (ngSubmit)="addNewMember()">
+  <div class="row">
+    <div class="form-group mx-2">
+      <label for="child-firstName">Imię Dziecka</label>
+      <input type="email" [(ngModel)]="memberFirstName" class="form-control" id="child-firstName" name="name"
+             placeholder="wprowadź dane">
+    </div>
+    <div class="form-group mx-2">
+      <label for="child-lastName">Nazwisko Dziecka</label>
+      <input type="password" [(ngModel)]="memberLastName" class="form-control" id="child-lastName" name="name"
+             placeholder="wprowadź dane">
+    </div>
+  </div>
+
+  <div class="form-group form-check">
+    <input type="checkbox" class="form-check-input" id="exampleCheck1">
+    <label class="form-check-label" for="exampleCheck1">Check me out</label>
+  </div>
+
+  <button type="submit" class="btn btn-primary">Submit</button>
+
+</form>

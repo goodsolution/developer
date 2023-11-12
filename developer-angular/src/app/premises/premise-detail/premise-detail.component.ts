@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from "@angular/core";
-import {Premise} from "../../interfaces/premise";
+import {Premise} from "../../shared/interfaces/premise";
 import {ActivatedRoute} from "@angular/router";
-import {PremiseService} from "../../services/premise.service";
+import {PremiseService} from "../../core/services/premise.service";
 import {Location} from '@angular/common';
 
 @Component({
