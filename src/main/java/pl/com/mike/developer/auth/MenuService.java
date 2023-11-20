@@ -20,7 +20,7 @@ public class MenuService {
         menuByCode.put("antal",
                 new ArrayList<>(Arrays.asList(
                         new Menu("Cities", "/", getCities()),
-                        new Menu("Contact", "/developer/contact", getCities())
+                        new Menu("Contact", "/developer/contact", Collections.emptyList())
                 )));
         menuByCode.put("domdevelopment",
                 new ArrayList<>(Arrays.asList(

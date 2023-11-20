@@ -6,7 +6,7 @@ import {PremisesComponent} from "./premises/premises.component";
 import {FormsModule} from "@angular/forms";
 import {PremiseDetailComponent} from "./premises/premise-detail/premise-detail.component";
 import {AppRoutingModule} from "./routing.module";
-import {HttpClientModule} from "@angular/common/http";
+import {HttpClient, HttpClientModule} from "@angular/common/http";
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatToolbarModule} from "@angular/material/toolbar";
 import {MatIconModule} from "@angular/material/icon";
@@ -20,6 +20,9 @@ import {ContactComponent} from "./contact/contact.component";
 import {MemberListComponent} from "./member-list/member-list.component";
 import {AddMemberComponent} from "./member-list/add-member/add-member.component";
 import {MemberComponent} from "./member-list/member/member.component";
+import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
+import {CustomTranslationLoader} from "./core/services/custom-translation-loader.service";
+import {LanguageDropdownComponent} from "./language-dropdown.component";
 
 @NgModule({
   declarations: [
@@ -32,7 +35,8 @@ import {MemberComponent} from "./member-list/member/member.component";
     ContactComponent,
     MemberListComponent,
     AddMemberComponent,
-    MemberComponent
+    MemberComponent,
+    LanguageDropdownComponent
   ],
   imports: [
     BrowserModule,
@@ -45,6 +49,13 @@ import {MemberComponent} from "./member-list/member/member.component";
     MatButtonModule,
     MatListModule,
     NgOptimizedImage,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: (http: HttpClient) => new CustomTranslationLoader(http, './assets/i18n/', '.json'),
+        deps: [HttpClient],
+      },
+    }),
   ],
   providers: [],
   bootstrap: [AppComponent]
