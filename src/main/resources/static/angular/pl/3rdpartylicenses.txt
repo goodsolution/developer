@@ -66,6 +66,9 @@ MIT
 @angular/router
 MIT
 
+@ngx-translate/core
+SEE LICENSE IN LICENSE
+
 bootstrap-icons
 MIT
 The MIT License (MIT)

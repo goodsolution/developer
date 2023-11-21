@@ -6,30 +6,23 @@ import org.springframework.web.bind.annotation.RestController;
 import pl.com.mike.developer.auth.Menu;
 import pl.com.mike.developer.auth.MenuService;
 import pl.com.mike.developer.config.ApplicationConfig;
-import pl.com.mike.developer.logic.developer.DeveloperService;
-import pl.com.mike.developer.logic.developer.InvestmentService;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("api/dev/")
+@RequestMapping("api/system/")
 public class FrontMenuEndpoint {
-
-    private final InvestmentService investmentService;
-    private final DeveloperService developerService;
     private final ApplicationConfig applicationConfig;
     private final MenuService menuService;
 
-    public FrontMenuEndpoint(InvestmentService investmentService, DeveloperService developerService, ApplicationConfig applicationConfig, MenuService menuService) {
-        this.investmentService = investmentService;
-        this.developerService = developerService;
+    public FrontMenuEndpoint(ApplicationConfig applicationConfig, MenuService menuService) {
         this.applicationConfig = applicationConfig;
         this.menuService = menuService;
     }
 
-    @GetMapping("developers/front-menu")
+    @GetMapping("front-menu")
     public FrontMenusGetResponse getFrontMenu() {
         return getFrontMenusGetResponse();
     }

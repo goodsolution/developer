@@ -1,5 +1,5 @@
 export const environment = {
-  logoDeveloperEndpoint: 'https://localhost:8081/api/dev/developers/logo',
-  frontMenuDeveloperEndpoint: 'https://localhost:8081/api/dev/developers/front-menu',
-  developerEndpoint: 'https://localhost:8081/api/dev/developers/code'
+  logoDeveloperEndpoint: 'https://localhost:8081/api/system/developers/logo',
+  frontMenuDeveloperEndpoint: 'https://localhost:8081/api/system/front-menu',
+  developerEndpoint: 'https://localhost:8081/api/system/developers/code'
 };
