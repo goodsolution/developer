@@ -5,6 +5,8 @@ import {PremiseDetailComponent} from "./premises/premise-detail/premise-detail.c
 import {NavbarContactComponent} from "./navbar-developer/navbar-contact/navbar-contact.component";
 
 const routes: Routes = [
+
+
   {path: 'premises', component: PremisesComponent},
   {path: 'premises/:id', component: PremiseDetailComponent},
   {path: 'developer/contact', component: NavbarContactComponent},
