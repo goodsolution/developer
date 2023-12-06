@@ -11,7 +11,9 @@ import {NavbarLogoComponent} from './navbar-developer/navbar-logo/navbar-logo.co
 import {NavbarLangComponent} from "./navbar-developer/navbar-lang/navbar-lang.component";
 import {NavbarContactComponent} from "./navbar-developer/navbar-contact/navbar-contact.component";
 import {CoreModule} from "./modules/core/core.module";
-import {HomeModule} from "./modules/home/home.module";
+import {AuthModule} from "./modules/auth/auth.module";
+import {CitiesModule} from "./modules/cities/cities.module";
+import {ContactModule} from "./modules/contact/contact.module";
 
 @NgModule({
   declarations: [
@@ -26,13 +28,16 @@ import {HomeModule} from "./modules/home/home.module";
   imports: [
     BrowserModule,
     CoreModule,
-    HomeModule,
+    AuthModule,
+    CitiesModule,
+    ContactModule,
     AppRoutingModule,
     HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}
 
 
