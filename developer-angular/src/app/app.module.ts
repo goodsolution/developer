@@ -5,7 +5,6 @@ import {AppComponent} from './app.component';
 import {PremisesComponent} from "./premises/premises.component";
 import {PremiseDetailComponent} from "./premises/premise-detail/premise-detail.component";
 import {AppRoutingModule} from "./app-routing.module";
-import {HttpClientModule} from "@angular/common/http";
 import {NavbarDeveloper} from "./navbar-developer/navbar-developer.component";
 import {NavbarLogoComponent} from './navbar-developer/navbar-logo/navbar-logo.component';
 import {NavbarLangComponent} from "./navbar-developer/navbar-lang/navbar-lang.component";
@@ -31,8 +30,7 @@ import {ContactModule} from "./modules/contact/contact.module";
     AuthModule,
     CitiesModule,
     ContactModule,
-    AppRoutingModule,
-    HttpClientModule,
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]
