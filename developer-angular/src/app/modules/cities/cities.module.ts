@@ -1,8 +1,8 @@
 import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
 
 import {CitiesRoutingModule} from './cities-routing.module';
 import {CitiesComponent} from './cities.component';
+import {SharedModule} from "../shared/shared.module";
 
 
 @NgModule({
@@ -10,7 +10,7 @@ import {CitiesComponent} from './cities.component';
     CitiesComponent
   ],
   imports: [
-    CommonModule,
+    SharedModule,
     CitiesRoutingModule
   ],
   exports: [

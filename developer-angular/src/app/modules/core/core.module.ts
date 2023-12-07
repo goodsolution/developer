@@ -1,8 +1,7 @@
 import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
 import {HeaderComponent} from './components/header/header.component';
 import {RouterModule} from "@angular/router";
-import {MaterialModule} from "../shared/material/material.module";
+import {SharedModule} from "../shared/shared.module";
 
 
 @NgModule({
@@ -13,9 +12,9 @@ import {MaterialModule} from "../shared/material/material.module";
     HeaderComponent
   ],
   imports: [
-    CommonModule,
+    SharedModule,
     RouterModule,
-    MaterialModule
   ]
 })
-export class CoreModule { }
+export class CoreModule {
+}
