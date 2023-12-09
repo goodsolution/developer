@@ -34,7 +34,7 @@ public class FrontMenuEndpoint {
     private FrontMenusGetResponse getFrontMenusGetResponse() {
         return new FrontMenusGetResponse(
                 new ArrayList<>(Arrays.asList(
-                        new FrontMenuGetResponse(getDeveloperName(applicationConfig.getSystemCode()), "/name", Collections.emptyList()),
+//                        new FrontMenuGetResponse(getDeveloperName(applicationConfig.getSystemCode()), "/name", Collections.emptyList()),
                         new FrontMenuGetResponse("Cities", "/", getCities()),
                         new FrontMenuGetResponse("Contact", "/developer/contact", Collections.emptyList())
                 ))
