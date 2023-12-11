@@ -7,7 +7,8 @@ import {FrontMenu} from "../interfaces/front-menu";
   templateUrl: './navbar-developer.component.html',
   styleUrls: ['./navbar-developer.component.css']
 })
-export class NavbarDeveloper implements OnInit {
+export class NavbarDeveloper implements OnInit{
+
 
   menus: FrontMenu[] = [];
   constructor(private frontMenuService: FrontMenuService) {

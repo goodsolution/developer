@@ -1,25 +1,31 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
-          aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
-  <div class="collapse navbar-collapse" id="navbarNavDropdown">
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <app-navbar-logo></app-navbar-logo>
-    <ul *ngFor="let menu of menus" class="navbar-nav">
-      <li class="nav-item active">
-        <a *ngIf="menu.children.length === 0" class="nav-link" routerLink="{{menu.url}}">{{menu.name}}
-          <span class="sr-only">(current)</span></a>
+    <ul class="navbar-nav mr-auto">
+      <div *ngFor="let menu of menus">
+        <li class="nav-item" *ngIf="menu.children.length === 0">
+          <a class="nav-link" routerLink="{{menu.url}}">{{ menu.name | translate}}</a>
+        </li>
+        <li class="nav-item dropdown" *ngIf="menu.children.length != 0">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
+            {{ menu.name | translate }}
+          </a>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" *ngFor="let submenu of menu.children"
+               routerLink="{{submenu.url}}">{{ submenu.name }}</a>
+          </div>
+        </li>
+      </div>
+      <span class="border"></span>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/login">{{ 'Login' | translate }}</a>
       </li>
-      <li class="nav-item dropdown">
-        <a *ngIf="menu.children.length != 0" class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink"
-           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          {{menu.name}}
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-          <a *ngFor="let submenu of menu.children" class="dropdown-item" href="{{submenu.url}}">{{submenu.name}}</a>
-        </div>
-      </li>
+      <span class="border"></span>
+      <app-navbar-lang></app-navbar-lang>
     </ul>
-    <app-navbar-lang></app-navbar-lang>
   </div>
 </nav>

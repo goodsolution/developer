@@ -13,6 +13,11 @@ import {CoreModule} from "./modules/core/core.module";
 import {AuthModule} from "./modules/auth/auth.module";
 import {CitiesModule} from "./modules/cities/cities.module";
 import {ContactModule} from "./modules/contact/contact.module";
+import {HttpClient} from "@angular/common/http";
+import {TranslateHttpLoader} from "@ngx-translate/http-loader";
+import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
+import { NavbarMenuComponent } from './navbar-developer/navbar-menu/navbar-menu.component';
+import { NavbarLoginComponent } from './navbar-developer/navbar-login/navbar-login.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +27,9 @@ import {ContactModule} from "./modules/contact/contact.module";
     NavbarDeveloper,
     NavbarLogoComponent,
     NavbarLangComponent,
-    NavbarContactComponent
+    NavbarContactComponent,
+    NavbarMenuComponent,
+    NavbarLoginComponent
   ],
   imports: [
     BrowserModule,
@@ -30,12 +37,25 @@ import {ContactModule} from "./modules/contact/contact.module";
     AuthModule,
     CitiesModule,
     ContactModule,
-    AppRoutingModule
+    AppRoutingModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient]
+      }
+    })
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule {
 }
+
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http, 'angular/pl/assets/i18n/', '.json');
+}
+
+
 
 

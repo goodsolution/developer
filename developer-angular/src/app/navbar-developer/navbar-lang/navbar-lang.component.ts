@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
   selector: 'app-navbar-lang',
@@ -7,10 +8,10 @@ import { Component } from '@angular/core';
 })
 export class NavbarLangComponent {
 
+  constructor(private translate: TranslateService) {}
 
-  changeLanguage(lang: string) {
-    window.location.href = window.location.pathname + "?lang=" + lang;
+  changeLanguage(language: string) {
+    this.translate.use(language);
   }
-
 
 }

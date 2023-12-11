@@ -7,7 +7,7 @@
     <title th:text="#{home.page.tab.title} + ' · ' + ${@applicationConfig.getAppNameFront()}"></title>
     <div th:replace="fragments/front-head"></div>
     <script th:replace="fragments/languages-script"></script>
-    <script>trace('page.show', 'home')</script>
+<!--    <script>trace('page.show', 'home')</script>-->
 </head>
 
 <body>
@@ -15,8 +15,8 @@
 <script th:src="@{/angular/pl/runtime.js}" type=text/javascript></script>
 <script th:src="@{/angular/pl/polyfills.js}" type=text/javascript></script>
 <script th:src="@{/angular/pl/main.js}" type=text/javascript></script>
-DomDev
-<nav th:replace="${@courseCustomersService.getLoggedCustomer()} ? 'fragments/logged-in-navbar' : 'fragments/logged-out-navbar'"></nav>
+<!--DomDev-->
+<!--<nav th:replace="${@courseCustomersService.getLoggedCustomer()} ? 'fragments/logged-in-navbar' : 'fragments/logged-out-navbar'"></nav>-->
 
 <!-- Header -->
 <header class="bg-primary py-5 mb-5">

@@ -1,0 +1,59 @@
+<!--  <ul *ngFor="let menu of menus" class="navbar-nav me-auto mb-2 mb-lg-0">-->
+<!--    <li class="nav-item">-->
+<!--      <a *ngIf="menu.children.length === 0" class="nav-link" routerLink="{{menu.url}}">{{ menu.name }}-->
+<!--        <span class="sr-only">(current)</span></a>-->
+<!--    </li>-->
+<!--    <li class="nav-item dropdown">-->
+<!--      <a *ngIf="menu.children.length != 0" class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink"-->
+<!--         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
+<!--        {{ menu.name }}-->
+<!--      </a>-->
+<!--      <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">-->
+<!--        <a *ngFor="let submenu of menu.children" class="dropdown-item" href="{{submenu.url}}">{{ submenu.name }}</a>-->
+<!--      </div>-->
+<!--    </li>-->
+<!--  </ul>-->
+
+<!--  <ul class="navbar-nav me-auto mb-2 mb-lg-0" *ngFor="let menu of menus" >-->
+<!--    <li class="nav-item" *ngIf="menu.children.length === 0" >-->
+<!--      <a class="nav-link" routerLink="{{menu.url}}">{{ menu.name }}</a>-->
+<!--    </li>-->
+<!--    <li class="nav-item dropdown" *ngIf="menu.children.length != 0">-->
+<!--      <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">-->
+<!--        {{ menu.name }}-->
+<!--      </a>-->
+<!--      <div class="dropdown-menu" aria-labelledby="navbarDropdown">-->
+<!--        <a class="dropdown-item" *ngFor="let submenu of menu.children" routerLink="{{submenu.url}}">{{submenu.name}}</a>-->
+<!--      </div>-->
+<!--    </li>-->
+<!--  </ul>-->
+
+<!--<ul class="navbar-nav mr-auto"  *ngFor="let menu of menus">-->
+<!--  <li class="nav-item" *ngIf="menu.children.length === 0">-->
+<!--    <a class="nav-link" routerLink="{{menu.url}}">{{ menu.name }}</a>-->
+<!--  </li>-->
+<!--  <li class="nav-item dropdown" *ngIf="menu.children.length != 0">-->
+<!--    <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">-->
+<!--      {{ menu.name }}-->
+<!--    </a>-->
+<!--    <div class="dropdown-menu">-->
+<!--      <a class="dropdown-item" *ngFor="let submenu of menu.children" routerLink="{{submenu.url}}">{{submenu.name}}</a>-->
+<!--    </div>-->
+<!--  </li>-->
+<!--</ul>-->
+
+<div *ngFor="let menu of menus">
+  <ul class="navbar-nav mr-auto">
+    <li class="nav-item" *ngIf="menu.children.length === 0">
+      <a class="nav-link" routerLink="{{menu.url}}">{{ menu.name }}</a>
+    </li>
+    <li class="nav-item dropdown" *ngIf="menu.children.length != 0">
+      <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
+        {{ menu.name }}
+      </a>
+      <div class="dropdown-menu">
+        <a class="dropdown-item" *ngFor="let submenu of menu.children" routerLink="{{submenu.url}}">{{submenu.name}}</a>
+      </div>
+    </li>
+  </ul>
+</div>

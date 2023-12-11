@@ -30,9 +30,9 @@ function markActiveMenuItem() {
     });
     $(".dropdown-item").each(function () {
       var href = $(this).attr("href");
-      if (path.substring(0, href.length) === href) {
-        $(this).closest(".nav-item").children("a").addClass("active");
-      }
+      // if (path.substring(0, href.length) === href) {
+      //   $(this).closest(".nav-item").children("a").addClass("active");
+      // }
     });
   }
 }
