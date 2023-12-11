@@ -1,19 +1,4 @@
-<!--<div class="container">-->
-<!--  <div class="row">-->
-<!--    <div *ngFor="let developer of developers" class="col-sm-5 developer-info">-->
-<!--      <p class="contact-message">{{"We'll get back to you within 24 hours" | translate }}</p>-->
-<!--      <p class="info-item"><i class="fas fa-map-marker"></i>{{ developer.name }}</p>-->
-<!--      <p class="info-item"><i class="fas fa-envelope"></i>{{ developer.addressCountry }}</p>-->
-<!--      <p class="info-item"><i class="fas fa-envelope"></i>{{ developer.addressPostalCode }}</p>-->
-<!--      <p class="info-item"><i class="fas fa-envelope"></i>{{ developer.addressStreet }}</p>-->
-<!--      <p class="info-item"><i class="fas fa-envelope"></i>{{ developer.telephoneNumber }}</p>-->
-<!--    </div>-->
-<!--  </div>-->
-<!--</div>-->
-
-
 <ul class="list-group login-wrapper" *ngFor="let developer of developers">
-  <li class="list-group-item list-group-item-light">{{"We'll get back to you within 24 hours" | translate }}</li>
   <li class="list-group-item list-group-item-dark">{{ developer.name }}</li>
   <li class="list-group-item list-group-item-dark">{{ developer.addressCountry }}</li>
   <li class="list-group-item list-group-item-dark">{{ developer.addressPostalCode }}</li>
