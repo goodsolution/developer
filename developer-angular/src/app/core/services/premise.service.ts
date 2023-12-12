@@ -2,7 +2,7 @@ import {Injectable} from "@angular/core";
 import {catchError, Observable, of, tap} from "rxjs";
 import {MessageService} from "./message.service";
 import {HttpClient} from "@angular/common/http";
-import {SearchResultPremises} from "../interfaces/searchResultPremises";
+import {SearchResultPremises} from "../../shared/interfaces/searchResultPremises";
 
 @Injectable({
   providedIn: 'root'

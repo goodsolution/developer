@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {DeveloperLogoUrlService} from "../../services/developer-logo-url.service";
+import {DeveloperLogoUrlService} from "../../core/services/developer-logo-url.service";
 
 @Component({
   selector: 'app-navbar-logo',
