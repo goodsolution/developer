@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {FrontMenu} from "../../interfaces/front-menu";
-import {FrontMenuService} from "../../services/front-menu.service";
+import {FrontMenu} from "../../shared/interfaces/front-menu";
+import {FrontMenuService} from "../../core/services/front-menu.service";
+
 
 @Component({
   selector: 'app-navbar-menu',
