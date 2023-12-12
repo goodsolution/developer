@@ -1,10 +1,14 @@
 {
-  "hello": "Cześć",
-  "welcome": "Witaj na naszej stronie",
-  "Contact": "Kontakt",
-  "Cities": "Miasta",
   "Language": "Język",
   "English": "Angielski",
   "Polish": "Polski",
-  "Log in": "Zaloguj się"
+  "Login":"Zaloguj",
+  "Contact": "Kontakt",
+  "Cities": "Miasta",
+  "Email address":"Adres email",
+  "We'll never share your email with anyone else.":"Nigdy nie podzielimy się Twoim adresem e-mail z nikim innym.",
+  "Password": "Hasło",
+  "Check me out": "Wyloguj mnie",
+  "Submit": "Zatwierdź"
+
 }

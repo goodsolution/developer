@@ -25,7 +25,7 @@ public class WebConfig implements WebMvcConfigurer {
                         "/fonts/**",
                         "/js/**",
                         "/angular/**",
-                        "/assets/i18n/**"
+                        "/angular/**"
                 )
                 .addResourceLocations(
                         "classpath:/static/img/",

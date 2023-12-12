@@ -3,44 +3,52 @@ package pl.com.mike.developer;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import pl.com.mike.developer.auth.Menu;
-import pl.com.mike.developer.auth.MenuService;
 import pl.com.mike.developer.config.ApplicationConfig;
+import pl.com.mike.developer.logic.developer.DeveloperSearchFilter;
+import pl.com.mike.developer.logic.developer.DeveloperService;
+import pl.com.mike.developer.logic.developer.InvestmentService;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("api/system/")
+@RequestMapping("api/dev/")
 public class FrontMenuEndpoint {
-    private final ApplicationConfig applicationConfig;
-    private final MenuService menuService;
 
-    public FrontMenuEndpoint(ApplicationConfig applicationConfig, MenuService menuService) {
+    private final InvestmentService investmentService;
+    private final DeveloperService developerService;
+
+    private final ApplicationConfig applicationConfig;
+
+    public FrontMenuEndpoint(InvestmentService investmentService, DeveloperService developerService, ApplicationConfig applicationConfig) {
+        this.investmentService = investmentService;
+        this.developerService = developerService;
         this.applicationConfig = applicationConfig;
-        this.menuService = menuService;
     }
 
-    @GetMapping("front-menu")
+    @GetMapping("developers/front-menu")
     public FrontMenusGetResponse getFrontMenu() {
         return getFrontMenusGetResponse();
     }
 
     private FrontMenusGetResponse getFrontMenusGetResponse() {
         return new FrontMenusGetResponse(
-                menuService.getMenu(applicationConfig.getSystemCode()).stream()
-                        .map(x -> new FrontMenuGetResponse(x.getName(), x.getUrl(), getResponses(x.getChildren())))
-                        .collect(Collectors.toList())
+                new ArrayList<>(Arrays.asList(
+//                        new FrontMenuGetResponse(getDeveloperName(applicationConfig.getSystemCode()), "/name", Collections.emptyList()),
+                        new FrontMenuGetResponse("Cities", "/", getCities()),
+                        new FrontMenuGetResponse("Contact", "/developer/contact", Collections.emptyList())
+                ))
         );
     }
 
-    List<FrontMenuGetResponse> getResponses(List<Menu> menus) {
-        List<FrontMenuGetResponse> frontMenuGetResponses = new ArrayList<>();
-        for (Menu menu : menus) {
-            frontMenuGetResponses.add(new FrontMenuGetResponse(menu.getName(), menu.getUrl(), getResponses(menu.getChildren())));
-        }
-        return frontMenuGetResponses;
+    private String getDeveloperName(String code) {
+        return developerService.getDeveloperByCode(new DeveloperSearchFilter(code)).getName();
+    }
+
+    private List<FrontMenuGetResponse> getCities() {
+        return investmentService.getInvestmentCitiesByDeveloperCode().stream()
+                .map(x -> new FrontMenuGetResponse(x.getName(), "", Collections.emptyList()))
+                .collect(Collectors.toList());
     }
 
 }

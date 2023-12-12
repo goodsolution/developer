@@ -1,32 +1,7 @@
-<br>
-<div id="contact" class="container-fluid bg-grey">
-
-  <div class="row">
-    <div *ngFor="let developer of developers" class="col-sm-5">
-      <p i18n>Contact us and we'll get back to you within 24 hours.</p>
-      <p><span class="glyphicon glyphicon-map-marker"></span>{{developer.name}}</p>
-      <p><span class="glyphicon glyphicon-phone"></span>{{developer.addressCountry}}</p>
-      <p><span class="glyphicon glyphicon-envelope"></span>{{developer.addressPostalCode}}</p>
-      <p><span class="glyphicon glyphicon-envelope"></span>{{developer.addressStreet}}</p>
-      <p><span class="glyphicon glyphicon-envelope"></span>{{developer.telephoneNumber}}</p>
-    </div>
-
-    <div class="col-sm-7 slideanim">
-      <div class="row">
-        <div class="col-sm-6 form-group">
-          <input class="form-control" id="name" name="name" i18n-name placeholder="Name" i18n-placeholder type="text" required>
-        </div>
-        <div class="col-sm-6 form-group">
-          <input class="form-control" id="email" name="email" placeholder="Email" i18n-placeholder type="email" required>
-        </div>
-      </div>
-      <textarea class="form-control" id="comments" name="comments" i18n-name placeholder="Comment" i18n-placeholder rows="5"></textarea><br>
-      <div class="row">
-        <div class="col-sm-12 form-group">
-          <button i18n class="btn btn-default pull-right" type="submit">Send</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-</div>
+<ul class="list-group login-wrapper" *ngFor="let developer of developers">
+  <li class="list-group-item list-group-item-dark">{{ developer.name }}</li>
+  <li class="list-group-item list-group-item-dark">{{ developer.addressCountry }}</li>
+  <li class="list-group-item list-group-item-dark">{{ developer.addressPostalCode }}</li>
+  <li class="list-group-item list-group-item-dark">{{ developer.addressStreet }}</li>
+  <li class="list-group-item list-group-item-dark">{{ developer.telephoneNumber }}</li>
+</ul>

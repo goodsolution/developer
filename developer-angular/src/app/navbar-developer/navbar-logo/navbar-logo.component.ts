@@ -7,13 +7,13 @@ import {DeveloperLogoUrlService} from "../../core/services/developer-logo-url.se
   styleUrls: ['./navbar-logo.component.css']
 })
 export class NavbarLogoComponent implements OnInit{
-  url: String | undefined;
+  apiUrl!: string;
 
   constructor(private developerLogoUrlService: DeveloperLogoUrlService) {
   }
 
   getLogo() {
-    this.developerLogoUrlService.getLogoUrl().subscribe(url => this.url = url.url)
+    this.developerLogoUrlService.getLogoUrl().subscribe(url => this.apiUrl = url.url)
   }
 
   ngOnInit(): void {
