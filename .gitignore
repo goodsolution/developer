@@ -186,3 +186,6 @@ target
 .gradle
 README.html
 .exercism
+
+### Angular build files
+src/main/resources/static/angular/pl/assets
