@@ -1,16 +1,15 @@
 import {Component, Input} from '@angular/core';
-import {Developer} from "../shared/interfaces/developer";
+import {Developer} from "../../shared/interfaces/developer";
 import {ActivatedRoute} from "@angular/router";
-import {DeveloperService} from "../core/services/developer.service";
+import {DeveloperService} from "../../core/services/developer.service";
 import {Location} from "@angular/common";
 
 @Component({
-  selector: 'app-contact',
-  templateUrl: './contact.component.html',
-  styleUrls: ['./contact.component.css']
+  selector: 'app-navbar-contact',
+  templateUrl: './navbar-contact.component.html',
+  styleUrls: ['./navbar-contact.component.css']
 })
-export class ContactComponent {
-
+export class NavbarContactComponent {
   @Input() developers?: Developer[];
 
   constructor(
@@ -27,5 +26,4 @@ export class ContactComponent {
   getDeveloper(): void{
     this.developerService.getDevelopers().subscribe(developer => this.developers = developer.developers)
   }
-
 }

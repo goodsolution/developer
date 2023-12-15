@@ -12,7 +12,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("api/dev/")
+@RequestMapping("api/system/")
 public class FrontMenuEndpoint {
 
     private final InvestmentService investmentService;
