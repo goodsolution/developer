@@ -18,6 +18,8 @@ import {TranslateHttpLoader} from "@ngx-translate/http-loader";
 import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
 import { NavbarMenuComponent } from './navbar-developer/navbar-menu/navbar-menu.component';
 import { NavbarLoginComponent } from './navbar-developer/navbar-login/navbar-login.component';
+import {HomeComponent} from "./modules/home/home.component";
+import {HomeModule} from "./modules/home/home.module";
 
 @NgModule({
   declarations: [
@@ -38,6 +40,7 @@ import { NavbarLoginComponent } from './navbar-developer/navbar-login/navbar-log
     CitiesModule,
     ContactModule,
     AppRoutingModule,
+    HomeModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

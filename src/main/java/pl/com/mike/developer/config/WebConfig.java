@@ -37,15 +37,15 @@ public class WebConfig implements WebMvcConfigurer {
                         "classpath:/static/angular/pl/assets/i18n/"
                 );
 
-        //TODO analyze and delete
-        registry.addResourceHandler("/gallery/**")
-                .addResourceLocations(new File(applicationConfig.getPathToGallery()).toURI().toString());
-
-        registry.addResourceHandler("/course-platform-images/**")
-                .addResourceLocations(new File(applicationConfig.getCoursePathToGallery()).toURI().toString());
-
-        registry.addResourceHandler("/course-platform-invoices/**")
-                .addResourceLocations(new File(applicationConfig.getCoursePathToInvoicesFolder()).toURI().toString());
+//        //TODO analyze and delete
+//        registry.addResourceHandler("/gallery/**")
+//                .addResourceLocations(new File(applicationConfig.getPathToGallery()).toURI().toString());
+//
+//        registry.addResourceHandler("/course-platform-images/**")
+//                .addResourceLocations(new File(applicationConfig.getCoursePathToGallery()).toURI().toString());
+//
+//        registry.addResourceHandler("/course-platform-invoices/**")
+//                .addResourceLocations(new File(applicationConfig.getCoursePathToInvoicesFolder()).toURI().toString());
     }
 
 }
