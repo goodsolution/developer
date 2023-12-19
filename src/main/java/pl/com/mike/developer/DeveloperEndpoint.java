@@ -13,10 +13,8 @@ import pl.com.mike.developer.web.ConverterToResponse;
 public class DeveloperEndpoint {
 
     private final PremiseService premiseService;
-
     private final DeveloperService developerService;
     private final ApplicationConfig applicationConfig;
-
 
     public DeveloperEndpoint(PremiseService premiseService, DeveloperService developerService, ApplicationConfig applicationConfig) {
         this.premiseService = premiseService;
