@@ -9,11 +9,11 @@ import pl.com.mike.developer.logic.developer.DeveloperService;
 
 @RestController
 @RequestMapping("api/system/")
-public class DeveloperLogoEndpoint {
+public class ConfigEndpoint {
     private final DeveloperService developerService;
     private final ApplicationConfig applicationConfig;
 
-    public DeveloperLogoEndpoint(DeveloperService developerService, ApplicationConfig applicationConfig) {
+    public ConfigEndpoint(DeveloperService developerService, ApplicationConfig applicationConfig) {
         this.developerService = developerService;
         this.applicationConfig = applicationConfig;
     }
@@ -25,8 +25,21 @@ public class DeveloperLogoEndpoint {
         );
     }
 
+    @GetMapping("homePageImagePath")
+    public HomePageImagePathGetResponse getHomePageImagePathResponse() {
+        return new HomePageImagePathGetResponse(
+                getHomePageImagePathUrl()
+        );
+    }
+
+    private String getHomePageImagePathUrl() {
+        return applicationConfig.getSystemAsset() + applicationConfig.getSystemCode() + applicationConfig.getSystemHomePagePhoto();
+    }
+
+
     private String getUrl(String logoFileName) {
         return applicationConfig.getSystemAsset() + applicationConfig.getSystemCode() + logoFileName;
     }
+
 
 }
