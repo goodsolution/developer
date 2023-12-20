@@ -29,9 +29,9 @@ public class DeveloperData implements Serializable {
     @Column(name = "tax_identification_number")
     private String taxIdentificationNumber;
     @Column(name = "city_id")
-    private Integer cityId;
+    private Long cityId;
     @Column(name = "voivodeship_id")
-    private Integer voivodeshipId;
+    private Long voivodeshipId;
     @Column(name = "logo_url")
     private String logoUrl;
 
@@ -132,22 +132,6 @@ public class DeveloperData implements Serializable {
         this.taxIdentificationNumber = taxIdentificationNumber;
     }
 
-    public Integer getCityId() {
-        return cityId;
-    }
-
-    public void setCityId(Integer cityId) {
-        this.cityId = cityId;
-    }
-
-    public Integer getVoivodeshipId() {
-        return voivodeshipId;
-    }
-
-    public void setVoivodeshipId(Integer voivodeshipId) {
-        this.voivodeshipId = voivodeshipId;
-    }
-
     public String getLogoUrl() {
         return logoUrl;
     }
@@ -156,16 +140,38 @@ public class DeveloperData implements Serializable {
         this.logoUrl = logoUrl;
     }
 
+
+    public void setCityId(Long cityId) {
+        this.cityId = cityId;
+    }
+
+
+    public void setVoivodeshipId(Long voivodeshipId) {
+        this.voivodeshipId = voivodeshipId;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public Long getCityId() {
+        return cityId;
+    }
+
+    public Long getVoivodeshipId() {
+        return voivodeshipId;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof DeveloperData)) return false;
         DeveloperData that = (DeveloperData) o;
-        return Objects.equals(getId(), that.getId()) && Objects.equals(getName(), that.getName()) && Objects.equals(getAddressCountry(), that.getAddressCountry()) && Objects.equals(getAddressStreet(), that.getAddressStreet()) && Objects.equals(getAddressBuildingNumber(), that.getAddressBuildingNumber()) && Objects.equals(getAddressFlatNumber(), that.getAddressFlatNumber()) && Objects.equals(getAddressPostalCode(), that.getAddressPostalCode()) && Objects.equals(getTelephoneNumber(), that.getTelephoneNumber()) && Objects.equals(getFaxNumber(), that.getFaxNumber()) && Objects.equals(getEmail(), that.getEmail()) && Objects.equals(getTaxIdentificationNumber(), that.getTaxIdentificationNumber()) && Objects.equals(getCityId(), that.getCityId()) && Objects.equals(getVoivodeshipId(), that.getVoivodeshipId());
+        return Objects.equals(getId(), that.getId()) && Objects.equals(getName(), that.getName()) && Objects.equals(getAddressCountry(), that.getAddressCountry()) && Objects.equals(getAddressStreet(), that.getAddressStreet()) && Objects.equals(getAddressBuildingNumber(), that.getAddressBuildingNumber()) && Objects.equals(getAddressFlatNumber(), that.getAddressFlatNumber()) && Objects.equals(getAddressPostalCode(), that.getAddressPostalCode()) && Objects.equals(getTelephoneNumber(), that.getTelephoneNumber()) && Objects.equals(getFaxNumber(), that.getFaxNumber()) && Objects.equals(getEmail(), that.getEmail()) && Objects.equals(getTaxIdentificationNumber(), that.getTaxIdentificationNumber()) && Objects.equals(getCityId(), that.getCityId()) && Objects.equals(getVoivodeshipId(), that.getVoivodeshipId()) && Objects.equals(getLogoUrl(), that.getLogoUrl()) && Objects.equals(getCode(), that.getCode());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getName(), getAddressCountry(), getAddressStreet(), getAddressBuildingNumber(), getAddressFlatNumber(), getAddressPostalCode(), getTelephoneNumber(), getFaxNumber(), getEmail(), getTaxIdentificationNumber(), getCityId(), getVoivodeshipId());
+        return Objects.hash(getId(), getName(), getAddressCountry(), getAddressStreet(), getAddressBuildingNumber(), getAddressFlatNumber(), getAddressPostalCode(), getTelephoneNumber(), getFaxNumber(), getEmail(), getTaxIdentificationNumber(), getCityId(), getVoivodeshipId(), getLogoUrl(), getCode());
     }
 }

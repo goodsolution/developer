@@ -22,13 +22,13 @@ public class DeveloperGetResponse {
 
     private String taxIdentificationNumber;
 
-    private Integer cityId;
+    private Long cityId;
 
-    private Integer voivodeshipId;
+    private Long voivodeshipId;
 
     private String logoUrl;
 
-    public DeveloperGetResponse(Long id, String name, String addressCountry, String addressStreet, String addressBuildingNumber, String addressFlatNumber, String addressPostalCode, String telephoneNumber, String faxNumber, String email, String taxIdentificationNumber, Integer cityId, Integer voivodeshipId, String logoUrl) {
+    public DeveloperGetResponse(Long id, String name, String addressCountry, String addressStreet, String addressBuildingNumber, String addressFlatNumber, String addressPostalCode, String telephoneNumber, String faxNumber, String email, String taxIdentificationNumber, Long cityId, Long voivodeshipId, String logoUrl) {
         this.id = id;
         this.name = name;
         this.addressCountry = addressCountry;
@@ -133,19 +133,19 @@ public class DeveloperGetResponse {
         this.taxIdentificationNumber = taxIdentificationNumber;
     }
 
-    public Integer getCityId() {
+    public Long getCityId() {
         return cityId;
     }
 
-    public void setCityId(Integer cityId) {
+    public void setCityId(Long cityId) {
         this.cityId = cityId;
     }
 
-    public Integer getVoivodeshipId() {
+    public Long getVoivodeshipId() {
         return voivodeshipId;
     }
 
-    public void setVoivodeshipId(Integer voivodeshipId) {
+    public void setVoivodeshipId(Long voivodeshipId) {
         this.voivodeshipId = voivodeshipId;
     }
 

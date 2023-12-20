@@ -37,12 +37,12 @@ public class PremiseData implements Serializable {
     @Column(name = "is_loggia")
     private Boolean isLoggia;
     @Column(name = "building_id")
-    private Integer buildingId;
+    private Long buildingId;
 
     public PremiseData() {
     }
 
-    public PremiseData(Long id, String type, Integer number, Integer floor, Double surfacePerSqMeter, Double pricePerSqMeter, BigDecimal totalPrice, Integer numberOfRooms, String technicalStatus, String salesStatus, String exposure, Boolean isBalcony, Boolean isGarden, Boolean isTerrace, Boolean isLoggia, Integer buildingId) {
+    public PremiseData(Long id, String type, Integer number, Integer floor, Double surfacePerSqMeter, Double pricePerSqMeter, BigDecimal totalPrice, Integer numberOfRooms, String technicalStatus, String salesStatus, String exposure, Boolean isBalcony, Boolean isGarden, Boolean isTerrace, Boolean isLoggia, Long buildingId) {
         this.id = id;
         this.type = type;
         this.number = number;
@@ -181,11 +181,12 @@ public class PremiseData implements Serializable {
         isLoggia = loggia;
     }
 
-    public Integer getBuildingId() {
+
+    public Long getBuildingId() {
         return buildingId;
     }
 
-    public void setBuildingId(Integer buildingId) {
+    public void setBuildingId(Long buildingId) {
         this.buildingId = buildingId;
     }
 

@@ -11,12 +11,12 @@
           <a class="nav-link" routerLink="{{menu.url}}">{{ menu.name | translate}}</a>
         </li>
         <li class="nav-item dropdown" *ngIf="menu.children.length != 0">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
+          <a class="nav-link dropdown-toggle" href="" role="button" data-toggle="dropdown" aria-expanded="false">
             {{ menu.name | translate }}
           </a>
           <div class="dropdown-menu">
             <a class="dropdown-item" *ngFor="let submenu of menu.children"
-               routerLink="{{submenu.url}}">{{ submenu.name }}</a>
+               routerLink="{{menu.url}}">{{ submenu.name }}</a>
           </div>
         </li>
       </div>
