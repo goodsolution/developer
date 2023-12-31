@@ -177,10 +177,11 @@
                 </executions>
                 <configuration>
                     <executable>ng</executable>
-                    <workingDirectory>developer-angular/</workingDirectory>
+                    <workingDirectory>src-angular/</workingDirectory>
                     <arguments>
                         <argument>build</argument>
                         <argument>--output-hashing=none</argument>
+                        <argument>--vendor-chunk=true</argument>
                     </arguments>
                 </configuration>
             </plugin>
