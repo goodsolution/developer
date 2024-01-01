@@ -4,7 +4,10 @@ import {BrowserModule} from '@angular/platform-browser';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {CoreModule} from "./modules/core/core.module";
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {HomeComponent} from "./modules/home/home.component";
+import {HomeModule} from "./modules/home/home.module";
+import {AuthModule} from "./modules/auth/auth.module";
+import {CitiesModule} from "./modules/cities/cities.module";
 
 @NgModule({
   declarations: [
@@ -12,9 +15,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
   ],
   imports: [
     BrowserModule,
+    HomeModule,
+    AuthModule,
+    CitiesModule,
     CoreModule,
-    AppRoutingModule,
-    BrowserAnimationsModule
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]
