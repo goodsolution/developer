@@ -2,3 +2,9 @@
   flex: 1 1 auto;
 }
 
+.toolbar-logo {
+  height: 100%; /* Adjusts the height to fit the toolbar */
+  max-height: 64px; /* Maximum height can be adjusted based on your toolbar size */
+  width: auto; /* Keeps the aspect ratio */
+}
+

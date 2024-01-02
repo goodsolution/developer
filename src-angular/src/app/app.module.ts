@@ -7,6 +7,7 @@ import {CoreModule} from "./modules/core/core.module";
 import {HomeModule} from "./modules/home/home.module";
 import {AuthModule} from "./modules/auth/auth.module";
 import {CitiesModule} from "./modules/cities/cities.module";
+import {HttpClientModule} from "@angular/common/http";
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import {CitiesModule} from "./modules/cities/cities.module";
     AuthModule,
     CitiesModule,
     CoreModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

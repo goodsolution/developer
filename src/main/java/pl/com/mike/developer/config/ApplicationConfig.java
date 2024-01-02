@@ -151,7 +151,7 @@ public class ApplicationConfig {
     @Value("${system.code}")
     private String systemCode;
 
-    @Value("angular/pl/assets/img/")
+    @Value("angular/assets/img/")
     private String systemAsset;
 
     @Value("${system.main-page.photo}")
