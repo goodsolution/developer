@@ -1,21 +1,18 @@
 <nav>
   <mat-toolbar color="primary">
-    <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
-      <mat-icon>menu</mat-icon>
-    </button>
-    <button mat-button routerLink="/cities" [matMenuTriggerFor]="cities_menu"><i class="material-icons">location_city</i>Cities</button>
+    <img src="logo" alt="Logo" class="toolbar-logo">
+    <button mat-button [matMenuTriggerFor]="cities_menu"><i class="material-icons">location_city</i>Cities</button>
     <mat-menu #cities_menu="matMenu">
       <button mat-menu-item>Item 1</button>
       <button mat-menu-item>Item 2</button>
     </mat-menu>
     <button mat-button routerLink="/contact">Contact</button>
-    <button mat-button routerLink="/login">Login</button>
     <span class="spacer"></span>
-    <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
-      <mat-icon>favorite</mat-icon>
-    </button>
-    <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
-      <mat-icon>share</mat-icon>
-    </button>
+    <button mat-button [matMenuTriggerFor]="language_menu"><i class="material-icons">language</i>Language</button>
+    <mat-menu #language_menu="matMenu">
+      <button mat-menu-item>Polish</button>
+      <button mat-menu-item>English</button>
+    </mat-menu>
+    <button mat-button routerLink="/login"><i class="material-icons">pin</i>Login</button>
   </mat-toolbar>
 </nav>
