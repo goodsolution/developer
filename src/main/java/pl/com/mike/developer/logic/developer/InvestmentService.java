@@ -16,7 +16,7 @@ public class InvestmentService {
         this.applicationConfig = applicationConfig;
     }
 
-    public List<CityData> getInvestmentCitiesByDeveloperCode() {
+    public List<String> getInvestmentCitiesByDeveloperCode() {
         return investmentRepository.getInvestmentCitiesByDeveloperCode(applicationConfig.getSystemCode());
     }
 

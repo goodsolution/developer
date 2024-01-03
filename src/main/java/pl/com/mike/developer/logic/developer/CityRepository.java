@@ -10,9 +10,7 @@ import pl.com.mike.developer.domain.developer.InvestmentData;
 import java.util.List;
 
 @Repository
-public interface InvestmentRepository extends JpaRepository<InvestmentData, Long> {
+public interface CityRepository extends JpaRepository<CityData, Long> {
 
-    @Query(nativeQuery = true, value = "select distinct c.name from investments join cities c on c.id = investments.city_id where developer_id = (select developers.id from developers where developers.code = :code)")
-    List<String> getInvestmentCitiesByDeveloperCode(@Param("code") String code);
 
 }

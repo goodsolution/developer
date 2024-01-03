@@ -4,17 +4,27 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pl.com.mike.developer.config.ApplicationConfig;
+import pl.com.mike.developer.logic.developer.CityService;
 import pl.com.mike.developer.logic.developer.DeveloperSearchFilter;
 import pl.com.mike.developer.logic.developer.DeveloperService;
+import pl.com.mike.developer.logic.developer.InvestmentService;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("api/system/")
 public class ConfigEndpoint {
     private final DeveloperService developerService;
+    private final InvestmentService investmentService;
+
+    private final CityService cityService;
     private final ApplicationConfig applicationConfig;
 
-    public ConfigEndpoint(DeveloperService developerService, ApplicationConfig applicationConfig) {
+    public ConfigEndpoint(DeveloperService developerService, InvestmentService investmentService, CityService cityService, ApplicationConfig applicationConfig) {
         this.developerService = developerService;
+        this.investmentService = investmentService;
+        this.cityService = cityService;
         this.applicationConfig = applicationConfig;
     }
 
@@ -29,6 +39,27 @@ public class ConfigEndpoint {
     public HomePageImagePathGetResponse getHomePageImagePathResponse() {
         return new HomePageImagePathGetResponse(
                 getHomePageImagePathUrl()
+        );
+    }
+
+    @GetMapping("code")
+    public CodeGetResponse getCodeResponse() {
+        return new CodeGetResponse(
+                applicationConfig.getSystemCode()
+        );
+    }
+
+    @GetMapping("cities")
+    public CitiesGetResponse getCitiesResponse() {
+        return new CitiesGetResponse(
+                investmentService.getInvestmentCitiesByDeveloperCode()
+                        .stream()
+                        .map(city -> new CityGetResponse(
+                                null,
+                                city,
+                                null
+                        ))
+                        .collect(Collectors.toList())
         );
     }
 

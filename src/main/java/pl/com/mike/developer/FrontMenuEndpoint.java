@@ -47,7 +47,7 @@ public class FrontMenuEndpoint {
 
     private List<FrontMenuGetResponse> getCities() {
         return investmentService.getInvestmentCitiesByDeveloperCode().stream()
-                .map(x -> new FrontMenuGetResponse(x.getName(), "", Collections.emptyList()))
+                .map(x -> new FrontMenuGetResponse(x, "", Collections.emptyList()))
                 .collect(Collectors.toList());
     }
 
