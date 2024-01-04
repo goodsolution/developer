@@ -4,7 +4,7 @@ import {Component, ViewEncapsulation} from '@angular/core';
   selector: 'app-footer',
   template: `
     <p class="text-center">
-      &copy; Prawa zastrzeżone
+      &copy; {{'Copy Rights' | translate}}
     </p>
   `,
   styleUrls: ['./footer.component.css'],

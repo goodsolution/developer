@@ -10,14 +10,14 @@
           {{ city.name }}
         </button>
       </mat-menu>
-      <button mat-button routerLink="/contact">Contact</button>
+      <button mat-button routerLink="/contact">{{'Contact' | translate}}</button>
       <span class="spacer"></span>
-      <button mat-button [matMenuTriggerFor]="language_menu"><i class="material-icons">language</i>Language</button>
+      <button mat-button [matMenuTriggerFor]="language_menu"><i class="material-icons">language</i>{{'Language' | translate}}</button>
       <mat-menu #language_menu="matMenu">
-        <button mat-menu-item (click)="switchLanguage('pl')">Polish</button>
-        <button mat-menu-item (click)="switchLanguage('en')">English</button>
+        <button mat-menu-item (click)="switchLanguage('pl')">{{'Polish' | translate}}</button>
+        <button mat-menu-item (click)="switchLanguage('en')">{{'English' | translate}}</button>
       </mat-menu>
-      <button mat-button routerLink="/login"><i class="material-icons">pin</i>Login</button>
+      <button mat-button routerLink="/login"><i class="material-icons">pin</i>{{'Login' | translate}}</button>
     </mat-toolbar>
   </nav>
 </ng-container>
