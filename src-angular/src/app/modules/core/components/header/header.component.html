@@ -1,18 +1,48 @@
-<nav>
-  <mat-toolbar color="primary">
-    <img src="{{url}}" alt="Logo" class="toolbar-logo">
-    <button mat-button [matMenuTriggerFor]="cities_menu" routerLink="/cities"><i class="material-icons">location_city</i>Cities</button>
-    <mat-menu #cities_menu="matMenu">
-      <button mat-menu-item>Item 1</button>
-      <button mat-menu-item>Item 2</button>
-    </mat-menu>
-    <button mat-button routerLink="/contact">Contact</button>
-    <span class="spacer"></span>
-    <button mat-button [matMenuTriggerFor]="language_menu"><i class="material-icons">language</i>Language</button>
-    <mat-menu #language_menu="matMenu">
-      <button mat-menu-item>Polish</button>
-      <button mat-menu-item>English</button>
-    </mat-menu>
-    <button mat-button routerLink="/login"><i class="material-icons">pin</i>Login</button>
-  </mat-toolbar>
-</nav>
+<!--<ng-container *ngIf="code$ | async as code">-->
+<ng-container *ngIf="code === 'domdevelopment'">
+  <nav>
+    <mat-toolbar color="primary">
+      <img src="{{url}}" alt="Logo" class="toolbar-logo">
+      <button mat-button [matMenuTriggerFor]="cities_menu">
+        <i class="material-icons">location_city</i>Cities
+      </button>
+      <mat-menu #cities_menu="matMenu">
+        <button *ngFor="let city of cities" mat-menu-item [routerLink]="'/' + city.name">
+          {{ city.name }}
+        </button>
+      </mat-menu>
+      <button mat-button routerLink="/contact">Contact</button>
+      <span class="spacer"></span>
+      <button mat-button [matMenuTriggerFor]="language_menu"><i class="material-icons">language</i>Language</button>
+      <mat-menu #language_menu="matMenu">
+        <button mat-menu-item>Polish</button>
+        <button mat-menu-item>English</button>
+      </mat-menu>
+      <button mat-button routerLink="/login"><i class="material-icons">pin</i>Login</button>
+    </mat-toolbar>
+  </nav>
+</ng-container>
+
+<ng-container *ngIf="code === 'antal'">
+  <nav>
+    <mat-toolbar color="primary">
+      <img src="{{url}}" alt="Logo" class="toolbar-logo">
+      <button mat-button [matMenuTriggerFor]="cities_menu">
+        <i class="material-icons">location_city</i>Main Cities
+      </button>
+      <mat-menu #cities_menu="matMenu">
+        <button *ngFor="let city of cities" mat-menu-item [routerLink]="'/' + city.name">
+          {{ city.name }}
+        </button>
+      </mat-menu>
+      <button mat-button routerLink="/offers">Special Offers!</button>
+      <span class="spacer"></span>
+      <button mat-button [matMenuTriggerFor]="language_menu"><i class="material-icons">language</i>Language</button>
+      <mat-menu #language_menu="matMenu">
+        <button mat-menu-item>Polish</button>
+        <button mat-menu-item>English</button>
+      </mat-menu>
+      <button mat-button routerLink="/login"><i class="material-icons">pin</i>Login</button>
+    </mat-toolbar>
+  </nav>
+</ng-container>
