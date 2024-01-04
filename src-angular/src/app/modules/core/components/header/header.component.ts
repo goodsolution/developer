@@ -3,6 +3,7 @@ import {HeaderLogoUrlService} from "../../services/header-logo-url.service";
 import {CityResponse} from "../../models/city.model";
 import {CitiesService} from "../../services/cities.service";
 import {CodeStatusService} from "../../services/code-status.service";
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
   selector: 'app-header',
@@ -16,7 +17,13 @@ export class HeaderComponent implements OnInit {
 
   constructor(private service: HeaderLogoUrlService,
               private cityService: CitiesService,
-              private codeService: CodeStatusService) {
+              private codeService: CodeStatusService,
+              private translate: TranslateService) {
+    translate.setDefaultLang('en'); // set a default language
+  }
+
+  switchLanguage(language: string) {
+    this.translate.use(language); // switch to selected language
   }
 
   getCode() {

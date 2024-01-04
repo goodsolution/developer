@@ -3,6 +3,7 @@ import {HeaderComponent} from './components/header/header.component';
 import {SharedModule} from "../shared/shared.module";
 import {RouterModule} from "@angular/router";
 import {FooterComponent} from "./components/footer/footer.component";
+import {TranslateModule} from "@ngx-translate/core";
 
 
 @NgModule({
@@ -10,10 +11,11 @@ import {FooterComponent} from "./components/footer/footer.component";
     HeaderComponent,
     FooterComponent
   ],
-  imports: [
-    SharedModule,
-    RouterModule
-  ],
+    imports: [
+        SharedModule,
+        RouterModule,
+        TranslateModule
+    ],
   exports: [
     HeaderComponent,
     FooterComponent
