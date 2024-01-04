@@ -63,6 +63,25 @@ public class ConfigEndpoint {
         );
     }
 
+    @GetMapping("investments")
+    public InvestmentsGetResponse getInvestmentsResponse() {
+        return new InvestmentsGetResponse(
+                investmentService.getInvestmentsByDeveloperCode()
+                        .stream()
+                        .map(investment -> new InvestmentGetResponse(
+                                investment.getId(),
+                                investment.getName(),
+                                investment.getDescription(),
+                                investment.getAddressCountry(),
+                                investment.getAddressStreet(),
+                                investment.getDeveloperId(),
+                                investment.getCityId(),
+                                investment.getVoivodeshipId()
+                        ))
+                        .collect(Collectors.toList())
+        );
+    }
+
     private String getHomePageImagePathUrl() {
         return applicationConfig.getSystemAsset() + applicationConfig.getSystemCode() + applicationConfig.getSystemHomePagePhoto();
     }
