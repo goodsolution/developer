@@ -16,25 +16,26 @@ public class InvestmentData implements Serializable {
     private String addressCountry;
     @Column(name = "address_street")
     private String addressStreet;
-    @Column(name = "developer_id")
+    @Column(name = "developer_id", insertable = false, updatable = false)
     private Long developerId;
     @Column(name = "city_id")
     private Long cityId;
     @Column(name = "voivodeship_id")
     private Long voivodeshipId;
 
+    @ManyToOne
+    @JoinColumn(name = "developer_id", referencedColumnName = "id")
+    private DeveloperData developer;
+
     public InvestmentData() {
     }
 
-    public InvestmentData(Long id, String name, String description, String addressCountry, String addressStreet, Long developerId, Long cityId, Long voivodeshipId) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
-        this.addressCountry = addressCountry;
-        this.addressStreet = addressStreet;
-        this.developerId = developerId;
-        this.cityId = cityId;
-        this.voivodeshipId = voivodeshipId;
+    public DeveloperData getDeveloper() {
+        return developer;
+    }
+
+    public void setDeveloper(DeveloperData developer) {
+        this.developer = developer;
     }
 
     public Long getId() {

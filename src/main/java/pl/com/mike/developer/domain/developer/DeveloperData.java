@@ -3,6 +3,7 @@ package pl.com.mike.developer.domain.developer;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "developers", schema = "course_platform")
@@ -34,10 +35,20 @@ public class DeveloperData implements Serializable {
     private Long voivodeshipId;
     @Column(name = "logo_url")
     private String logoUrl;
-
     private String code;
 
     public DeveloperData() {
+    }
+
+    @OneToMany(mappedBy = "developer")
+    private Set<InvestmentData> investments;
+
+    public Set<InvestmentData> getInvestments() {
+        return investments;
+    }
+
+    public void setInvestments(Set<InvestmentData> investments) {
+        this.investments = investments;
     }
 
     public String getCode() {
