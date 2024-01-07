@@ -4,21 +4,27 @@ import {SharedModule} from "../shared/shared.module";
 import {RouterModule} from "@angular/router";
 import {FooterComponent} from "./components/footer/footer.component";
 import {TranslateModule} from "@ngx-translate/core";
+import {DodeHeaderComponent} from "./components/header/dode-header/dode-header.component";
+import {AntalHeaderComponent} from "./components/header/antal-header/antal-header.component";
 
 
 @NgModule({
   declarations: [
     HeaderComponent,
-    FooterComponent
+    FooterComponent,
+    DodeHeaderComponent,
+    AntalHeaderComponent
   ],
-    imports: [
-        SharedModule,
-        RouterModule,
-        TranslateModule
-    ],
+  imports: [
+    SharedModule,
+    RouterModule,
+    TranslateModule
+  ],
   exports: [
     HeaderComponent,
-    FooterComponent
+    FooterComponent,
+    DodeHeaderComponent,
+    AntalHeaderComponent
   ]
 })
 export class CoreModule {

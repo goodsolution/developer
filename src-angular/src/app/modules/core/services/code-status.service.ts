@@ -19,5 +19,10 @@ export class CodeStatusService {
     return this.http.get<SearchResultCode>(`${this.apiSystemCode}`);
   }
 
+  fetchHeaderType(): Observable<string> {
+    // Replace with your actual API call
+    return this.http.get<string>(`${this.apiSystemCode}`);
+  }
+
 
 }

@@ -1,0 +1,20 @@
+<nav>
+  <mat-toolbar color="primary">
+    <img src="{{url}}" alt="Logo" class="toolbar-logo">
+    <button mat-button [matMenuTriggerFor]="cities_menu">
+      <i class="material-icons">location_city</i>{{'Cities' | translate}}</button>
+    <mat-menu #cities_menu="matMenu">
+      <button *ngFor="let city of cities" mat-menu-item [routerLink]="'/' + city.name">
+        {{ city.name }}
+      </button>
+    </mat-menu>
+    <button mat-button routerLink="/contact">{{'Contact' | translate}}</button>
+    <span class="spacer"></span>
+    <button mat-button [matMenuTriggerFor]="language_menu"><i class="material-icons">language</i>{{'Language' | translate}}</button>
+    <mat-menu #language_menu="matMenu">
+      <button mat-menu-item (click)="switchLanguage('pl')">{{'Polish' | translate}}</button>
+      <button mat-menu-item (click)="switchLanguage('en')">{{'English' | translate}}</button>
+    </mat-menu>
+    <button mat-button routerLink="/login"><i class="material-icons">pin</i>{{'Login' | translate}}</button>
+  </mat-toolbar>
+</nav>
