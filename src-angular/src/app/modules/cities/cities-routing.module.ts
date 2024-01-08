@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import {CitiesComponent} from "./cities.component";
 
 const routes: Routes = [
-  {path: 'WARSZAWA', component: CitiesComponent}
+  {path: 'city/:name', component: CitiesComponent}
 ];
 
 @NgModule({
