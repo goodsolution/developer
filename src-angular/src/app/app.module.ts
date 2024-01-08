@@ -10,6 +10,7 @@ import {CitiesModule} from "./modules/cities/cities.module";
 import {HttpClient, HttpClientModule} from "@angular/common/http";
 import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
 import {TranslateHttpLoader} from "@ngx-translate/http-loader";
+import {InvestmentListModule} from "./modules/investment-list/investment-list.module";
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import {TranslateHttpLoader} from "@ngx-translate/http-loader";
     AuthModule,
     CitiesModule,
     CoreModule,
+    InvestmentListModule,
     AppRoutingModule,
     HttpClientModule,
     TranslateModule.forRoot({

@@ -4,5 +4,6 @@ export const environment = {
   citiesEndpoint: 'https://localhost:8081/api/system/cities',
   systemCodeEndpoint: 'https://localhost:8081/api/system/code',
   frontMenuDeveloperEndpoint: 'https://localhost:8081/api/system/developers/front-menu',
-  homePagePhoto: 'https://localhost:8081/api/system/homePageImagePath'
+  homePagePhoto: 'https://localhost:8081/api/system/homePageImagePath',
+  investmentsEndpoint: 'https://localhost:8081/api/system/investments',
 };
