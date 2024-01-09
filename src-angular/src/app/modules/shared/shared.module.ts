@@ -14,7 +14,7 @@ import { DefaultComponent } from './default/default.component';
     CommonModule
   ],
   exports: [
-    CommonModule, MaterialModule, FormsModule, ReactiveFormsModule, BrowserAnimationsModule
+    CommonModule, MaterialModule, FormsModule, ReactiveFormsModule, BrowserAnimationsModule, DefaultComponent
   ]
 })
 export class SharedModule {

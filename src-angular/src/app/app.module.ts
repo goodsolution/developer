@@ -6,7 +6,6 @@ import {AppComponent} from './app.component';
 import {CoreModule} from "./modules/core/core.module";
 import {HomeModule} from "./modules/home/home.module";
 import {AuthModule} from "./modules/auth/auth.module";
-import {CitiesModule} from "./modules/cities/cities.module";
 import {HttpClient, HttpClientModule} from "@angular/common/http";
 import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
 import {TranslateHttpLoader} from "@ngx-translate/http-loader";
@@ -20,7 +19,6 @@ import {InvestmentListModule} from "./modules/investment-list/investment-list.mo
     BrowserModule,
     HomeModule,
     AuthModule,
-    CitiesModule,
     CoreModule,
     InvestmentListModule,
     AppRoutingModule,
