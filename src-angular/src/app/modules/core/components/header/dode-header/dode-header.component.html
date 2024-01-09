@@ -1,6 +1,6 @@
 <nav>
   <mat-toolbar color="primary">
-    <img src="{{url}}" alt="Logo" class="toolbar-logo">
+    <img src="{{url}}" alt="Logo" class="toolbar-logo" routerLink="">
     <button mat-button [matMenuTriggerFor]="cities_menu">
       <i class="material-icons">location_city</i>{{'Cities' | translate}}</button>
     <mat-menu #cities_menu="matMenu">
