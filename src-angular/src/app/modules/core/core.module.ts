@@ -1,5 +1,4 @@
 import {NgModule} from '@angular/core';
-
 import {SharedModule} from "../shared/shared.module";
 import {RouterModule} from "@angular/router";
 import {FooterComponent} from "./components/footer/footer.component";
@@ -10,7 +9,6 @@ import {AntalHeaderComponent} from "./components/header/antal-header/antal-heade
 
 @NgModule({
   declarations: [
-
     FooterComponent,
     DodeHeaderComponent,
     AntalHeaderComponent
@@ -21,7 +19,6 @@ import {AntalHeaderComponent} from "./components/header/antal-header/antal-heade
     TranslateModule
   ],
   exports: [
-
     FooterComponent,
     DodeHeaderComponent,
     AntalHeaderComponent

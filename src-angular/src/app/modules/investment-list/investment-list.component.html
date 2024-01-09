@@ -1,5 +1,5 @@
 <div class="card-container" *ngIf="investments.length > 0">
-  <ng-container *ngFor="let investment of investments; index as i">
+  <ng-container *ngFor="let investment of investments">
     <app-investment [investment]="investment"></app-investment>
   </ng-container>
 </div>

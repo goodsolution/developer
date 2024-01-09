@@ -10,11 +10,12 @@ import {CityResponse} from "../core/models/city.model";
   templateUrl: './investment-list.component.html',
   styleUrls: ['./investment-list.component.scss']
 })
-export class InvestmentListComponent implements OnInit{
+export class InvestmentListComponent implements OnInit {
 
   investments: InvestmentResponse[] = [];
   cities: CityResponse[] = [];
   cityName: string = '';
+
   constructor(private service: InvestmentsService, private route: ActivatedRoute, private cityService: CitiesService) {
   }
 
@@ -33,11 +34,9 @@ export class InvestmentListComponent implements OnInit{
   ngOnInit(): void {
     this.getInvestments();
     this.route.paramMap.subscribe(params => {
-      this.cityName = params.get('name') || '';
+      this.cityName = params.get('name') ?? '';
     });
   }
-
-
 
 
 }
