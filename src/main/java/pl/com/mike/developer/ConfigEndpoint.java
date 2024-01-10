@@ -2,6 +2,7 @@ package pl.com.mike.developer;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import pl.com.mike.developer.config.ApplicationConfig;
 import pl.com.mike.developer.logic.developer.CityService;
@@ -67,6 +68,25 @@ public class ConfigEndpoint {
     public InvestmentsGetResponse getInvestmentsResponse() {
         return new InvestmentsGetResponse(
                 investmentService.getInvestmentsByDeveloperCode()
+                        .stream()
+                        .map(investment -> new InvestmentGetResponse(
+                                investment.getId(),
+                                investment.getName(),
+                                investment.getDescription(),
+                                investment.getAddressCountry(),
+                                investment.getAddressStreet(),
+                                investment.getDeveloperId(),
+                                investment.getCityId(),
+                                investment.getVoivodeshipId()
+                        ))
+                        .collect(Collectors.toList())
+        );
+    }
+
+    @GetMapping("investmentsByCity")
+    public InvestmentsByCityGetResponse getInvestmentsByCityResponse(@RequestParam(name = "city", required = true) String city) {
+        return new InvestmentsByCityGetResponse(
+                investmentService.getInvestmentsByDeveloperCodeAndCity(city)
                         .stream()
                         .map(investment -> new InvestmentGetResponse(
                                 investment.getId(),
