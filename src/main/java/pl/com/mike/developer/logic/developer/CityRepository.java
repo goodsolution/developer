@@ -13,4 +13,7 @@ import java.util.List;
 public interface CityRepository extends JpaRepository<CityData, Long> {
 
 
+    @Query(nativeQuery = true, value = "select distinct c.id, c.name, c.voivodeship_id from cities c join investments i on c.id = i.city_id where i.developer_id = (select developers.id from developers where developers.code = :code)")
+    List<CityData> getCitiesByDeveloperCode(@Param("code") String code);
+
 }

@@ -1,20 +1,29 @@
 import {Injectable} from '@angular/core';
 import {environment} from "../../../../environments/environment.development";
 import {HttpClient} from "@angular/common/http";
-import {Observable} from "rxjs";
+import {Observable, of, tap} from "rxjs";
 import {SearchResultCityModel} from "../models/searchResultCity.model";
+import {CityResponse} from "../models/city.model";
 
 @Injectable({
   providedIn: 'root'
 })
 export class CitiesService {
-  apiUrl = environment.citiesEndpoint;
+  private apiUrl = environment.citiesEndpoint;
+  private cache!: SearchResultCityModel;
 
   constructor(private http: HttpClient) {
   }
 
   getCities(): Observable<SearchResultCityModel> {
-    return this.http.get<SearchResultCityModel>(`${this.apiUrl}`);
+    if (this.cache) {
+      console.log('Fetching data from cache Cities');
+      return of(this.cache); // Return cached data
+    } else {
+      console.log('Fetching data from API Cities');
+      return this.http.get<SearchResultCityModel>(`${this.apiUrl}`)
+        .pipe(tap(data => this.cache = data));
+    }
   }
 
 }

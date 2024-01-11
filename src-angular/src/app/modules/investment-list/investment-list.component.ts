@@ -31,10 +31,30 @@ export class InvestmentListComponent implements OnInit {
     });
   }
 
+  // ngOnInit(): void {
+  //   this.getInvestments();
+  //   this.route.paramMap.subscribe(params => {
+  //     this.cityName = params.get('name') ?? '';
+  //   });
+  // }
+
   ngOnInit(): void {
-    this.getInvestments();
     this.route.paramMap.subscribe(params => {
       this.cityName = params.get('name') ?? '';
+      this.filterInvestmentsByCity(this.cityName);
+    });
+  }
+
+  filterInvestmentsByCity(cityName: string): void {
+    // console.log(cityName + ' cityName w filterInvestmentsByCity'); OK WARSZAWA
+    this.cityService.getCities().subscribe(cityData => {
+      console.log('cityData.cities:', cityData.cities);
+      const cityId = cityData.cities.find(city => city.name === cityName)?.id;
+      if (cityId) {
+        this.service.getInvestments().subscribe(investmentData => {
+          this.investments = investmentData.investments.filter(investment => investment.cityId === cityId);
+        });
+      }
     });
   }
 

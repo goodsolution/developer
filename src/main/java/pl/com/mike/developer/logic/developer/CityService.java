@@ -9,10 +9,19 @@ import java.util.List;
 @Service
 public class CityService {
     private final CityRepository cityRepository;
+    private final ApplicationConfig applicationConfig;
 
-    public CityService(CityRepository cityRepository) {
+    public CityService(CityRepository cityRepository, ApplicationConfig applicationConfig) {
         this.cityRepository = cityRepository;
+        this.applicationConfig = applicationConfig;
     }
 
+    public List<CityData> getCities() {
+        return cityRepository.findAll();
+    }
+
+    public List<CityData> getCitiesByDeveloperCode() {
+        return cityRepository.getCitiesByDeveloperCode(applicationConfig.getSystemCode());
+    }
 
 }

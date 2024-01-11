@@ -10,7 +10,7 @@ import pl.com.mike.developer.logic.developer.DeveloperSearchFilter;
 import pl.com.mike.developer.logic.developer.DeveloperService;
 import pl.com.mike.developer.logic.developer.InvestmentService;
 
-import java.util.List;
+import java.util.Collections;
 import java.util.stream.Collectors;
 
 @RestController
@@ -18,7 +18,6 @@ import java.util.stream.Collectors;
 public class ConfigEndpoint {
     private final DeveloperService developerService;
     private final InvestmentService investmentService;
-
     private final CityService cityService;
     private final ApplicationConfig applicationConfig;
 
@@ -52,6 +51,20 @@ public class ConfigEndpoint {
 
     @GetMapping("cities")
     public CitiesGetResponse getCitiesResponse() {
+        return new CitiesGetResponse(
+                cityService.getCitiesByDeveloperCode()
+                        .stream()
+                        .map(city -> new CityGetResponse(
+                                city.getId(),
+                                city.getName(),
+                                city.getVoivodeshipId()
+                        ))
+                        .collect(Collectors.toList())
+        );
+    }
+
+    @GetMapping("citiesNamesByDeveloperCode")
+    public CitiesGetResponse getCitiesNamesByDeveloperCode() {
         return new CitiesGetResponse(
                 investmentService.getInvestmentCitiesByDeveloperCode()
                         .stream()
