@@ -27,7 +27,7 @@ export class AntalHeaderComponent implements OnInit {
   }
 
   getCode() {
-    this.codeService.getDeveloperStatus().subscribe(data => {
+    this.codeService.fetchStatusCode().subscribe(data => {
       this.code = data.code;
     });
   }

@@ -15,13 +15,8 @@ export class CodeStatusService {
   constructor(private http: HttpClient) {
   }
 
-  getDeveloperStatus():Observable<SearchResultCode> {
+  fetchStatusCode(): Observable<SearchResultCode> {
     return this.http.get<SearchResultCode>(`${this.apiSystemCode}`);
-  }
-
-  fetchHeaderType(): Observable<string> {
-    // Replace with your actual API call
-    return this.http.get<string>(`${this.apiSystemCode}`);
   }
 
 

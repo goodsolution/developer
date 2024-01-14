@@ -3,6 +3,9 @@ import {CodeStatusService} from "./modules/core/services/code-status.service";
 import {AntalHeaderComponent} from "./modules/core/components/header/antal-header/antal-header.component";
 import {DodeHeaderComponent} from "./modules/core/components/header/dode-header/dode-header.component";
 import {DefaultComponent} from "./modules/shared/default/default.component";
+import {FooterAntalComponent} from "./modules/core/components/footer/footer-antal/footer-antal.component";
+import {FooterDodeComponent} from "./modules/core/components/footer/footer-dode/footer-dode.component";
+import {SearchResultCode} from "./modules/core/models/searchResultCode.model";
 
 @Component({
   selector: 'app-root',
@@ -11,45 +14,48 @@ import {DefaultComponent} from "./modules/shared/default/default.component";
 })
 export class AppComponent implements OnInit, AfterViewInit {
   @ViewChild('headerContainer', {read: ViewContainerRef, static: true})
-  private headerContainer!: ViewContainerRef
+  private headerContainer!: ViewContainerRef;
+  @ViewChild('footerContainer', {read: ViewContainerRef, static: true})
+  private footerContainer!: ViewContainerRef;
   title = 'app';
-  code!: string;
+  statusCode!: SearchResultCode;
 
   constructor(private codeStatusService: CodeStatusService) {
   }
 
   ngAfterViewInit(): void {
-    this.codeStatusService.fetchHeaderType().subscribe(headerType => {
-      this.code = headerType;
-      console.log('code', this.code);
-      this.loadHeaderComponent(this.code);
+    this.codeStatusService.fetchStatusCode().subscribe(headerType => {
+      this.statusCode = headerType;
+      console.log('code', this.statusCode.code);
+      this.loadDynamicComponents(this.statusCode.code);
     });
   }
 
   ngOnInit() {
   }
 
-  private loadHeaderComponent(headerTypeObject: any) {
-    // Extract the 'code' property from the object
-    const headerType = headerTypeObject.code;
-    console.log('Extracted headerType:', headerType);
-    let component: Type<any>;
-    switch (headerType) {
+  private loadDynamicComponents(codeStatus: string) {
+    let headerComponent: Type<any>;
+    let footerComponent: Type<any>
+    switch (codeStatus) {
       case 'antal':
-        console.log('Loading AntalHeaderComponent');
-        component = AntalHeaderComponent;
+        headerComponent = AntalHeaderComponent;
+        footerComponent = FooterAntalComponent;
         break;
       case 'domdevelopment':
-        console.log('Loading DodeHeaderComponent');
-        component = DodeHeaderComponent;
+        headerComponent = DodeHeaderComponent;
+        footerComponent = FooterDodeComponent;
         break;
       default:
-        console.log('Loading DefaultComponent');
-        component = DefaultComponent;
+        headerComponent = DefaultComponent;
+        footerComponent = DefaultComponent;
         break;
     }
     this.headerContainer.clear();
-    this.headerContainer.createComponent(component);
+    this.footerContainer.clear();
+    this.headerContainer.createComponent(headerComponent);
+    this.footerContainer.createComponent(footerComponent);
   }
-
 }
+
+

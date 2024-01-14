@@ -23,13 +23,8 @@ export class InvestmentsService {
         .pipe(tap(data => this.investmentsCache = data)); // Cache data
     }
   }
-  //
-  // constructor(private http: HttpClient) {
-  // }
-  //
-  // getInvestments(): Observable<SearchResultInvestmentModel> {
-  //   return this.http.get<SearchResultInvestmentModel>(`${this.apiUrl}`);
-  // }
+  //TODO cache mechanizm angular
+  //TODO once hour check - shot to DB
 
 }
 
