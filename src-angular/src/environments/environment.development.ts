@@ -7,4 +7,5 @@ export const environment = {
   frontMenuDeveloperEndpoint: 'https://localhost:8081/api/system/developers/front-menu',
   homePagePhoto: 'https://localhost:8081/api/system/homePageImagePath',
   investmentsEndpoint: 'https://localhost:8081/api/system/investments',
+  developerBySystemCodeEndpoint: 'https://localhost:8081/api/system/developers/code',
 };

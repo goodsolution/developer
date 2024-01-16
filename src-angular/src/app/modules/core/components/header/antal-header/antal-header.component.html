@@ -9,6 +9,7 @@
       </button>
     </mat-menu>
     <button mat-button routerLink="/offers">Special Offers!</button>
+    <button mat-button [routerLink]="['/contact', code]">{{'Contact' | translate}}</button>
     <span class="spacer"></span>
     <button mat-button [matMenuTriggerFor]="language_menu"><i class="material-icons">language</i>Language</button>
     <mat-menu #language_menu="matMenu">

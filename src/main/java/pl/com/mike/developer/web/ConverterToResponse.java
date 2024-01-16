@@ -54,7 +54,8 @@ public class ConverterToResponse {
                             developer.getTaxIdentificationNumber(),
                             developer.getCityId(),
                             developer.getVoivodeshipId(),
-                            developer.getLogoUrl()
+                            developer.getLogoUrl(),
+                            developer.getCode()
                     )
             );
         }
@@ -79,7 +80,8 @@ public class ConverterToResponse {
                             developer.getTaxIdentificationNumber(),
                             developer.getCityId(),
                             developer.getVoivodeshipId(),
-                            developer.getLogoUrl()
+                            developer.getLogoUrl(),
+                            developer.getCode()
                     )
             );
         return developersGetResponse;
