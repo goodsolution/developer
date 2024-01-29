@@ -10,7 +10,7 @@ import {SearchResultInvestmentModel} from "../models/searchResultInvestment.mode
 export class InvestmentsService {
 
   private apiUrl = environment.investmentsEndpoint;
-  private cache$: Observable<SearchResultInvestmentModel> | null = null;
+  private investmentCache$: Observable<SearchResultInvestmentModel> | null = null;
   private cacheExpirationMs = 100000; // Cache expiration in milliseconds (e.g., 300000ms = 5 minutes)
   private lastRequestTime: number | null = null;
 
@@ -19,12 +19,12 @@ export class InvestmentsService {
   getInvestments(): Observable<SearchResultInvestmentModel> {
     const currentTime = new Date().getTime();
 
-    if (this.cache$ && this.lastRequestTime && (currentTime - this.lastRequestTime < this.cacheExpirationMs)) {
+    if (this.investmentCache$ && this.lastRequestTime && (currentTime - this.lastRequestTime < this.cacheExpirationMs)) {
       console.log('Fetching data from cache Investments');
-      return this.cache$;
+      return this.investmentCache$;
     } else {
       console.log('Fetching data from API Investments');
-      this.cache$ = this.http.get<SearchResultInvestmentModel>(this.apiUrl).pipe(
+      this.investmentCache$ = this.http.get<SearchResultInvestmentModel>(this.apiUrl).pipe(
         tap(() => this.lastRequestTime = new Date().getTime()),
         shareReplay(1),
         catchError(error => {
@@ -32,7 +32,7 @@ export class InvestmentsService {
           return throwError(() => error);
         })
       );
-      return this.cache$;
+      return this.investmentCache$;
     }
   }
 

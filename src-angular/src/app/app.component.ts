@@ -57,5 +57,6 @@ export class AppComponent implements OnInit, AfterViewInit {
     this.footerContainer.createComponent(footerComponent);
   }
 }
+//TODO add contact page and home page to loader, no name in the contact link
 
 
