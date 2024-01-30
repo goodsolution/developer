@@ -6,6 +6,9 @@ import {DefaultComponent} from "./modules/shared/default/default.component";
 import {FooterAntalComponent} from "./modules/core/components/footer/footer-antal/footer-antal.component";
 import {FooterDodeComponent} from "./modules/core/components/footer/footer-dode/footer-dode.component";
 import {SearchResultCode} from "./modules/core/models/searchResultCode.model";
+import {ContactAntalComponent} from "./modules/contact/contact-antal/contact-antal.component";
+import {ContactDodeComponent} from "./modules/contact/contact-dode/contact-dode.component";
+import {NavigationEnd, Router} from "@angular/router";
 
 @Component({
   selector: 'app-root',
@@ -17,26 +20,39 @@ export class AppComponent implements OnInit, AfterViewInit {
   private headerContainer!: ViewContainerRef;
   @ViewChild('footerContainer', {read: ViewContainerRef, static: true})
   private footerContainer!: ViewContainerRef;
+  @ViewChild('contactContainer', {read: ViewContainerRef, static: true})
+  private contactContainer!: ViewContainerRef;
   title = 'app';
   statusCode!: SearchResultCode;
 
-  constructor(private codeStatusService: CodeStatusService) {
+  constructor(private codeStatusService: CodeStatusService, private router: Router) {
   }
 
   ngAfterViewInit(): void {
     this.codeStatusService.fetchStatusCode().subscribe(headerType => {
       this.statusCode = headerType;
-      console.log('code', this.statusCode.code);
-      this.loadDynamicComponents(this.statusCode.code);
+      console.log('code loadHeaderFooterDynamicComponents', this.statusCode.code);
+      this.loadHeaderFooterDynamicComponents(this.statusCode.code);
     });
   }
 
   ngOnInit() {
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        if (event.url !== '/contact') {
+          this.contactContainer.clear();
+        }
+      }
+    });
+    this.codeStatusService.getContactComponentTrigger().subscribe(() => {
+      console.log('code loadDynamicComponents', this.statusCode.code);
+      this.loadDynamicComponents(this.statusCode.code);
+    });
   }
 
-  private loadDynamicComponents(codeStatus: string) {
+  private loadHeaderFooterDynamicComponents(codeStatus: string) {
     let headerComponent: Type<any>;
-    let footerComponent: Type<any>
+    let footerComponent: Type<any>;
     switch (codeStatus) {
       case 'antal':
         headerComponent = AntalHeaderComponent;
@@ -56,7 +72,26 @@ export class AppComponent implements OnInit, AfterViewInit {
     this.headerContainer.createComponent(headerComponent);
     this.footerContainer.createComponent(footerComponent);
   }
+
+  private loadDynamicComponents(codeStatus: string) {
+    let contactComponent: Type<any>;
+    switch (codeStatus) {
+      case 'antal':
+        contactComponent = ContactAntalComponent;
+        break;
+      case 'domdevelopment':
+        contactComponent = ContactDodeComponent;
+        break;
+      default:
+        contactComponent = DefaultComponent;
+        break;
+    }
+    this.contactContainer.clear();
+    this.contactContainer.createComponent(contactComponent);
+  }
+
 }
+
 //TODO add contact page and home page to loader, no name in the contact link
 
 

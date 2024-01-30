@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {SearchResultDeveloperModel} from "../../core/models/searchResultDeveloper.model";
 import {DeveloperService} from "../../core/services/developer.service";
 
@@ -7,7 +7,7 @@ import {DeveloperService} from "../../core/services/developer.service";
   templateUrl: './contact-antal.component.html',
   styleUrls: ['./contact-antal.component.scss']
 })
-export class ContactAntalComponent {
+export class ContactAntalComponent implements OnInit {
 
   developers!: SearchResultDeveloperModel;
 

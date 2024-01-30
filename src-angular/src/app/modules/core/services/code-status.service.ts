@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {environment} from "../../../../environments/environment.development";
 import {HttpClient} from "@angular/common/http";
-import {Observable} from "rxjs";
+import {Observable, Subject} from "rxjs";
 import {SearchResultCode} from "../models/searchResultCode.model";
 
 
@@ -11,6 +11,7 @@ import {SearchResultCode} from "../models/searchResultCode.model";
 export class CodeStatusService {
 
   private apiSystemCode = environment.systemCodeEndpoint;
+  private contactComponentTrigger = new Subject<void>();
 
   constructor(private http: HttpClient) {
   }
@@ -19,5 +20,12 @@ export class CodeStatusService {
     return this.http.get<SearchResultCode>(`${this.apiSystemCode}`);
   }
 
+  triggerContactComponentLoading() {
+    this.contactComponentTrigger.next();
+  }
+
+  getContactComponentTrigger() {
+    return this.contactComponentTrigger.asObservable();
+  }
 
 }

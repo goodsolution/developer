@@ -1,11 +1,10 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {ContactDodeComponent} from "./contact-dode/contact-dode.component";
-import {ContactAntalComponent} from "./contact-antal/contact-antal.component";
+import {ContactComponent} from "./contact.component";
 
 const routes: Routes = [
-  {path: 'contact/domdevelopment', component: ContactDodeComponent},
-  {path: 'contact/antal', component: ContactAntalComponent},
+  {path: 'contact', component: ContactComponent },
+
 ];
 
 @NgModule({
