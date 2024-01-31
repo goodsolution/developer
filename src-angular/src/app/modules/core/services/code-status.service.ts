@@ -12,6 +12,7 @@ export class CodeStatusService {
 
   private apiSystemCode = environment.systemCodeEndpoint;
   private contactComponentTrigger = new Subject<void>();
+  private homeComponentTrigger: Subject<void> = new Subject<void>();
 
   constructor(private http: HttpClient) {
   }
@@ -28,4 +29,7 @@ export class CodeStatusService {
     return this.contactComponentTrigger.asObservable();
   }
 
+  getHomeComponentTrigger() {
+    return this.homeComponentTrigger.asObservable();
+  }
 }

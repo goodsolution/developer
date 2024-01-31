@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {CodeStatusService} from "../core/services/code-status.service";
 
 @Component({
@@ -6,21 +6,15 @@ import {CodeStatusService} from "../core/services/code-status.service";
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit {
   code!: string;
 
   constructor(
-    private codeService: CodeStatusService) {
-  }
-
-  getCode() {
-    this.codeService.fetchStatusCode().subscribe(data => {
-      this.code = data.code;
-    });
+    private codeStatus: CodeStatusService) {
   }
 
   ngOnInit(): void {
-    this.getCode();
+    this.codeStatus.getHomeComponentTrigger();
   }
 
 }
