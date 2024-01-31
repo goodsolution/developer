@@ -16,6 +16,17 @@ public class PremiseService {
         this.premiseRepository = premiseRepository;
     }
 
+    public List<PremiseData> getPremiseDataByInvestmentId(PremiseSearchFilter filter) {
+        List<PremiseData> premises = new ArrayList<>();
+        Iterable<PremiseData> optionalPremiseData = premiseRepository.findAllByInvestmentId(filter.getId());
+        if (optionalPremiseData.iterator().hasNext()) {
+            optionalPremiseData.forEach(premises::add);
+        } else {
+            throw new NoSuchElementException();
+        }
+        return premises;
+    }
+
     public List<PremiseData> getPremiseDataById(PremiseSearchFilter filter) {
         List<PremiseData> premises = new ArrayList<>();
         Optional<PremiseData> optionalPremiseData = premiseRepository.findById(filter.getId());

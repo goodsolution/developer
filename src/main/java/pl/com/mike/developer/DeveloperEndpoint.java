@@ -22,6 +22,14 @@ public class DeveloperEndpoint {
         this.applicationConfig = applicationConfig;
     }
 
+    @GetMapping("premises/investment/{id}")
+    public PremisesGetResponse getPremisesByInvestmentId(@PathVariable Long id) {
+        return new PremisesGetResponse(
+                ConverterToResponse.premisesDataToResponse(
+                        premiseService.getPremiseDataByInvestmentId(new PremiseSearchFilter(id))
+                ));
+    }
+
     @GetMapping("premises")
     public PremisesGetResponse getAllPremises() {
         return new PremisesGetResponse(
