@@ -17,7 +17,6 @@ public class PremiseData implements Serializable {
     @Column(name = "surface_sq_m")
     private Double surfacePerSqMeter;
     @Column(name = "price_of_sq_m")
-
     private Double pricePerSqMeter;
     @Column(name = "price_total")
     private BigDecimal totalPrice;

@@ -9,6 +9,6 @@
     <p>{{ investment.description }}</p>
   </mat-card-content>
   <mat-card-actions>
-    <button mat-button>VIEW DETAILS</button>
+    <button mat-button [routerLink]="['/premises', investment.id]">VIEW DETAILS</button>
   </mat-card-actions>
 </mat-card>

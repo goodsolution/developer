@@ -11,6 +11,7 @@ import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
 import {TranslateHttpLoader} from "@ngx-translate/http-loader";
 import {InvestmentListModule} from "./modules/investment-list/investment-list.module";
 import {ContactModule} from "./modules/contact/contact.module";
+import {PremiseListModule} from "./modules/premise-list/premise-list.module";
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import {ContactModule} from "./modules/contact/contact.module";
     AuthModule,
     CoreModule,
     InvestmentListModule,
+    PremiseListModule,
     AppRoutingModule,
     HttpClientModule,
     TranslateModule.forRoot({
