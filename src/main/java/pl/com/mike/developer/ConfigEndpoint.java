@@ -35,13 +35,6 @@ public class ConfigEndpoint {
         );
     }
 
-    @GetMapping("homePageImagePath")
-    public HomePageImagePathGetResponse getHomePageImagePathResponse() {
-        return new HomePageImagePathGetResponse(
-                getHomePageImagePathUrl()
-        );
-    }
-
     @GetMapping("code")
     public CodeGetResponse getCodeResponse() {
         return new CodeGetResponse(
@@ -114,11 +107,6 @@ public class ConfigEndpoint {
                         .collect(Collectors.toList())
         );
     }
-
-    private String getHomePageImagePathUrl() {
-        return applicationConfig.getSystemAsset() + applicationConfig.getSystemCode() + applicationConfig.getSystemHomePagePhoto();
-    }
-
 
     private String getUrl(String logoFileName) {
         return applicationConfig.getSystemAsset() + applicationConfig.getSystemCode() + logoFileName;
