@@ -35,7 +35,7 @@ public class FrontMenuEndpoint {
         return new FrontMenusGetResponse(
                 new ArrayList<>(Arrays.asList(
 //                        new FrontMenuGetResponse(getDeveloperName(applicationConfig.getSystemCode()), "/name", Collections.emptyList()),
-                        new FrontMenuGetResponse("Cities", "/", getCities()),
+                        new FrontMenuGetResponse("Cities", "/cities", getCities()),
                         new FrontMenuGetResponse("Contact", "/developer/contact", Collections.emptyList())
                 ))
         );
@@ -47,7 +47,7 @@ public class FrontMenuEndpoint {
 
     private List<FrontMenuGetResponse> getCities() {
         return investmentService.getInvestmentCitiesByDeveloperCode().stream()
-                .map(x -> new FrontMenuGetResponse(x.getName(), "", Collections.emptyList()))
+                .map(x -> new FrontMenuGetResponse(x, "", Collections.emptyList()))
                 .collect(Collectors.toList());
     }
 

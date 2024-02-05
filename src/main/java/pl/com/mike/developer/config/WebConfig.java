@@ -25,7 +25,9 @@ public class WebConfig implements WebMvcConfigurer {
                         "/fonts/**",
                         "/js/**",
                         "/angular/**",
-                        "/angular/**"
+                        "/assets/i18n/**",
+                        "/assets/img/domdevelopment/**",
+                        "/assets/img/antal/**"
                 )
                 .addResourceLocations(
                         "classpath:/static/img/",
@@ -34,7 +36,9 @@ public class WebConfig implements WebMvcConfigurer {
                         "classpath:/static/fonts/",
                         "classpath:/static/js/",
                         "classpath:/static/angular/",
-                        "classpath:/static/angular/pl/assets/i18n/"
+                        "classpath:/static/angular/assets/i18n/",
+                        "classpath:/static/angular/assets/img/domdevelopment/",
+                        "classpath:/static/angular/assets/img/antal/"
                 );
 
 //        //TODO analyze and delete

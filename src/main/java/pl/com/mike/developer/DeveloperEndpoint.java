@@ -13,15 +13,21 @@ import pl.com.mike.developer.web.ConverterToResponse;
 public class DeveloperEndpoint {
 
     private final PremiseService premiseService;
-
     private final DeveloperService developerService;
     private final ApplicationConfig applicationConfig;
-
 
     public DeveloperEndpoint(PremiseService premiseService, DeveloperService developerService, ApplicationConfig applicationConfig) {
         this.premiseService = premiseService;
         this.developerService = developerService;
         this.applicationConfig = applicationConfig;
+    }
+
+    @GetMapping("premises/investment/{id}")
+    public PremisesGetResponse getPremisesByInvestmentId(@PathVariable Long id) {
+        return new PremisesGetResponse(
+                ConverterToResponse.premisesDataToResponse(
+                        premiseService.getPremiseDataByInvestmentId(new PremiseSearchFilter(id))
+                ));
     }
 
     @GetMapping("premises")

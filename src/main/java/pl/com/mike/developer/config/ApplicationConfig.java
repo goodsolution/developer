@@ -151,21 +151,14 @@ public class ApplicationConfig {
     @Value("${system.code}")
     private String systemCode;
 
-    @Value("angular/pl/assets/img/")
+    @Value("angular/assets/img/")
     private String systemAsset;
-
-    @Value("${system.main-page.photo}")
-    private String systemHomePagePhoto;
 
     public String getSystemAsset() {
         return systemAsset;
     }
 
     private String templateNameProductsDemandPdf = "products-demand-pdf.html";
-
-    public String getSystemHomePagePhoto() {
-        return systemHomePagePhoto;
-    }
 
     public String getUrl() {
         return url;

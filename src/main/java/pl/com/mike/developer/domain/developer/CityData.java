@@ -12,19 +12,9 @@ public class CityData implements Serializable {
     private Long id;
     private String name;
     @Column(name = "voivodeship_id")
-    private Integer voivodeshipId;
+    private Long voivodeshipId;
 
     public CityData() {
-    }
-
-    public CityData(String name) {
-        this.name = name;
-    }
-
-    public CityData(Long id, String name, Integer voivodeshipId) {
-        this.id = id;
-        this.name = name;
-        this.voivodeshipId = voivodeshipId;
     }
 
     public Long getId() {
@@ -43,6 +33,14 @@ public class CityData implements Serializable {
         this.name = name;
     }
 
+    public Long getVoivodeshipId() {
+        return voivodeshipId;
+    }
+
+    public void setVoivodeshipId(Long voivodeshipId) {
+        this.voivodeshipId = voivodeshipId;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -54,13 +52,5 @@ public class CityData implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(getId(), getName(), getVoivodeshipId());
-    }
-
-    public Integer getVoivodeshipId() {
-        return voivodeshipId;
-    }
-
-    public void setVoivodeshipId(Integer voivodeshipId) {
-        this.voivodeshipId = voivodeshipId;
     }
 }

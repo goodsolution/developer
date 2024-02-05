@@ -32,7 +32,7 @@ public class MenuService {
 
     private List<Menu> getCities() {
         return investmentService.getInvestmentCitiesByDeveloperCode().stream()
-                .map(x -> new Menu(x.getName(), "", Collections.emptyList()))
+                .map(x -> new Menu(x, "", Collections.emptyList()))
                 .collect(Collectors.toList());
     }
 
