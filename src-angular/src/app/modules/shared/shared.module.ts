@@ -4,6 +4,7 @@ import {MaterialModule} from "./material/material.module";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import { DefaultComponent } from './default/default.component';
+import {FiltersModule} from "./filters/filters.module";
 
 
 @NgModule({
@@ -14,7 +15,7 @@ import { DefaultComponent } from './default/default.component';
     CommonModule
   ],
   exports: [
-    CommonModule, MaterialModule, FormsModule, ReactiveFormsModule, BrowserAnimationsModule, DefaultComponent
+    CommonModule, MaterialModule, FormsModule, ReactiveFormsModule, BrowserAnimationsModule, DefaultComponent, FiltersModule
   ]
 })
 export class SharedModule {

@@ -83,6 +83,7 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private createComponent(container: ViewContainerRef, location: ComponentLocation) {
+    if(!this.statusCode) return;
     const statusKey = this.statusCode.code || 'default';
     const component = this.componentConfig[statusKey][location] || DefaultComponent;
     container.clear();
