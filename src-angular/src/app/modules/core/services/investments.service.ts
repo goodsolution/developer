@@ -20,15 +20,15 @@ export class InvestmentsService {
     const currentTime = new Date().getTime();
 
     if (this.investmentCache$ && this.lastRequestTime && (currentTime - this.lastRequestTime < this.cacheExpirationMs)) {
-      console.log('Fetching data from cache Investments');
+      // console.log('Fetching data from cache Investments');
       return this.investmentCache$;
     } else {
-      console.log('Fetching data from API Investments');
+      // console.log('Fetching data from API Investments');
       this.investmentCache$ = this.http.get<SearchResultInvestmentModel>(this.apiUrl).pipe(
         tap(() => this.lastRequestTime = new Date().getTime()),
         shareReplay(1),
         catchError(error => {
-          console.error('Error fetching investments data:', error);
+          // console.error('Error fetching investments data:', error);
           return throwError(() => error);
         })
       );

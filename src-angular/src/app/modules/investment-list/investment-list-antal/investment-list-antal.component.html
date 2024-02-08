@@ -1,0 +1,7 @@
+<div class="card-container" *ngIf="investments.length > 0">
+  <ng-container *ngFor="let investment of investments">
+    <app-investment [investment]="investment"></app-investment>
+  </ng-container>
+</div>
+<h5 *ngIf="investments.length === 0">Aktualnie brak inwestycji</h5>
+

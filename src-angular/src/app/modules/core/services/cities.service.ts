@@ -18,7 +18,7 @@ export class CitiesService {
   }
 
   private startPeriodicUpdate(): void {
-    console.log('Starting periodic update Cities 60 sec interval');
+    // console.log('Starting periodic update Cities 60 sec interval');
     interval(this.updateInterval).pipe(
       switchMap(() => {
         return this.fetchDataFromAPI();
@@ -39,10 +39,10 @@ export class CitiesService {
     //   return this.fetchDataFromAPI();
     // }
     if(this.cache){
-      console.log('Fetching data from cache Cities');
+      // console.log('Fetching data from cache Cities');
       return of(this.cache);
     } else {
-      console.log('Fetching data from API Cities');
+      // console.log('Fetching data from API Cities');
       return this.fetchDataFromAPI();
     }
   }
@@ -54,7 +54,7 @@ export class CitiesService {
           this.cache = data;
           this.lastUpdated = new Date().getTime();
         } else {
-          console.log('cities- No changes in data, cache not updated');
+          // console.log('cities- No changes in data, cache not updated');
         }
       })
     );
@@ -62,7 +62,7 @@ export class CitiesService {
 
   private isDataUpdated(newData: SearchResultCityModel): boolean {
     if (!this.cache || this.cache.cities.length !== newData.cities.length) {
-      console.log('CIty is DataUpdated Cache is empty or data length is different')
+      // console.log('CIty is DataUpdated Cache is empty or data length is different')
       return true;
     }
     // Create sets of IDs for easy comparison

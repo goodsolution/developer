@@ -12,9 +12,15 @@ import {ContactAntalComponent} from "./modules/contact/contact-antal/contact-ant
 import {ContactDodeComponent} from "./modules/contact/contact-dode/contact-dode.component";
 import {HomeAntalComponent} from "./modules/home/home-antal/home-antal.component";
 import {HomeDodeComponent} from "./modules/home/home-dode/home-dode.component";
+import {
+  InvestmentListAntalComponent
+} from "./modules/investment-list/investment-list-antal/investment-list-antal.component";
+import {
+  InvestmentListDodeComponent
+} from "./modules/investment-list/investment-list-dode/investment-list-dode.component";
 
 enum ComponentLocation {
-  Header, Footer, Contact, Home
+  Header, Footer, Contact, Home, InvestmentList
 }
 
 interface ComponentConfig {
@@ -33,6 +39,7 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('footerContainer', {read: ViewContainerRef, static: true}) private footerContainer!: ViewContainerRef;
   @ViewChild('contactContainer', {read: ViewContainerRef, static: true}) private contactContainer!: ViewContainerRef;
   @ViewChild('homeContainer', {read: ViewContainerRef, static: true}) private homeContainer!: ViewContainerRef;
+  @ViewChild('investmentListContainer', {read: ViewContainerRef}) private investmentListContainer!: ViewContainerRef;
 
   private subscriptions: Subscription = new Subscription();
   private statusCode!: SearchResultCode;
@@ -42,19 +49,22 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
       [ComponentLocation.Header]: AntalHeaderComponent,
       [ComponentLocation.Footer]: FooterAntalComponent,
       [ComponentLocation.Contact]: ContactAntalComponent,
-      [ComponentLocation.Home]: HomeAntalComponent
+      [ComponentLocation.Home]: HomeAntalComponent,
+      [ComponentLocation.InvestmentList]: InvestmentListAntalComponent,
     },
     domdevelopment: {
       [ComponentLocation.Header]: DodeHeaderComponent,
       [ComponentLocation.Footer]: FooterDodeComponent,
       [ComponentLocation.Contact]: ContactDodeComponent,
-      [ComponentLocation.Home]: HomeDodeComponent
+      [ComponentLocation.Home]: HomeDodeComponent,
+      [ComponentLocation.InvestmentList]: InvestmentListDodeComponent,
     },
     default: {
       [ComponentLocation.Header]: DefaultComponent,
       [ComponentLocation.Footer]: DefaultComponent,
       [ComponentLocation.Contact]: DefaultComponent,
-      [ComponentLocation.Home]: DefaultComponent
+      [ComponentLocation.Home]: DefaultComponent,
+      [ComponentLocation.InvestmentList]: DefaultComponent,
     }
   };
 
@@ -79,11 +89,17 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
       this.createComponent(this.headerContainer, ComponentLocation.Header);
       this.createComponent(this.footerContainer, ComponentLocation.Footer);
       this.createComponent(this.homeContainer, ComponentLocation.Home);
+
+      // Add a condition to prevent loading investment components instantly
+      // For example, only load if not on the root route (or based on some other condition)
+      if (this.router.url !== '/') {
+        this.createComponent(this.investmentListContainer, ComponentLocation.InvestmentList);
+      }
     }));
   }
 
   private createComponent(container: ViewContainerRef, location: ComponentLocation) {
-    if(!this.statusCode) return;
+    if (!this.statusCode) return;
     const statusKey = this.statusCode.code || 'default';
     const component = this.componentConfig[statusKey][location] || DefaultComponent;
     container.clear();
@@ -94,24 +110,53 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
     this.subscriptions.add(this.router.events.pipe(
       filter((event): event is NavigationEnd => event instanceof NavigationEnd)
     ).subscribe(event => {
+      console.log('Navigation Event:', event.urlAfterRedirects);
       this.handleNavigationChange(event);
     }));
   }
 
   private handleNavigationChange(event: NavigationEnd) {
-    const routesClearingMap = new Map<string, () => void>([
-      ['/contact', () => this.createComponent(this.contactContainer, ComponentLocation.Contact)],
-      ['/', () => this.createComponent(this.homeContainer, ComponentLocation.Home)],
-      // ... more routes if necessary
-    ]);
+    console.log('Navigation Event:', event.urlAfterRedirects); // Log the navigation event URL
+    const url = event.urlAfterRedirects.split('?')[0];
+    const directMatchAction = this.routesClearingMap.get(url);
+    if (directMatchAction) {
+      console.log('Direct Match Action found for url:', url); // Log when a direct match is found
+      directMatchAction();
+    } else if (/^\/city\/.+/.test(url)) {
+      console.log('City route matched:', url); // Log when a city route is matched
+      this.loadDynamicInvestmentComponent(url);
+    } else {
+      console.log('No specific action found for url:', url); // Log when no specific action is matched
+    }
+  }
 
-    // Clear all containers by default
-    this.contactContainer.clear();
-    this.homeContainer.clear();
+  private routesClearingMap = new Map<string, () => void>([
+    ['/contact', () => {
+      this.homeContainer.clear();
+      this.investmentListContainer.clear();
+      this.contactContainer.clear();
+      this.createComponent(this.contactContainer, ComponentLocation.Contact);
+    }],
+    ['/', () => {
+      this.homeContainer.clear();
+      this.createComponent(this.homeContainer, ComponentLocation.Home);
+    }],
+    ['/login', () => {
+      this.homeContainer.clear();
+      this.investmentListContainer.clear();
+      this.contactContainer.clear();
+    }],
+    // Add more route actions as needed
+  ]);
 
-    // Invoke the function corresponding to the current route, if it exists
-    const routeAction = routesClearingMap.get(event.url);
-    if (routeAction) routeAction();
+  private loadDynamicInvestmentComponent(url: string) {
+    // Extract the city name from the URL if needed, or directly load the component
+    // Example extraction (assuming URL is something like '/city/new-york'):
+    const cityName = url.split('/')[2]; // This will give 'new-york' for '/city/new-york'
+
+    // Use cityName or other logic to decide which component to load
+    // Assuming you've a method to dynamically load components like:
+    this.createComponent(this.investmentListContainer, ComponentLocation.InvestmentList);
   }
 
 }
