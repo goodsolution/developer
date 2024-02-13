@@ -9,3 +9,5 @@ export const environment = {
   developerBySystemCodeEndpoint: 'https://localhost:8081/api/system/developers/code',
   premisesByInvestmentIdEndpoint: 'https://localhost:8081/api/system/premises/investment'
 };
+//TODO dynamic load of environment variables
+//from poperties file?

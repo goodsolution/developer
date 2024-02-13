@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {DynamicComponentLoadingServiceService} from "../core/services/dynamic-component-loading-service.service";
 import {ActivatedRoute} from "@angular/router";
+import {DynamicComponentLoadingService} from "../core/services/dynamic-component-loading.service";
 
 @Component({
   selector: 'app-investment-list',
@@ -11,19 +11,16 @@ export class InvestmentListComponent implements OnInit {
   cityName: string = '';
 
   constructor(
-    private dynamicLoadingService: DynamicComponentLoadingServiceService, // Only one instance is needed
+    private dynamicLoadingService: DynamicComponentLoadingService,
     private route: ActivatedRoute
   ) {
   }
 
   ngOnInit(): void {
-    // Reactively listen to route parameter changes
     this.route.paramMap.subscribe(params => {
       const name = params.get('name');
-      console.log('Reactive city name:', name); // Check the console to see if the name is correctly logged
-      if (name) {
+      if (name && name !== this.cityName) {
         this.cityName = name;
-        // Here, trigger the dynamic loading with the new city name
         this.dynamicLoadingService.triggerInvestmentComponentLoading({cityName: this.cityName});
       }
     });

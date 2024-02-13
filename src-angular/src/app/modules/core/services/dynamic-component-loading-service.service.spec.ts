@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { DynamicComponentLoadingServiceService } from './dynamic-component-loading-service.service';
+import { DynamicComponentLoadingService } from './dynamic-component-loading.service';
 
 describe('DynamicComponentLoadingServiceService', () => {
-  let service: DynamicComponentLoadingServiceService;
+  let service: DynamicComponentLoadingService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(DynamicComponentLoadingServiceService);
+    service = TestBed.inject(DynamicComponentLoadingService);
   });
 
   it('should be created', () => {

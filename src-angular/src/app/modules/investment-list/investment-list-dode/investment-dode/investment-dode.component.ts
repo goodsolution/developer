@@ -8,4 +8,5 @@ import {InvestmentResponse} from "../../../core/models/investment.model";
 })
 export class InvestmentDodeComponent {
   @Input() investment!: InvestmentResponse;
+
 }

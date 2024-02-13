@@ -1,10 +1,11 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { InvestmentResponse } from "../../core/models/investment.model";
-import { CityResponse } from "../../core/models/city.model";
-import { Subject, takeUntil } from "rxjs";
-import { InvestmentsService } from "../../core/services/investments.service";
-import { CitiesService } from "../../core/services/cities.service";
-import { DynamicComponentLoadingServiceService } from "../../core/services/dynamic-component-loading-service.service";
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {InvestmentResponse} from "../../core/models/investment.model";
+import {CityResponse} from "../../core/models/city.model";
+import {Subject, Subscription, takeUntil} from "rxjs";
+import {InvestmentsService} from "../../core/services/investments.service";
+import {CitiesService} from "../../core/services/cities.service";
+import {DynamicComponentLoadingService} from "../../core/services/dynamic-component-loading.service";
+
 
 @Component({
   selector: 'app-investment-list-dode',
@@ -17,65 +18,95 @@ export class InvestmentListDodeComponent implements OnInit, OnDestroy {
   cities: CityResponse[] = [];
   cityName: string = '';
   private unsubscribe$ = new Subject<void>();
+  private subscriptionToCityChanges?: Subscription;
+  private citiesLoaded = false;
 
   constructor(
+    private dynamicLoadingService: DynamicComponentLoadingService,
     private investmentsService: InvestmentsService,
     private cityService: CitiesService,
-    private dynamicLoadingService: DynamicComponentLoadingServiceService // Inject the service for dynamic component loading
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
-    // Subscribe to the dynamic loading service to get cityName
-    this.dynamicLoadingService.getInvestmentComponentTrigger().pipe(
-      takeUntil(this.unsubscribe$)
-    ).subscribe(data => {
-      this.cityName = data.cityName;
-      console.log('City name received in dynamically loaded component:', this.cityName);
-      this.loadComponentData(); // Call a method to load investments and cities based on cityName
-    });
-    this.getCities();
+    this.loadCities();
   }
 
-  loadComponentData() {
-    // Assuming getCities does not depend on cityName and can be called independently
-    this.getInvestments(); // Now getInvestments should be aware of the updated cityName
+  private loadCities() {
+    if (this.citiesLoaded) {
+      return;
+    }
+    this.cityService.getCities()
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe({
+        next: data => {
+          console.log('Cities loaded:', data.cities);
+          this.cities = data.cities;
+          this.citiesLoaded = true;
+          if (!this.subscriptionToCityChanges) {
+            this.subscribeToCityChanges();
+          }
+        },
+        error: error => {
+          console.error('Error fetching cities:', error);
+          this.citiesLoaded = false;
+        }
+      });
   }
 
-  getInvestments() {
+  private subscribeToCityChanges() {
+    this.dynamicLoadingService.getInvestmentComponentTrigger()
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(data => {
+        console.log('City change triggered:', data); // Add this line
+        console.log(`Are cities loaded? ${this.citiesLoaded}`); // Add this line
+        if (this.citiesLoaded && data.cityName !== this.cityName) {
+          console.log(`Changing city to: ${data.cityName}`); // Add this line
+          this.cityName = data.cityName;
+          this.getInvestments();
+        }
+      });
+  }
+
+  private getInvestments() {
+    console.log('getInvestments called'); // Log when the method is called
     this.investmentsService.getInvestments()
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe({
         next: data => {
+          console.log('Investments fetched:', data.investments); // Add this line
           this.allInvestments = data.investments;
-          this.filterInvestmentsByCity(this.cityName); // Make sure this uses the updated cityName
+          this.filterInvestmentsByCity(this.cityName);
         },
         error: error => console.error('Error fetching investments:', error)
       });
   }
 
-  getCities() {
-    this.cityService.getCities()
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe({
-        next: data => this.cities = data.cities,
-        error: error => console.error('Error fetching cities:', error)
-      });
-  }
-
-  filterInvestmentsByCity(cityName: string): void {
-    console.log('Filtering investments by city:', cityName);
+  private filterInvestmentsByCity(cityName: string): void {
+    console.log('filterInvestmentsByCity called with:', cityName); // Log when the function is called
     if (!cityName) {
       this.investments = [...this.allInvestments];
+      console.log('No city name provided, showing all investments.'); // Add this line
       return;
     }
     this.investments = this.allInvestments.filter(investment => {
-      const city = this.cities.find(c => c.name.toLowerCase() === cityName.toLowerCase());
+      const city = this.cities
+        .find(c => c.name.toLowerCase() === cityName.toLowerCase());
+      if (!city) {
+        console.warn(`City not found: ${cityName}`);
+      }
       return city && investment.cityId === city.id;
     });
+    console.log('Filtered investments for city:', cityName, this.investments); // Log the filtered investments
+    console.log('Filtered investments for city length:', cityName, this.investments.length); // Log the number of filtered investments
   }
 
   ngOnDestroy(): void {
+    if (this.subscriptionToCityChanges) {
+      this.subscriptionToCityChanges.unsubscribe();
+    }
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
   }
+
 }
