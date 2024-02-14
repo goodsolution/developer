@@ -79,7 +79,6 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    console.log('AppComponent ngOnInit');
     this.fetchStatusCode();
   }
 
@@ -123,28 +122,23 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   private handleNavigationChange(event: NavigationEnd) {
+    console.log('handleNavigationChange start');
     const url = event.urlAfterRedirects.split('?')[0];
-    console.log(`Handling navigation change for url: ${url}`);
     this.clearAllContainers();
     const directMatchAction = this.routesClearingMap.get(url);
-    console.log(`handleNavigationChange Direct match action found for url: ${url}`, directMatchAction);
     if (directMatchAction) {
-      console.log(`handleNavigationChange Direct match found for url: ${url}`);
       directMatchAction();
     } else if (/^\/city\/.+/.test(url)) {
-      console.log(`handleNavigationChange City match found for url: ${url}`);
       this.loadDynamicInvestmentComponent(url);
     } else if (url === '/') {
-      console.log('handleNavigationChange Loading home component:' + ComponentLocation.Home.valueOf());
       this.createComponent(this.homeContainer, ComponentLocation.Home);
     } else {
       // Handle other routes
     }
-    console.log('handleNavigationChange Finished handling navigation change');
+    console.log('handleNavigationChange stop');
   }
 
   private clearAllContainers() {
-    console.log('Clearing all containers');
     this.homeContainer.clear();
     this.contactContainer.clear();
     this.investmentListContainer.clear();
@@ -171,48 +165,42 @@ export class AppComponent implements OnInit, OnDestroy {
   ]);
 
   private loadDynamicInvestmentComponent(url: string) {
-    console.log(`Loading dynamic investment component for url: ${url}`);
+    console.log(`Handling dynamic loading for URL: ${url}`);
     const urlSegments = url.split('/');
-    const cityName = urlSegments.length > 2 ? urlSegments[2] : null;
-    if (!cityName) {
-      console.error('City name is not available in the URL');
-      return;
-    }
+    // Assuming the city name is the second segment after '/city/', like '/city/paris'
+    const cityName = urlSegments[2]; // This should not be null, adjust the index as necessary
+
+    // Your existing logic
     const statusKey = this.statusCode?.code || 'default';
     const componentMapping = this.componentConfig[statusKey];
     const componentClass = componentMapping[ComponentLocation.InvestmentList];
+
     if (componentClass) {
-      this.investmentListContainer.clear();
+      // Pass the cityName directly to the loadComponent call
       this.dynamicComponentLoadingService.loadComponent(
         this.investmentListContainer,
         componentClass,
         {name: cityName}
       );
     } else {
-      console.error(`No component found for ${ComponentLocation.InvestmentList} in status key ${statusKey}`);
+      console.error(`No component found for ${ComponentLocation.InvestmentList} with status key ${statusKey}`);
     }
   }
 
   private createComponent(container: ViewContainerRef, location: ComponentLocation) {
-    console.log(`Creating component for location: ${location}`);
     if (!this.statusCode) {
       console.warn('Status code is not available, cannot create component');
-      return
+      return;
     }
-    ;
     const statusKey = this.statusCode.code;
-    console.log(`Creating component for status key: ${statusKey}`);
     const componentConfigEntry = this.componentConfig[statusKey];
     if (!componentConfigEntry) {
-      console.warn(`No component config found for status key: ${statusKey}`);
       return;
     }
     const componentClass = componentConfigEntry[location];
     if (!componentClass) {
-      console.warn(`No component class found for location: ${location} and status key: ${statusKey}`);
       return;
     }
-    console.log(`Preparing to load component of type : ${componentClass.name}`);
     this.dynamicComponentLoadingService.loadComponent(container, componentClass);
   }
 

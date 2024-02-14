@@ -33,6 +33,7 @@ export class InvestmentListDodeComponent implements OnInit, OnDestroy {
   }
 
   private loadCities() {
+    console.log('InvestmentListDodeComponent loadCities start');
     if (this.citiesLoaded) {
       return;
     }
@@ -52,16 +53,14 @@ export class InvestmentListDodeComponent implements OnInit, OnDestroy {
           this.citiesLoaded = false;
         }
       });
+    console.log('InvestmentListDodeComponent loadCities stop');
   }
 
   private subscribeToCityChanges() {
     this.dynamicLoadingService.getInvestmentComponentTrigger()
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(data => {
-        console.log('City change triggered:', data); // Add this line
-        console.log(`Are cities loaded? ${this.citiesLoaded}`); // Add this line
         if (this.citiesLoaded && data.cityName !== this.cityName) {
-          console.log(`Changing city to: ${data.cityName}`); // Add this line
           this.cityName = data.cityName;
           this.getInvestments();
         }
@@ -69,12 +68,10 @@ export class InvestmentListDodeComponent implements OnInit, OnDestroy {
   }
 
   private getInvestments() {
-    console.log('getInvestments called'); // Log when the method is called
     this.investmentsService.getInvestments()
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe({
         next: data => {
-          console.log('Investments fetched:', data.investments); // Add this line
           this.allInvestments = data.investments;
           this.filterInvestmentsByCity(this.cityName);
         },
@@ -83,10 +80,8 @@ export class InvestmentListDodeComponent implements OnInit, OnDestroy {
   }
 
   private filterInvestmentsByCity(cityName: string): void {
-    console.log('filterInvestmentsByCity called with:', cityName); // Log when the function is called
     if (!cityName) {
       this.investments = [...this.allInvestments];
-      console.log('No city name provided, showing all investments.'); // Add this line
       return;
     }
     this.investments = this.allInvestments.filter(investment => {
@@ -97,8 +92,6 @@ export class InvestmentListDodeComponent implements OnInit, OnDestroy {
       }
       return city && investment.cityId === city.id;
     });
-    console.log('Filtered investments for city:', cityName, this.investments); // Log the filtered investments
-    console.log('Filtered investments for city length:', cityName, this.investments.length); // Log the number of filtered investments
   }
 
   ngOnDestroy(): void {

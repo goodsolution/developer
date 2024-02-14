@@ -12,6 +12,8 @@ import {TranslateHttpLoader} from "@ngx-translate/http-loader";
 import {InvestmentListModule} from "./modules/investment-list/investment-list.module";
 import {ContactModule} from "./modules/contact/contact.module";
 import {PremiseListModule} from "./modules/premise-list/premise-list.module";
+import {CustomReuseStrategyService} from "./modules/core/routing/custom-reuse-strategy.service";
+import {RouteReuseStrategy} from "@angular/router";
 
 @NgModule({
   declarations: [
@@ -35,7 +37,12 @@ import {PremiseListModule} from "./modules/premise-list/premise-list.module";
       }
     })
   ],
-  providers: [],
+  providers: [
+    {
+      provide: RouteReuseStrategy,
+      useClass: CustomReuseStrategyService
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {
