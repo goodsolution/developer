@@ -1,4 +1,4 @@
-import {NgModule} from '@angular/core';
+import {APP_INITIALIZER, NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 
 import {AppRoutingModule} from './app-routing.module';
@@ -14,6 +14,14 @@ import {ContactModule} from "./modules/contact/contact.module";
 import {PremiseListModule} from "./modules/premise-list/premise-list.module";
 import {CustomReuseStrategyService} from "./modules/core/routing/custom-reuse-strategy.service";
 import {RouteReuseStrategy} from "@angular/router";
+import {CodeStatusService} from "./modules/core/services/code-status.service";
+
+// Function to return a configuration loading function
+export function initializeApp(config: CodeStatusService) {
+  return (): Promise<any> => {
+    return config.loadConfig();
+  }
+}
 
 @NgModule({
   declarations: [
@@ -38,6 +46,13 @@ import {RouteReuseStrategy} from "@angular/router";
     })
   ],
   providers: [
+    CodeStatusService,
+    {
+      provide: APP_INITIALIZER,
+      useFactory: initializeApp,
+      deps: [CodeStatusService],
+      multi: true
+    },
     {
       provide: RouteReuseStrategy,
       useClass: CustomReuseStrategyService

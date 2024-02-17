@@ -1,28 +1,26 @@
 import {Injectable} from '@angular/core';
-import {environment} from "../../../../environments/environment.development";
 import {HttpClient} from "@angular/common/http";
-import {Observable, ReplaySubject, tap} from "rxjs";
+import {firstValueFrom, Observable, ReplaySubject, tap} from "rxjs";
 import {SearchResultCode} from "../models/searchResultCode.model";
+import {ConstantsService} from "./constants.service";
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class CodeStatusService {
+  private statusCodeSource = new ReplaySubject<SearchResultCode>(1);
+  private config: any = {};
 
-  private statusCodeSource = new ReplaySubject<SearchResultCode>(1); // 1 is the buffer size
-
-  private apiSystemCode = environment.systemCodeEndpoint;
-
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private constantsService: ConstantsService) {
   }
 
-  // fetchStatusCode(): Observable<SearchResultCode> {
-  //   return this.http.get<SearchResultCode>(`${this.apiSystemCode}`);
-  // }
+  async loadConfig(): Promise<void> {
+    this.config = await firstValueFrom(this.http.get(`${this.constantsService.API_SYSTEM_CODE}`));
+  }
 
   fetchStatusCode(): Observable<SearchResultCode> {
-    return this.http.get<SearchResultCode>(`${this.apiSystemCode}`).pipe(
+    return this.http.get<SearchResultCode>(this.getStatusCode()).pipe(
       tap({
         next: (code) => this.statusCodeSource.next(code),
         error: (error) => console.error('Error fetching status code:', error)
@@ -30,6 +28,8 @@ export class CodeStatusService {
     );
   }
 
-
+  private getStatusCode(): string {
+    return this.config?.systemCodeEndpoint;
+  }
 
 }
