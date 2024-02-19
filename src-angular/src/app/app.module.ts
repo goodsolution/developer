@@ -14,10 +14,10 @@ import {ContactModule} from "./modules/contact/contact.module";
 import {PremiseListModule} from "./modules/premise-list/premise-list.module";
 import {CustomReuseStrategyService} from "./modules/core/routing/custom-reuse-strategy.service";
 import {RouteReuseStrategy} from "@angular/router";
-import {CodeStatusService} from "./modules/core/services/code-status.service";
+import {ConfigService} from "./modules/core/services/config.service";
 
 // Function to return a configuration loading function
-export function initializeApp(config: CodeStatusService) {
+export function initializeApp(config: ConfigService) {
   return (): Promise<any> => {
     return config.loadAppConfig();
   }
@@ -46,11 +46,11 @@ export function initializeApp(config: CodeStatusService) {
     })
   ],
   providers: [
-    CodeStatusService,
+    ConfigService,
     {
       provide: APP_INITIALIZER,
       useFactory: initializeApp,
-      deps: [CodeStatusService],
+      deps: [ConfigService],
       multi: true
     },
     {

@@ -1,6 +1,6 @@
 import {Component, OnDestroy, OnInit, Type, ViewChild, ViewContainerRef} from '@angular/core';
 import {NavigationEnd, Router} from "@angular/router";
-import {filter, Subscription, take} from 'rxjs';
+import {filter, Observable, of, ReplaySubject, Subscription, take, tap} from 'rxjs';
 import {SearchResultCode} from "./modules/core/models/searchResultCode.model";
 import {DynamicComponentLoadingService} from "./modules/core/services/dynamic-component-loading.service";
 import {
@@ -18,7 +18,7 @@ import {FooterDodeComponent} from "./modules/core/components/footer/footer-dode/
 import {ContactDodeComponent} from "./modules/contact/contact-dode/contact-dode.component";
 import {HomeDodeComponent} from "./modules/home/home-dode/home-dode.component";
 import {DefaultComponent} from "./modules/shared/default/default.component";
-import {CodeStatusService} from "./modules/core/services/code-status.service";
+import {ConfigService} from "./modules/core/services/config.service";
 
 
 enum ComponentLocation {
@@ -46,6 +46,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   private subscriptions: Subscription = new Subscription();
   private statusCode: SearchResultCode | null = null;
+  private statusCodeSource = new ReplaySubject<SearchResultCode>(1);
 
   private componentConfig: ComponentConfig = {
     antal: {
@@ -72,22 +73,34 @@ export class AppComponent implements OnInit, OnDestroy {
   };
 
   constructor(
-    private codeStatusService: CodeStatusService,
+    private configService: ConfigService,
     private router: Router,
     private dynamicComponentLoadingService: DynamicComponentLoadingService,
   ) {
   }
 
   ngOnInit() {
-    this.fetchStatusCode();
+    this.initializeAppAfterFetchingCode();
   }
 
   ngOnDestroy() {
     this.subscriptions.unsubscribe();
   }
 
-  private fetchStatusCode() {
-    this.codeStatusService.fetchStatusCode().pipe(
+  private fetchCode(): Observable<SearchResultCode> {
+    const statusCode: SearchResultCode = {
+      code: this.configService.getSystemCode
+    };
+    return of(statusCode).pipe(
+      tap({
+        next: (code) => this.statusCodeSource.next(code),
+        error: (error) => console.error('Error fetching status code:', error)
+      })
+    );
+  }
+
+  private initializeAppAfterFetchingCode() {
+    this.fetchCode().pipe(
       take(1) // Take only the first emission from the observable
     ).subscribe({
       next: (statusCode) => {

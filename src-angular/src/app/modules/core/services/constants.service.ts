@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class ConstantsService {
-  readonly API_SYSTEM_CODE = 'https://localhost:8081/api/system/config/properties';
+  readonly API_SYSTEM_CONFIG = 'https://localhost:8081/api/system/config/properties';
 
   constructor() { }
 }

@@ -18,7 +18,6 @@ export class CitiesService {
   }
 
   private startPeriodicUpdate(): void {
-    // console.log('Starting periodic update Cities 60 sec interval');
     interval(this.updateInterval).pipe(
       switchMap(() => {
         return this.fetchDataFromAPI();
@@ -27,22 +26,9 @@ export class CitiesService {
   }
 
   getCities(): Observable<SearchResultCityModel> {
-    // if (this.cache && (new Date().getTime() - this.lastUpdated < this.updateInterval)) {
-    //   console.log(this.lastUpdated);
-    //   console.log(this.updateInterval);
-    //   console.log(new Date().getTime());
-    //   console.log(new Date().getTime() - this.lastUpdated);
-    //   console.log('Fetching data from cache Cities');
-    //   return of(this.cache); // Return cached data
-    // } else {
-    //   console.log('Fetching data from API Cities');
-    //   return this.fetchDataFromAPI();
-    // }
     if(this.cache){
-      // console.log('Fetching data from cache Cities');
       return of(this.cache);
     } else {
-      // console.log('Fetching data from API Cities');
       return this.fetchDataFromAPI();
     }
   }
@@ -54,7 +40,7 @@ export class CitiesService {
           this.cache = data;
           this.lastUpdated = new Date().getTime();
         } else {
-          // console.log('cities- No changes in data, cache not updated');
+          console.log('City Data is not updated');
         }
       })
     );
