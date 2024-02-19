@@ -154,6 +154,14 @@ public class ApplicationConfig {
     @Value("angular/assets/img/")
     private String systemAsset;
 
+    @Value("${system.logoDeveloperEndpoint}")
+    private String logoDeveloperEndpoint;
+
+    public String getLogoDeveloperEndpoint() {
+        return logoDeveloperEndpoint;
+    }
+
+
     public String getSystemAsset() {
         return systemAsset;
     }

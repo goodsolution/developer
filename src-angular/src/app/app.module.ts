@@ -19,7 +19,7 @@ import {CodeStatusService} from "./modules/core/services/code-status.service";
 // Function to return a configuration loading function
 export function initializeApp(config: CodeStatusService) {
   return (): Promise<any> => {
-    return config.loadConfig();
+    return config.loadAppConfig();
   }
 }
 

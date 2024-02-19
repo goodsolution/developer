@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {firstValueFrom, Observable, ReplaySubject, tap} from "rxjs";
+import {firstValueFrom, Observable, of, ReplaySubject, tap} from "rxjs";
 import {SearchResultCode} from "../models/searchResultCode.model";
 import {ConstantsService} from "./constants.service";
 
@@ -10,26 +10,29 @@ import {ConstantsService} from "./constants.service";
 })
 export class CodeStatusService {
   private statusCodeSource = new ReplaySubject<SearchResultCode>(1);
-  private config: any = {};
+  private appConfig: any = {};
 
   constructor(private http: HttpClient, private constantsService: ConstantsService) {
   }
 
-  async loadConfig(): Promise<void> {
-    this.config = await firstValueFrom(this.http.get(`${this.constantsService.API_SYSTEM_CODE}`));
+  async loadAppConfig(): Promise<void> {
+    this.appConfig = await firstValueFrom(this.http.get(`${this.constantsService.API_SYSTEM_CODE}`));
+  }
+
+  get getSystemCode(): string {
+    return this.appConfig?.['system.code'];
   }
 
   fetchStatusCode(): Observable<SearchResultCode> {
-    return this.http.get<SearchResultCode>(this.getStatusCode()).pipe(
+    const statusCode: SearchResultCode = {
+      code: this.getSystemCode
+    };
+    return of(statusCode).pipe(
       tap({
         next: (code) => this.statusCodeSource.next(code),
         error: (error) => console.error('Error fetching status code:', error)
       })
     );
-  }
-
-  private getStatusCode(): string {
-    return this.config?.systemCodeEndpoint;
   }
 
 }
