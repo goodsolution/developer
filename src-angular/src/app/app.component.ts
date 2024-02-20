@@ -176,10 +176,9 @@ export class AppComponent implements OnInit, OnDestroy {
   ]);
 
   private loadDynamicInvestmentComponent(url: string) {
-    console.log(`Handling dynamic loading for URL: ${url}`);
     const urlSegments = url.split('/');
-    // Assuming the city name is the second segment after '/city/', like '/city/paris'
-    const cityName = urlSegments[2]; // This should not be null, adjust the index as necessary
+    // Assuming the city id is the second segment after '/city/', like '/city/2'
+    const cityId = urlSegments[2]; // This should not be null, adjust the index as necessary
 
     // Your existing logic
     const statusKey = this.statusCode?.code || 'default';
@@ -187,11 +186,11 @@ export class AppComponent implements OnInit, OnDestroy {
     const componentClass = componentMapping[ComponentLocation.InvestmentList];
 
     if (componentClass) {
-      // Pass the cityName directly to the loadComponent call
+      // Pass the cityId directly to the loadComponent call
       this.loadComponent(
         this.investmentListContainer,
         componentClass,
-        {name: cityName}
+        {id: cityId}
       );
     } else {
       console.error(`No component found for ${ComponentLocation.InvestmentList} with status key ${statusKey}`);

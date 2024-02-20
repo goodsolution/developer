@@ -3,7 +3,6 @@ import {InvestmentResponse} from "../../core/models/investment.model";
 import {CityResponse} from "../../core/models/city.model";
 import {Subject, Subscription, takeUntil} from "rxjs";
 import {InvestmentsService} from "../../core/services/investments.service";
-import {ActivatedRoute} from "@angular/router";
 import {CitiesService} from "../../core/services/cities.service";
 import {DynamicComponentLoadingService} from "../../core/services/dynamic-component-loading.service";
 
@@ -16,7 +15,7 @@ export class InvestmentListAntalComponent implements OnInit, OnDestroy {
   allInvestments: InvestmentResponse[] = [];
   investments: InvestmentResponse[] = [];
   cities: CityResponse[] = [];
-  cityName: string = '';
+  cityId: string = '';
   private unsubscribe$ = new Subject<void>();
   private subscriptionToCityChanges?: Subscription;
   private citiesLoaded = false;
@@ -33,7 +32,6 @@ export class InvestmentListAntalComponent implements OnInit, OnDestroy {
   }
 
   private loadCities() {
-    console.log('InvestmentListDodeComponent loadCities start');
     if (this.citiesLoaded) {
       return;
     }
@@ -41,7 +39,6 @@ export class InvestmentListAntalComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe({
         next: data => {
-          console.log('Cities loaded:', data.cities);
           this.cities = data.cities;
           this.citiesLoaded = true;
           if (!this.subscriptionToCityChanges) {
@@ -53,15 +50,14 @@ export class InvestmentListAntalComponent implements OnInit, OnDestroy {
           this.citiesLoaded = false;
         }
       });
-    console.log('InvestmentListDodeComponent loadCities stop');
   }
 
   private subscribeToCityChanges() {
     this.dynamicLoadingService.getInvestmentComponentTrigger()
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(data => {
-        if (this.citiesLoaded && data.cityName !== this.cityName) {
-          this.cityName = data.cityName;
+        if (this.citiesLoaded && data.cityId !== this.cityId) {
+          this.cityId = data.cityId;
           this.getInvestments();
         }
       });
@@ -73,25 +69,17 @@ export class InvestmentListAntalComponent implements OnInit, OnDestroy {
       .subscribe({
         next: data => {
           this.allInvestments = data.investments;
-          this.filterInvestmentsByCity(this.cityName);
+          this.filterInvestmentsByCity(this.cityId);
         },
         error: error => console.error('Error fetching investments:', error)
       });
   }
 
-  private filterInvestmentsByCity(cityName: string): void {
-    if (!cityName) {
-      this.investments = [...this.allInvestments];
-      return;
-    }
-    this.investments = this.allInvestments.filter(investment => {
-      const city = this.cities
-        .find(c => c.name.toLowerCase() === cityName.toLowerCase());
-      if (!city) {
-        console.warn(`City not found: ${cityName}`);
-      }
-      return city && investment.cityId === city.id;
-    });
+  private filterInvestmentsByCity(cityId: string): void {
+    const numericCityId = Number(cityId); // Convert cityId to number
+    this.investments = numericCityId ? this.allInvestments.filter(investment => {
+      return investment.cityId === numericCityId;
+    }) : [...this.allInvestments];
   }
 
   ngOnDestroy(): void {
@@ -101,5 +89,6 @@ export class InvestmentListAntalComponent implements OnInit, OnDestroy {
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
   }
+
 
 }
