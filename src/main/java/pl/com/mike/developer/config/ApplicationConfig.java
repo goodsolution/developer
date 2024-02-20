@@ -157,25 +157,6 @@ public class ApplicationConfig {
     @Value("${system.logoDeveloperEndpoint}")
     private String logoDeveloperEndpoint;
 
-    @Value("${system.citiesEndpoint}")
-    private String citiesEndpoint;
-
-    @Value("${system.developerBySystemCodeEndpoint}")
-    private String developerBySystemCodeEndpoint;
-
-    @Value("${system.investmentsEndpoint}")
-    private String investmentEndpoint;
-
-    public String getInvestmentEndpoint() {
-        return investmentEndpoint;
-    }
-
-    public String getDeveloperBySystemCodeEndpoint() {
-        return developerBySystemCodeEndpoint;
-    }
-    public String getCitiesEndpoint() {
-        return citiesEndpoint;
-    }
     public String getLogoDeveloperEndpoint() {
         return logoDeveloperEndpoint;
     }

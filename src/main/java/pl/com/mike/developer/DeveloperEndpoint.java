@@ -12,7 +12,7 @@ import pl.com.mike.developer.logic.developer.PremiseService;
 import pl.com.mike.developer.web.ConverterToResponse;
 
 @RestController
-@RequestMapping("api/system/")
+@RequestMapping("api/")
 public class DeveloperEndpoint {
 
     private final PremiseService premiseService;
