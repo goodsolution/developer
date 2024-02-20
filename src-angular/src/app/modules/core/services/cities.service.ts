@@ -1,19 +1,19 @@
 import {Injectable} from '@angular/core';
-import {environment} from "../../../../environments/environment.development";
 import {HttpClient} from "@angular/common/http";
 import {interval, Observable, of, switchMap, tap} from "rxjs";
 import {SearchResultCityModel} from "../models/searchResultCity.model";
+import {ConstantsService} from "./constants.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class CitiesService {
-  private apiUrl = environment.citiesEndpoint;
+  private apiUrl = this.constantsService.API_CITIES_ENDPOINT;
   private cache!: SearchResultCityModel;
   private lastUpdated: number = 0;
   private updateInterval = 60000; // 15 sec in milliseconds
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private constantsService: ConstantsService) {
     this.startPeriodicUpdate()
   }
 

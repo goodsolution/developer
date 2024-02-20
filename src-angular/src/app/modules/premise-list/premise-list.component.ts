@@ -20,17 +20,15 @@ export class PremiseListComponent {
   ngOnInit() {
     this.route.params.subscribe(params => {
       const id = +params['id'];
-      // console.log('Investment id:', id);
       this.premiseService.getPremisesByInvestmentId(id).subscribe({
         next: (data) => {
-          this.premises = data.premisesGetResponse; // Assuming the response structure has a premises property
-          // console.log('Premises fetched:', this.premises);
+          this.premises = data.premisesGetResponse;
         },
         error: (error) => {
-          // console.error('Error fetching premises:', error);
+          console.error('Error fetching premises:', error);
         },
         complete: () => {
-          // console.log('Fetching premises complete');
+          console.log('Fetching premises complete');
         }
       });
     });

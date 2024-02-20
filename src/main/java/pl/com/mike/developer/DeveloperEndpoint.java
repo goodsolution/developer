@@ -5,7 +5,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pl.com.mike.developer.config.ApplicationConfig;
-import pl.com.mike.developer.logic.developer.*;
+import pl.com.mike.developer.logic.developer.DeveloperSearchFilter;
+import pl.com.mike.developer.logic.developer.DeveloperService;
+import pl.com.mike.developer.logic.developer.PremiseSearchFilter;
+import pl.com.mike.developer.logic.developer.PremiseService;
 import pl.com.mike.developer.web.ConverterToResponse;
 
 @RestController

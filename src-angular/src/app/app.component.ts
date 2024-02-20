@@ -2,7 +2,6 @@ import {Component, OnDestroy, OnInit, Type, ViewChild, ViewContainerRef} from '@
 import {NavigationEnd, Router} from "@angular/router";
 import {filter, Observable, of, ReplaySubject, Subscription, take, tap} from 'rxjs';
 import {SearchResultCode} from "./modules/core/models/searchResultCode.model";
-import {DynamicComponentLoadingService} from "./modules/core/services/dynamic-component-loading.service";
 import {
   InvestmentListAntalComponent
 } from "./modules/investment-list/investment-list-antal/investment-list-antal.component";
@@ -74,8 +73,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   constructor(
     private configService: ConfigService,
-    private router: Router,
-    private dynamicComponentLoadingService: DynamicComponentLoadingService,
+    private router: Router
   ) {
   }
 
@@ -190,7 +188,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
     if (componentClass) {
       // Pass the cityName directly to the loadComponent call
-      this.dynamicComponentLoadingService.loadComponent(
+      this.loadComponent(
         this.investmentListContainer,
         componentClass,
         {name: cityName}
@@ -214,7 +212,15 @@ export class AppComponent implements OnInit, OnDestroy {
     if (!componentClass) {
       return;
     }
-    this.dynamicComponentLoadingService.loadComponent(container, componentClass);
+    this.loadComponent(container, componentClass);
+  }
+
+  private loadComponent<T>(container: ViewContainerRef, component: Type<T>, inputData?: any): void {
+    container.clear();
+    const componentRef = container.createComponent(component);
+    if (inputData && componentRef.instance) {
+      Object.assign(componentRef.instance, inputData);
+    }
   }
 
 }

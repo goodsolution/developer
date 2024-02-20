@@ -71,23 +71,6 @@ public class ConfigEndpoint {
         return ResponseEntity.ok(map);
     }
 
-    @GetMapping("config")
-    public ResponseEntity<Map<String, Object>> getConfig() {
-        Map<String, Object> config = new HashMap<>();
-
-        config.put("production", false);
-        config.put("logoDeveloperEndpoint", "https://localhost:8081/api/system/developers/logo");
-        config.put("citiesEndpoint", "https://localhost:8081/api/system/cities");
-        config.put("citiesByDeveloperCode", "https://localhost:8081/api/system/citiesNamesByDeveloperCode");
-        config.put("systemCodeEndpoint", "https://localhost:8081/api/system/code");
-        config.put("frontMenuDeveloperEndpoint", "https://localhost:8081/api/system/developers/front-menu");
-        config.put("investmentsEndpoint", "https://localhost:8081/api/system/investments");
-        config.put("developerBySystemCodeEndpoint", "https://localhost:8081/api/system/developers/code");
-        config.put("premisesByInvestmentIdEndpoint", "https://localhost:8081/api/system/premises/investment");
-
-        return ResponseEntity.ok(config);
-    }
-
     private String getUrl(String logoFileName) {
         return applicationConfig.getSystemAsset() + applicationConfig.getSystemCode() + logoFileName;
     }
