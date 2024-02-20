@@ -3,7 +3,6 @@ import {CommonModule} from '@angular/common';
 
 import {InvestmentListRoutingModule} from './investment-list-routing.module';
 import {InvestmentListComponent} from './investment-list.component';
-import {InvestmentComponent} from './investment/investment.component';
 import {SharedModule} from "../shared/shared.module";
 import { InvestmentListDodeComponent } from './investment-list-dode/investment-list-dode.component';
 import { InvestmentListAntalComponent } from './investment-list-antal/investment-list-antal.component';
@@ -15,7 +14,6 @@ import {InvestmentDodeComponent} from "./investment-list-dode/investment-dode/in
 @NgModule({
   declarations: [
     InvestmentListComponent,
-    InvestmentComponent,
     InvestmentListDodeComponent,
     InvestmentListAntalComponent,
     InvestmentAntalComponent,
@@ -28,7 +26,6 @@ import {InvestmentDodeComponent} from "./investment-list-dode/investment-dode/in
   ],
   exports: [
     InvestmentListComponent,
-    InvestmentComponent,
     InvestmentListDodeComponent,
     InvestmentListAntalComponent,
     InvestmentAntalComponent,
