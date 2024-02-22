@@ -18,10 +18,12 @@ import {ContactDodeComponent} from "./modules/contact/contact-dode/contact-dode.
 import {HomeDodeComponent} from "./modules/home/home-dode/home-dode.component";
 import {DefaultComponent} from "./modules/shared/default/default.component";
 import {ConfigService} from "./modules/core/services/config.service";
+import {PremiseListAntalComponent} from "./modules/premise-list/premise-list-antal/premise-list-antal.component";
+import {PremiseListDodeComponent} from "./modules/premise-list/premise-list-dode/premise-list-dode.component";
 
 
 enum ComponentLocation {
-  Header, Footer, Contact, Home, InvestmentList
+  Header, Footer, Contact, Home, InvestmentList, PremiseList
 }
 
 interface ComponentConfig {
@@ -42,6 +44,7 @@ export class AppComponent implements OnInit, OnDestroy {
   @ViewChild('contactContainer', {read: ViewContainerRef, static: true}) private contactContainer!: ViewContainerRef;
   @ViewChild('homeContainer', {read: ViewContainerRef, static: true}) private homeContainer!: ViewContainerRef;
   @ViewChild('investmentListContainer', {read: ViewContainerRef}) private investmentListContainer!: ViewContainerRef;
+  @ViewChild('premiseListContainer', {read: ViewContainerRef}) private premiseListContainer!: ViewContainerRef;
 
   private subscriptions: Subscription = new Subscription();
   private statusCode: SearchResultCode | null = null;
@@ -54,6 +57,7 @@ export class AppComponent implements OnInit, OnDestroy {
       [ComponentLocation.Contact]: ContactAntalComponent,
       [ComponentLocation.Home]: HomeAntalComponent,
       [ComponentLocation.InvestmentList]: InvestmentListAntalComponent,
+      [ComponentLocation.PremiseList]: PremiseListAntalComponent // Add the correct component here
     },
     domdevelopment: {
       [ComponentLocation.Header]: DodeHeaderComponent,
@@ -61,6 +65,7 @@ export class AppComponent implements OnInit, OnDestroy {
       [ComponentLocation.Contact]: ContactDodeComponent,
       [ComponentLocation.Home]: HomeDodeComponent,
       [ComponentLocation.InvestmentList]: InvestmentListDodeComponent,
+      [ComponentLocation.PremiseList]: PremiseListDodeComponent // Add the correct component here
     },
     default: {
       [ComponentLocation.Header]: DefaultComponent,
@@ -68,6 +73,7 @@ export class AppComponent implements OnInit, OnDestroy {
       [ComponentLocation.Contact]: DefaultComponent,
       [ComponentLocation.Home]: DefaultComponent,
       [ComponentLocation.InvestmentList]: DefaultComponent,
+      [ComponentLocation.PremiseList]: DefaultComponent // Add the correct component here
     }
   };
 
@@ -141,6 +147,8 @@ export class AppComponent implements OnInit, OnDestroy {
       directMatchAction();
     } else if (/^\/city\/.+/.test(url)) {
       this.loadDynamicInvestmentComponent(url);
+    } else if (/^\/premises\/.+/.test(url)) {
+      this.loadDynamicPremiseComponent(url);
     } else if (url === '/') {
       this.createComponent(this.homeContainer, ComponentLocation.Home);
     } else {
@@ -153,6 +161,7 @@ export class AppComponent implements OnInit, OnDestroy {
     this.homeContainer.clear();
     this.contactContainer.clear();
     this.investmentListContainer.clear();
+    this.premiseListContainer.clear();
     // Clear other containers if any
   }
 
@@ -194,6 +203,26 @@ export class AppComponent implements OnInit, OnDestroy {
       );
     } else {
       console.error(`No component found for ${ComponentLocation.InvestmentList} with status key ${statusKey}`);
+    }
+  }
+
+  private loadDynamicPremiseComponent(url: string) {
+    const urlSegments = url.split('/');
+    const investmentId = urlSegments[2]; // Adjust the index as necessary
+
+    const statusKey = this.statusCode?.code || 'default';
+    const componentMapping = this.componentConfig[statusKey];
+    const componentClass = componentMapping[ComponentLocation.PremiseList];
+
+    if (componentClass) {
+      // Pass the investmentId directly to the loadComponent call
+      this.loadComponent(
+        this.premiseListContainer,
+        componentClass,
+        {investmentId: investmentId}
+      );
+    } else {
+      console.error(`No component found for Premises with status key ${statusKey}`);
     }
   }
 

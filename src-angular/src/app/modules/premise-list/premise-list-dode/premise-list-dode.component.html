@@ -1,0 +1,7 @@
+<p>!dode developer premise list!</p>
+<div class="card-container" *ngIf="premises.length > 0">
+  <ng-container *ngFor="let premise of premises">
+    <app-premise-dode [premise]="premise"></app-premise-dode>
+  </ng-container>
+</div>
+<h5 *ngIf="premises.length === 0">Aktualnie brak mieszkań</h5>

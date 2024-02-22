@@ -6,20 +6,19 @@ import {InvestmentsService} from "../../core/services/investments.service";
 import {CitiesService} from "../../core/services/cities.service";
 import {DynamicComponentLoadingService} from "../../core/services/dynamic-component-loading.service";
 
-
 @Component({
   selector: 'app-investment-list-dode',
   templateUrl: './investment-list-dode.component.html',
   styleUrls: ['./investment-list-dode.component.scss']
 })
 export class InvestmentListDodeComponent implements OnInit, OnDestroy {
-  allInvestments: InvestmentResponse[] = [];
+  private allInvestments: InvestmentResponse[] = [];
   investments: InvestmentResponse[] = [];
-  cities: CityResponse[] = [];
-  cityId: string = '';
   private unsubscribe$ = new Subject<void>();
   private subscriptionToCityChanges?: Subscription;
   private citiesLoaded = false;
+  cities: CityResponse[] = [];
+  private cityId: string = '';
 
   constructor(
     private dynamicLoadingService: DynamicComponentLoadingService,
@@ -77,7 +76,7 @@ export class InvestmentListDodeComponent implements OnInit, OnDestroy {
   }
 
   private filterInvestmentsByCity(cityId: string): void {
-    const numericCityId = Number(cityId); // Convert cityId to number
+    const numericCityId = Number(cityId);
     this.investments = numericCityId ? this.allInvestments.filter(investment => {
       return investment.cityId === numericCityId;
     }) : [...this.allInvestments];

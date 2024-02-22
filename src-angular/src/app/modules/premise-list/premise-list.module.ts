@@ -1,27 +1,34 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
 
-import { PremiseListRoutingModule } from './premise-list-routing.module';
-import { PremiseListComponent } from './premise-list.component';
-import { PremiseComponent } from './premise/premise.component';
+import {PremiseListRoutingModule} from './premise-list-routing.module';
+import {PremiseListComponent} from './premise-list.component';
 import {SharedModule} from "../shared/shared.module";
-import {InvestmentListModule} from "../investment-list/investment-list.module";
+import {PremiseListDodeComponent} from './premise-list-dode/premise-list-dode.component';
+import {PremiseDodeComponent} from './premise-list-dode/premise-dode/premise-dode.component';
+import {PremiseListAntalComponent} from './premise-list-antal/premise-list-antal.component';
+import {PremiseAntalComponent} from './premise-list-antal/premise-antal/premise-antal.component';
 
 
 @NgModule({
   declarations: [
     PremiseListComponent,
-    PremiseComponent
+    PremiseListDodeComponent,
+    PremiseDodeComponent,
+    PremiseListAntalComponent,
+    PremiseAntalComponent
   ],
     imports: [
         CommonModule,
         PremiseListRoutingModule,
-        SharedModule,
-        InvestmentListModule
+        SharedModule
     ],
   exports: [
     PremiseListComponent,
-    PremiseComponent
+    PremiseListDodeComponent,
+    PremiseDodeComponent,
+    PremiseListAntalComponent,
+    PremiseAntalComponent
   ]
 })
 export class PremiseListModule { }
