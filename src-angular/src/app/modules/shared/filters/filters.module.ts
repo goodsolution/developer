@@ -1,9 +1,10 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
 
-import { FiltersRoutingModule } from './filters-routing.module';
-import { FiltersDodeComponent } from './filters-dode/filters-dode.component';
-import { FiltersAntalComponent } from './filters-antal/filters-antal.component';
+import {FiltersRoutingModule} from './filters-routing.module';
+import {FiltersDodeComponent} from './filters-dode/filters-dode.component';
+import {FiltersAntalComponent} from './filters-antal/filters-antal.component';
+import {MaterialModule} from "../material/material.module";
 
 
 @NgModule({
@@ -13,11 +14,13 @@ import { FiltersAntalComponent } from './filters-antal/filters-antal.component';
   ],
   imports: [
     CommonModule,
-    FiltersRoutingModule
+    FiltersRoutingModule,
+    MaterialModule
   ],
   exports: [
     FiltersDodeComponent,
-    FiltersAntalComponent
+    FiltersAntalComponent,
+
   ]
 })
 export class FiltersModule { }

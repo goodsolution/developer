@@ -1,1 +1,11 @@
-<p>filters-dode works!</p>
+<div class="filter-container">
+  <span class="filter-label">Filter by price (PLN):</span>
+  <mat-slider class="price-slider" min="1000000" max="10000000" step="10000">
+    <input matInput [value]="minPrice" (input)="onMinPriceChange($event)" matSliderStartThumb>
+    <input matInput [value]="maxPrice" (input)="onMaxPriceChange($event)" matSliderEndThumb>
+  </mat-slider>
+  <div class="price-display">
+    <span class="price-from">From: {{ minPrice | currency:'PLN' }}</span>
+    <span class="price-to">To: {{ maxPrice | currency:'PLN' }}</span>
+  </div>
+</div>
