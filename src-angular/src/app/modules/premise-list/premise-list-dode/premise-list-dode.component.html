@@ -1,4 +1,4 @@
-<app-filters-dode (priceRangeChange)="onPriceRangeChange($event)"></app-filters-dode>
+<app-premise-list-filter-dode (priceRangeChange)="onPriceRangeChange($event)"></app-premise-list-filter-dode>
 <div class="card-container" *ngIf="filteredPremises.length > 0">
   <ng-container *ngFor="let premise of filteredPremises">
     <app-premise-dode [premise]="premise"></app-premise-dode>

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pl.com.mike.developer.config.ApplicationConfig;
+import pl.com.mike.developer.config.ProfilesBean;
 import pl.com.mike.developer.logic.developer.DeveloperSearchFilter;
 import pl.com.mike.developer.logic.developer.DeveloperService;
 
@@ -23,13 +24,13 @@ import java.util.Properties;
 public class ConfigEndpoint {
     private final DeveloperService developerService;
     private final ApplicationConfig applicationConfig;
-    private final Environment environment;
+    private final ProfilesBean profilesBean;
     private static final Logger logger = LoggerFactory.getLogger(ConfigEndpoint.class);
 
-    public ConfigEndpoint(DeveloperService developerService, ApplicationConfig applicationConfig, Environment environment) {
+    public ConfigEndpoint(DeveloperService developerService, ApplicationConfig applicationConfig, ProfilesBean profilesBean) {
         this.developerService = developerService;
         this.applicationConfig = applicationConfig;
-        this.environment = environment;
+        this.profilesBean = profilesBean;
     }
 
     @GetMapping("developers/logo")
@@ -48,14 +49,10 @@ public class ConfigEndpoint {
 
     @GetMapping("config/properties")
     public ResponseEntity<Map<String, String>> getConfiguration() {
-        String[] activeProfiles = environment.getActiveProfiles();
-        String activeProfile = activeProfiles.length > 0 ? activeProfiles[0] : "default";
         Properties prop = new Properties();
-        String propertiesFileName = "application-" + activeProfile + ".properties";
-
-        try (InputStream input = getClass().getClassLoader().getResourceAsStream(propertiesFileName)) {
+        try (InputStream input = getClass().getClassLoader().getResourceAsStream(profilesBean.getActiveProfiles())) {
             if (input == null) {
-                logger.error("Properties file not found: {}", propertiesFileName);
+                logger.error("Properties file not found: {}", profilesBean.getActiveProfiles());
                 return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
             }
             prop.load(input);

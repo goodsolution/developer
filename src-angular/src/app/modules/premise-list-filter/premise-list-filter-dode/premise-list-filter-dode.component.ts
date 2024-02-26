@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, EventEmitter, Output} from '@angular/core';
 
 export interface PriceFilterCriteria {
   minPrice: number;
@@ -6,11 +6,11 @@ export interface PriceFilterCriteria {
 }
 
 @Component({
-  selector: 'app-filters-dode',
-  templateUrl: './filters-dode.component.html',
-  styleUrls: ['./filters-dode.component.scss']
+  selector: 'app-premise-list-filter-dode',
+  templateUrl: './premise-list-filter-dode.component.html',
+  styleUrls: ['./premise-list-filter-dode.component.scss']
 })
-export class FiltersDodeComponent {
+export class PremiseListFilterDodeComponent {
 
   minPrice: number = 1000000;
   maxPrice: number = 10000000;

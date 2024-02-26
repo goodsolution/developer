@@ -15,6 +15,7 @@ import {PremiseListModule} from "./modules/premise-list/premise-list.module";
 import {CustomReuseStrategyService} from "./modules/core/routing/custom-reuse-strategy.service";
 import {RouteReuseStrategy} from "@angular/router";
 import {ConfigService} from "./modules/core/services/config.service";
+import {PremiseListFilterModule} from "./modules/premise-list-filter/premise-list-filter.module";
 
 // Function to return a configuration loading function
 export function initializeApp(config: ConfigService) {
@@ -35,6 +36,7 @@ export function initializeApp(config: ConfigService) {
     CoreModule,
     InvestmentListModule,
     PremiseListModule,
+    PremiseListFilterModule,
     AppRoutingModule,
     HttpClientModule,
     TranslateModule.forRoot({

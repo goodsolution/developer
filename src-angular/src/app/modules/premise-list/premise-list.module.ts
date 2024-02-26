@@ -8,6 +8,7 @@ import {PremiseListDodeComponent} from './premise-list-dode/premise-list-dode.co
 import {PremiseDodeComponent} from './premise-list-dode/premise-dode/premise-dode.component';
 import {PremiseListAntalComponent} from './premise-list-antal/premise-list-antal.component';
 import {PremiseAntalComponent} from './premise-list-antal/premise-antal/premise-antal.component';
+import {PremiseListFilterModule} from "../premise-list-filter/premise-list-filter.module";
 
 
 @NgModule({
@@ -18,11 +19,12 @@ import {PremiseAntalComponent} from './premise-list-antal/premise-antal/premise-
     PremiseListAntalComponent,
     PremiseAntalComponent
   ],
-    imports: [
-        CommonModule,
-        PremiseListRoutingModule,
-        SharedModule
-    ],
+  imports: [
+    CommonModule,
+    PremiseListRoutingModule,
+    SharedModule,
+    PremiseListFilterModule
+  ],
   exports: [
     PremiseListComponent,
     PremiseListDodeComponent,
@@ -31,4 +33,5 @@ import {PremiseAntalComponent} from './premise-list-antal/premise-antal/premise-
     PremiseAntalComponent
   ]
 })
-export class PremiseListModule { }
+export class PremiseListModule {
+}
