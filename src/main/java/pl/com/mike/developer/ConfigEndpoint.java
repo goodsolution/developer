@@ -60,11 +60,11 @@ public class ConfigEndpoint {
             logger.error("Error loading properties file", ex);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
-
         Map<String, String> map = new HashMap<>();
-        for (String key : prop.stringPropertyNames()) {
-            map.put(key, prop.getProperty(key));
-        }
+        prop.stringPropertyNames()
+                .stream()
+                .filter(key -> key.startsWith("system."))
+                .forEach(key -> map.put(key, prop.getProperty(key)));
         return ResponseEntity.ok(map);
     }
 
