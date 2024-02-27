@@ -36,4 +36,14 @@ export class PremiseListFilterDodeComponent {
     });
   }
 
+  formatPrice(value: number): string {
+    if (value >= 1000000) {
+      return (value / 1000000).toFixed(1).replace('.', ',') + ' mln';
+    } else if (value >= 1000) {
+      return (value / 1000).toFixed(1).replace('.', ',') + ' tys.';
+    } else {
+      return value + ' PLN';
+    }
+  }
+
 }
