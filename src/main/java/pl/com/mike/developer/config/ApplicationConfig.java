@@ -53,8 +53,6 @@ public class ApplicationConfig {
     @Value("${masterdieta-scheduler-update-order-status-disabled}")
     private Boolean schedulerUpdateOrderStatusDisabled;
 
-
-
     @Value("${masterdieta-scheduler-update-order-status-traditional-hour}")
     private Integer schedulerUpdateOrderStatusTraditionalHour;
 
@@ -156,6 +154,13 @@ public class ApplicationConfig {
 
     @Value("${system.logoDeveloperEndpoint}")
     private String logoDeveloperEndpoint;
+
+    @Value("system.")
+    private String propertyConfigService;
+
+    public String getPropertyConfigService() {
+        return propertyConfigService;
+    }
 
     public String getLogoDeveloperEndpoint() {
         return logoDeveloperEndpoint;

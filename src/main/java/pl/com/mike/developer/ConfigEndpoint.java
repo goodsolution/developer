@@ -2,7 +2,6 @@ package pl.com.mike.developer;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,10 +11,10 @@ import pl.com.mike.developer.config.ApplicationConfig;
 import pl.com.mike.developer.config.ProfilesBean;
 import pl.com.mike.developer.logic.developer.DeveloperSearchFilter;
 import pl.com.mike.developer.logic.developer.DeveloperService;
+import pl.com.mike.developer.logic.developer.PropertyConfigService;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
@@ -25,12 +24,14 @@ public class ConfigEndpoint {
     private final DeveloperService developerService;
     private final ApplicationConfig applicationConfig;
     private final ProfilesBean profilesBean;
+    private final PropertyConfigService propertyConfigService;
     private static final Logger logger = LoggerFactory.getLogger(ConfigEndpoint.class);
 
-    public ConfigEndpoint(DeveloperService developerService, ApplicationConfig applicationConfig, ProfilesBean profilesBean) {
+    public ConfigEndpoint(DeveloperService developerService, ApplicationConfig applicationConfig, ProfilesBean profilesBean, PropertyConfigService propertyService) {
         this.developerService = developerService;
         this.applicationConfig = applicationConfig;
         this.profilesBean = profilesBean;
+        this.propertyConfigService = propertyService;
     }
 
     @GetMapping("developers/logo")
@@ -60,12 +61,7 @@ public class ConfigEndpoint {
             logger.error("Error loading properties file", ex);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
-        Map<String, String> map = new HashMap<>();
-        prop.stringPropertyNames()
-                .stream()
-                .filter(key -> key.startsWith("system."))
-                .forEach(key -> map.put(key, prop.getProperty(key)));
-        return ResponseEntity.ok(map);
+        return ResponseEntity.ok(propertyConfigService.getFilteredConfigProperties(prop));
     }
 
     private String getUrl(String logoFileName) {
