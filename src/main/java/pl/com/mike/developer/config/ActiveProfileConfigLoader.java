@@ -6,11 +6,11 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ProfilesBean {
+public class ActiveProfileConfigLoader {
     private final String[] activeProfiles;
-    private final Logger logger = LoggerFactory.getLogger(ProfilesBean.class);
+    private final Logger logger = LoggerFactory.getLogger(ActiveProfileConfigLoader.class);
 
-    public ProfilesBean(@Value("${spring.profiles.active:}") String activeProfiles) {
+    public ActiveProfileConfigLoader(@Value("${spring.profiles.active:}") String activeProfiles) {
         this.activeProfiles = activeProfiles.split(",");
     }
 

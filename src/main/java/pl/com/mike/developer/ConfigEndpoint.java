@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pl.com.mike.developer.config.ApplicationConfig;
-import pl.com.mike.developer.config.ProfilesBean;
+import pl.com.mike.developer.config.ActiveProfileConfigLoader;
 import pl.com.mike.developer.logic.developer.DeveloperSearchFilter;
 import pl.com.mike.developer.logic.developer.DeveloperService;
 import pl.com.mike.developer.logic.developer.PropertyConfigService;
@@ -23,14 +23,14 @@ import java.util.Properties;
 public class ConfigEndpoint {
     private final DeveloperService developerService;
     private final ApplicationConfig applicationConfig;
-    private final ProfilesBean profilesBean;
+    private final ActiveProfileConfigLoader profileConfigLoader;
     private final PropertyConfigService propertyConfigService;
     private static final Logger logger = LoggerFactory.getLogger(ConfigEndpoint.class);
 
-    public ConfigEndpoint(DeveloperService developerService, ApplicationConfig applicationConfig, ProfilesBean profilesBean, PropertyConfigService propertyService) {
+    public ConfigEndpoint(DeveloperService developerService, ApplicationConfig applicationConfig, ActiveProfileConfigLoader profilesBean, PropertyConfigService propertyService) {
         this.developerService = developerService;
         this.applicationConfig = applicationConfig;
-        this.profilesBean = profilesBean;
+        this.profileConfigLoader = profilesBean;
         this.propertyConfigService = propertyService;
     }
 
@@ -51,9 +51,9 @@ public class ConfigEndpoint {
     @GetMapping("config/properties")
     public ResponseEntity<Map<String, String>> getConfiguration() {
         Properties prop = new Properties();
-        try (InputStream input = getClass().getClassLoader().getResourceAsStream(profilesBean.getActiveProfiles())) {
+        try (InputStream input = getClass().getClassLoader().getResourceAsStream(profileConfigLoader.getActiveProfiles())) {
             if (input == null) {
-                logger.error("Properties file not found: {}", profilesBean.getActiveProfiles());
+                logger.error("Properties file not found: {}", profileConfigLoader.getActiveProfiles());
                 return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
             }
             prop.load(input);
