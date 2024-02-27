@@ -11,9 +11,16 @@ import java.util.Optional;
 @Service
 public class PremiseService {
     private final PremiseRepository premiseRepository;
+    private final CustomPremiseRepositoryImpl customPremiseRepository;
 
-    public PremiseService(PremiseRepository premiseRepository) {
+
+    public PremiseService(PremiseRepository premiseRepository, CustomPremiseRepository customPremiseRepository, CustomPremiseRepositoryImpl customPremiseRepository1) {
         this.premiseRepository = premiseRepository;
+        this.customPremiseRepository = customPremiseRepository1;
+    }
+
+    public List<PremiseData> findPriceByInvestmentId(Long id, String priceFunction) {
+        return customPremiseRepository.findPriceByInvestmentId(id, priceFunction);
     }
 
     public List<PremiseData> getPremiseDataByInvestmentId(PremiseSearchFilter filter) {

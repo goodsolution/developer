@@ -37,8 +37,19 @@ public class PremiseData implements Serializable {
     private Boolean isLoggia;
     @Column(name = "building_id")
     private Long buildingId;
+    @ManyToOne
+    @JoinColumn(name = "building_id", insertable = false, updatable = false)
+    private BuildingData building;
 
     public PremiseData() {
+    }
+
+    public BuildingData getBuilding() {
+        return building;
+    }
+
+    public void setBuilding(BuildingData building) {
+        this.building = building;
     }
 
     public PremiseData(Long id, String type, Integer number, Integer floor, Double surfacePerSqMeter, Double pricePerSqMeter, BigDecimal totalPrice, Integer numberOfRooms, String technicalStatus, String salesStatus, String exposure, Boolean isBalcony, Boolean isGarden, Boolean isTerrace, Boolean isLoggia, Long buildingId) {
