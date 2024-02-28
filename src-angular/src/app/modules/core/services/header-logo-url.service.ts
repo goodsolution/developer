@@ -1,22 +1,27 @@
 import {Injectable} from '@angular/core';
-import {environment} from "../../../../environments/environment.development";
-import {HttpClient} from "@angular/common/http";
-import {Observable} from "rxjs";
+import {Observable, of, ReplaySubject, tap} from "rxjs";
 import {HeaderLogoUrlData} from "../models/header-logo-url.model";
+import {ConfigService} from "./config.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class HeaderLogoUrlService {
+  private logoUrl = new ReplaySubject<HeaderLogoUrlData>(1);
 
-  apiUrl = environment.logoDeveloperEndpoint;
-
-  constructor(private http: HttpClient) {
+  constructor(private configService: ConfigService) {
   }
 
   getLogoUrl(): Observable<HeaderLogoUrlData> {
-    return this.http.get<HeaderLogoUrlData>(`${this.apiUrl}`);
+    const logoUrl: HeaderLogoUrlData = {
+      url: this.configService.getLogoDeveloperUrl
+    };
+    return of(logoUrl).pipe(
+      tap({
+        next: (url) => this.logoUrl.next(url),
+        error: (error) => console.error('Error fetching logo url:', error)
+      })
+    );
   }
-
 
 }

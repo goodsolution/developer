@@ -1,40 +1,40 @@
-import {Component} from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
-import {PremiseService} from "../core/services/premise.service";
-import {PremiseResponse} from "../core/models/premise.model";
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute } from "@angular/router";
+import { DynamicComponentLoadingService } from "../core/services/dynamic-component-loading.service";
+import { Subscription } from "rxjs";
 
 @Component({
   selector: 'app-premise-list',
-  templateUrl: './premise-list.component.html',
+  template: '', // No HTML content, it's a dynamic loader only
   styleUrls: ['./premise-list.component.scss']
 })
-export class PremiseListComponent {
-
-  premises: PremiseResponse[] = [];
+export class PremiseListComponent implements OnInit, OnDestroy {
+  investmentId = '';
+  private routeSub!: Subscription;
 
   constructor(
-    private route: ActivatedRoute,
-    private premiseService: PremiseService
+    private dynamicLoadingService: DynamicComponentLoadingService,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit() {
-    this.route.params.subscribe(params => {
-      const id = +params['id'];
-      console.log('Investment id:', id);
-      this.premiseService.getPremisesByInvestmentId(id).subscribe({
-        next: (data) => {
-          this.premises = data.premisesGetResponse; // Assuming the response structure has a premises property
-          console.log('Premises fetched:', this.premises);
-        },
-        error: (error) => {
-          console.error('Error fetching premises:', error);
-        },
-        complete: () => {
-          console.log('Fetching premises complete');
-        }
-      });
+    this.routeSub = this.route.paramMap.subscribe(params => {
+      const investmentId: string | null = params.get('id');
+      this.handleInvestmentIdChange(investmentId);
     });
   }
 
+  private handleInvestmentIdChange(newInvestmentId: string | null) {
+    if (newInvestmentId && newInvestmentId !== this.investmentId) {
+      this.investmentId = newInvestmentId;
+      this.dynamicLoadingService.triggerPremiseComponentLoading({investmentId: this.investmentId});
+    }
+  }
+
+  ngOnDestroy(): void {
+    if (this.routeSub) {
+      this.routeSub.unsubscribe();
+    }
+  }
 
 }

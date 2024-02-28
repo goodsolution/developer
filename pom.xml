@@ -5,7 +5,7 @@
 
     <groupId>pl.com.mike.projects</groupId>
     <artifactId>developer</artifactId>
-    <version>1.0.0.SNAPSHOT</version>
+    <version>1.0.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>developer</name>
@@ -159,6 +159,12 @@
             <artifactId>exec-maven-plugin</artifactId>
             <version>3.1.0</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+        </dependency>
+
     </dependencies>
 
     <build>

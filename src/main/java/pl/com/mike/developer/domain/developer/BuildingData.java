@@ -2,6 +2,7 @@ package pl.com.mike.developer.domain.developer;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -25,8 +26,18 @@ public class BuildingData implements Serializable {
     private Long cityId;
     @Column(name = "voivodeship_id")
     private Long voivodeshipId;
+    @OneToMany(mappedBy = "building")
+    List<PremiseData> premises;
 
     public BuildingData() {
+    }
+
+    public List<PremiseData> getPremises() {
+        return premises;
+    }
+
+    public void setPremises(List<PremiseData> premises) {
+        this.premises = premises;
     }
 
     public Long getId() {

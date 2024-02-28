@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {CodeStatusService} from "../core/services/code-status.service";
+import {Subject} from "rxjs";
 
 @Component({
   selector: 'app-home',
@@ -7,14 +7,16 @@ import {CodeStatusService} from "../core/services/code-status.service";
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-  code!: string;
 
-  constructor(
-    private codeStatus: CodeStatusService) {
-  }
+  private homeComponentTrigger: Subject<void> = new Subject<void>();
 
   ngOnInit(): void {
-    this.codeStatus.getHomeComponentTrigger();
+    console.log('HomeComponent initialized');
+    this.getHomeComponentTrigger();
+  }
+
+  getHomeComponentTrigger() {
+    return this.homeComponentTrigger.next();
   }
 
 }

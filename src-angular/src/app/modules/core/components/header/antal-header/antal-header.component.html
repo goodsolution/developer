@@ -4,7 +4,7 @@
     <button mat-button [matMenuTriggerFor]="cities_menu">
       <i class="material-icons">location_city</i>{{'Main Cities' | translate}}</button>
     <mat-menu #cities_menu="matMenu">
-      <button *ngFor="let city of cities" mat-menu-item [routerLink]="['/city', city.name]">
+      <button *ngFor="let city of cities" mat-menu-item [routerLink]="['/city', city.id]">
         {{ city.name }}
       </button>
     </mat-menu>

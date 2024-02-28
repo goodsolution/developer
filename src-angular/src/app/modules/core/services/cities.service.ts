@@ -1,24 +1,23 @@
 import {Injectable} from '@angular/core';
-import {environment} from "../../../../environments/environment.development";
 import {HttpClient} from "@angular/common/http";
 import {interval, Observable, of, switchMap, tap} from "rxjs";
 import {SearchResultCityModel} from "../models/searchResultCity.model";
+import {ConstantsService} from "./constants.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class CitiesService {
-  private apiUrl = environment.citiesEndpoint;
+  private apiUrl = this.constantsService.API_CITIES_ENDPOINT;
   private cache!: SearchResultCityModel;
   private lastUpdated: number = 0;
   private updateInterval = 60000; // 15 sec in milliseconds
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private constantsService: ConstantsService) {
     this.startPeriodicUpdate()
   }
 
   private startPeriodicUpdate(): void {
-    console.log('Starting periodic update Cities 60 sec interval');
     interval(this.updateInterval).pipe(
       switchMap(() => {
         return this.fetchDataFromAPI();
@@ -27,22 +26,9 @@ export class CitiesService {
   }
 
   getCities(): Observable<SearchResultCityModel> {
-    // if (this.cache && (new Date().getTime() - this.lastUpdated < this.updateInterval)) {
-    //   console.log(this.lastUpdated);
-    //   console.log(this.updateInterval);
-    //   console.log(new Date().getTime());
-    //   console.log(new Date().getTime() - this.lastUpdated);
-    //   console.log('Fetching data from cache Cities');
-    //   return of(this.cache); // Return cached data
-    // } else {
-    //   console.log('Fetching data from API Cities');
-    //   return this.fetchDataFromAPI();
-    // }
     if(this.cache){
-      console.log('Fetching data from cache Cities');
       return of(this.cache);
     } else {
-      console.log('Fetching data from API Cities');
       return this.fetchDataFromAPI();
     }
   }
@@ -54,7 +40,7 @@ export class CitiesService {
           this.cache = data;
           this.lastUpdated = new Date().getTime();
         } else {
-          console.log('cities- No changes in data, cache not updated');
+          console.log('City Data is not updated');
         }
       })
     );
@@ -62,7 +48,7 @@ export class CitiesService {
 
   private isDataUpdated(newData: SearchResultCityModel): boolean {
     if (!this.cache || this.cache.cities.length !== newData.cities.length) {
-      console.log('CIty is DataUpdated Cache is empty or data length is different')
+      // console.log('CIty is DataUpdated Cache is empty or data length is different')
       return true;
     }
     // Create sets of IDs for easy comparison

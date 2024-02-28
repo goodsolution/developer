@@ -3,7 +3,7 @@ import {RouterModule, Routes} from '@angular/router';
 import {InvestmentListComponent} from "./investment-list.component";
 
 const routes: Routes = [
-  {path: 'city/:name', component: InvestmentListComponent}
+  {path: 'city/:id', component: InvestmentListComponent}
 ];
 
 @NgModule({
