@@ -1,7 +1,7 @@
 <div class="filter-wrapper">
   <div class="filter-container">
     <span class="filter-label">Filter by price (PLN):</span>
-    <mat-slider class="price-slider" min="1000000" max="10000000" step="10000">
+    <mat-slider class="price-slider" [min]="minAllowedPrice" [max]="maxAllowedPrice" step="10000">
       <input matInput [value]="minPrice" (input)="onMinPriceChange($event)" matSliderStartThumb>
       <input matInput [value]="maxPrice" (input)="onMaxPriceChange($event)" matSliderEndThumb>
     </mat-slider>
@@ -11,4 +11,3 @@
     </div>
   </div>
 </div>
-

@@ -20,6 +20,7 @@ interface PriceFilterCriteria {
 export class PremiseListDodeComponent implements OnInit, OnDestroy {
   premises: PremiseResponse[] = [];
   filteredPremises: PremiseResponse[] = [];
+  investmentId!: number;
   private unsubscribe$ = new Subject<void>();
   private subscription!: Subscription;
   filterCriteria: PriceFilterCriteria = { minPrice: 0, maxPrice: Infinity };
@@ -35,6 +36,7 @@ export class PremiseListDodeComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (data) => {
           this.loadPremises(data.investmentId);
+          this.investmentId = data.investmentId;
         },
         error: (error) => console.error('Error in dynamic loading of premises:', error)
       });

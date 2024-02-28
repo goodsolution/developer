@@ -1,4 +1,5 @@
-import {Component, EventEmitter, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {PremiseService} from "../../core/services/premise.service";
 
 export interface PriceFilterCriteria {
   minPrice: number;
@@ -10,12 +11,42 @@ export interface PriceFilterCriteria {
   templateUrl: './premise-list-filter-dode.component.html',
   styleUrls: ['./premise-list-filter-dode.component.scss']
 })
-export class PremiseListFilterDodeComponent {
+export class PremiseListFilterDodeComponent implements OnInit {
 
-  minPrice: number = 1000000;
-  maxPrice: number = 10000000;
-
+  minPrice!: number;
+  maxPrice!: number;
+  minAllowedPrice!: number;
+  maxAllowedPrice!: number;
+  @Input() investmentId!: number;
   @Output() priceRangeChange = new EventEmitter<PriceFilterCriteria>();
+
+  constructor(private premiseService: PremiseService) {
+  }
+
+  ngOnInit(): void {
+    this.loadMinMaxPrices();
+  }
+
+  loadMinMaxPrices(): void {
+    this.loadMinPrice();
+    this.loadMaxPrice();
+  }
+
+  loadMinPrice(): void {
+    this.premiseService.getPremiseByInvestmentIdAndMinTotalPrice(this.investmentId)
+      .subscribe((response) => {
+        this.minPrice = response.premisesGetResponse[0].totalPrice;
+        this.minAllowedPrice = this.minPrice;
+      });
+  }
+
+  loadMaxPrice(): void {
+    this.premiseService.getPremiseByInvestmentIdAndMaxTotalPrice(this.investmentId)
+      .subscribe((response) => {
+        this.maxPrice = response.premisesGetResponse[0].totalPrice;
+        this.maxAllowedPrice = this.maxPrice;
+      });
+  }
 
   onMinPriceChange(event: Event): void {
     const input = event.target as HTMLInputElement;

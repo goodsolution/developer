@@ -7,13 +7,20 @@ import {ConstantsService} from "./constants.service";
   providedIn: 'root'
 })
 export class PremiseService {
-  private apiUrl = this.constanceService.API_PREMISES_BY_INVESTMENT_ID_ENDPOINT;
 
   constructor(private http: HttpClient, private constanceService: ConstantsService) {
   }
 
   getPremisesByInvestmentId(id: number) {
-    return this.http.get<SearchResultPremiseModel>(`${this.apiUrl}/${id}`);
+    return this.http.get<SearchResultPremiseModel>(this.constanceService.getApiPremisesByInvestmentEndpoint(id));
+  }
+
+  getPremiseByInvestmentIdAndMinTotalPrice(id: number) {
+    return this.http.get<SearchResultPremiseModel>(this.constanceService.getApiPremisesMinPriceByInvestmentIdEndpoint(id));
+  }
+
+  getPremiseByInvestmentIdAndMaxTotalPrice(id: number) {
+    return this.http.get<SearchResultPremiseModel>(this.constanceService.getApiPremisesMaxPriceByInvestmentIdEndpoint(id));
   }
 
 }
