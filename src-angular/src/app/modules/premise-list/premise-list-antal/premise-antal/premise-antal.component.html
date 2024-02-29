@@ -5,7 +5,7 @@
   </mat-card-header>
   <!--      <img mat-card-image [src]="premise.imageUrl" alt="{{ premise.name }}">-->
   <mat-card-content>
-    <p>{{ premise.surfacePerSqM | number }} m² - {{ premise.numberOfRooms }} pokoje</p>
+    <p>{{ premise.surfacePerSqMeter | number }} m² - {{ premise.numberOfRooms }} pokoje</p>
     <p>{{ premise.floor }} piętro</p>
     <div class="price">
       <span class="new-price">{{ premise.totalPrice | currency:'PLN' }}</span>

@@ -3,8 +3,8 @@ export interface PremiseResponse {
   type: string;
   number: number;
   floor: number;
-  surfacePerSqM: number;
-  pricePerSqM: number;
+  surfacePerSqMeter: number;
+  pricePerSqMeter: number;
   totalPrice: number;
   numberOfRooms: number;
   technicalStatus: string;

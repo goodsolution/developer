@@ -4,11 +4,11 @@ import {CommonModule} from '@angular/common';
 import {InvestmentListRoutingModule} from './investment-list-routing.module';
 import {InvestmentListComponent} from './investment-list.component';
 import {SharedModule} from "../shared/shared.module";
-import { InvestmentListDodeComponent } from './investment-list-dode/investment-list-dode.component';
-import { InvestmentListAntalComponent } from './investment-list-antal/investment-list-antal.component';
-import { InvestmentAntalComponent } from './investment-list-antal/investment-antal/investment-antal.component';
+import {InvestmentListDodeComponent} from './investment-list-dode/investment-list-dode.component';
+import {InvestmentListAntalComponent} from './investment-list-antal/investment-list-antal.component';
+import {InvestmentAntalComponent} from './investment-list-antal/investment-antal/investment-antal.component';
 import {InvestmentDodeComponent} from "./investment-list-dode/investment-dode/investment-dode.component";
-
+import {TruncatePipe} from "../../truncate.pipe";
 
 
 @NgModule({
@@ -17,7 +17,8 @@ import {InvestmentDodeComponent} from "./investment-list-dode/investment-dode/in
     InvestmentListDodeComponent,
     InvestmentListAntalComponent,
     InvestmentAntalComponent,
-    InvestmentDodeComponent
+    InvestmentDodeComponent,
+    TruncatePipe
   ],
   imports: [
     CommonModule,
@@ -29,7 +30,8 @@ import {InvestmentDodeComponent} from "./investment-list-dode/investment-dode/in
     InvestmentListDodeComponent,
     InvestmentListAntalComponent,
     InvestmentAntalComponent,
-    InvestmentDodeComponent
+    InvestmentDodeComponent,
+    TruncatePipe
   ]
 })
 export class InvestmentListModule {

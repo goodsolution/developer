@@ -139,7 +139,6 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   private handleNavigationChange(event: NavigationEnd) {
-    console.log('handleNavigationChange start');
     const url = event.urlAfterRedirects.split('?')[0];
     this.clearAllContainers();
     const directMatchAction = this.routesClearingMap.get(url);
@@ -154,7 +153,6 @@ export class AppComponent implements OnInit, OnDestroy {
     } else {
       // Handle other routes
     }
-    console.log('handleNavigationChange stop');
   }
 
   private clearAllContainers() {

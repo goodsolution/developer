@@ -8,4 +8,5 @@ import {PremiseResponse} from "../../../core/models/premise.model";
 })
 export class PremiseDodeComponent {
   @Input() premise!: PremiseResponse;
+
 }
