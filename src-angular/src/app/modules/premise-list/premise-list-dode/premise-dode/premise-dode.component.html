@@ -12,6 +12,6 @@
     </div>
   </mat-card-content>
   <mat-card-actions>
-    <button mat-button class="more-info-btn">Dowiedz się więcej</button>
+    <button mat-button [routerLink]="['/premise', premise.id]" class="more-info-btn">Dowiedz się więcej</button>
   </mat-card-actions>
 </mat-card>

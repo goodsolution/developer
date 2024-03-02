@@ -20,7 +20,7 @@ public class PropertyConfigService {
         Map<String, String> filteredProperties = new HashMap<>();
         properties.stringPropertyNames()
                 .stream()
-                .filter(key -> key.startsWith(applicationConfig.getPropertyConfigService()))
+                .filter(key -> key.startsWith(applicationConfig.getSystemPrefix()))
                 .forEach(key -> filteredProperties.put(key, properties.getProperty(key)));
         return filteredProperties;
     }

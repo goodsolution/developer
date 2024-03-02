@@ -51,9 +51,9 @@ public class ConfigEndpoint {
     @GetMapping("config/properties")
     public ResponseEntity<Map<String, String>> getConfiguration() {
         Properties prop = new Properties();
-        try (InputStream input = getClass().getClassLoader().getResourceAsStream(profileConfigLoader.getActiveProfiles())) {
+        try (InputStream input = getClass().getClassLoader().getResourceAsStream(profileConfigLoader.getActiveProfilePropertiesPath())) {
             if (input == null) {
-                logger.error("Properties file not found: {}", profileConfigLoader.getActiveProfiles());
+                logger.error("Properties file not found: {}", profileConfigLoader.getActiveProfilePropertiesPath());
                 return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
             }
             prop.load(input);
