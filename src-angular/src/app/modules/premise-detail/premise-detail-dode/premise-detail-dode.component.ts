@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import {Component, Input} from '@angular/core';
+import {Premise} from "../../../../../../db/src/app/premise";
 
 @Component({
   selector: 'app-premise-detail-dode',
@@ -6,5 +7,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./premise-detail-dode.component.scss']
 })
 export class PremiseDetailDodeComponent {
+@Input() premise!: Premise
 
 }

@@ -1,1 +1,31 @@
-<p>premise-detail-dode works!</p>
+<div class="container my-5">
+  <div class="row">
+    <div class="col-md-7">
+      <div class="premise-image mb-3">
+        <!-- Dynamically load image here -->
+        <img src="assets/img/domdevelopment/domdevelopment_home_page.jpg" alt="Premise View" class="img-fluid">
+      </div>
+      <!-- Additional premise details like gallery or floor plan can go here -->
+    </div>
+    <div class="col-md-5">
+      <div class="premise-details">
+        <h2 class="premise-title">{{ premise.type }} - {{ premise.number }}</h2>
+        <p class="lead"><strong>Floor:</strong> {{ premise.floor }}</p>
+        <p><strong>Area:</strong> {{ premise.surfacePerSqMeter }} m²</p>
+        <p><strong>Rooms:</strong> {{ premise.numberOfRooms }}</p>
+        <p><strong>Price per m²:</strong> {{ premise.pricePerSqMeter | currency }}</p>
+        <p><strong>Total Price:</strong> {{ premise.totalPrice | currency }}</p>
+        <p><strong>Technical Status:</strong> {{ premise.technicalStatus }}</p>
+        <p><strong>Sales Status:</strong> {{ premise.salesStatus }}</p>
+        <p><strong>Exposure:</strong> {{ premise.exposure }}</p>
+        <!-- Icons or labels for balcony, garden, etc. -->
+        <p>
+          <span class="badge bg-success" *ngIf="premise.balcony">Balcony</span>
+          <span class="badge bg-primary" *ngIf="premise.garden">Garden</span>
+          <!-- Repeat for terrace and loggia -->
+        </p>
+        <a href="#" class="btn btn-primary btn-lg mt-3">Ask about this apartment</a>
+      </div>
+    </div
+  </div>
+</div>
