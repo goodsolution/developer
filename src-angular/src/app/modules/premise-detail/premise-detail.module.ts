@@ -5,6 +5,7 @@ import {PremiseDetailRoutingModule} from './premise-detail-routing.module';
 import {PremiseDetailComponent} from './premise-detail.component';
 import {PremiseDetailDodeComponent} from './premise-detail-dode/premise-detail-dode.component';
 import {PremiseDetailAntalComponent} from './premise-detail-antal/premise-detail-antal.component';
+import {SharedModule} from "../shared/shared.module";
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import {PremiseDetailAntalComponent} from './premise-detail-antal/premise-detail
   ],
   imports: [
     CommonModule,
-    PremiseDetailRoutingModule
+    PremiseDetailRoutingModule,
+    SharedModule
   ],
   exports: [
     PremiseDetailComponent,

@@ -26,6 +26,4 @@ export class ConfigService {
     return this.appConfig?.['system.logoDeveloperEndpoint'];
   }
 
-  //TODO only thise two to map on backend
-
 }
