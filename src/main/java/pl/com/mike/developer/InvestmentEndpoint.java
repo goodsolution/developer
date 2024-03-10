@@ -1,6 +1,7 @@
 package pl.com.mike.developer;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pl.com.mike.developer.logic.developer.CityService;
@@ -51,6 +52,25 @@ public class InvestmentEndpoint {
     public InvestmentsGetResponse getInvestmentsResponse() {
         return new InvestmentsGetResponse(
                 investmentService.getInvestmentsByDeveloperCode()
+                        .stream()
+                        .map(investment -> new InvestmentGetResponse(
+                                investment.getId(),
+                                investment.getName(),
+                                investment.getDescription(),
+                                investment.getAddressCountry(),
+                                investment.getAddressStreet(),
+                                investment.getDeveloperId(),
+                                investment.getCityId(),
+                                investment.getVoivodeshipId()
+                        ))
+                        .collect(Collectors.toList())
+        );
+    }
+
+    @GetMapping("investmentByPremiseId/{id}")
+    public InvestmentsGetResponse getInvestmentByPremiseId(@PathVariable Long id) {
+        return new InvestmentsGetResponse(
+                investmentService.getInvestmentsByPremiseId(id)
                         .stream()
                         .map(investment -> new InvestmentGetResponse(
                                 investment.getId(),

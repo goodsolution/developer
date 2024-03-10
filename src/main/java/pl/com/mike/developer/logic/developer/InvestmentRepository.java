@@ -18,7 +18,7 @@ public interface InvestmentRepository extends JpaRepository<InvestmentData, Long
     @Query(nativeQuery = true, value = "select distinct investments.id, investments.name, investments.description, investments.address_country, investments.address_street, investments.developer_id, investments.city_id, investments.voivodeship_id from investments where developer_id = (select developers.id from developers where developers.code = :code)")
     List<InvestmentData> getInvestmentsByDeveloperCode(@Param("code") String code);
 
-    @Query(nativeQuery = true, value = "select distinct investments.id, investments.name, investments.description, investments.address_country, investments.address_street, investments.developer_id, investments.city_id, investments.voivodeship_id from investments where developer_id = (select developers.id from developers where developers.code = :code) and investments.city_id = (select cities.id from cities where cities.name = :city)")
-    List<InvestmentData> getInvestmentsByDeveloperCodeAndCity(@Param("code") String code, @Param("city") String city);
+    @Query(nativeQuery = true, value = "select * from investments join buildings on investments.id = buildings.investment_id join premises on buildings.id = premises.building_id where premises.id = :premiseId")
+    List<InvestmentData> getInvestmentsByPremiseId(@Param("premiseId") Long premiseId);
 
 }

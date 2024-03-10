@@ -10,10 +10,10 @@ export interface PremiseResponse {
   technicalStatus: string;
   salesStatus: string;
   exposure: string;
-  isBalcony: boolean;
-  isGarden: boolean;
-  isTerrace: boolean;
-  isLoggia: boolean;
+  isBalcony: number;
+  isGarden: number;
+  isTerrace: number;
+  isLoggia: number;
   buildingId: number;
 
 }

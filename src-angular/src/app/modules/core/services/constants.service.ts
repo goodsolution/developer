@@ -15,5 +15,11 @@ export class ConstantsService {
   getApiPremiseMinMaxTotalPriceByInvestmentId(investmentId: number): string {
     return `${this.API_BASE_URL}/premises/investment/${investmentId}/enhancedPremiseData`;
   }
+  getApiPremiseByIdEndpoint(premiseId: string): string {
+    return `${this.API_BASE_URL}/premises/${premiseId}`;
+  }
+  getApiInvestmentByPremiseIdEndpoint(premiseId: string): string {
+    return `${this.API_BASE_URL}/investmentByPremiseId/${premiseId}`;
+  }
 
 }

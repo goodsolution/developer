@@ -33,6 +33,11 @@ export class InvestmentsService {
     }
   }
 
+  getInvestmentByPremiseId(premiseId: string): Observable<SearchResultInvestmentModel> {
+    const url = this.constanceService.getApiInvestmentByPremiseIdEndpoint(premiseId);
+    return this.http.get<SearchResultInvestmentModel>(url);
+  }
+
 }
 
 
