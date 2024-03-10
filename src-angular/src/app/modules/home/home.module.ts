@@ -6,17 +6,16 @@ import {SharedModule} from "../shared/shared.module";
 import { HomeDodeComponent } from './home-dode/home-dode.component';
 import { HomeAntalComponent } from './home-antal/home-antal.component';
 
-
 @NgModule({
   declarations: [
     HomeComponent,
     HomeDodeComponent,
     HomeAntalComponent
   ],
-  imports: [
-    SharedModule,
-    HomeRoutingModule
-  ],
+    imports: [
+        SharedModule,
+        HomeRoutingModule
+    ],
   exports: [
     HomeComponent
   ]
