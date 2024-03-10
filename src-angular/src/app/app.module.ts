@@ -9,13 +9,14 @@ import {AuthModule} from "./modules/auth/auth.module";
 import {HttpClient, HttpClientModule} from "@angular/common/http";
 import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
 import {TranslateHttpLoader} from "@ngx-translate/http-loader";
-import {InvestmentListModule} from "./modules/investment-list/investment-list.module";
 import {ContactModule} from "./modules/contact/contact.module";
 import {PremiseListModule} from "./modules/premise-list/premise-list.module";
 import {CustomReuseStrategyService} from "./modules/core/routing/custom-reuse-strategy.service";
 import {RouteReuseStrategy} from "@angular/router";
 import {ConfigService} from "./modules/core/services/config.service";
 import {PremiseListFilterModule} from "./modules/premise-list-filter/premise-list-filter.module";
+import {InvestmentListModule} from "./modules/investment-list/investment-list.module";
+import {PremiseDetailModule} from "./modules/premise-detail/premise-detail.module";
 
 // Function to return a configuration loading function
 export function initializeApp(config: ConfigService) {
@@ -37,6 +38,7 @@ export function initializeApp(config: ConfigService) {
     InvestmentListModule,
     PremiseListModule,
     PremiseListFilterModule,
+    PremiseDetailModule,
     AppRoutingModule,
     HttpClientModule,
     TranslateModule.forRoot({

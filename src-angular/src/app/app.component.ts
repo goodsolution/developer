@@ -20,10 +20,14 @@ import {DefaultComponent} from "./modules/shared/default/default.component";
 import {ConfigService} from "./modules/core/services/config.service";
 import {PremiseListAntalComponent} from "./modules/premise-list/premise-list-antal/premise-list-antal.component";
 import {PremiseListDodeComponent} from "./modules/premise-list/premise-list-dode/premise-list-dode.component";
+import {
+  PremiseDetailAntalComponent
+} from './modules/premise-detail/premise-detail-antal/premise-detail-antal.component';
+import {PremiseDetailDodeComponent} from "./modules/premise-detail/premise-detail-dode/premise-detail-dode.component";
 
 
 enum ComponentLocation {
-  Header, Footer, Contact, Home, InvestmentList, PremiseList
+  Header, Footer, Contact, Home, InvestmentList, PremiseList, PremiseDetail
 }
 
 interface ComponentConfig {
@@ -45,6 +49,7 @@ export class AppComponent implements OnInit, OnDestroy {
   @ViewChild('homeContainer', {read: ViewContainerRef, static: true}) private homeContainer!: ViewContainerRef;
   @ViewChild('investmentListContainer', {read: ViewContainerRef}) private investmentListContainer!: ViewContainerRef;
   @ViewChild('premiseListContainer', {read: ViewContainerRef}) private premiseListContainer!: ViewContainerRef;
+  @ViewChild('premiseDetailContainer', {read: ViewContainerRef}) private premiseDetailContainer!: ViewContainerRef;
 
   private subscriptions: Subscription = new Subscription();
   private statusCode: SearchResultCode | null = null;
@@ -57,7 +62,8 @@ export class AppComponent implements OnInit, OnDestroy {
       [ComponentLocation.Contact]: ContactAntalComponent,
       [ComponentLocation.Home]: HomeAntalComponent,
       [ComponentLocation.InvestmentList]: InvestmentListAntalComponent,
-      [ComponentLocation.PremiseList]: PremiseListAntalComponent // Add the correct component here
+      [ComponentLocation.PremiseList]: PremiseListAntalComponent,
+      [ComponentLocation.PremiseDetail]: PremiseDetailAntalComponent
     },
     domdevelopment: {
       [ComponentLocation.Header]: DodeHeaderComponent,
@@ -65,7 +71,8 @@ export class AppComponent implements OnInit, OnDestroy {
       [ComponentLocation.Contact]: ContactDodeComponent,
       [ComponentLocation.Home]: HomeDodeComponent,
       [ComponentLocation.InvestmentList]: InvestmentListDodeComponent,
-      [ComponentLocation.PremiseList]: PremiseListDodeComponent // Add the correct component here
+      [ComponentLocation.PremiseList]: PremiseListDodeComponent,
+      [ComponentLocation.PremiseDetail]: PremiseDetailDodeComponent
     },
     default: {
       [ComponentLocation.Header]: DefaultComponent,
@@ -73,7 +80,8 @@ export class AppComponent implements OnInit, OnDestroy {
       [ComponentLocation.Contact]: DefaultComponent,
       [ComponentLocation.Home]: DefaultComponent,
       [ComponentLocation.InvestmentList]: DefaultComponent,
-      [ComponentLocation.PremiseList]: DefaultComponent // Add the correct component here
+      [ComponentLocation.PremiseList]: DefaultComponent,
+      [ComponentLocation.PremiseDetail]: DefaultComponent
     }
   };
 
@@ -139,7 +147,6 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   private handleNavigationChange(event: NavigationEnd) {
-    console.log('handleNavigationChange start');
     const url = event.urlAfterRedirects.split('?')[0];
     this.clearAllContainers();
     const directMatchAction = this.routesClearingMap.get(url);
@@ -149,12 +156,11 @@ export class AppComponent implements OnInit, OnDestroy {
       this.loadDynamicInvestmentComponent(url);
     } else if (/^\/premises\/.+/.test(url)) {
       this.loadDynamicPremiseComponent(url);
+    } else if (/^\/premise\/.+/.test(url)) {
+      this.loadDynamicPremiseDetailComponent(url);
     } else if (url === '/') {
       this.createComponent(this.homeContainer, ComponentLocation.Home);
-    } else {
-      // Handle other routes
     }
-    console.log('handleNavigationChange stop');
   }
 
   private clearAllContainers() {
@@ -162,7 +168,7 @@ export class AppComponent implements OnInit, OnDestroy {
     this.contactContainer.clear();
     this.investmentListContainer.clear();
     this.premiseListContainer.clear();
-    // Clear other containers if any
+    this.premiseDetailContainer.clear();
   }
 
   private routesClearingMap = new Map<string, () => void>([
@@ -223,6 +229,24 @@ export class AppComponent implements OnInit, OnDestroy {
       );
     } else {
       console.error(`No component found for Premises with status key ${statusKey}`);
+    }
+  }
+
+  private loadDynamicPremiseDetailComponent(url: string) {
+    const urlSegments = url.split('/');
+    const premiseId = urlSegments[2]; // Adjust the index as necessary
+
+    const statusKey = this.statusCode?.code || 'default';
+    const componentMapping = this.componentConfig[statusKey];
+    const componentClass = componentMapping[ComponentLocation.PremiseDetail];
+    if(componentClass) {
+      this.loadComponent(
+        this.premiseDetailContainer,
+        componentClass,
+        {premiseId: premiseId}
+      );
+    } else {
+      console.error(`No component found for Premise Detail with status key ${statusKey}`);
     }
   }
 

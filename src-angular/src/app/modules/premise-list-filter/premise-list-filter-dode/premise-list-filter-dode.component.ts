@@ -24,26 +24,15 @@ export class PremiseListFilterDodeComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.loadMinMaxPrices();
+    this.loadMinMaxTotalPrice();
   }
 
-  loadMinMaxPrices(): void {
-    this.loadMinPrice();
-    this.loadMaxPrice();
-  }
-
-  loadMinPrice(): void {
-    this.premiseService.getPremiseByInvestmentIdAndMinTotalPrice(this.investmentId)
+  loadMinMaxTotalPrice(): void {
+    this.premiseService.getPremiseMinMaxTotalPriceByInvestmentId(this.investmentId)
       .subscribe((response) => {
-        this.minPrice = response.premisesGetResponse[0].totalPrice;
+        this.minPrice = response.minPrice;
+        this.maxPrice = response.maxPrice
         this.minAllowedPrice = this.minPrice;
-      });
-  }
-
-  loadMaxPrice(): void {
-    this.premiseService.getPremiseByInvestmentIdAndMaxTotalPrice(this.investmentId)
-      .subscribe((response) => {
-        this.maxPrice = response.premisesGetResponse[0].totalPrice;
         this.maxAllowedPrice = this.maxPrice;
       });
   }

@@ -156,10 +156,10 @@ public class ApplicationConfig {
     private String logoDeveloperEndpoint;
 
     @Value("system.")
-    private String propertyConfigService;
+    private String systemPrefix;
 
-    public String getPropertyConfigService() {
-        return propertyConfigService;
+    public String getSystemPrefix() {
+        return systemPrefix;
     }
 
     public String getLogoDeveloperEndpoint() {

@@ -11,7 +11,6 @@ export class HomeComponent implements OnInit {
   private homeComponentTrigger: Subject<void> = new Subject<void>();
 
   ngOnInit(): void {
-    console.log('HomeComponent initialized');
     this.getHomeComponentTrigger();
   }
 

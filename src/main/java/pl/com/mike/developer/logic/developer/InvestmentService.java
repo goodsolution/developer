@@ -25,8 +25,12 @@ public class InvestmentService {
         return investmentRepository.getInvestmentsByDeveloperCode(applicationConfig.getSystemCode());
     }
 
-    public List<InvestmentData> getInvestmentsByDeveloperCodeAndCity(String city) {
-        return investmentRepository.getInvestmentsByDeveloperCodeAndCity(applicationConfig.getSystemCode(), city);
+//    public List<InvestmentData> getInvestmentsByDeveloperCodeAndCity(String city) {
+//        return investmentRepository.getInvestmentsByDeveloperCodeAndCity(applicationConfig.getSystemCode(), city);
+//    }
+
+    public List<InvestmentData> getInvestmentsByPremiseId(Long premiseId) {
+        return investmentRepository.getInvestmentsByPremiseId(premiseId);
     }
 
 }

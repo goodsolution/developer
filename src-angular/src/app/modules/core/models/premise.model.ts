@@ -3,17 +3,17 @@ export interface PremiseResponse {
   type: string;
   number: number;
   floor: number;
-  surfacePerSqM: number;
-  pricePerSqM: number;
+  surfacePerSqMeter: number;
+  pricePerSqMeter: number;
   totalPrice: number;
   numberOfRooms: number;
   technicalStatus: string;
   salesStatus: string;
   exposure: string;
-  isBalcony: boolean;
-  isGarden: boolean;
-  isTerrace: boolean;
-  isLoggia: boolean;
+  isBalcony: number;
+  isGarden: number;
+  isTerrace: number;
+  isLoggia: number;
   buildingId: number;
 
 }

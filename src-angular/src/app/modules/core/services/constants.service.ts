@@ -9,14 +9,17 @@ export class ConstantsService {
   readonly API_CITIES_ENDPOINT = `${this.API_BASE_URL}/cities`;
   readonly API_DEVELOPER_BY_SYSTEM_CODE_ENDPOINT = `${this.API_BASE_URL}/developers/code`;
   readonly API_INVESTMENTS_ENDPOINT = `${this.API_BASE_URL}/investments`;
-  getApiPremisesMinPriceByInvestmentIdEndpoint(investmentId: number): string {
-    return `${this.API_BASE_URL}/premises/investment/${investmentId}/min`;
-  }
-  getApiPremisesMaxPriceByInvestmentIdEndpoint(investmentId: number): string {
-    return `${this.API_BASE_URL}/premises/investment/${investmentId}/max`;
-  }
   getApiPremisesByInvestmentEndpoint(investmentId: number): string {
     return `${this.API_BASE_URL}/premises/investment/${investmentId}`;
+  }
+  getApiPremiseMinMaxTotalPriceByInvestmentId(investmentId: number): string {
+    return `${this.API_BASE_URL}/premises/investment/${investmentId}/enhancedPremiseData`;
+  }
+  getApiPremiseByIdEndpoint(premiseId: string): string {
+    return `${this.API_BASE_URL}/premises/${premiseId}`;
+  }
+  getApiInvestmentByPremiseIdEndpoint(premiseId: string): string {
+    return `${this.API_BASE_URL}/investmentByPremiseId/${premiseId}`;
   }
 
 }
