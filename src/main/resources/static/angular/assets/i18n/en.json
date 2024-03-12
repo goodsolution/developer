@@ -1,13 +1,21 @@
 {
-  "Cities": "Cities",
-  "Main Cities": "Main Cities",
-  "Contact": "Contact",
-  "Polish": "Polish",
-  "English": "English",
-  "Login": "Login",
-  "Language": "Language",
-  "Copy Rights": "Copy Rights",
-  "Welcome to DOM Development": "Welcome to DOM Development",
-  "Your dream home, crafted with precision and care by the leading architects of tomorrow.": "Your dream home, crafted with precision and care by the leading architects of tomorrow.",
-  "Discover More": "Discover More"
+  "antal": {
+    "Welcome.Msg": "Welcome to Antal Development",
+    "Dream.Home.Desc": "Your dream home, crafted with precision and care by the leading architects of tomorrow.",
+    "Discover.More": "Discover More"
+  },
+  "doda": {
+    "Welcome.Msg": "Welcome to DOM Development",
+    "Dream.Home.Desc": "Your dream home, crafted with precision and care by the leading architects of tomorrow.",
+    "Discover.More": "Discover More"
+  },
+  "shared": {
+    "Cities": "Cities",
+    "Contact": "Contact",
+    "Language.Polish": "Polish",
+    "Language.English": "English",
+    "Login": "Login",
+    "Language.Selection": "Language",
+    "Copy.Rights": "Copy Rights"
+  }
 }

@@ -1,13 +1,21 @@
 {
-  "Cities": "Miasta",
-  "Main Cities": "Główne Miasta",
-  "Contact": "Kontakt",
-  "Polish": "Polski",
-  "English": "Angielski",
-  "Login": "Zaloguj",
-  "Language": "Język",
-  "Copy Rights": "Prawa zastrzeżone",
-  "Welcome to DOM Development": "Witamy w  DOM Development",
-  "Your dream home, crafted with precision and care by the leading architects of tomorrow.": "Twój wymarzony dom, stworzony z precyzją i dbałością przez wiodących architektów jutra.",
-  "Discover More": "Odkryj więcej"
+  "antal": {
+    "Welcome.Msg": "Witamy w DOM Development",
+    "Dream.Home.Desc": "Twój wymarzony dom, stworzony z precyzją i dbałością przez wiodących architektów jutra.",
+    "Discover.More": "Odkryj więcej"
+  },
+  "doda": {
+    "Welcome.Msg": "Witamy w DOM Development",
+    "Dream.Home.Desc": "Twój wymarzony dom, stworzony z precyzją i dbałością przez wiodących architektów jutra.",
+    "Discover.More": "Odkryj więcej"
+  },
+  "shared": {
+    "Cities": "Miasta",
+    "Contact": "Kontakt",
+    "Language.Polish": "Polski",
+    "Language.English": "Angielski",
+    "Login": "Zaloguj",
+    "Language.Selection": "Język",
+    "Copy.Rights": "Prawa zastrzeżone"
+  }
 }
