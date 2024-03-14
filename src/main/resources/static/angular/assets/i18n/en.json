@@ -1,21 +1,27 @@
 {
-  "antal": {
+  "antal":
+  {
     "Welcome.Msg": "Welcome to Antal Development",
-    "Dream.Home.Desc": "Your dream home, crafted with precision and care by the leading architects of tomorrow.",
-    "Discover.More": "Discover More"
+    "Welcome.Desc": "Your dream home, crafted with precision and care by the leading architects of tomorrow.",
+    "Welcome.More": "Discover More"
   },
-  "doda": {
+  "doda":
+  {
     "Welcome.Msg": "Welcome to DOM Development",
-    "Dream.Home.Desc": "Your dream home, crafted with precision and care by the leading architects of tomorrow.",
-    "Discover.More": "Discover More"
+    "Welcome.Desc": "Your dream home, crafted with precision and care by the leading architects of tomorrow.",
+    "Welcome.More": "Discover More"
   },
-  "shared": {
-    "Cities": "Cities",
-    "Contact": "Contact",
-    "Language.Polish": "Polish",
-    "Language.English": "English",
-    "Login": "Login",
-    "Language.Selection": "Language",
-    "Copy.Rights": "Copy Rights"
+  "shared":
+  {
+    "Header.Cities": "Cities",
+    "Header.Contact": "Contact",
+    "Header.Language.Polish": "Polish",
+    "Header.Language.English": "English",
+    "Header.Language.Selection": "Language",
+    "Log.User.Name": "User Name",
+    "Log.Login": "Login",
+    "Log.Password": "Password",
+    "Footer.Copy.Rights": "Copy Rights",
+    "Investments.List.None": "Currently no investments"
   }
 }

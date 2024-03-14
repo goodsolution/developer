@@ -1,21 +1,27 @@
 {
-  "antal": {
+  "antal":
+  {
     "Welcome.Msg": "Witamy w DOM Development",
-    "Dream.Home.Desc": "Twój wymarzony dom, stworzony z precyzją i dbałością przez wiodących architektów jutra.",
-    "Discover.More": "Odkryj więcej"
+    "Welcome.Desc": "Twój wymarzony dom, stworzony z precyzją i dbałością przez wiodących architektów jutra.",
+    "Welcome.More": "Odkryj więcej"
   },
-  "doda": {
+  "doda":
+  {
     "Welcome.Msg": "Witamy w DOM Development",
-    "Dream.Home.Desc": "Twój wymarzony dom, stworzony z precyzją i dbałością przez wiodących architektów jutra.",
-    "Discover.More": "Odkryj więcej"
+    "Welcome.Desc": "Twój wymarzony dom, stworzony z precyzją i dbałością przez wiodących architektów jutra.",
+    "Welcome.More": "Odkryj więcej"
   },
-  "shared": {
-    "Cities": "Miasta",
-    "Contact": "Kontakt",
-    "Language.Polish": "Polski",
-    "Language.English": "Angielski",
-    "Login": "Zaloguj",
-    "Language.Selection": "Język",
-    "Copy.Rights": "Prawa zastrzeżone"
+  "shared":
+  {
+    "Header.Cities": "Miasta",
+    "Header.Contact": "Kontakt",
+    "Header.Language.Polish": "Polski",
+    "Header.Language.English": "Angielski",
+    "Header.Language.Selection": "Język",
+    "Log.User.Name": "Nazwa użytkownika",
+    "Log.Login": "Zaloguj",
+    "Log.Password": "Hasło",
+    "Footer.Copy.Rights": "Prawa zastrzeżone",
+    "Investments.List.None": "Aktualnie brak inwestycji"
   }
 }
