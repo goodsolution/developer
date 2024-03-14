@@ -1,19 +1,24 @@
 package pl.com.mike.developer.config;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.i18n.AcceptHeaderLocaleResolver;
 
-import java.io.File;
+import java.util.Locale;
 
 @Configuration
 @EnableWebMvc
 public class WebConfig implements WebMvcConfigurer {
-    private final ApplicationConfig applicationConfig;
 
-    public WebConfig(ApplicationConfig applicationConfig) {
-        this.applicationConfig = applicationConfig;
+    @Bean
+    public LocaleResolver localeResolver() {
+        AcceptHeaderLocaleResolver resolver = new AcceptHeaderLocaleResolver();
+        resolver.setDefaultLocale(Locale.ENGLISH); // Set default Locale as English
+        return resolver;
     }
 
     @Override
@@ -40,16 +45,6 @@ public class WebConfig implements WebMvcConfigurer {
                         "classpath:/static/angular/assets/img/domdevelopment/",
                         "classpath:/static/angular/assets/img/antal/"
                 );
-
-//        //TODO analyze and delete
-//        registry.addResourceHandler("/gallery/**")
-//                .addResourceLocations(new File(applicationConfig.getPathToGallery()).toURI().toString());
-//
-//        registry.addResourceHandler("/course-platform-images/**")
-//                .addResourceLocations(new File(applicationConfig.getCoursePathToGallery()).toURI().toString());
-//
-//        registry.addResourceHandler("/course-platform-invoices/**")
-//                .addResourceLocations(new File(applicationConfig.getCoursePathToInvoicesFolder()).toURI().toString());
     }
 
 }

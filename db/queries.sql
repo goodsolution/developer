@@ -532,3 +532,71 @@ where i.id = 1
   and p.type = 'a'
   and p.number_of_rooms = 2
   and p.surface_sq_m BETWEEN 40 AND 200;
+
+
+-- Adding columns for Polish and English descriptions
+ALTER TABLE investments
+    ADD COLUMN description_pl VARCHAR(5000) AFTER description,
+    ADD COLUMN description_en VARCHAR(5000) AFTER description_pl;
+
+-- Adding columns for create_time, edit_time, and delete_time
+ALTER TABLE investments
+    ADD COLUMN create_time DATETIME DEFAULT CURRENT_TIMESTAMP,
+    ADD COLUMN edit_time DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    ADD COLUMN delete_time DATETIME NULL;
+
+-- This is a simplistic example; your migration logic might differ
+UPDATE investments
+SET description_en = description
+WHERE description IS NOT NULL;
+
+-- Removing the original description column
+ALTER TABLE investments
+    DROP COLUMN description;
+
+ALTER TABLE investments
+    DROP COLUMN description_pl,
+    DROP COLUMN description_en;
+ALTER TABLE investments
+    ADD COLUMN description VARCHAR(5000) AFTER name;
+
+
+CREATE TABLE investments
+(
+    id                  INT AUTO_INCREMENT,
+    name                VARCHAR(200),
+    description         VARCHAR(5000),
+    address_country     VARCHAR(200),
+    address_voivodeship VARCHAR(200),
+    address_city        VARCHAR(200) NOT NULL,
+    address_street      VARCHAR(200),
+    developer_id        INT NOT NULL,
+    PRIMARY KEY (id),
+    FOREIGN KEY (developer_id) REFERENCES developers (id)
+)
+    ENGINE=INNODB
+    COLLATE=utf8mb4_general_ci;
+
+CREATE TABLE investment_translations
+(
+    translation_id     INT AUTO_INCREMENT PRIMARY KEY,
+    investment_id      INT NOT NULL,
+    language_code      VARCHAR(2) NOT NULL,
+    domain             VARCHAR(50) NOT NULL,
+    value              VARCHAR(5000) NOT NULL,
+    FOREIGN KEY (investment_id) REFERENCES investments (id)
+);
+
+INSERT INTO investment_translations (investment_id, language_code, domain, value) VALUES
+                                                                                      (1, 'en', 'description', 'Eco-friendly estate with modern homes and green energy solutions.'),
+                                                                                      (1, 'pl', 'description', 'Ekologiczne osiedle z nowoczesnymi domami i zielonymi rozwiązaniami energetycznymi.'),
+                                                                                      (2, 'en', 'description', 'High-rise with luxury apartments and panoramic city views.'),
+                                                                                      (2, 'pl', 'description', 'Wieżowiec z luksusowymi apartamentami i panoramicznym widokiem na miasto.'),
+                                                                                      (3, 'en', 'description', 'Waterfront residences offering tranquility and stunning bay views.'),
+                                                                                      (3, 'pl', 'description', 'Nadmorskie rezydencje zapewniające spokój i piękny widok na zatokę.'),
+                                                                                      (4, 'en', 'description', 'Urban complex with residential and commercial spaces plus green areas.'),
+                                                                                      (4, 'pl', 'description', 'Miejski kompleks mieszkalno-handlowy z zielonymi przestrzeniami.'),
+                                                                                      (5, 'en', 'description', 'Hillside villas providing comfort and nature-friendly living.'),
+                                                                                      (5, 'pl', 'description', 'Wille na wzgórzu zapewniające komfort i bliskość natury.'),
+                                                                                      (6, 'en', 'description', 'Exclusive community with homes offering sunset views and private gardens.'),
+                                                                                      (6, 'pl', 'description', 'Ekskluzywna społeczność z domami oferującymi widok na zachód słońca i prywatne ogrody.');
