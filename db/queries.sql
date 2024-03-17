@@ -600,3 +600,30 @@ INSERT INTO investment_translations (investment_id, language_code, domain, value
                                                                                       (5, 'pl', 'description', 'Wille na wzgórzu zapewniające komfort i bliskość natury.'),
                                                                                       (6, 'en', 'description', 'Exclusive community with homes offering sunset views and private gardens.'),
                                                                                       (6, 'pl', 'description', 'Ekskluzywna społeczność z domami oferującymi widok na zachód słońca i prywatne ogrody.');
+
+CREATE TABLE translations
+(
+    translation_id    INT AUTO_INCREMENT PRIMARY KEY,
+    entity_id         INT NOT NULL,
+    language_code     VARCHAR(2) NOT NULL,
+    domain            VARCHAR(50) NOT NULL,
+    `key`             VARCHAR(255) NOT NULL,
+    value             TEXT NOT NULL,
+    created_at        TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at        TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    deleted_at        TIMESTAMP NULL DEFAULT NULL
+);
+
+INSERT INTO translations (entity_id, language_code, domain, `key`, value) VALUES
+                                                                              (1, 'en', 'investment', 'description', 'Eco-friendly estate with modern homes and green energy solutions.'),
+                                                                              (1, 'pl', 'investment', 'description', 'Ekologiczne osiedle z nowoczesnymi domami i zielonymi rozwiązaniami energetycznymi.'),
+                                                                              (2, 'en', 'investment', 'description', 'High-rise with luxury apartments and panoramic city views.'),
+                                                                              (2, 'pl', 'investment', 'description', 'Wieżowiec z luksusowymi apartamentami i panoramicznym widokiem na miasto.'),
+                                                                              (3, 'en', 'investment', 'description', 'Waterfront residences offering tranquility and stunning bay views.'),
+                                                                              (3, 'pl', 'investment', 'description', 'Nadmorskie rezydencje zapewniające spokój i piękny widok na zatokę.'),
+                                                                              (4, 'en', 'investment', 'description', 'Urban complex with residential and commercial spaces plus green areas.'),
+                                                                              (4, 'pl', 'investment', 'description', 'Miejski kompleks mieszkalno-handlowy z zielonymi przestrzeniami.'),
+                                                                              (5, 'en', 'investment', 'description', 'Hillside villas providing comfort and nature-friendly living.'),
+                                                                              (5, 'pl', 'investment', 'description', 'Wille na wzgórzu zapewniające komfort i bliskość natury.'),
+                                                                              (6, 'en', 'investment', 'description', 'Exclusive community with homes offering sunset views and private gardens.'),
+                                                                              (6, 'pl', 'investment', 'description', 'Ekskluzywna społeczność z domami oferującymi widok na zachód słońca i prywatne ogrody.');

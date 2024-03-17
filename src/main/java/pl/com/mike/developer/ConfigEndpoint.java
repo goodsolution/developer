@@ -4,16 +4,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import pl.com.mike.developer.config.ApplicationConfig;
+import org.springframework.web.bind.annotation.*;
 import pl.com.mike.developer.config.ActiveProfileConfigLoader;
+import pl.com.mike.developer.config.ApplicationConfig;
 import pl.com.mike.developer.logic.developer.DeveloperSearchFilter;
 import pl.com.mike.developer.logic.developer.DeveloperService;
-import pl.com.mike.developer.logic.developer.InvestmentTranslationService;
 import pl.com.mike.developer.logic.developer.PropertyConfigService;
+import pl.com.mike.developer.logic.developer.TranslationDataService;
+import pl.com.mike.developer.web.TranslationGetResponse;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -28,21 +26,26 @@ public class ConfigEndpoint {
     private final ApplicationConfig applicationConfig;
     private final ActiveProfileConfigLoader profileConfigLoader;
     private final PropertyConfigService propertyConfigService;
-    private final InvestmentTranslationService investmentTranslationService;
+    private final TranslationDataService translationDataService;
     private static final Logger logger = LoggerFactory.getLogger(ConfigEndpoint.class);
 
-    public ConfigEndpoint(DeveloperService developerService, ApplicationConfig applicationConfig, ActiveProfileConfigLoader profilesBean, PropertyConfigService propertyService, InvestmentTranslationService investmentTranslationService) {
+    public ConfigEndpoint(DeveloperService developerService, ApplicationConfig applicationConfig, ActiveProfileConfigLoader profilesBean, PropertyConfigService propertyService, TranslationDataService translationDataService) {
         this.developerService = developerService;
         this.applicationConfig = applicationConfig;
         this.profileConfigLoader = profilesBean;
         this.propertyConfigService = propertyService;
-        this.investmentTranslationService = investmentTranslationService;
+        this.translationDataService = translationDataService;
     }
 
-    @GetMapping("/{investmentId}/description")
-    public ResponseEntity<String> getInvestmentDescription(@PathVariable Integer investmentId, Locale locale) {
-        String description = investmentTranslationService.getTranslation(investmentId, locale, "description");
-        return ResponseEntity.ok(description);
+    @GetMapping("/{entityId}/{domain}/{key}")
+    public ResponseEntity<TranslationGetResponse> getTranslation(
+            @PathVariable Integer entityId,
+            @RequestParam String languageCode,
+            @PathVariable String domain,
+            @PathVariable String key) {
+        Locale locale = Locale.forLanguageTag(languageCode);
+        TranslationGetResponse translation = translationDataService.getTranslation(entityId, locale, domain, key);
+        return ResponseEntity.ok(translation);
     }
 
     @GetMapping("developers/logo")
