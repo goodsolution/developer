@@ -8,6 +8,6 @@
     <p>{{ descriptionTranslation | truncate:100:true}}</p>
   </mat-card-content>
   <mat-card-actions class="card-actions">
-    <button mat-button [routerLink]="['/premises', investment.id]">Find out more</button>
+    <button mat-button [routerLink]="['/premises', investment.id]">{{ 'shared.more' | translate }}</button>
   </mat-card-actions>
 </mat-card>

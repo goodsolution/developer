@@ -2,13 +2,13 @@
   <form #f='ngForm' (ngSubmit)="onLogin()">
     <div>
       <mat-form-field>
-        <mat-label>{{ 'shared.Log.User.Name' | translate }}</mat-label>
+        <mat-label>{{ 'shared.log.user.name' | translate }}</mat-label>
         <input matInput>
       </mat-form-field>
     </div>
     <div>
       <mat-form-field>
-        <mat-label>{{ 'shared.Log.Password' | translate }}</mat-label>
+        <mat-label>{{ 'shared.log.password' | translate }}</mat-label>
         <input matInput [type]="hide ? 'password' : 'text'">
         <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
                 [attr.aria-pressed]="hide">
@@ -17,7 +17,7 @@
       </mat-form-field>
     </div>
     <div class="d-flex justify-content-end">
-      <button mat-raised-button color="primary">{{ 'shared.Log.Login' | translate }}</button>
+      <button mat-raised-button color="primary">{{ 'shared.log.login' | translate }}</button>
     </div>
   </form>
 </div>

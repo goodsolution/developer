@@ -1,27 +1,29 @@
 {
-  "antal":
-  {
-    "Welcome.Msg": "Welcome to Antal Development",
-    "Welcome.Desc": "Your dream home, crafted with precision and care by the leading architects of tomorrow.",
-    "Welcome.More": "Discover More"
+  "antal": {
+    "welcome.msg": "Welcome to Antal Development",
+    "welcome.desc": "Your dream home, crafted with precision and care by the leading architects of tomorrow.",
+    "welcome.more": "Discover More"
   },
-  "doda":
-  {
-    "Welcome.Msg": "Welcome to DOM Development",
-    "Welcome.Desc": "Your dream home, crafted with precision and care by the leading architects of tomorrow.",
-    "Welcome.More": "Discover More"
+  "doda": {
+    "welcome.msg": "Welcome to DOM Development",
+    "welcome.desc": "Your dream home, crafted with precision and care by the leading architects of tomorrow.",
+    "welcome.more": "Discover More"
   },
-  "shared":
-  {
-    "Header.Cities": "Cities",
-    "Header.Contact": "Contact",
-    "Header.Language.Polish": "Polish",
-    "Header.Language.English": "English",
-    "Header.Language.Selection": "Language",
-    "Log.User.Name": "User Name",
-    "Log.Login": "Login",
-    "Log.Password": "Password",
-    "Footer.Copy.Rights": "Copy Rights",
-    "Investments.List.None": "Currently no investments"
+  "shared": {
+    "header.cities": "Cities",
+    "header.contact": "Contact",
+    "header.language.polish": "Polish",
+    "header.language.english": "English",
+    "header.language.selection": "Language",
+    "log.user.name": "User Name",
+    "log.login": "Login",
+    "log.password": "Password",
+    "footer.copy.rights": "Copy Rights",
+    "investments.list.none": "Currently no investments",
+    "more": "Find out more",
+    "premise.ask": "Ask for details",
+    "premise.rooms": "Rooms",
+    "premise.floor": "Floor",
+    "filter.price": "Filter by price:"
   }
 }

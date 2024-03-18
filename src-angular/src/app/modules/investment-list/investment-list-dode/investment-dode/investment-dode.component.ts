@@ -1,6 +1,6 @@
 import {ChangeDetectorRef, Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {InvestmentResponse} from "../../../core/models/investment.model";
-import {Subject, takeUntil} from "rxjs";
+import {share, Subject, takeUntil} from "rxjs";
 import {LanguageService} from "../../../core/services/language.service";
 
 @Component({
@@ -10,9 +10,8 @@ import {LanguageService} from "../../../core/services/language.service";
 })
 export class InvestmentDodeComponent implements OnInit, OnDestroy {
   @Input() investment!: InvestmentResponse;
-  descriptionTranslation!: string; // Holds the translated description
+  descriptionTranslation!: string;
   private unsubscribe$ = new Subject<void>();
-
   constructor(private languageService: LanguageService,
               private changeDetectorRef: ChangeDetectorRef) {
   }
@@ -33,7 +32,7 @@ export class InvestmentDodeComponent implements OnInit, OnDestroy {
         .subscribe({
           next: response => {
             this.descriptionTranslation = response.translation;
-            this.changeDetectorRef.detectChanges(); // Ensure UI updates with new translation
+            this.changeDetectorRef.detectChanges();
           },
           error: error => {
             console.error('Error fetching description:', error);
@@ -46,6 +45,5 @@ export class InvestmentDodeComponent implements OnInit, OnDestroy {
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
   }
-
 
 }

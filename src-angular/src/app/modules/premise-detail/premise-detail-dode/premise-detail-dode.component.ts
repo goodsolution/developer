@@ -1,10 +1,11 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
 import {PremiseService} from "../../core/services/premise.service";
 import {DynamicComponentLoadingService} from "../../core/services/dynamic-component-loading.service";
 import {Subject, Subscription, takeUntil} from "rxjs";
 import {PremiseResponse} from "../../core/models/premise.model";
 import {InvestmentResponse} from "../../core/models/investment.model";
 import {InvestmentsService} from "../../core/services/investments.service";
+import {LanguageService} from "../../core/services/language.service";
 
 @Component({
   selector: 'app-premise-detail-dode',
@@ -16,11 +17,14 @@ export class PremiseDetailDodeComponent implements OnInit, OnDestroy {
   investments!: InvestmentResponse[];
   private subscription!: Subscription;
   private unsubscribe$ = new Subject<void>();
+  descriptionTranslation!: string;
 
   constructor(
     private premiseService: PremiseService,
     private investmentService: InvestmentsService,
-    private dynamicLoadingService: DynamicComponentLoadingService
+    private dynamicLoadingService: DynamicComponentLoadingService,
+    private languageService: LanguageService,
+    private changeDetectorRef: ChangeDetectorRef
   ) {
   }
 
@@ -35,6 +39,32 @@ export class PremiseDetailDodeComponent implements OnInit, OnDestroy {
         error: (error) => console.error('Error in dynamic loading of premise:', error)
       });
 
+    this.languageService.language$
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(() => {
+        this.investments.forEach((investment) => {
+          this.fetchInvestmentDescription(investment.id); // Fetch new translations when language changes
+        });
+      });
+
+  }
+
+  fetchInvestmentDescription(investmentId: number): void {
+    this.languageService.getTranslation(investmentId, 'investment', 'description')
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe({
+        next: response => {
+          const index = this.investments.findIndex(inv => inv.id === investmentId);
+          if (index !== -1) {
+            this.investments[index].description = response.translation;
+            this.descriptionTranslation = response.translation;
+            this.changeDetectorRef.detectChanges(); // Ensure UI updates with new translation
+          }
+        },
+        error: error => {
+          console.error('Error fetching investment description:', error);
+        }
+      });
   }
 
   loadInvestmentByPremiseId(premiseId: string) {

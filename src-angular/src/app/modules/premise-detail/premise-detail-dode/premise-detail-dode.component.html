@@ -25,7 +25,7 @@
             <span class="badge bg-primary" *ngIf="premise.isGarden">Garden</span>
             <!-- Repeat for terrace and loggia -->
           </p>
-          <a href="#" class="btn btn-primary btn-lg mt-3">Ask about this apartment</a>
+          <a href="#" class="btn btn-primary btn-lg mt-3">{{ 'shared.premise.ask' | translate }}</a>
         </div>
       </div>
     </div>
@@ -38,11 +38,9 @@
     </div>
     <div class="investment__info">
       <h1 class="investment__title">{{ investment.name }}</h1>
-      <p class="investment__description">{{ investment.description }}</p>
+      <p class="investment__description">{{ descriptionTranslation }}</p>
       <p class="investment__address">{{ investment.addressStreet }}, {{ investment.addressCountry }}</p>
-      <a href="#" class="investment__link">Learn more</a>
+      <a href="#" class="investment__link">{{ 'shared.more' | translate }}</a>
     </div>
   </section>
 </ng-container>
-
-

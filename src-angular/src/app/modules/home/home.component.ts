@@ -3,7 +3,7 @@ import {Subject} from "rxjs";
 
 @Component({
   selector: 'app-home',
-  templateUrl: './home.component.html',
+  template: '', // No HTML content, it's a dynamic loader only
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
