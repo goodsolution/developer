@@ -38,7 +38,6 @@ export class PremiseDetailDodeComponent implements OnInit, OnDestroy {
         },
         error: (error) => console.error('Error in dynamic loading of premise:', error)
       });
-
     this.languageService.language$
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(() => {
@@ -46,7 +45,6 @@ export class PremiseDetailDodeComponent implements OnInit, OnDestroy {
           this.fetchInvestmentDescription(investment.id); // Fetch new translations when language changes
         });
       });
-
   }
 
   fetchInvestmentDescription(investmentId: number): void {
@@ -90,6 +88,5 @@ export class PremiseDetailDodeComponent implements OnInit, OnDestroy {
     this.unsubscribe$.complete();
     this.subscription.unsubscribe();
   }
-
 
 }
