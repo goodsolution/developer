@@ -11,15 +11,14 @@
       <div class="col-md-5">
         <div class="premise-details">
           <h2 class="premise-title">{{ premise.type }} - {{ premise.number }}</h2>
-          <p class="lead"><strong>Floor:</strong> {{ premise.floor }}</p>
-          <p><strong>Area:</strong> {{ premise.surfacePerSqMeter }} m²</p>
-          <p><strong>Rooms:</strong> {{ premise.numberOfRooms }}</p>
-          <p><strong>Price per m²:</strong> {{ premise.pricePerSqMeter | currency }}</p>
-          <p><strong>Total Price:</strong> {{ premise.totalPrice | currency }}</p>
-          <p><strong>Technical Status:</strong> {{ premise.technicalStatus }}</p>
-          <p><strong>Sales Status:</strong> {{ premise.salesStatus }}</p>
-          <p><strong>Exposure:</strong> {{ premise.exposure }}</p>
-          <!-- Icons or labels for balcony, garden, etc. -->
+          <p class="lead"><strong>{{ 'shared.premise.floor' | translate }}</strong> {{ premise.floor }}</p>
+          <p><strong>{{ 'shared.premise.area' | translate }}</strong> {{ premise.surfacePerSqMeter }} m²</p>
+          <p><strong>{{ 'shared.premise.rooms' | translate }}</strong> {{ premise.numberOfRooms }}</p>
+          <p><strong>{{ 'shared.premise.pricePerM' | translate }}</strong> {{ premise.pricePerSqMeter | currency }}</p>
+          <p><strong>{{ 'shared.premise.totalPrice' | translate }}</strong> {{ premise.totalPrice | currency }}</p>
+          <p><strong>{{ 'shared.premise.technicalStatus' | translate }}</strong> {{ premise.technicalStatus }}</p>
+          <p><strong>{{ 'shared.premise.salesStatus' | translate }}</strong> {{ premise.salesStatus }}</p>
+          <p><strong>{{ 'shared.premise.exposure' | translate }}</strong> {{ premise.exposure }}</p>
           <p>
             <span class="badge bg-success" *ngIf="premise.isBalcony">Balcony</span>
             <span class="badge bg-primary" *ngIf="premise.isGarden">Garden</span>

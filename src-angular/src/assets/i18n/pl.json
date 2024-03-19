@@ -24,6 +24,12 @@
     "premise.ask": "Zapytaj o lokal",
     "premise.rooms": "Pokoje",
     "premise.floor": "Piętro",
+    "premise.area": "Powierzchnia",
+    "premise.pricePerM": "Cena za m2",
+    "premise.totalPrice": "Cena całkowita",
+    "premise.technicalStatus": "Stan techniczny",
+    "premise.salesStatus": "Status sprzedaży",
+    "premise.exposure": "Ekspozycja",
     "filter.price": "Filtruj na podstawie ceny:"
   }
 }

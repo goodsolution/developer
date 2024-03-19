@@ -21,9 +21,15 @@
     "footer.copy.rights": "Copy Rights",
     "investments.list.none": "Currently no investments",
     "more": "Find out more",
-    "premise.ask": "Ask for details",
+    "premise.ask": "Ask about this premise",
     "premise.rooms": "Rooms",
     "premise.floor": "Floor",
+    "premise.area": "Area",
+    "premise.pricePerM": "Price per m2",
+    "premise.totalPrice": "Total price",
+    "premise.technicalStatus": "Technical status",
+    "premise.salesStatus": "Sales status",
+    "premise.exposure": "Exposure",
     "filter.price": "Filter by price:"
   }
 }
