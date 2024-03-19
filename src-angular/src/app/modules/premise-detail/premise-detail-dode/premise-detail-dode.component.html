@@ -11,21 +11,20 @@
       <div class="col-md-5">
         <div class="premise-details">
           <h2 class="premise-title">{{ premise.type }} - {{ premise.number }}</h2>
-          <p class="lead"><strong>Floor:</strong> {{ premise.floor }}</p>
-          <p><strong>Area:</strong> {{ premise.surfacePerSqMeter }} m²</p>
-          <p><strong>Rooms:</strong> {{ premise.numberOfRooms }}</p>
-          <p><strong>Price per m²:</strong> {{ premise.pricePerSqMeter | currency }}</p>
-          <p><strong>Total Price:</strong> {{ premise.totalPrice | currency }}</p>
-          <p><strong>Technical Status:</strong> {{ premise.technicalStatus }}</p>
-          <p><strong>Sales Status:</strong> {{ premise.salesStatus }}</p>
-          <p><strong>Exposure:</strong> {{ premise.exposure }}</p>
-          <!-- Icons or labels for balcony, garden, etc. -->
+          <p class="lead"><strong>{{ 'shared.premise.floor' | translate }}</strong> {{ premise.floor }}</p>
+          <p><strong>{{ 'shared.premise.area' | translate }}</strong> {{ premise.surfacePerSqMeter }} m²</p>
+          <p><strong>{{ 'shared.premise.rooms' | translate }}</strong> {{ premise.numberOfRooms }}</p>
+          <p><strong>{{ 'shared.premise.pricePerM' | translate }}</strong> {{ premise.pricePerSqMeter | currency }}</p>
+          <p><strong>{{ 'shared.premise.totalPrice' | translate }}</strong> {{ premise.totalPrice | currency }}</p>
+          <p><strong>{{ 'shared.premise.technicalStatus' | translate }}</strong> {{ premise.technicalStatus }}</p>
+          <p><strong>{{ 'shared.premise.salesStatus' | translate }}</strong> {{ premise.salesStatus }}</p>
+          <p><strong>{{ 'shared.premise.exposure' | translate }}</strong> {{ premise.exposure }}</p>
           <p>
             <span class="badge bg-success" *ngIf="premise.isBalcony">Balcony</span>
             <span class="badge bg-primary" *ngIf="premise.isGarden">Garden</span>
             <!-- Repeat for terrace and loggia -->
           </p>
-          <a href="#" class="btn btn-primary btn-lg mt-3">Ask about this apartment</a>
+          <a href="#" class="btn btn-primary btn-lg mt-3">{{ 'shared.premise.ask' | translate }}</a>
         </div>
       </div>
     </div>
@@ -38,11 +37,9 @@
     </div>
     <div class="investment__info">
       <h1 class="investment__title">{{ investment.name }}</h1>
-      <p class="investment__description">{{ investment.description }}</p>
+      <p class="investment__description">{{ descriptionTranslation }}</p>
       <p class="investment__address">{{ investment.addressStreet }}, {{ investment.addressCountry }}</p>
-      <a href="#" class="investment__link">Learn more</a>
+      <a href="#" class="investment__link">{{ 'shared.more' | translate }}</a>
     </div>
   </section>
 </ng-container>
-
-

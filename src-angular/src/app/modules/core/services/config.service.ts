@@ -3,7 +3,6 @@ import {HttpClient} from "@angular/common/http";
 import {firstValueFrom} from "rxjs";
 import {ConstantsService} from "./constants.service";
 
-
 @Injectable({
   providedIn: 'root'
 })

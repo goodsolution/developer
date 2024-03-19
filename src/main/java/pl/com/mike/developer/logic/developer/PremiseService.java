@@ -1,8 +1,8 @@
 package pl.com.mike.developer.logic.developer;
 
 import org.springframework.stereotype.Service;
-import pl.com.mike.developer.EnhancedPremiseGetResponse;
-import pl.com.mike.developer.domain.developer.EnhancedPremiseData;
+import pl.com.mike.developer.PremiseAggregatedValuesGetResponse;
+import pl.com.mike.developer.domain.developer.AggregatedValues;
 import pl.com.mike.developer.domain.developer.PremiseData;
 
 import java.util.ArrayList;
@@ -21,9 +21,9 @@ public class PremiseService {
         this.customPremiseRepository = customPremiseRepository1;
     }
 
-    public EnhancedPremiseGetResponse findPremisePriceRangeByInvestmentId(Long id) {
-        EnhancedPremiseData priceRangeByInvestmentId = premiseRepository.findPremisePriceRangeByInvestmentId(id);
-        return new EnhancedPremiseGetResponse(priceRangeByInvestmentId.getMinPrice(), priceRangeByInvestmentId.getMaxPrice());
+    public PremiseAggregatedValuesGetResponse findPremisePriceRangeByInvestmentId(Long id) {
+        AggregatedValues priceRangeByInvestmentId = premiseRepository.findPremisePriceRangeByInvestmentId(id);
+        return new PremiseAggregatedValuesGetResponse(priceRangeByInvestmentId.getMinPrice(), priceRangeByInvestmentId.getMaxPrice());
     }
 
     public List<PremiseData> findPriceByInvestmentId(Long id, String priceFunction) {

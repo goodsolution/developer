@@ -30,7 +30,7 @@ public class DeveloperEndpoint {
     }
 
     @GetMapping("premises/investment/{id}/enhancedPremiseData")
-    public EnhancedPremiseGetResponse getMinMaxTotalPremisePriceByInvestmentId(@PathVariable Long id) {
+    public PremiseAggregatedValuesGetResponse getMinMaxTotalPremisePriceByInvestmentId(@PathVariable Long id) {
         return premiseService.findPremisePriceRangeByInvestmentId(id);
     }
 

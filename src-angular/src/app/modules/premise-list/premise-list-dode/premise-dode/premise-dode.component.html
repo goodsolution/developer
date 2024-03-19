@@ -5,13 +5,13 @@
 <!--    <mat-card-subtitle>Opis</mat-card-subtitle>-->
   </mat-card-header>
   <mat-card-content>
-    <p class="details">{{ premise.surfacePerSqMeter }} m² - {{ premise.numberOfRooms }} pokoje</p>
-    <p class="floor">{{ premise.floor }} piętro</p>
+    <p class="details">{{ premise.surfacePerSqMeter }} m² - {{ premise.numberOfRooms }} {{ 'shared.premise.rooms' | translate }}</p>
+    <p class="floor">{{ premise.floor }} {{ 'shared.premise.floor' | translate }}</p>
     <div class="price">
       <span class="new-price">{{ premise.totalPrice | currency:'PLN' }}</span>
     </div>
   </mat-card-content>
   <mat-card-actions>
-    <button mat-button [routerLink]="['/premise', premise.id]" class="more-info-btn">Dowiedz się więcej</button>
+    <button mat-button [routerLink]="['/premise', premise.id]" class="more-info-btn">{{ 'shared.more' | translate }}</button>
   </mat-card-actions>
 </mat-card>

@@ -16,17 +16,21 @@ public class ActiveProfileConfigLoader {
         this.activeProfile = activeProfiles;
     }
 
+    private String getActiveProfile() {
+        return activeProfile;
+    }
+
     @PostConstruct
     private void checkActiveProfile() {
-        if (activeProfile.isEmpty()) {
+        if (getActiveProfile().isEmpty()) {
             logger.warn("No active profile set, running with default configuration");
         } else {
-            logger.info("Running with active profile: {}", activeProfile);
+            logger.info("Running with active profile: {}", getActiveProfile());
         }
     }
 
-    public String getActiveProfilePropertiesPath() {
-        return "application-" + activeProfile + ".properties";
+    public String getActiveProfilePropertiesFileName() {
+        return "application-" + getActiveProfile() + ".properties";
     }
 
 }

@@ -1,10 +1,35 @@
 {
-  "Cities": "Cities",
-  "Main Cities": "Main Cities",
-  "Contact": "Contact",
-  "Polish": "Polish",
-  "English": "English",
-  "Login": "Login",
-  "Language": "Language",
-  "Copy Rights": "Copy Rights"
+  "antal": {
+    "welcome.msg": "Welcome to Antal Development",
+    "welcome.desc": "Your dream home, crafted with precision and care by the leading architects of tomorrow.",
+    "welcome.more": "Discover More"
+  },
+  "domdevelopment": {
+    "welcome.msg": "Welcome to DOM Development",
+    "welcome.desc": "Your dream home, crafted with precision and care by the leading architects of tomorrow.",
+    "welcome.more": "Discover More"
+  },
+  "shared": {
+    "header.cities": "Cities",
+    "header.contact": "Contact",
+    "header.language.polish": "Polish",
+    "header.language.english": "English",
+    "header.language.selection": "Language",
+    "log.user.name": "User Name",
+    "log.login": "Login",
+    "log.password": "Password",
+    "footer.copy.rights": "Copy Rights",
+    "investments.list.none": "Currently no investments",
+    "more": "Find out more",
+    "premise.ask": "Ask about this premise",
+    "premise.rooms": "Rooms",
+    "premise.floor": "Floor",
+    "premise.area": "Area",
+    "premise.pricePerM": "Price per m2",
+    "premise.totalPrice": "Total price",
+    "premise.technicalStatus": "Technical status",
+    "premise.salesStatus": "Sales status",
+    "premise.exposure": "Exposure",
+    "filter.price": "Filter by price:"
+  }
 }

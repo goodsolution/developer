@@ -2,7 +2,7 @@ package pl.com.mike.developer.domain.developer;
 
 import java.math.BigDecimal;
 
-public interface EnhancedPremiseData {
+public interface AggregatedValues {
     BigDecimal getMinPrice();
     BigDecimal getMaxPrice();
 }

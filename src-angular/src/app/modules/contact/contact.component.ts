@@ -3,7 +3,7 @@ import {Subject} from "rxjs";
 
 @Component({
   selector: 'app-contact',
-  templateUrl: './contact.component.html',
+  template: '', // No HTML content, it's a dynamic loader only
   styleUrls: ['./contact.component.scss']
 })
 export class ContactComponent implements OnInit {

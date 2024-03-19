@@ -3,6 +3,7 @@ import {CityResponse} from "../../../models/city.model";
 import {HeaderLogoUrlService} from "../../../services/header-logo-url.service";
 import {CitiesService} from "../../../services/cities.service";
 import {TranslateService} from "@ngx-translate/core";
+import {LanguageService} from "../../../services/language.service";
 
 @Component({
   selector: 'app-dode-header',
@@ -15,12 +16,15 @@ export class DodeHeaderComponent implements OnInit {
 
   constructor(private headerLogoUrlService: HeaderLogoUrlService,
               private cityService: CitiesService,
-              private translate: TranslateService) {
+              private translate: TranslateService,
+              private languageService: LanguageService
+  ) {
     translate.setDefaultLang('en')
   }
 
   switchLanguage(language: string) {
     this.translate.use(language);
+    this.languageService.setLanguage(language);
   }
 
   private getLogoUrl(): void {
