@@ -627,3 +627,12 @@ INSERT INTO translations (entity_id, language_code, domain, `key`, value) VALUES
                                                                               (5, 'pl', 'investment', 'description', 'Wille na wzgórzu zapewniające komfort i bliskość natury.'),
                                                                               (6, 'en', 'investment', 'description', 'Exclusive community with homes offering sunset views and private gardens.'),
                                                                               (6, 'pl', 'investment', 'description', 'Ekskluzywna społeczność z domami oferującymi widok na zachód słońca i prywatne ogrody.');
+
+alter table investments drop constraint investments_ibfk_2;
+alter table investments drop column voivodeship_id;
+
+alter table developers drop constraint developers_ibfk_2;
+alter table developers drop column voivodeship_id;
+
+alter table buildings drop constraint buildings_ibfk_3;
+alter table buildings drop column voivodeship_id;

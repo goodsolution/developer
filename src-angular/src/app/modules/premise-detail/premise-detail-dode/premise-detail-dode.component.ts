@@ -14,10 +14,9 @@ import {LanguageService} from "../../core/services/language.service";
 })
 export class PremiseDetailDodeComponent implements OnInit, OnDestroy {
   premises!: PremiseResponse[];
-  investments!: InvestmentResponse[];
+  investments: InvestmentResponse[] = [];
   private subscription!: Subscription;
   private unsubscribe$ = new Subject<void>();
-  descriptionTranslation!: string;
 
   constructor(
     private premiseService: PremiseService,
@@ -41,9 +40,11 @@ export class PremiseDetailDodeComponent implements OnInit, OnDestroy {
     this.languageService.language$
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(() => {
-        this.investments.forEach((investment) => {
-          this.fetchInvestmentDescription(investment.id); // Fetch new translations when language changes
-        });
+        if (this.investments) {
+          this.investments.forEach((investment) => {
+            this.fetchInvestmentDescription(investment.id);
+          });
+        }
       });
   }
 
@@ -55,8 +56,7 @@ export class PremiseDetailDodeComponent implements OnInit, OnDestroy {
           const index = this.investments.findIndex(inv => inv.id === investmentId);
           if (index !== -1) {
             this.investments[index].description = response.translation;
-            this.descriptionTranslation = response.translation;
-            this.changeDetectorRef.detectChanges(); // Ensure UI updates with new translation
+            this.changeDetectorRef.detectChanges();
           }
         },
         error: error => {

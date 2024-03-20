@@ -6,5 +6,4 @@ export interface InvestmentResponse {
   addressStreet: string;
   developerId: number;
   cityId: number;
-  VoivodeshipId: number;
 }

@@ -60,8 +60,7 @@ public class InvestmentEndpoint {
                                 investment.getAddressCountry(),
                                 investment.getAddressStreet(),
                                 investment.getDeveloperId(),
-                                investment.getCityId(),
-                                investment.getVoivodeshipId()
+                                investment.getCityId()
                         ))
                         .collect(Collectors.toList())
         );
@@ -79,8 +78,7 @@ public class InvestmentEndpoint {
                                 investment.getAddressCountry(),
                                 investment.getAddressStreet(),
                                 investment.getDeveloperId(),
-                                investment.getCityId(),
-                                investment.getVoivodeshipId()
+                                investment.getCityId()
                         ))
                         .collect(Collectors.toList())
         );
