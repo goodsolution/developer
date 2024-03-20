@@ -24,13 +24,11 @@ public class DeveloperGetResponse {
 
     private Long cityId;
 
-    private Long voivodeshipId;
-
     private String logoUrl;
 
     private String code;
 
-    public DeveloperGetResponse(Long id, String name, String addressCountry, String addressStreet, String addressBuildingNumber, String addressFlatNumber, String addressPostalCode, String telephoneNumber, String faxNumber, String email, String taxIdentificationNumber, Long cityId, Long voivodeshipId, String logoUrl, String code) {
+    public DeveloperGetResponse(Long id, String name, String addressCountry, String addressStreet, String addressBuildingNumber, String addressFlatNumber, String addressPostalCode, String telephoneNumber, String faxNumber, String email, String taxIdentificationNumber, Long cityId, String logoUrl, String code) {
         this.id = id;
         this.name = name;
         this.addressCountry = addressCountry;
@@ -43,7 +41,6 @@ public class DeveloperGetResponse {
         this.email = email;
         this.taxIdentificationNumber = taxIdentificationNumber;
         this.cityId = cityId;
-        this.voivodeshipId = voivodeshipId;
         this.logoUrl = logoUrl;
         this.code = code;
     }
@@ -150,14 +147,6 @@ public class DeveloperGetResponse {
 
     public void setCityId(Long cityId) {
         this.cityId = cityId;
-    }
-
-    public Long getVoivodeshipId() {
-        return voivodeshipId;
-    }
-
-    public void setVoivodeshipId(Long voivodeshipId) {
-        this.voivodeshipId = voivodeshipId;
     }
 
     public String getLogoUrl() {

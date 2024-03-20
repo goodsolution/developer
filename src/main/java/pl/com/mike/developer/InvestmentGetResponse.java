@@ -8,9 +8,8 @@ public class InvestmentGetResponse {
     private String addressStreet;
     private Long developerId;
     private Long cityId;
-    private Long voivodeshipId;
 
-    public InvestmentGetResponse(Long id, String name, String description, String addressCountry, String addressStreet, Long developerId, Long cityId, Long voivodeshipId) {
+    public InvestmentGetResponse(Long id, String name, String description, String addressCountry, String addressStreet, Long developerId, Long cityId) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -18,7 +17,7 @@ public class InvestmentGetResponse {
         this.addressStreet = addressStreet;
         this.developerId = developerId;
         this.cityId = cityId;
-        this.voivodeshipId = voivodeshipId;
+
     }
 
     public Long getId() {
@@ -77,11 +76,4 @@ public class InvestmentGetResponse {
         this.cityId = cityId;
     }
 
-    public Long getVoivodeshipId() {
-        return voivodeshipId;
-    }
-
-    public void setVoivodeshipId(Long voivodeshipId) {
-        this.voivodeshipId = voivodeshipId;
-    }
 }

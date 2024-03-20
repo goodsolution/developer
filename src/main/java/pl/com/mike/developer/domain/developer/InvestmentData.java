@@ -2,7 +2,9 @@ package pl.com.mike.developer.domain.developer;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "investments", schema = "course_platform")
@@ -18,24 +20,25 @@ public class InvestmentData implements Serializable {
     private String addressStreet;
     @Column(name = "developer_id", insertable = false, updatable = false)
     private Long developerId;
-    @Column(name = "city_id")
+    @Column(name = "city_id", insertable = false, updatable = false)
     private Long cityId;
-    @Column(name = "voivodeship_id")
-    private Long voivodeshipId;
-
+    @Column(name = "create_time")
+    private LocalDateTime createdAt;
+    @Column(name = "edit_time")
+    private LocalDateTime updatedAt;
+    @Column(name = "delete_time")
+    private LocalDateTime deletedAt;
     @ManyToOne
     @JoinColumn(name = "developer_id", referencedColumnName = "id")
     private DeveloperData developer;
+    @ManyToOne
+    @JoinColumn(name = "city_id", referencedColumnName = "id")
+    private CityData investmentCity;
+
+    @OneToMany(mappedBy = "investmentBuildings")
+    private Set<BuildingData> buildings;
 
     public InvestmentData() {
-    }
-
-    public DeveloperData getDeveloper() {
-        return developer;
-    }
-
-    public void setDeveloper(DeveloperData developer) {
-        this.developer = developer;
     }
 
     public Long getId() {
@@ -94,24 +97,43 @@ public class InvestmentData implements Serializable {
         this.cityId = cityId;
     }
 
-    public Long getVoivodeshipId() {
-        return voivodeshipId;
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
     }
 
-    public void setVoivodeshipId(Long voivodeshipId) {
-        this.voivodeshipId = voivodeshipId;
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof InvestmentData)) return false;
-        InvestmentData data = (InvestmentData) o;
-        return Objects.equals(getId(), data.getId()) && Objects.equals(getName(), data.getName()) && Objects.equals(getDescription(), data.getDescription()) && Objects.equals(getAddressCountry(), data.getAddressCountry()) && Objects.equals(getAddressStreet(), data.getAddressStreet()) && Objects.equals(getDeveloperId(), data.getDeveloperId()) && Objects.equals(getCityId(), data.getCityId()) && Objects.equals(getVoivodeshipId(), data.getVoivodeshipId());
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(getId(), getName(), getDescription(), getAddressCountry(), getAddressStreet(), getDeveloperId(), getCityId(), getVoivodeshipId());
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public LocalDateTime getDeletedAt() {
+        return deletedAt;
+    }
+
+    public void setDeletedAt(LocalDateTime deletedAt) {
+        this.deletedAt = deletedAt;
+    }
+
+    public DeveloperData getDeveloper() {
+        return developer;
+    }
+
+    public void setDeveloper(DeveloperData developer) {
+        this.developer = developer;
+    }
+
+    public CityData getInvestmentCity() {
+        return investmentCity;
+    }
+
+    public void setInvestmentCity(CityData investmentCity) {
+        this.investmentCity = investmentCity;
     }
 }

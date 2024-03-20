@@ -29,19 +29,20 @@ public class DeveloperData implements Serializable {
     private String email;
     @Column(name = "tax_identification_number")
     private String taxIdentificationNumber;
-    @Column(name = "city_id")
+    @Column(name = "city_id" , insertable = false, updatable = false)
     private Long cityId;
-    @Column(name = "voivodeship_id")
-    private Long voivodeshipId;
     @Column(name = "logo_url")
     private String logoUrl;
     private String code;
+    @ManyToOne
+    @JoinColumn(name = "city_id", referencedColumnName = "id")
+    private CityData developerCity;
+    @OneToMany(mappedBy = "developer")
+    private Set<InvestmentData> investments;
 
     public DeveloperData() {
     }
 
-    @OneToMany(mappedBy = "developer")
-    private Set<InvestmentData> investments;
 
     public Set<InvestmentData> getInvestments() {
         return investments;
@@ -142,23 +143,15 @@ public class DeveloperData implements Serializable {
     public void setTaxIdentificationNumber(String taxIdentificationNumber) {
         this.taxIdentificationNumber = taxIdentificationNumber;
     }
-
     public String getLogoUrl() {
         return logoUrl;
     }
-
     public void setLogoUrl(String logoUrl) {
         this.logoUrl = logoUrl;
     }
 
-
     public void setCityId(Long cityId) {
         this.cityId = cityId;
-    }
-
-
-    public void setVoivodeshipId(Long voivodeshipId) {
-        this.voivodeshipId = voivodeshipId;
     }
 
     public void setCode(String code) {
@@ -168,9 +161,11 @@ public class DeveloperData implements Serializable {
     public Long getCityId() {
         return cityId;
     }
-
-    public Long getVoivodeshipId() {
-        return voivodeshipId;
+    public CityData getDeveloperCity() {
+        return developerCity;
+    }
+    public void setDeveloperCity(CityData developerCity) {
+        this.developerCity = developerCity;
     }
 
     @Override
@@ -178,11 +173,11 @@ public class DeveloperData implements Serializable {
         if (this == o) return true;
         if (!(o instanceof DeveloperData)) return false;
         DeveloperData that = (DeveloperData) o;
-        return Objects.equals(getId(), that.getId()) && Objects.equals(getName(), that.getName()) && Objects.equals(getAddressCountry(), that.getAddressCountry()) && Objects.equals(getAddressStreet(), that.getAddressStreet()) && Objects.equals(getAddressBuildingNumber(), that.getAddressBuildingNumber()) && Objects.equals(getAddressFlatNumber(), that.getAddressFlatNumber()) && Objects.equals(getAddressPostalCode(), that.getAddressPostalCode()) && Objects.equals(getTelephoneNumber(), that.getTelephoneNumber()) && Objects.equals(getFaxNumber(), that.getFaxNumber()) && Objects.equals(getEmail(), that.getEmail()) && Objects.equals(getTaxIdentificationNumber(), that.getTaxIdentificationNumber()) && Objects.equals(getCityId(), that.getCityId()) && Objects.equals(getVoivodeshipId(), that.getVoivodeshipId()) && Objects.equals(getLogoUrl(), that.getLogoUrl()) && Objects.equals(getCode(), that.getCode());
+        return Objects.equals(getId(), that.getId()) && Objects.equals(getName(), that.getName()) && Objects.equals(getAddressCountry(), that.getAddressCountry()) && Objects.equals(getAddressStreet(), that.getAddressStreet()) && Objects.equals(getAddressBuildingNumber(), that.getAddressBuildingNumber()) && Objects.equals(getAddressFlatNumber(), that.getAddressFlatNumber()) && Objects.equals(getAddressPostalCode(), that.getAddressPostalCode()) && Objects.equals(getTelephoneNumber(), that.getTelephoneNumber()) && Objects.equals(getFaxNumber(), that.getFaxNumber()) && Objects.equals(getEmail(), that.getEmail()) && Objects.equals(getTaxIdentificationNumber(), that.getTaxIdentificationNumber()) && Objects.equals(getCityId(), that.getCityId()) && Objects.equals(getLogoUrl(), that.getLogoUrl()) && Objects.equals(getCode(), that.getCode()) && Objects.equals(getDeveloperCity(), that.getDeveloperCity()) && Objects.equals(getInvestments(), that.getInvestments());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getName(), getAddressCountry(), getAddressStreet(), getAddressBuildingNumber(), getAddressFlatNumber(), getAddressPostalCode(), getTelephoneNumber(), getFaxNumber(), getEmail(), getTaxIdentificationNumber(), getCityId(), getVoivodeshipId(), getLogoUrl(), getCode());
+        return Objects.hash(getId(), getName(), getAddressCountry(), getAddressStreet(), getAddressBuildingNumber(), getAddressFlatNumber(), getAddressPostalCode(), getTelephoneNumber(), getFaxNumber(), getEmail(), getTaxIdentificationNumber(), getCityId(), getLogoUrl(), getCode(), getDeveloperCity(), getInvestments());
     }
 }

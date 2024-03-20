@@ -53,7 +53,6 @@ public class ConverterToResponse {
                             developer.getEmail(),
                             developer.getTaxIdentificationNumber(),
                             developer.getCityId(),
-                            developer.getVoivodeshipId(),
                             developer.getLogoUrl(),
                             developer.getCode()
                     )
@@ -79,7 +78,6 @@ public class ConverterToResponse {
                             developer.getEmail(),
                             developer.getTaxIdentificationNumber(),
                             developer.getCityId(),
-                            developer.getVoivodeshipId(),
                             developer.getLogoUrl(),
                             developer.getCode()
                     )

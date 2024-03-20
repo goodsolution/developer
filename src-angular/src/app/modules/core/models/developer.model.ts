@@ -11,7 +11,6 @@ export interface DeveloperResponse {
   email: string;
   taxIdentificationNumber: string;
   cityId: number;
-  voivodeshipId: number;
   logoUrl: string;
   code: string;
 }

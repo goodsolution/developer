@@ -10,13 +10,12 @@ import pl.com.mike.developer.domain.developer.PremiseData;
 @Repository
 public interface PremiseRepository extends JpaRepository<PremiseData, Long> {
 
-    @Query(nativeQuery = true, value = "select * from premises join buildings on premises.building_id = buildings.id where buildings.investment_id = :id")
+    @Query("SELECT p FROM PremiseData p WHERE p.building.investmentBuildings.id = :id")
     Iterable<PremiseData> findAllByInvestmentId(@Param("id") Long id);
 
     @Query("SELECT MIN(p.totalPrice) AS minPrice, MAX(p.totalPrice) AS maxPrice " +
             "FROM PremiseData p JOIN p.building b " +
             "WHERE b.investmentId = :investmentId")
     AggregatedValues findPremisePriceRangeByInvestmentId(@Param("investmentId") Long investmentId);
-
 
 }

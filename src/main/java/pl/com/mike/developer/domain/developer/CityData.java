@@ -3,6 +3,7 @@ package pl.com.mike.developer.domain.developer;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "cities", schema = "course_platform")
@@ -13,6 +14,15 @@ public class CityData implements Serializable {
     private String name;
     @Column(name = "voivodeship_id")
     private Long voivodeshipId;
+    @ManyToOne
+    @JoinColumn(name = "voivodeship_id", insertable = false, updatable = false)
+    private VoivodeshipData voivodeship;
+    @OneToMany(mappedBy = "investmentCity")
+    private Set<InvestmentData> investments;
+    @OneToMany(mappedBy = "developerCity")
+    private Set<DeveloperData> developers;
+    @OneToMany(mappedBy = "cityBuildings")
+    private Set<BuildingData> buildings;
 
     public CityData() {
     }
@@ -37,8 +47,32 @@ public class CityData implements Serializable {
         return voivodeshipId;
     }
 
+    public VoivodeshipData getVoivodeship() {
+        return voivodeship;
+    }
+
     public void setVoivodeshipId(Long voivodeshipId) {
         this.voivodeshipId = voivodeshipId;
+    }
+
+    public void setVoivodeship(VoivodeshipData voivodeship) {
+        this.voivodeship = voivodeship;
+    }
+
+    public Set<InvestmentData> getInvestments() {
+        return investments;
+    }
+
+    public void setInvestments(Set<InvestmentData> investments) {
+        this.investments = investments;
+    }
+
+    public Set<DeveloperData> getDevelopers() {
+        return developers;
+    }
+
+    public void setDevelopers(Set<DeveloperData> developers) {
+        this.developers = developers;
     }
 
     @Override
@@ -46,11 +80,11 @@ public class CityData implements Serializable {
         if (this == o) return true;
         if (!(o instanceof CityData)) return false;
         CityData cityData = (CityData) o;
-        return Objects.equals(getId(), cityData.getId()) && Objects.equals(getName(), cityData.getName()) && Objects.equals(getVoivodeshipId(), cityData.getVoivodeshipId());
+        return Objects.equals(getId(), cityData.getId()) && Objects.equals(getName(), cityData.getName()) && Objects.equals(getVoivodeshipId(), cityData.getVoivodeshipId()) && Objects.equals(getVoivodeship(), cityData.getVoivodeship()) && Objects.equals(getInvestments(), cityData.getInvestments()) && Objects.equals(getDevelopers(), cityData.getDevelopers());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getName(), getVoivodeshipId());
+        return Objects.hash(getId(), getName(), getVoivodeshipId(), getVoivodeship(), getInvestments(), getDevelopers());
     }
 }
