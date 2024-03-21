@@ -20,13 +20,13 @@ import {PremiseDetailModule} from "./modules/premise-detail/premise-detail.modul
 import {AcceptLanguageInterceptor} from "./modules/core/services/accept-language.interceptor";
 import {LanguageService} from "./modules/core/services/language.service";
 
-export function initializeApp(config: ConfigService) {
+export function initializeConfig(config: ConfigService) {
   return (): Promise<any> => {
     return config.loadAppConfig();
   }
 }
 
-export function appInit(languageService: LanguageService, translate: TranslateService) {
+export function serveLanguageServices(languageService: LanguageService, translate: TranslateService) {
   return (): Promise<any> => {
     return new Promise((resolve) => {
       const browserLang = translate.getBrowserLang();
@@ -68,13 +68,13 @@ export function appInit(languageService: LanguageService, translate: TranslateSe
     ConfigService,
     {
       provide: APP_INITIALIZER,
-      useFactory: initializeApp,
+      useFactory: initializeConfig,
       deps: [ConfigService],
       multi: true
     },
     {
       provide: APP_INITIALIZER,
-      useFactory: appInit,
+      useFactory: serveLanguageServices,
       deps: [LanguageService, TranslateService],
       multi: true
     },
