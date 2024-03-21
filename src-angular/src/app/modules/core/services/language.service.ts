@@ -8,7 +8,7 @@ import {SearchResultTranslationModel} from "../models/searchResultTranslation.mo
   providedIn: 'root'
 })
 export class LanguageService {
-  private currentLanguage = new BehaviorSubject<string>('en'); // Default language
+  private currentLanguage = new BehaviorSubject<string>('en');
   language$: Observable<string> = this.currentLanguage.asObservable();
 
   constructor(private http: HttpClient,

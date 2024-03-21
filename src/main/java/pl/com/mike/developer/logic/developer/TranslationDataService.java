@@ -15,11 +15,11 @@ public class TranslationDataService {
     }
 
     public TranslationGetResponse getTranslation(Integer entityId, Locale locale, String domain, String key) {
-        String translationValue = translationDataRepository
+        return new TranslationGetResponse(translationDataRepository
                 .findByEntityIdAndLanguageCodeAndDomainAndKey(entityId, locale.getLanguage(), domain, key)
                 .map(TranslationData::getValue)
-                .orElseThrow(() -> new RuntimeException("Translation not found"));
-        return new TranslationGetResponse(translationValue);
+                .orElseThrow(() -> new RuntimeException("Translation not found"))
+        );
     }
 
 }

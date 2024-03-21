@@ -29,7 +29,11 @@ public class ConfigEndpoint {
     private final TranslationDataService translationDataService;
     private static final Logger logger = LoggerFactory.getLogger(ConfigEndpoint.class);
 
-    public ConfigEndpoint(DeveloperService developerService, ApplicationConfig applicationConfig, ActiveProfileConfigLoader profilesBean, PropertyConfigService propertyService, TranslationDataService translationDataService) {
+    public ConfigEndpoint(DeveloperService developerService,
+                          ApplicationConfig applicationConfig,
+                          ActiveProfileConfigLoader profilesBean,
+                          PropertyConfigService propertyService,
+                          TranslationDataService translationDataService) {
         this.developerService = developerService;
         this.applicationConfig = applicationConfig;
         this.profileConfigLoader = profilesBean;
@@ -43,9 +47,7 @@ public class ConfigEndpoint {
             @RequestParam String languageCode,
             @PathVariable String domain,
             @PathVariable String key) {
-        Locale locale = Locale.forLanguageTag(languageCode);
-        TranslationGetResponse translation = translationDataService.getTranslation(entityId, locale, domain, key);
-        return ResponseEntity.ok(translation);
+        return ResponseEntity.ok(translationDataService.getTranslation(entityId, Locale.forLanguageTag(languageCode), domain, key));
     }
 
     @GetMapping("developers/logo")
