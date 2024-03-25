@@ -80,11 +80,12 @@ public class CityData implements Serializable {
         if (this == o) return true;
         if (!(o instanceof CityData)) return false;
         CityData cityData = (CityData) o;
-        return Objects.equals(getId(), cityData.getId()) && Objects.equals(getName(), cityData.getName()) && Objects.equals(getVoivodeshipId(), cityData.getVoivodeshipId()) && Objects.equals(getVoivodeship(), cityData.getVoivodeship()) && Objects.equals(getInvestments(), cityData.getInvestments()) && Objects.equals(getDevelopers(), cityData.getDevelopers());
+        return Objects.equals(getId(), cityData.getId()) && Objects.equals(getName(), cityData.getName());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getName(), getVoivodeshipId(), getVoivodeship(), getInvestments(), getDevelopers());
+        return Objects.hash(getId(), getName());
     }
+
 }

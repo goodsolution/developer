@@ -47,7 +47,12 @@ public class ConfigEndpoint {
             @RequestParam String languageCode,
             @PathVariable String domain,
             @PathVariable String key) {
-        return ResponseEntity.ok(translationDataService.getTranslation(entityId, Locale.forLanguageTag(languageCode), domain, key));
+        return ResponseEntity.ok(translationDataService.getTranslation(new TranslationRequest(
+                entityId,
+                new Locale(languageCode),
+                domain,
+                key
+        )));
     }
 
     @GetMapping("developers/logo")

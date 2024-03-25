@@ -1,10 +1,11 @@
 package pl.com.mike.developer.logic.developer;
 
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import pl.com.mike.developer.TranslationRequest;
 import pl.com.mike.developer.domain.developer.TranslationData;
 import pl.com.mike.developer.web.TranslationGetResponse;
-
-import java.util.Locale;
 
 @Service
 public class TranslationDataService {
@@ -14,9 +15,14 @@ public class TranslationDataService {
         this.translationDataRepository = translationDataRepository;
     }
 
-    public TranslationGetResponse getTranslation(Integer entityId, Locale locale, String domain, String key) {
+    public TranslationGetResponse getTranslation(TranslationRequest request) {
         return new TranslationGetResponse(translationDataRepository
-                .findByEntityIdAndLanguageCodeAndDomainAndKey(entityId, locale.getLanguage(), domain, key)
+                .findByEntityIdAndLanguageCodeAndDomainAndKey(
+                        request.getEntityId(),
+                        request.getLocale().getLanguage(),
+                        request.getDomain(),
+                        request.getKey()
+                )
                 .map(TranslationData::getValue)
                 .orElseThrow(() -> new RuntimeException("Translation not found"))
         );
