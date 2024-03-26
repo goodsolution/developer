@@ -30,6 +30,13 @@
     "premise.technicalStatus": "Stan techniczny",
     "premise.salesStatus": "Status sprzedaży",
     "premise.exposure": "Ekspozycja",
-    "filter.price": "Filtruj na podstawie ceny:"
+    "filter.price": "Filtruj na podstawie ceny:",
+    "paginator.items.per.page": "Pozycji na stronę:",
+    "paginator.next.page": "Następna strona",
+    "paginator.previous.page": "Poprzednia strona",
+    "paginator.first.page": "Pierwsza strona",
+    "paginator.last.page": "Ostatnia strona",
+    "paginator.range": "{{start}} - {{end}} z {{length}}",
+    "paginator.range.of": "z"
   }
 }

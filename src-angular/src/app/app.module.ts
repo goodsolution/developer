@@ -19,6 +19,7 @@ import {InvestmentListModule} from "./modules/investment-list/investment-list.mo
 import {PremiseDetailModule} from "./modules/premise-detail/premise-detail.module";
 import {AcceptLanguageInterceptor} from "./modules/core/services/accept-language.interceptor";
 import {LanguageService} from "./modules/core/services/language.service";
+import {MatPaginatorIntl} from "@angular/material/paginator";
 
 export function initializeConfig(config: ConfigService) {
   return (): Promise<any> => {
@@ -38,6 +39,35 @@ export function serveLanguageServices(languageService: LanguageService, translat
       });
     });
   };
+}
+
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+}
+
+export class CustomMatPaginatorIntl extends MatPaginatorIntl {
+  constructor(private translate: TranslateService) {
+    super();
+    this.translate.onLangChange.subscribe(() => this.translateLabels());
+    this.translateLabels();
+  }
+  translateLabels() {
+    this.itemsPerPageLabel = this.translate.instant('shared.paginator.items.per.page');
+    this.nextPageLabel = this.translate.instant('shared.paginator.next.page');
+    this.previousPageLabel = this.translate.instant('shared.paginator.previous.page');
+    this.firstPageLabel = this.translate.instant('shared.paginator.first.page');
+    this.lastPageLabel = this.translate.instant('shared.paginator.last.page');
+    this.getRangeLabel = (page: number, pageSize: number, length: number) => {
+      if (length === 0 || pageSize === 0) {
+        return `0 ${this.translate.instant('shared.paginator.range_of')} ${length}`;
+      }
+      length = Math.max(length, 0);
+      const startIndex = page * pageSize;
+      const endIndex = startIndex < length ? Math.min(startIndex + pageSize, length) : startIndex + pageSize;
+      return `${startIndex + 1} – ${endIndex} ${this.translate.instant('shared.paginator.range.of')} ${length}`;
+    };
+    this.changes.next();
+  }
 }
 
 @NgModule({
@@ -86,13 +116,16 @@ export function serveLanguageServices(languageService: LanguageService, translat
     {
       provide: RouteReuseStrategy,
       useClass: CustomReuseStrategyService
+    },
+    {
+      provide: MatPaginatorIntl,
+      deps: [TranslateService],
+      useFactory: (translate: TranslateService) => {
+        return new CustomMatPaginatorIntl(translate);
+      }
     }
   ],
   bootstrap: [AppComponent]
 })
 export class AppModule {
-}
-
-export function HttpLoaderFactory(http: HttpClient) {
-  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
