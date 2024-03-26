@@ -17,15 +17,15 @@ export class InvestmentDodeComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.fetchDescription();
+    this.fetchInvestmentDescription();
     this.languageService.language$
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(() => {
-        this.fetchDescription();
+        this.fetchInvestmentDescription();
       });
   }
 
-  private fetchDescription(): void {
+  private fetchInvestmentDescription(): void {
     if (this.investment && this.investment.id) {
       this.languageService.getTranslation(this.investment.id, 'investment', 'description')
         .pipe(takeUntil(this.unsubscribe$))
