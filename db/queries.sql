@@ -636,3 +636,9 @@ alter table developers drop column voivodeship_id;
 
 alter table buildings drop constraint buildings_ibfk_3;
 alter table buildings drop column voivodeship_id;
+
+-- Adding columns for create_time, edit_time, and delete_time
+ALTER TABLE buildings
+    ADD COLUMN create_time DATETIME DEFAULT CURRENT_TIMESTAMP,
+    ADD COLUMN edit_time DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    ADD COLUMN delete_time DATETIME NULL;
