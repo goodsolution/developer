@@ -2,6 +2,7 @@ package pl.com.mike.developer.domain.developer;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.Set;
 
@@ -14,6 +15,12 @@ public class CityData implements Serializable {
     private String name;
     @Column(name = "voivodeship_id")
     private Long voivodeshipId;
+    @Column(name = "create_time")
+    private LocalDateTime createdAt;
+    @Column(name = "edit_time")
+    private LocalDateTime updatedAt;
+    @Column(name = "delete_time")
+    private LocalDateTime deletedAt;
     @ManyToOne
     @JoinColumn(name = "voivodeship_id", insertable = false, updatable = false)
     private VoivodeshipData voivodeship;
@@ -75,6 +82,38 @@ public class CityData implements Serializable {
         this.developers = developers;
     }
 
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public LocalDateTime getDeletedAt() {
+        return deletedAt;
+    }
+
+    public void setDeletedAt(LocalDateTime deletedAt) {
+        this.deletedAt = deletedAt;
+    }
+
+    public Set<BuildingData> getBuildings() {
+        return buildings;
+    }
+
+    public void setBuildings(Set<BuildingData> buildings) {
+        this.buildings = buildings;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -87,5 +126,4 @@ public class CityData implements Serializable {
     public int hashCode() {
         return Objects.hash(getId(), getName());
     }
-
 }
