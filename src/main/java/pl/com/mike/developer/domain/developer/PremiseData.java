@@ -3,6 +3,7 @@ package pl.com.mike.developer.domain.developer;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Entity
@@ -37,11 +38,41 @@ public class PremiseData implements Serializable {
     private Boolean isLoggia;
     @Column(name = "building_id")
     private Long buildingId;
+    @Column(name = "create_time")
+    private LocalDateTime createdAt;
+    @Column(name = "edit_time")
+    private LocalDateTime updatedAt;
+    @Column(name = "delete_time")
+    private LocalDateTime deletedAt;
     @ManyToOne
     @JoinColumn(name = "building_id", insertable = false, updatable = false)
     private BuildingData building;
 
     public PremiseData() {
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public LocalDateTime getDeletedAt() {
+        return deletedAt;
+    }
+
+    public void setDeletedAt(LocalDateTime deletedAt) {
+        this.deletedAt = deletedAt;
     }
 
     public BuildingData getBuilding() {
@@ -50,25 +81,6 @@ public class PremiseData implements Serializable {
 
     public void setBuilding(BuildingData building) {
         this.building = building;
-    }
-
-    public PremiseData(Long id, String type, Integer number, Integer floor, Double surfacePerSqMeter, Double pricePerSqMeter, BigDecimal totalPrice, Integer numberOfRooms, String technicalStatus, String salesStatus, String exposure, Boolean isBalcony, Boolean isGarden, Boolean isTerrace, Boolean isLoggia, Long buildingId) {
-        this.id = id;
-        this.type = type;
-        this.number = number;
-        this.floor = floor;
-        this.surfacePerSqMeter = surfacePerSqMeter;
-        this.pricePerSqMeter = pricePerSqMeter;
-        this.totalPrice = totalPrice;
-        this.numberOfRooms = numberOfRooms;
-        this.technicalStatus = technicalStatus;
-        this.salesStatus = salesStatus;
-        this.exposure = exposure;
-        this.isBalcony = isBalcony;
-        this.isGarden = isGarden;
-        this.isTerrace = isTerrace;
-        this.isLoggia = isLoggia;
-        this.buildingId = buildingId;
     }
 
     public Long getId() {
@@ -203,13 +215,13 @@ public class PremiseData implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof PremiseData)) return false;
         PremiseData that = (PremiseData) o;
-        return Objects.equals(id, that.id) && Objects.equals(type, that.type) && Objects.equals(number, that.number) && Objects.equals(floor, that.floor) && Objects.equals(surfacePerSqMeter, that.surfacePerSqMeter) && Objects.equals(pricePerSqMeter, that.pricePerSqMeter) && Objects.equals(totalPrice, that.totalPrice) && Objects.equals(numberOfRooms, that.numberOfRooms) && Objects.equals(technicalStatus, that.technicalStatus) && Objects.equals(salesStatus, that.salesStatus) && Objects.equals(exposure, that.exposure) && Objects.equals(isBalcony, that.isBalcony) && Objects.equals(isGarden, that.isGarden) && Objects.equals(isTerrace, that.isTerrace) && Objects.equals(isLoggia, that.isLoggia) && Objects.equals(buildingId, that.buildingId);
+        return Objects.equals(getId(), that.getId()) && Objects.equals(getType(), that.getType()) && Objects.equals(getNumber(), that.getNumber());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, type, number, floor, surfacePerSqMeter, pricePerSqMeter, totalPrice, numberOfRooms, technicalStatus, salesStatus, exposure, isBalcony, isGarden, isTerrace, isLoggia, buildingId);
+        return Objects.hash(getId(), getType(), getNumber());
     }
 }

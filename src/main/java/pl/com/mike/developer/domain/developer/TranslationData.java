@@ -2,6 +2,7 @@ package pl.com.mike.developer.domain.developer;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.Objects;
 
 @Entity
 @Table(name = "translations")
@@ -33,7 +34,7 @@ public class TranslationData {
     @Column(name = "updated_at")
     private Timestamp updatedAt;
 
-    @Column(name = "deleted_at", nullable = true) // Marking this as nullable since deleted_at can be null
+    @Column(name = "deleted_at", nullable = true)
     private Timestamp deletedAt;
 
     public TranslationData() {
@@ -109,5 +110,18 @@ public class TranslationData {
 
     public void setDeletedAt(Timestamp deletedAt) {
         this.deletedAt = deletedAt;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof TranslationData)) return false;
+        TranslationData that = (TranslationData) o;
+        return Objects.equals(getTranslationId(), that.getTranslationId());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getTranslationId());
     }
 }

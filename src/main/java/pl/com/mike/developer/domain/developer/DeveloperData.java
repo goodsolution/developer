@@ -2,6 +2,7 @@ package pl.com.mike.developer.domain.developer;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.Set;
 
@@ -34,6 +35,12 @@ public class DeveloperData implements Serializable {
     @Column(name = "logo_url")
     private String logoUrl;
     private String code;
+    @Column(name = "create_time")
+    private LocalDateTime createdAt;
+    @Column(name = "edit_time")
+    private LocalDateTime updatedAt;
+    @Column(name = "delete_time")
+    private LocalDateTime deletedAt;
     @ManyToOne
     @JoinColumn(name = "city_id", referencedColumnName = "id")
     private CityData developerCity;
@@ -43,6 +50,29 @@ public class DeveloperData implements Serializable {
     public DeveloperData() {
     }
 
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public LocalDateTime getDeletedAt() {
+        return deletedAt;
+    }
+
+    public void setDeletedAt(LocalDateTime deletedAt) {
+        this.deletedAt = deletedAt;
+    }
 
     public Set<InvestmentData> getInvestments() {
         return investments;
@@ -173,11 +203,11 @@ public class DeveloperData implements Serializable {
         if (this == o) return true;
         if (!(o instanceof DeveloperData)) return false;
         DeveloperData that = (DeveloperData) o;
-        return Objects.equals(getId(), that.getId()) && Objects.equals(getName(), that.getName()) && Objects.equals(getAddressCountry(), that.getAddressCountry()) && Objects.equals(getAddressStreet(), that.getAddressStreet()) && Objects.equals(getAddressBuildingNumber(), that.getAddressBuildingNumber()) && Objects.equals(getAddressFlatNumber(), that.getAddressFlatNumber()) && Objects.equals(getAddressPostalCode(), that.getAddressPostalCode()) && Objects.equals(getTelephoneNumber(), that.getTelephoneNumber()) && Objects.equals(getFaxNumber(), that.getFaxNumber()) && Objects.equals(getEmail(), that.getEmail()) && Objects.equals(getTaxIdentificationNumber(), that.getTaxIdentificationNumber()) && Objects.equals(getCityId(), that.getCityId()) && Objects.equals(getLogoUrl(), that.getLogoUrl()) && Objects.equals(getCode(), that.getCode()) && Objects.equals(getDeveloperCity(), that.getDeveloperCity()) && Objects.equals(getInvestments(), that.getInvestments());
+        return Objects.equals(getId(), that.getId()) && Objects.equals(getName(), that.getName());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getName(), getAddressCountry(), getAddressStreet(), getAddressBuildingNumber(), getAddressFlatNumber(), getAddressPostalCode(), getTelephoneNumber(), getFaxNumber(), getEmail(), getTaxIdentificationNumber(), getCityId(), getLogoUrl(), getCode(), getDeveloperCity(), getInvestments());
+        return Objects.hash(getId(), getName());
     }
 }

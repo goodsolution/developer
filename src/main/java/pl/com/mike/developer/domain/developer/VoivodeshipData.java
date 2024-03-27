@@ -1,6 +1,8 @@
 package pl.com.mike.developer.domain.developer;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.Set;
 
@@ -11,10 +13,41 @@ public class VoivodeshipData {
     @GeneratedValue
     private Long id;
     private String name;
+    @Column(name = "create_time")
+    private LocalDateTime createdAt;
+    @Column(name = "edit_time")
+    private LocalDateTime updatedAt;
+    @Column(name = "delete_time")
+    private LocalDateTime deletedAt;
+
     @OneToMany(mappedBy = "voivodeship")
     private Set<CityData> cities;
 
     public VoivodeshipData() {
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public LocalDateTime getDeletedAt() {
+        return deletedAt;
+    }
+
+    public void setDeletedAt(LocalDateTime deletedAt) {
+        this.deletedAt = deletedAt;
     }
 
     public Long getId() {
@@ -46,11 +79,11 @@ public class VoivodeshipData {
         if (this == o) return true;
         if (!(o instanceof VoivodeshipData)) return false;
         VoivodeshipData that = (VoivodeshipData) o;
-        return Objects.equals(getId(), that.getId()) && Objects.equals(getName(), that.getName()) && Objects.equals(getCities(), that.getCities());
+        return Objects.equals(getId(), that.getId());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getName(), getCities());
+        return Objects.hash(getId());
     }
 }
