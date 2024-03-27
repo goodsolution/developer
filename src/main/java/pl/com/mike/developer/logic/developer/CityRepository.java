@@ -11,7 +11,7 @@ import java.util.List;
 @Repository
 public interface CityRepository extends JpaRepository<CityData, Long> {
 
-    @Query("SELECT DISTINCT i.investmentCity FROM InvestmentData i WHERE i.developer.code = :code")
+    @Query("SELECT i.investmentCity FROM InvestmentData i WHERE i.developer.code = :code")
     List<CityData> getCitiesByDeveloperCode(@Param("code") String code);
 
 }

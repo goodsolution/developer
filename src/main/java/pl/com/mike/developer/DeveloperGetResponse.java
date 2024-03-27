@@ -1,34 +1,27 @@
 package pl.com.mike.developer;
 
-public class DeveloperGetResponse {
+import java.time.LocalDateTime;
 
+public class DeveloperGetResponse {
     private Long id;
     private String name;
-
     private String addressCountry;
-
     private String addressStreet;
-
     private String addressBuildingNumber;
-
     private String addressFlatNumber;
-
     private String addressPostalCode;
-
     private String telephoneNumber;
-
     private String faxNumber;
     private String email;
-
     private String taxIdentificationNumber;
-
     private Long cityId;
-
     private String logoUrl;
-
     private String code;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+    private LocalDateTime deletedAt;
 
-    public DeveloperGetResponse(Long id, String name, String addressCountry, String addressStreet, String addressBuildingNumber, String addressFlatNumber, String addressPostalCode, String telephoneNumber, String faxNumber, String email, String taxIdentificationNumber, Long cityId, String logoUrl, String code) {
+    public DeveloperGetResponse(Long id, String name, String addressCountry, String addressStreet, String addressBuildingNumber, String addressFlatNumber, String addressPostalCode, String telephoneNumber, String faxNumber, String email, String taxIdentificationNumber, Long cityId, String logoUrl, String code, LocalDateTime createdAt, LocalDateTime updatedAt, LocalDateTime deletedAt) {
         this.id = id;
         this.name = name;
         this.addressCountry = addressCountry;
@@ -43,6 +36,33 @@ public class DeveloperGetResponse {
         this.cityId = cityId;
         this.logoUrl = logoUrl;
         this.code = code;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+        this.deletedAt = deletedAt;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public LocalDateTime getDeletedAt() {
+        return deletedAt;
+    }
+
+    public void setDeletedAt(LocalDateTime deletedAt) {
+        this.deletedAt = deletedAt;
     }
 
     public String getCode() {

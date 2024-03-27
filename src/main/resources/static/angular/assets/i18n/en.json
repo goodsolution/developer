@@ -1,7 +1,7 @@
 {
   "antal": {
     "welcome.msg": "Welcome to Antal Development",
-    "welcome.desc": "Your dream home, crafted with precision and care by the leading architects of tomorrow.",
+    "welcome.desc": "Your super home, crafted with precision and care by the leading architects of tomorrow.",
     "welcome.more": "Discover More"
   },
   "domdevelopment": {
@@ -30,6 +30,13 @@
     "premise.technicalStatus": "Technical status",
     "premise.salesStatus": "Sales status",
     "premise.exposure": "Exposure",
-    "filter.price": "Filter by price:"
+    "filter.price": "Filter by price:",
+    "paginator.items.per.page": "Items per page:",
+    "paginator.next.page": "Next page",
+    "paginator.previous.page": "Previous page",
+    "paginator.first.page": "First page",
+    "paginator.last.page": "Last page",
+    "paginator.range": "{{start}} - {{end}} of {{length}}",
+    "paginator.range.of": "of"
   }
 }

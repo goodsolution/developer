@@ -40,47 +40,47 @@ export class PremiseDetailDodeComponent implements OnInit, OnDestroy {
     this.languageService.language$
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(() => {
-        if (this.investments) {
-          this.investments.forEach((investment) => {
-            this.fetchInvestmentDescription(investment.id);
+        if (this.investments.length) {
+          this.investments.forEach((investment, index) => {
+            this.fetchInvestmentDescription(index);
           });
         }
       });
   }
 
-  fetchInvestmentDescription(investmentId: number): void {
-    this.languageService.getTranslation(investmentId, 'investment', 'description')
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe({
-        next: response => {
-          const index = this.investments.findIndex(inv => inv.id === investmentId);
-          if (index !== -1) {
-            this.investments[index].description = response.translation;
-            this.changeDetectorRef.detectChanges();
-          }
-        },
-        error: error => {
-          console.error('Error fetching investment description:', error);
-        }
-      });
+  loadPremiseById(premiseId: string) {
+    this.premiseService.getPremiseById(premiseId).subscribe({
+      next: (response) => {
+        this.premises = response.premisesGetResponse;
+      },
+      error: (error) => console.error('Error fetching premise:', error)
+    });
   }
 
   loadInvestmentByPremiseId(premiseId: string) {
     this.investmentService.getInvestmentByPremiseId(premiseId).subscribe({
       next: (response) => {
         this.investments = response.investments;
+        // Initialize translation fetching for all investments after they are loaded
+        this.investments.forEach((_, index) => this.fetchInvestmentDescription(index));
       },
       error: (error) => console.error('Error fetching investment:', error)
     });
   }
 
-  loadPremiseById(premiseId: string) {
-    this.premiseService.getPremiseById(premiseId).subscribe({
-      next: (response) => {
-        this.premises = response.premisesGetResponse
-      },
-      error: (error) => console.error('Error fetching premise:', error)
-    });
+  fetchInvestmentDescription(index: number): void {
+    const investmentId = this.investments[index].id;
+    this.languageService.getTranslation(investmentId, 'investment', 'description')
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe({
+        next: response => {
+          this.investments[index].description = response.translation;
+          this.changeDetectorRef.detectChanges();
+        },
+        error: error => {
+          console.error('Error fetching investment description:', error);
+        }
+      });
   }
 
   ngOnDestroy(): void {

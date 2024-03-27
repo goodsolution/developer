@@ -2,6 +2,7 @@ package pl.com.mike.developer.domain.developer;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
@@ -24,6 +25,12 @@ public class BuildingData implements Serializable {
     private Long investmentId;
     @Column(name = "city_id")
     private Long cityId;
+    @Column(name = "create_time")
+    private LocalDateTime createdAt;
+    @Column(name = "edit_time")
+    private LocalDateTime updatedAt;
+    @Column(name = "delete_time")
+    private LocalDateTime deletedAt;
     @OneToMany(mappedBy = "building")
     List<PremiseData> premises;
     @ManyToOne
@@ -124,16 +131,40 @@ public class BuildingData implements Serializable {
         this.cityBuildings = cityBuildings;
     }
 
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public LocalDateTime getDeletedAt() {
+        return deletedAt;
+    }
+
+    public void setDeletedAt(LocalDateTime deletedAt) {
+        this.deletedAt = deletedAt;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof BuildingData)) return false;
         BuildingData that = (BuildingData) o;
-        return Objects.equals(getId(), that.getId()) && Objects.equals(getName(), that.getName()) && Objects.equals(getAddressCountry(), that.getAddressCountry()) && Objects.equals(getAddressStreet(), that.getAddressStreet()) && Objects.equals(getAddressBuildingNumber(), that.getAddressBuildingNumber()) && Objects.equals(getAddressPostalCode(), that.getAddressPostalCode()) && Objects.equals(getInvestmentId(), that.getInvestmentId()) && Objects.equals(getCityId(), that.getCityId()) && Objects.equals(getPremises(), that.getPremises()) && Objects.equals(getInvestmentBuildings(), that.getInvestmentBuildings()) && Objects.equals(getCityBuildings(), that.getCityBuildings());
+        return Objects.equals(getId(), that.getId()) && Objects.equals(getName(), that.getName());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getName(), getAddressCountry(), getAddressStreet(), getAddressBuildingNumber(), getAddressPostalCode(), getInvestmentId(), getCityId(), getPremises(), getInvestmentBuildings(), getCityBuildings());
+        return Objects.hash(getId(), getName());
     }
 }

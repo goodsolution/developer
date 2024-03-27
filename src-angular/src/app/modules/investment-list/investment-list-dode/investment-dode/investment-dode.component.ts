@@ -1,6 +1,6 @@
 import {ChangeDetectorRef, Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {InvestmentResponse} from "../../../core/models/investment.model";
-import {share, Subject, takeUntil} from "rxjs";
+import {Subject, takeUntil} from "rxjs";
 import {LanguageService} from "../../../core/services/language.service";
 
 @Component({
@@ -12,20 +12,21 @@ export class InvestmentDodeComponent implements OnInit, OnDestroy {
   @Input() investment!: InvestmentResponse;
   descriptionTranslation!: string;
   private unsubscribe$ = new Subject<void>();
+
   constructor(private languageService: LanguageService,
               private changeDetectorRef: ChangeDetectorRef) {
   }
 
   ngOnInit(): void {
-    this.fetchDescription();
+    this.fetchInvestmentDescription();
     this.languageService.language$
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(() => {
-        this.fetchDescription();
+        this.fetchInvestmentDescription();
       });
   }
 
-  private fetchDescription(): void {
+  private fetchInvestmentDescription(): void {
     if (this.investment && this.investment.id) {
       this.languageService.getTranslation(this.investment.id, 'investment', 'description')
         .pipe(takeUntil(this.unsubscribe$))

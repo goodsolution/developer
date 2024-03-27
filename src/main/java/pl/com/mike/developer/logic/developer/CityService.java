@@ -5,6 +5,7 @@ import pl.com.mike.developer.config.ApplicationConfig;
 import pl.com.mike.developer.domain.developer.CityData;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class CityService {
@@ -21,7 +22,10 @@ public class CityService {
     }
 
     public List<CityData> getCitiesByDeveloperCode() {
-        return cityRepository.getCitiesByDeveloperCode(applicationConfig.getSystemCode());
+        return cityRepository.getCitiesByDeveloperCode(applicationConfig.getSystemCode())
+                .stream()
+                .distinct()
+                .collect(Collectors.toList());
     }
 
 }

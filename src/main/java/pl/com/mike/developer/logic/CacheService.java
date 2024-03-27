@@ -3,7 +3,7 @@ package pl.com.mike.developer.logic;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 
-@Service
+@Service("cacheService_2")
 public class CacheService {
 
     @CacheEvict(value = CacheType.MENU, allEntries = true)

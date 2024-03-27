@@ -11,13 +11,13 @@ import java.util.List;
 @Repository
 public interface InvestmentRepository extends JpaRepository<InvestmentData, Long> {
 
-    @Query("SELECT DISTINCT c.name FROM InvestmentData i JOIN i.investmentCity c WHERE i.developer.code = :code")
+    @Query("SELECT c.name FROM InvestmentData i JOIN i.investmentCity c WHERE i.developer.code = :code")
     List<String> getInvestmentCitiesByDeveloperCode(@Param("code") String code);
 
-    @Query("SELECT DISTINCT i FROM InvestmentData i WHERE i.developer.code = :code")
+    @Query("SELECT i FROM InvestmentData i WHERE i.developer.code = :code")
     List<InvestmentData> getInvestmentsByDeveloperCode(@Param("code") String code);
 
-    @Query("SELECT DISTINCT b.investmentBuildings FROM BuildingData b JOIN b.premises p WHERE p.id = :premiseId")
+    @Query("SELECT b.investmentBuildings FROM BuildingData b JOIN b.premises p WHERE p.id = :premiseId")
     List<InvestmentData> getInvestmentsByPremiseId(@Param("premiseId") Long premiseId);
 
 }

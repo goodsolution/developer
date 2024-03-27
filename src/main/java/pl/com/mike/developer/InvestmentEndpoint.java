@@ -28,7 +28,10 @@ public class InvestmentEndpoint {
                         .map(city -> new CityGetResponse(
                                 city.getId(),
                                 city.getName(),
-                                city.getVoivodeshipId()
+                                city.getVoivodeshipId(),
+                                city.getCreatedAt(),
+                                city.getUpdatedAt(),
+                                city.getDeletedAt()
                         ))
                         .collect(Collectors.toList())
         );
@@ -42,6 +45,9 @@ public class InvestmentEndpoint {
                         .map(city -> new CityGetResponse(
                                 null,
                                 city,
+                                null,
+                                null,
+                                null,
                                 null
                         ))
                         .collect(Collectors.toList())

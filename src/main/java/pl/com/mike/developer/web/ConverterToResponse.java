@@ -29,7 +29,10 @@ public class ConverterToResponse {
                             list.getGarden(),
                             list.getTerrace(),
                             list.getLoggia(),
-                            list.getBuildingId()
+                            list.getBuildingId(),
+                            list.getCreatedAt(),
+                            list.getUpdatedAt(),
+                            list.getDeletedAt()
                     )
             );
         }
@@ -54,7 +57,10 @@ public class ConverterToResponse {
                             developer.getTaxIdentificationNumber(),
                             developer.getCityId(),
                             developer.getLogoUrl(),
-                            developer.getCode()
+                            developer.getCode(),
+                            developer.getCreatedAt(),
+                            developer.getUpdatedAt(),
+                            developer.getDeletedAt()
                     )
             );
         }
@@ -79,7 +85,10 @@ public class ConverterToResponse {
                             developer.getTaxIdentificationNumber(),
                             developer.getCityId(),
                             developer.getLogoUrl(),
-                            developer.getCode()
+                            developer.getCode(),
+                            developer.getCreatedAt(),
+                            developer.getUpdatedAt(),
+                            developer.getDeletedAt()
                     )
             );
         return developersGetResponse;
