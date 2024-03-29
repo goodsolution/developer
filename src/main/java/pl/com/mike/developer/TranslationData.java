@@ -3,13 +3,13 @@ package pl.com.mike.developer;
 import java.util.Locale;
 import java.util.Objects;
 
-public class TranslationRequest {
+public class TranslationData {
     private Integer entityId;
     private Locale locale;
     private String domain;
     private String key;
 
-    public TranslationRequest(Integer entityId, Locale locale, String domain, String key) {
+    public TranslationData(Integer entityId, Locale locale, String domain, String key) {
         this.entityId = entityId;
         this.locale = locale;
         this.domain = domain;
@@ -51,8 +51,8 @@ public class TranslationRequest {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof TranslationRequest)) return false;
-        TranslationRequest that = (TranslationRequest) o;
+        if (!(o instanceof TranslationData)) return false;
+        TranslationData that = (TranslationData) o;
         return Objects.equals(getEntityId(), that.getEntityId()) && Objects.equals(getLocale(), that.getLocale()) && Objects.equals(getDomain(), that.getDomain()) && Objects.equals(getKey(), that.getKey());
     }
 
