@@ -1,7 +1,6 @@
 package pl.com.mike.developer;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 
 public class PremiseGetResponse {
     private Long id;
@@ -19,12 +18,8 @@ public class PremiseGetResponse {
     private Boolean isGarden;
     private Boolean isTerrace;
     private Boolean isLoggia;
-    private Long buildingId;
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
-    private LocalDateTime deletedAt;
 
-    public PremiseGetResponse(Long id, String type, Integer number, Integer floor, Double surfacePerSqMeter, Double pricePerSqMeter, BigDecimal totalPrice, Integer numberOfRooms, String technicalStatus, String salesStatus, String exposure, Boolean isBalcony, Boolean isGarden, Boolean isTerrace, Boolean isLoggia, Long buildingId, LocalDateTime createdAt, LocalDateTime updatedAt, LocalDateTime deletedAt) {
+    public PremiseGetResponse(Long id, String type, Integer number, Integer floor, Double surfacePerSqMeter, Double pricePerSqMeter, BigDecimal totalPrice, Integer numberOfRooms, String technicalStatus, String salesStatus, String exposure, Boolean isBalcony, Boolean isGarden, Boolean isTerrace, Boolean isLoggia) {
         this.id = id;
         this.type = type;
         this.number = number;
@@ -40,34 +35,7 @@ public class PremiseGetResponse {
         this.isGarden = isGarden;
         this.isTerrace = isTerrace;
         this.isLoggia = isLoggia;
-        this.buildingId = buildingId;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
-        this.deletedAt = deletedAt;
-    }
 
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(LocalDateTime updatedAt) {
-        this.updatedAt = updatedAt;
-    }
-
-    public LocalDateTime getDeletedAt() {
-        return deletedAt;
-    }
-
-    public void setDeletedAt(LocalDateTime deletedAt) {
-        this.deletedAt = deletedAt;
     }
 
     public Long getId() {
@@ -190,11 +158,4 @@ public class PremiseGetResponse {
         isLoggia = loggia;
     }
 
-    public Long getBuildingId() {
-        return buildingId;
-    }
-
-    public void setBuildingId(Long buildingId) {
-        this.buildingId = buildingId;
-    }
 }

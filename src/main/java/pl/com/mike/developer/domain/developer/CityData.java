@@ -29,7 +29,7 @@ public class CityData implements Serializable {
     @OneToMany(mappedBy = "developerCity")
     private Set<DeveloperData> developers;
     @OneToMany(mappedBy = "cityBuildings")
-    private Set<BuildingData> buildings;
+    private Set<Building> buildings;
 
     public CityData() {
     }
@@ -106,11 +106,11 @@ public class CityData implements Serializable {
         this.deletedAt = deletedAt;
     }
 
-    public Set<BuildingData> getBuildings() {
+    public Set<Building> getBuildings() {
         return buildings;
     }
 
-    public void setBuildings(Set<BuildingData> buildings) {
+    public void setBuildings(Set<Building> buildings) {
         this.buildings = buildings;
     }
 

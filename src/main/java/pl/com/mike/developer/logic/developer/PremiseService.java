@@ -3,6 +3,7 @@ package pl.com.mike.developer.logic.developer;
 import org.springframework.stereotype.Service;
 import pl.com.mike.developer.PremiseAggregatedValuesGetResponse;
 import pl.com.mike.developer.domain.developer.AggregatedValues;
+import pl.com.mike.developer.domain.developer.Premise;
 import pl.com.mike.developer.domain.developer.PremiseData;
 
 import java.util.ArrayList;
@@ -27,14 +28,17 @@ public class PremiseService {
     }
 
     public List<PremiseData> findPriceByInvestmentId(Long id, String priceFunction) {
-        return customPremiseRepository.findPriceByInvestmentId(id, priceFunction);
+        List<Premise> priceByInvestmentId = customPremiseRepository.findPriceByInvestmentId(id, priceFunction);
+        List<PremiseData> premises = new ArrayList<>();
+        priceByInvestmentId.forEach(premise -> premises.add(new PremiseData(premise)));
+        return premises;
     }
 
     public List<PremiseData> getPremiseDataByInvestmentId(PremiseSearchFilter filter) {
         List<PremiseData> premises = new ArrayList<>();
-        Iterable<PremiseData> optionalPremiseData = premiseRepository.findAllByInvestmentId(filter.getId());
+        Iterable<Premise> optionalPremiseData = premiseRepository.findAllByInvestmentId(filter.getId());
         if (optionalPremiseData.iterator().hasNext()) {
-            optionalPremiseData.forEach(premises::add);
+            optionalPremiseData.forEach(premise -> premises.add(new PremiseData(premise)));
         } else {
             throw new NoSuchElementException();
         }
@@ -43,9 +47,9 @@ public class PremiseService {
 
     public List<PremiseData> getPremiseDataById(PremiseSearchFilter filter) {
         List<PremiseData> premises = new ArrayList<>();
-        Optional<PremiseData> optionalPremiseData = premiseRepository.findById(filter.getId());
+        Optional<Premise> optionalPremiseData = premiseRepository.findById(filter.getId());
         if (optionalPremiseData.isPresent()) {
-            premises.add(optionalPremiseData.get());
+            premises.add(new PremiseData(optionalPremiseData.get()));
         } else {
             throw new NoSuchElementException();
         }
@@ -54,9 +58,9 @@ public class PremiseService {
 
     public List<PremiseData> getAllPremises() {
         List<PremiseData> premises = new ArrayList<>();
-        Iterable<PremiseData> optionalPremiseData = premiseRepository.findAll();
+        Iterable<Premise> optionalPremiseData = premiseRepository.findAll();
         if (optionalPremiseData.iterator().hasNext()) {
-            optionalPremiseData.forEach(premises::add);
+            optionalPremiseData.forEach(premise -> premises.add(new PremiseData(premise)));
         } else {
             throw new NoSuchElementException();
         }

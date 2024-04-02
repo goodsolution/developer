@@ -17,7 +17,7 @@ public interface InvestmentRepository extends JpaRepository<InvestmentData, Long
     @Query("SELECT i FROM InvestmentData i WHERE i.developer.code = :code")
     List<InvestmentData> getInvestmentsByDeveloperCode(@Param("code") String code);
 
-    @Query("SELECT b.investmentBuildings FROM BuildingData b JOIN b.premises p WHERE p.id = :premiseId")
+    @Query("SELECT b.investmentBuildings FROM Building b JOIN b.premises p WHERE p.id = :premiseId")
     List<InvestmentData> getInvestmentsByPremiseId(@Param("premiseId") Long premiseId);
 
 }
