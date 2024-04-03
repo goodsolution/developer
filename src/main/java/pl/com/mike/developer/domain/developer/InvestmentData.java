@@ -33,7 +33,7 @@ public class InvestmentData implements Serializable {
     private DeveloperData developer;
     @ManyToOne
     @JoinColumn(name = "city_id", referencedColumnName = "id")
-    private CityData investmentCity;
+    private City investmentCity;
 
     @OneToMany(mappedBy = "investmentBuildings")
     private Set<Building> buildings;
@@ -137,11 +137,11 @@ public class InvestmentData implements Serializable {
         this.developer = developer;
     }
 
-    public CityData getInvestmentCity() {
+    public City getInvestmentCity() {
         return investmentCity;
     }
 
-    public void setInvestmentCity(CityData investmentCity) {
+    public void setInvestmentCity(City investmentCity) {
         this.investmentCity = investmentCity;
     }
 

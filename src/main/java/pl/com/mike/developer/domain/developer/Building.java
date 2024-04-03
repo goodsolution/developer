@@ -38,7 +38,7 @@ public class Building implements Serializable {
     private InvestmentData investmentBuildings;
     @ManyToOne
     @JoinColumn(name = "city_id", insertable = false, updatable = false)
-    private CityData cityBuildings;
+    private City cityBuildings;
 
     public Building() {
     }
@@ -123,11 +123,11 @@ public class Building implements Serializable {
         this.investmentBuildings = investmentBuildings;
     }
 
-    public CityData getCityBuildings() {
+    public City getCityBuildings() {
         return cityBuildings;
     }
 
-    public void setCityBuildings(CityData cityBuildings) {
+    public void setCityBuildings(City cityBuildings) {
         this.cityBuildings = cityBuildings;
     }
 

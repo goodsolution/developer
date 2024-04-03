@@ -1,7 +1,6 @@
 package pl.com.mike.developer.domain.developer;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.Set;
@@ -21,7 +20,7 @@ public class VoivodeshipData {
     private LocalDateTime deletedAt;
 
     @OneToMany(mappedBy = "voivodeship")
-    private Set<CityData> cities;
+    private Set<City> cities;
 
     public VoivodeshipData() {
     }
@@ -66,11 +65,11 @@ public class VoivodeshipData {
         this.name = name;
     }
 
-    public Set<CityData> getCities() {
+    public Set<City> getCities() {
         return cities;
     }
 
-    public void setCities(Set<CityData> cities) {
+    public void setCities(Set<City> cities) {
         this.cities = cities;
     }
 

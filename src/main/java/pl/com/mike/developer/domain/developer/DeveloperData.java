@@ -43,7 +43,7 @@ public class DeveloperData implements Serializable {
     private LocalDateTime deletedAt;
     @ManyToOne
     @JoinColumn(name = "city_id", referencedColumnName = "id")
-    private CityData developerCity;
+    private City developerCity;
     @OneToMany(mappedBy = "developer")
     private Set<InvestmentData> investments;
 
@@ -191,10 +191,10 @@ public class DeveloperData implements Serializable {
     public Long getCityId() {
         return cityId;
     }
-    public CityData getDeveloperCity() {
+    public City getDeveloperCity() {
         return developerCity;
     }
-    public void setDeveloperCity(CityData developerCity) {
+    public void setDeveloperCity(City developerCity) {
         this.developerCity = developerCity;
     }
 

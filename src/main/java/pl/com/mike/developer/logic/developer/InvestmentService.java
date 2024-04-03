@@ -2,7 +2,6 @@ package pl.com.mike.developer.logic.developer;
 
 import org.springframework.stereotype.Service;
 import pl.com.mike.developer.config.ApplicationConfig;
-import pl.com.mike.developer.domain.developer.CityData;
 import pl.com.mike.developer.domain.developer.InvestmentData;
 
 import java.util.List;

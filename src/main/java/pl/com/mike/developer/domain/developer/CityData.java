@@ -1,129 +1,33 @@
 package pl.com.mike.developer.domain.developer;
 
-import javax.persistence.*;
-import java.io.Serializable;
-import java.time.LocalDateTime;
-import java.util.Objects;
-import java.util.Set;
-
-@Entity
-@Table(name = "cities", schema = "course_platform")
-public class CityData implements Serializable {
-    @Id
-    @GeneratedValue
+public class CityData {
     private Long id;
     private String name;
-    @Column(name = "voivodeship_id")
     private Long voivodeshipId;
-    @Column(name = "create_time")
-    private LocalDateTime createdAt;
-    @Column(name = "edit_time")
-    private LocalDateTime updatedAt;
-    @Column(name = "delete_time")
-    private LocalDateTime deletedAt;
-    @ManyToOne
-    @JoinColumn(name = "voivodeship_id", insertable = false, updatable = false)
-    private VoivodeshipData voivodeship;
-    @OneToMany(mappedBy = "investmentCity")
-    private Set<InvestmentData> investments;
-    @OneToMany(mappedBy = "developerCity")
-    private Set<DeveloperData> developers;
-    @OneToMany(mappedBy = "cityBuildings")
-    private Set<Building> buildings;
 
-    public CityData() {
+    public CityData(Long id, String name, Long voivodeshipId) {
+        this.id = id;
+        this.name = name;
+        this.voivodeshipId = voivodeshipId;
     }
 
     public Long getId() {
         return id;
     }
-
     public void setId(Long id) {
         this.id = id;
     }
-
     public String getName() {
         return name;
     }
-
     public void setName(String name) {
         this.name = name;
     }
-
     public Long getVoivodeshipId() {
         return voivodeshipId;
     }
-
-    public VoivodeshipData getVoivodeship() {
-        return voivodeship;
-    }
-
     public void setVoivodeshipId(Long voivodeshipId) {
         this.voivodeshipId = voivodeshipId;
     }
 
-    public void setVoivodeship(VoivodeshipData voivodeship) {
-        this.voivodeship = voivodeship;
-    }
-
-    public Set<InvestmentData> getInvestments() {
-        return investments;
-    }
-
-    public void setInvestments(Set<InvestmentData> investments) {
-        this.investments = investments;
-    }
-
-    public Set<DeveloperData> getDevelopers() {
-        return developers;
-    }
-
-    public void setDevelopers(Set<DeveloperData> developers) {
-        this.developers = developers;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(LocalDateTime updatedAt) {
-        this.updatedAt = updatedAt;
-    }
-
-    public LocalDateTime getDeletedAt() {
-        return deletedAt;
-    }
-
-    public void setDeletedAt(LocalDateTime deletedAt) {
-        this.deletedAt = deletedAt;
-    }
-
-    public Set<Building> getBuildings() {
-        return buildings;
-    }
-
-    public void setBuildings(Set<Building> buildings) {
-        this.buildings = buildings;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof CityData)) return false;
-        CityData cityData = (CityData) o;
-        return Objects.equals(getId(), cityData.getId()) && Objects.equals(getName(), cityData.getName());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getId(), getName());
-    }
 }
