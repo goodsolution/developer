@@ -23,8 +23,7 @@ public class PremiseService {
     }
 
     public PremiseAggregatedValuesGetResponse findPremisePriceRangeByInvestmentId(Long id) {
-        AggregatedValues priceRangeByInvestmentId = premiseRepository.findPremisePriceRangeByInvestmentId(id);
-        return new PremiseAggregatedValuesGetResponse(priceRangeByInvestmentId.getMinPrice(), priceRangeByInvestmentId.getMaxPrice());
+        return new PremiseAggregatedValuesGetResponse(premiseRepository.findPremisePriceRangeByInvestmentId(id));
     }
 
     public List<PremiseData> findPriceByInvestmentId(Long id, String priceFunction) {
