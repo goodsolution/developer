@@ -2,7 +2,8 @@ package pl.com.mike.developer.logic.developer;
 
 import org.springframework.stereotype.Service;
 import pl.com.mike.developer.TranslationData;
-import pl.com.mike.developer.web.TranslationGetResponse;
+import pl.com.mike.developer.TranslationGetResponse;
+import pl.com.mike.developer.domain.developer.Translation;
 
 @Service
 public class TranslationDataService {
@@ -16,11 +17,11 @@ public class TranslationDataService {
         return new TranslationGetResponse(translationDataRepository
                 .findByEntityIdAndLanguageCodeAndDomainAndKey(
                         request.getEntityId(),
-                        request.getLocale().getLanguage(),
+                        request.getLanguageCode(),
                         request.getDomain(),
                         request.getKey()
                 )
-                .map(pl.com.mike.developer.domain.developer.TranslationData::getValue)
+                .map(Translation::getValue)
                 .orElseThrow(() -> new RuntimeException("Translation not found"))
         );
     }

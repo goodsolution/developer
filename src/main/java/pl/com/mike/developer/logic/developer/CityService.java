@@ -25,6 +25,7 @@ public class CityService {
     public List<CityData> getCitiesByDeveloperCode() {
         return cityRepository.getCitiesByDeveloperCode(applicationConfig.getSystemCode())
                 .stream()
+                .distinct()
                 .map(city -> new CityData(city.getId(), city.getName(), city.getVoivodeship().getId()))
                 .collect(Collectors.toList());
     }

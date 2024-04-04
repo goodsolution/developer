@@ -1,19 +1,25 @@
 package pl.com.mike.developer;
 
-import java.util.Locale;
-import java.util.Objects;
-
 public class TranslationData {
+    private Long translationId;
     private Integer entityId;
-    private Locale locale;
+    private String languageCode;
     private String domain;
     private String key;
 
-    public TranslationData(Integer entityId, Locale locale, String domain, String key) {
+    public TranslationData(Integer entityId, String languageCode, String domain, String key) {
         this.entityId = entityId;
-        this.locale = locale;
+        this.languageCode = languageCode;
         this.domain = domain;
         this.key = key;
+    }
+
+    public Long getTranslationId() {
+        return translationId;
+    }
+
+    public void setTranslationId(Long translationId) {
+        this.translationId = translationId;
     }
 
     public Integer getEntityId() {
@@ -24,12 +30,12 @@ public class TranslationData {
         this.entityId = entityId;
     }
 
-    public Locale getLocale() {
-        return locale;
+    public String getLanguageCode() {
+        return languageCode;
     }
 
-    public void setLocale(Locale locale) {
-        this.locale = locale;
+    public void setLanguageCode(String languageCode) {
+        this.languageCode = languageCode;
     }
 
     public String getDomain() {
@@ -47,18 +53,4 @@ public class TranslationData {
     public void setKey(String key) {
         this.key = key;
     }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof TranslationData)) return false;
-        TranslationData that = (TranslationData) o;
-        return Objects.equals(getEntityId(), that.getEntityId()) && Objects.equals(getLocale(), that.getLocale()) && Objects.equals(getDomain(), that.getDomain()) && Objects.equals(getKey(), that.getKey());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getEntityId(), getLocale(), getDomain(), getKey());
-    }
-
 }

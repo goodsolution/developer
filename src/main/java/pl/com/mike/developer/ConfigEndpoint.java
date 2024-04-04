@@ -5,7 +5,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import pl.com.mike.developer.config.ActiveProfileConfigLoader;
 import pl.com.mike.developer.config.ApplicationConfig;
@@ -13,9 +12,7 @@ import pl.com.mike.developer.logic.developer.DeveloperSearchFilter;
 import pl.com.mike.developer.logic.developer.DeveloperService;
 import pl.com.mike.developer.logic.developer.PropertyConfigService;
 import pl.com.mike.developer.logic.developer.TranslationDataService;
-import pl.com.mike.developer.web.TranslationGetResponse;
 
-import java.beans.PropertyEditorSupport;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Locale;
@@ -52,7 +49,7 @@ public class ConfigEndpoint {
         Locale locale = LocaleContextHolder.getLocale();
         return ResponseEntity.ok(translationDataService.getTranslation(new TranslationData(
                 entityId,
-                locale,
+                locale.getLanguage(),
                 domain,
                 key
         )));
