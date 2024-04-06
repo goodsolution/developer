@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Entity
-@Table(name = "premises", schema = "course_platform")
+@Table(name = "premises")
 public class Premise implements Serializable {
     @Id
     @GeneratedValue

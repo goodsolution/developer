@@ -1,89 +1,37 @@
 package pl.com.mike.developer.domain.developer;
 
-import javax.persistence.*;
-import java.io.Serializable;
-import java.time.LocalDateTime;
-import java.util.Objects;
-import java.util.Set;
+public class DeveloperData {
 
-@Entity
-@Table(name = "developers", schema = "course_platform")
-public class DeveloperData implements Serializable {
-    @Id
-    @GeneratedValue
     private Long id;
     private String name;
-    @Column(name = "address_country")
     private String addressCountry;
-    @Column(name = "address_street")
     private String addressStreet;
-    @Column(name = "address_building_number")
     private String addressBuildingNumber;
-    @Column(name = "address_flat_number")
     private String addressFlatNumber;
-    @Column(name = "address_postal_code")
     private String addressPostalCode;
-    @Column(name = "telephone_number")
     private String telephoneNumber;
-    @Column(name = "fax_number")
     private String faxNumber;
     private String email;
-    @Column(name = "tax_identification_number")
     private String taxIdentificationNumber;
-    @Column(name = "city_id" , insertable = false, updatable = false)
     private Long cityId;
-    @Column(name = "logo_url")
     private String logoUrl;
     private String code;
-    @Column(name = "create_time")
-    private LocalDateTime createdAt;
-    @Column(name = "edit_time")
-    private LocalDateTime updatedAt;
-    @Column(name = "delete_time")
-    private LocalDateTime deletedAt;
-    @ManyToOne
-    @JoinColumn(name = "city_id", referencedColumnName = "id")
-    private City developerCity;
-    @OneToMany(mappedBy = "developer")
-    private Set<InvestmentData> investments;
 
-    public DeveloperData() {
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(LocalDateTime updatedAt) {
-        this.updatedAt = updatedAt;
-    }
-
-    public LocalDateTime getDeletedAt() {
-        return deletedAt;
-    }
-
-    public void setDeletedAt(LocalDateTime deletedAt) {
-        this.deletedAt = deletedAt;
-    }
-
-    public Set<InvestmentData> getInvestments() {
-        return investments;
-    }
-
-    public void setInvestments(Set<InvestmentData> investments) {
-        this.investments = investments;
-    }
-
-    public String getCode() {
-        return code;
+    public DeveloperData(Long id, String name, String addressCountry, String addressStreet, String addressBuildingNumber, String addressFlatNumber, String addressPostalCode, String telephoneNumber, String faxNumber, String email, String taxIdentificationNumber, Long cityId, String logoUrl, String code) {
+        this.id = id;
+        this.name = name;
+        this.addressCountry = addressCountry;
+        this.addressStreet = addressStreet;
+        this.addressBuildingNumber = addressBuildingNumber;
+        this.addressFlatNumber = addressFlatNumber;
+        this.addressPostalCode = addressPostalCode;
+        this.telephoneNumber = telephoneNumber;
+        this.faxNumber = faxNumber;
+        this.email = email;
+        this.taxIdentificationNumber = taxIdentificationNumber;
+        this.cityId = cityId;
+        this.logoUrl = logoUrl;
+        this.code = code;
     }
 
     public Long getId() {
@@ -173,41 +121,28 @@ public class DeveloperData implements Serializable {
     public void setTaxIdentificationNumber(String taxIdentificationNumber) {
         this.taxIdentificationNumber = taxIdentificationNumber;
     }
-    public String getLogoUrl() {
-        return logoUrl;
-    }
-    public void setLogoUrl(String logoUrl) {
-        this.logoUrl = logoUrl;
+
+    public Long getCityId() {
+        return cityId;
     }
 
     public void setCityId(Long cityId) {
         this.cityId = cityId;
     }
 
+    public String getLogoUrl() {
+        return logoUrl;
+    }
+
+    public void setLogoUrl(String logoUrl) {
+        this.logoUrl = logoUrl;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
     public void setCode(String code) {
         this.code = code;
-    }
-
-    public Long getCityId() {
-        return cityId;
-    }
-    public City getDeveloperCity() {
-        return developerCity;
-    }
-    public void setDeveloperCity(City developerCity) {
-        this.developerCity = developerCity;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof DeveloperData)) return false;
-        DeveloperData that = (DeveloperData) o;
-        return Objects.equals(getId(), that.getId()) && Objects.equals(getName(), that.getName());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getId(), getName());
     }
 }

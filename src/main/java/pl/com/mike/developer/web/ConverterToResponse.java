@@ -58,10 +58,7 @@ public final class ConverterToResponse {
                             developer.getTaxIdentificationNumber(),
                             developer.getCityId(),
                             developer.getLogoUrl(),
-                            developer.getCode(),
-                            developer.getCreatedAt(),
-                            developer.getUpdatedAt(),
-                            developer.getDeletedAt()
+                            developer.getCode()
                     )
             );
         }
@@ -86,10 +83,7 @@ public final class ConverterToResponse {
                         developer.getTaxIdentificationNumber(),
                         developer.getCityId(),
                         developer.getLogoUrl(),
-                        developer.getCode(),
-                        developer.getCreatedAt(),
-                        developer.getUpdatedAt(),
-                        developer.getDeletedAt()
+                        developer.getCode()
                 )
         );
         return developersGetResponse;

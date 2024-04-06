@@ -1,8 +1,6 @@
 package pl.com.mike.developer.domain.developer;
 
-import java.io.Serializable;
-
-public class BuildingData implements Serializable {
+public class BuildingData {
 
     private Long id;
     private String name;

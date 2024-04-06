@@ -3,27 +3,24 @@ package pl.com.mike.developer.domain.developer;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
-@Table(name = "buildings")
-public class Building implements Serializable {
+@Table(name = "investments")
+public class Investment implements Serializable {
     @Id
     @GeneratedValue
     private Long id;
     private String name;
+    private String description;
     @Column(name = "address_country")
     private String addressCountry;
     @Column(name = "address_street")
     private String addressStreet;
-    @Column(name = "address_building_number")
-    private String addressBuildingNumber;
-    @Column(name = "address_postal_code")
-    private String addressPostalCode;
-    @Column(name = "investment_id")
-    private Long investmentId;
-    @Column(name = "city_id")
+    @Column(name = "developer_id", insertable = false, updatable = false)
+    private Long developerId;
+    @Column(name = "city_id", insertable = false, updatable = false)
     private Long cityId;
     @Column(name = "create_time")
     private LocalDateTime createdAt;
@@ -31,24 +28,25 @@ public class Building implements Serializable {
     private LocalDateTime updatedAt;
     @Column(name = "delete_time")
     private LocalDateTime deletedAt;
-    @OneToMany(mappedBy = "building")
-    List<Premise> premises;
     @ManyToOne
-    @JoinColumn(name = "investment_id", insertable = false, updatable = false)
-    private Investment investmentBuildings;
+    @JoinColumn(name = "developer_id", referencedColumnName = "id")
+    private Developer developer;
     @ManyToOne
-    @JoinColumn(name = "city_id", insertable = false, updatable = false)
-    private City cityBuildings;
+    @JoinColumn(name = "city_id", referencedColumnName = "id")
+    private City investmentCity;
 
-    public Building() {
+    @OneToMany(mappedBy = "investmentBuildings")
+    private Set<Building> buildings;
+
+    public Investment() {
     }
 
-    public List<Premise> getPremises() {
-        return premises;
+    public Set<Building> getBuildings() {
+        return buildings;
     }
 
-    public void setPremises(List<Premise> premises) {
-        this.premises = premises;
+    public void setBuildings(Set<Building> buildings) {
+        this.buildings = buildings;
     }
 
     public Long getId() {
@@ -67,6 +65,14 @@ public class Building implements Serializable {
         this.name = name;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public String getAddressCountry() {
         return addressCountry;
     }
@@ -83,28 +89,12 @@ public class Building implements Serializable {
         this.addressStreet = addressStreet;
     }
 
-    public String getAddressBuildingNumber() {
-        return addressBuildingNumber;
+    public Long getDeveloperId() {
+        return developerId;
     }
 
-    public void setAddressBuildingNumber(String addressBuildingNumber) {
-        this.addressBuildingNumber = addressBuildingNumber;
-    }
-
-    public String getAddressPostalCode() {
-        return addressPostalCode;
-    }
-
-    public void setAddressPostalCode(String addressPostalCode) {
-        this.addressPostalCode = addressPostalCode;
-    }
-
-    public Long getInvestmentId() {
-        return investmentId;
-    }
-
-    public void setInvestmentId(Long investmentId) {
-        this.investmentId = investmentId;
+    public void setDeveloperId(Long developerId) {
+        this.developerId = developerId;
     }
 
     public Long getCityId() {
@@ -113,22 +103,6 @@ public class Building implements Serializable {
 
     public void setCityId(Long cityId) {
         this.cityId = cityId;
-    }
-
-    public Investment getInvestmentBuildings() {
-        return investmentBuildings;
-    }
-
-    public void setInvestmentBuildings(Investment investmentBuildings) {
-        this.investmentBuildings = investmentBuildings;
-    }
-
-    public City getCityBuildings() {
-        return cityBuildings;
-    }
-
-    public void setCityBuildings(City cityBuildings) {
-        this.cityBuildings = cityBuildings;
     }
 
     public LocalDateTime getCreatedAt() {
@@ -155,12 +129,28 @@ public class Building implements Serializable {
         this.deletedAt = deletedAt;
     }
 
+    public Developer getDeveloper() {
+        return developer;
+    }
+
+    public void setDeveloper(Developer developer) {
+        this.developer = developer;
+    }
+
+    public City getInvestmentCity() {
+        return investmentCity;
+    }
+
+    public void setInvestmentCity(City investmentCity) {
+        this.investmentCity = investmentCity;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Building building = (Building) o;
-        return Objects.equals(getId(), building.getId());
+        Investment that = (Investment) o;
+        return Objects.equals(getId(), that.getId());
     }
 
     @Override

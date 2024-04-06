@@ -14,7 +14,7 @@ export class LanguageService {
   constructor(private http: HttpClient,
               private constantsService: ConstantsService
   ) {
-    const storedLang = localStorage.getItem('preferredLanguage') || 'en';
+    const storedLang = localStorage.getItem('preferredLanguage') ?? 'en';
     this.currentLanguage.next(storedLang);
   }
 

@@ -1,11 +1,13 @@
-package pl.com.mike.developer;
+package pl.com.mike.developer.domain.developer;
 
 public class TranslationData {
+
     private Long translationId;
     private Integer entityId;
     private String languageCode;
     private String domain;
     private String key;
+    private String value;
 
     public TranslationData(Integer entityId, String languageCode, String domain, String key) {
         this.entityId = entityId;
@@ -52,5 +54,13 @@ public class TranslationData {
 
     public void setKey(String key) {
         this.key = key;
+    }
+
+    public String getValue() {
+        return value;
+    }
+
+    public void setValue(String value) {
+        this.value = value;
     }
 }

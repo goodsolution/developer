@@ -7,7 +7,7 @@ import java.util.Objects;
 import java.util.Set;
 
 @Entity
-@Table(name = "cities", schema = "course_platform")
+@Table(name = "cities")
 public class City implements Serializable {
     @Id
     @GeneratedValue
@@ -23,11 +23,11 @@ public class City implements Serializable {
     private LocalDateTime deletedAt;
     @ManyToOne
     @JoinColumn(name = "voivodeship_id", insertable = false, updatable = false)
-    private VoivodeshipData voivodeship;
+    private Voivodeship voivodeship;
     @OneToMany(mappedBy = "investmentCity")
-    private Set<InvestmentData> investments;
+    private Set<Investment> investments;
     @OneToMany(mappedBy = "developerCity")
-    private Set<DeveloperData> developers;
+    private Set<Developer> developers;
     @OneToMany(mappedBy = "cityBuildings")
     private Set<Building> buildings;
 
@@ -54,7 +54,7 @@ public class City implements Serializable {
         return voivodeshipId;
     }
 
-    public VoivodeshipData getVoivodeship() {
+    public Voivodeship getVoivodeship() {
         return voivodeship;
     }
 
@@ -62,23 +62,23 @@ public class City implements Serializable {
         this.voivodeshipId = voivodeshipId;
     }
 
-    public void setVoivodeship(VoivodeshipData voivodeship) {
+    public void setVoivodeship(Voivodeship voivodeship) {
         this.voivodeship = voivodeship;
     }
 
-    public Set<InvestmentData> getInvestments() {
+    public Set<Investment> getInvestments() {
         return investments;
     }
 
-    public void setInvestments(Set<InvestmentData> investments) {
+    public void setInvestments(Set<Investment> investments) {
         this.investments = investments;
     }
 
-    public Set<DeveloperData> getDevelopers() {
+    public Set<Developer> getDevelopers() {
         return developers;
     }
 
-    public void setDevelopers(Set<DeveloperData> developers) {
+    public void setDevelopers(Set<Developer> developers) {
         this.developers = developers;
     }
 
@@ -117,13 +117,13 @@ public class City implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof City)) return false;
-        City cityData = (City) o;
-        return Objects.equals(getId(), cityData.getId()) && Objects.equals(getName(), cityData.getName());
+        if (o == null || getClass() != o.getClass()) return false;
+        City city = (City) o;
+        return Objects.equals(getId(), city.getId());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getName());
+        return Objects.hashCode(getId());
     }
 }
