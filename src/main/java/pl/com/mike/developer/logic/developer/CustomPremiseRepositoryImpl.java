@@ -1,7 +1,7 @@
 package pl.com.mike.developer.logic.developer;
 
 import org.springframework.stereotype.Repository;
-import pl.com.mike.developer.domain.developer.PremiseData;
+import pl.com.mike.developer.domain.developer.Premise;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -13,14 +13,14 @@ public class CustomPremiseRepositoryImpl implements CustomPremiseRepository{
     @PersistenceContext
     private EntityManager entityManager;
     @Override
-    public List<PremiseData> findPriceByInvestmentId(Long id, String priceFunction) {
+    public List<Premise> findPriceByInvestmentId(Long id, String priceFunction) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
-        CriteriaQuery<PremiseData> cq = cb.createQuery(PremiseData.class);
-        Root<PremiseData> premiseRoot = cq.from(PremiseData.class);
+        CriteriaQuery<Premise> cq = cb.createQuery(Premise.class);
+        Root<Premise> premiseRoot = cq.from(Premise.class);
 
         // Create a subquery to select the minimum or maximum price
         Subquery<Double> priceSubquery = cq.subquery(Double.class);
-        Root<PremiseData> premiseSubRoot = priceSubquery.from(PremiseData.class);
+        Root<Premise> premiseSubRoot = priceSubquery.from(Premise.class);
 
         // Determine the aggregate function based on the input parameter
         Expression<Double> priceExpression;

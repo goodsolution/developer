@@ -1,10 +1,10 @@
 package pl.com.mike.developer.logic.developer;
 
-import pl.com.mike.developer.domain.developer.PremiseData;
+import pl.com.mike.developer.domain.developer.Premise;
 
 import java.util.List;
 
 public interface CustomPremiseRepository {
-    List<PremiseData> findPriceByInvestmentId(Long id, String priceFunction);
+    List<Premise> findPriceByInvestmentId(Long id, String priceFunction);
 
 }

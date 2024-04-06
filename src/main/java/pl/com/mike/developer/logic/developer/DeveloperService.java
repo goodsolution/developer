@@ -6,7 +6,6 @@ import pl.com.mike.developer.domain.developer.DeveloperData;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Optional;
 
 @Service
 public class DeveloperService {
@@ -18,13 +17,53 @@ public class DeveloperService {
 
     public List<DeveloperData> getDeveloperById(DeveloperSearchFilter filter) {
         List<DeveloperData> developers = new ArrayList<>();
-        developers.add(developerRepository.findById(filter.getId()).orElseThrow(NoSuchElementException::new));
+        if (developerRepository.findById(filter.getId()).isPresent()) {
+            developerRepository.findById(filter.getId()).ifPresent(developer -> developers.add(
+                    new DeveloperData(
+                            developer.getId(),
+                            developer.getName(),
+                            developer.getAddressCountry(),
+                            developer.getAddressStreet(),
+                            developer.getAddressBuildingNumber(),
+                            developer.getAddressFlatNumber(),
+                            developer.getAddressPostalCode(),
+                            developer.getTelephoneNumber(),
+                            developer.getFaxNumber(),
+                            developer.getEmail(),
+                            developer.getTaxIdentificationNumber(),
+                            developer.getCityId(),
+                            developer.getLogoUrl(),
+                            developer.getCode()
+                    ))
+            );
+        } else {
+            throw new NoSuchElementException();
+        }
         return developers;
     }
 
     public DeveloperData getDeveloperByCode(DeveloperSearchFilter filter) {
-        return developerRepository.getDeveloperDataByCode(filter.getCode()).orElseThrow(NoSuchElementException::new);
+        if (developerRepository.getDeveloperDataByCode(filter.getCode()).isPresent()) {
+            return developerRepository.getDeveloperDataByCode(filter.getCode())
+                    .map(developer -> new DeveloperData(
+                            developer.getId(),
+                            developer.getName(),
+                            developer.getAddressCountry(),
+                            developer.getAddressStreet(),
+                            developer.getAddressBuildingNumber(),
+                            developer.getAddressFlatNumber(),
+                            developer.getAddressPostalCode(),
+                            developer.getTelephoneNumber(),
+                            developer.getFaxNumber(),
+                            developer.getEmail(),
+                            developer.getTaxIdentificationNumber(),
+                            developer.getCityId(),
+                            developer.getLogoUrl(),
+                            developer.getCode()
+                    )).orElseThrow(NoSuchElementException::new);
+        } else {
+            throw new NoSuchElementException();
+        }
     }
-
 
 }

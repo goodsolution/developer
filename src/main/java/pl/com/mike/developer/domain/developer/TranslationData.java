@@ -1,43 +1,19 @@
 package pl.com.mike.developer.domain.developer;
 
-import javax.persistence.*;
-import java.sql.Timestamp;
-import java.util.Objects;
-
-@Entity
-@Table(name = "translations")
 public class TranslationData {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "translation_id")
     private Long translationId;
-
-    @Column(name = "entity_id")
     private Integer entityId;
-
-    @Column(name = "language_code")
     private String languageCode;
-
-    @Column(name = "domain")
     private String domain;
-
-    @Column(name = "`key`") // Use backticks in the column definition to avoid SQL reserved keyword conflicts
     private String key;
-
-    @Column(name = "value")
     private String value;
 
-    @Column(name = "created_at")
-    private Timestamp createdAt;
-
-    @Column(name = "updated_at")
-    private Timestamp updatedAt;
-
-    @Column(name = "deleted_at", nullable = true)
-    private Timestamp deletedAt;
-
-    public TranslationData() {
+    public TranslationData(Integer entityId, String languageCode, String domain, String key) {
+        this.entityId = entityId;
+        this.languageCode = languageCode;
+        this.domain = domain;
+        this.key = key;
     }
 
     public Long getTranslationId() {
@@ -86,42 +62,5 @@ public class TranslationData {
 
     public void setValue(String value) {
         this.value = value;
-    }
-
-    public Timestamp getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(Timestamp createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public Timestamp getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(Timestamp updatedAt) {
-        this.updatedAt = updatedAt;
-    }
-
-    public Timestamp getDeletedAt() {
-        return deletedAt;
-    }
-
-    public void setDeletedAt(Timestamp deletedAt) {
-        this.deletedAt = deletedAt;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof TranslationData)) return false;
-        TranslationData that = (TranslationData) o;
-        return Objects.equals(getTranslationId(), that.getTranslationId());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getTranslationId());
     }
 }

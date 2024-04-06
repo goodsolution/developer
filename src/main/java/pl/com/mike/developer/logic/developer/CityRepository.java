@@ -4,14 +4,14 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-import pl.com.mike.developer.domain.developer.CityData;
+import pl.com.mike.developer.domain.developer.City;
 
 import java.util.List;
 
 @Repository
-public interface CityRepository extends JpaRepository<CityData, Long> {
+public interface CityRepository extends JpaRepository<City, Long> {
 
-    @Query("SELECT i.investmentCity FROM InvestmentData i WHERE i.developer.code = :code")
-    List<CityData> getCitiesByDeveloperCode(@Param("code") String code);
+    @Query("SELECT i.investmentCity FROM Investment i WHERE i.developer.code = :code")
+    List<City> getCitiesByDeveloperCode(@Param("code") String code);
 
 }

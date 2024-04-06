@@ -8,16 +8,19 @@ public class PremiseAggregatedValuesGetResponse implements AggregatedValues {
     private final BigDecimal minPrice;
     private final BigDecimal maxPrice;
 
-    public PremiseAggregatedValuesGetResponse(BigDecimal minPrice, BigDecimal maxPrice) {
-        this.minPrice = minPrice;
-        this.maxPrice = maxPrice;
+    public PremiseAggregatedValuesGetResponse(AggregatedValues values) {
+        this.minPrice = values.getMinPrice();
+        this.maxPrice = values.getMaxPrice();
     }
 
+    @Override
     public BigDecimal getMinPrice() {
         return minPrice;
     }
 
+    @Override
     public BigDecimal getMaxPrice() {
         return maxPrice;
     }
+
 }

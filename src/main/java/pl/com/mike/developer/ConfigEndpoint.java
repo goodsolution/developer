@@ -2,16 +2,17 @@ package pl.com.mike.developer;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.com.mike.developer.config.ActiveProfileConfigLoader;
 import pl.com.mike.developer.config.ApplicationConfig;
+import pl.com.mike.developer.domain.developer.TranslationData;
 import pl.com.mike.developer.logic.developer.DeveloperSearchFilter;
 import pl.com.mike.developer.logic.developer.DeveloperService;
 import pl.com.mike.developer.logic.developer.PropertyConfigService;
 import pl.com.mike.developer.logic.developer.TranslationDataService;
-import pl.com.mike.developer.web.TranslationGetResponse;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -44,12 +45,12 @@ public class ConfigEndpoint {
     @GetMapping("/{entityId}/{domain}/{key}")
     public ResponseEntity<TranslationGetResponse> getTranslation(
             @PathVariable Integer entityId,
-            @RequestParam String languageCode,
             @PathVariable String domain,
             @PathVariable String key) {
-        return ResponseEntity.ok(translationDataService.getTranslation(new TranslationRequest(
+        Locale locale = LocaleContextHolder.getLocale();
+        return ResponseEntity.ok(translationDataService.getTranslation(new TranslationData(
                 entityId,
-                new Locale(languageCode),
+                locale.getLanguage(),
                 domain,
                 key
         )));

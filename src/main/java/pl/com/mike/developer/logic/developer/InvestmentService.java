@@ -2,7 +2,6 @@ package pl.com.mike.developer.logic.developer;
 
 import org.springframework.stereotype.Service;
 import pl.com.mike.developer.config.ApplicationConfig;
-import pl.com.mike.developer.domain.developer.CityData;
 import pl.com.mike.developer.domain.developer.InvestmentData;
 
 import java.util.List;
@@ -22,11 +21,33 @@ public class InvestmentService {
     }
 
     public List<InvestmentData> getInvestmentsByDeveloperCode() {
-        return investmentRepository.getInvestmentsByDeveloperCode(applicationConfig.getSystemCode());
+        return investmentRepository.getInvestmentsByDeveloperCode(applicationConfig.getSystemCode())
+                .stream()
+                .map(investment -> new InvestmentData(
+                        investment.getId(),
+                        investment.getName(),
+                        investment.getDescription(),
+                        investment.getAddressCountry(),
+                        investment.getAddressStreet(),
+                        investment.getDeveloper().getId(),
+                        investment.getInvestmentCity().getId()
+                )
+        ).toList();
     }
 
     public List<InvestmentData> getInvestmentsByPremiseId(Long premiseId) {
-        return investmentRepository.getInvestmentsByPremiseId(premiseId);
+        return investmentRepository.getInvestmentsByPremiseId(premiseId)
+                .stream()
+                .map(investment -> new InvestmentData(
+                        investment.getId(),
+                        investment.getName(),
+                        investment.getDescription(),
+                        investment.getAddressCountry(),
+                        investment.getAddressStreet(),
+                        investment.getDeveloper().getId(),
+                        investment.getInvestmentCity().getId()
+                )
+        ).toList();
     }
 
 }

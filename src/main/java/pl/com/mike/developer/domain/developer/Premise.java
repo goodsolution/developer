@@ -1,40 +1,86 @@
 package pl.com.mike.developer.domain.developer;
 
+import javax.persistence.*;
+import java.io.Serializable;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.Objects;
 
-public class PremiseData {
+@Entity
+@Table(name = "premises")
+public class Premise implements Serializable {
+    @Id
+    @GeneratedValue
     private Long id;
     private String type;
     private Integer number;
     private Integer floor;
+    @Column(name = "surface_sq_m")
     private Double surfacePerSqMeter;
+    @Column(name = "price_of_sq_m")
     private Double pricePerSqMeter;
+    @Column(name = "price_total")
     private BigDecimal totalPrice;
+    @Column(name = "number_of_rooms")
     private Integer numberOfRooms;
+    @Column(name = "technical_status")
     private String technicalStatus;
+    @Column(name = "sales_status")
     private String salesStatus;
     private String exposure;
+    @Column(name = "is_balcony")
     private Boolean isBalcony;
+    @Column(name = "is_garden")
     private Boolean isGarden;
+    @Column(name = "is_terrace")
     private Boolean isTerrace;
+    @Column(name = "is_loggia")
     private Boolean isLoggia;
+    @Column(name = "building_id")
+    private Long buildingId;
+    @Column(name = "create_time")
+    private LocalDateTime createdAt;
+    @Column(name = "edit_time")
+    private LocalDateTime updatedAt;
+    @Column(name = "delete_time")
+    private LocalDateTime deletedAt;
+    @ManyToOne
+    @JoinColumn(name = "building_id", insertable = false, updatable = false)
+    private Building building;
 
-    public PremiseData(Premise premise){
-        this.id = premise.getId();
-        this.type = premise.getType();
-        this.number = premise.getNumber();
-        this.floor = premise.getFloor();
-        this.surfacePerSqMeter = premise.getSurfacePerSqMeter();
-        this.pricePerSqMeter = premise.getPricePerSqMeter();
-        this.totalPrice = premise.getTotalPrice();
-        this.numberOfRooms = premise.getNumberOfRooms();
-        this.technicalStatus = premise.getTechnicalStatus();
-        this.salesStatus = premise.getSalesStatus();
-        this.exposure = premise.getExposure();
-        this.isBalcony = premise.getBalcony();
-        this.isGarden = premise.getGarden();
-        this.isTerrace = premise.getTerrace();
-        this.isLoggia = premise.getLoggia();
+    public Premise() {
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public LocalDateTime getDeletedAt() {
+        return deletedAt;
+    }
+
+    public void setDeletedAt(LocalDateTime deletedAt) {
+        this.deletedAt = deletedAt;
+    }
+
+    public Building getBuilding() {
+        return building;
+    }
+
+    public void setBuilding(Building building) {
+        this.building = building;
     }
 
     public Long getId() {
@@ -155,5 +201,27 @@ public class PremiseData {
 
     public void setLoggia(Boolean loggia) {
         isLoggia = loggia;
+    }
+
+
+    public Long getBuildingId() {
+        return buildingId;
+    }
+
+    public void setBuildingId(Long buildingId) {
+        this.buildingId = buildingId;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Premise)) return false;
+        Premise that = (Premise) o;
+        return Objects.equals(getId(), that.getId()) && Objects.equals(getType(), that.getType()) && Objects.equals(getNumber(), that.getNumber());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getType(), getNumber());
     }
 }

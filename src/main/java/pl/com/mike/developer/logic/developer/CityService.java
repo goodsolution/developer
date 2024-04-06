@@ -2,6 +2,7 @@ package pl.com.mike.developer.logic.developer;
 
 import org.springframework.stereotype.Service;
 import pl.com.mike.developer.config.ApplicationConfig;
+import pl.com.mike.developer.domain.developer.City;
 import pl.com.mike.developer.domain.developer.CityData;
 
 import java.util.List;
@@ -17,7 +18,7 @@ public class CityService {
         this.applicationConfig = applicationConfig;
     }
 
-    public List<CityData> getCities() {
+    public List<City> getCities() {
         return cityRepository.findAll();
     }
 
@@ -25,6 +26,7 @@ public class CityService {
         return cityRepository.getCitiesByDeveloperCode(applicationConfig.getSystemCode())
                 .stream()
                 .distinct()
+                .map(city -> new CityData(city.getId(), city.getName(), city.getVoivodeship().getId()))
                 .collect(Collectors.toList());
     }
 

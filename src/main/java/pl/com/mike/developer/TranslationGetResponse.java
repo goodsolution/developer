@@ -1,4 +1,4 @@
-package pl.com.mike.developer.web;
+package pl.com.mike.developer;
 
 public class TranslationGetResponse {
     private String translation;
