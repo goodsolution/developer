@@ -46,11 +46,14 @@ public class ConfigEndpoint {
     public ResponseEntity<TranslationGetResponse> getTranslation(
             @PathVariable Integer entityId,
             @PathVariable String domain,
-            @PathVariable String key) {
-        Locale locale = LocaleContextHolder.getLocale();
+            @PathVariable String key,
+            @RequestParam(name = "languageCode", required = false) String languageCode) {
+        if (languageCode == null || languageCode.isEmpty()) {
+            languageCode = LocaleContextHolder.getLocale().getLanguage();
+        }
         return ResponseEntity.ok(translationDataService.getTranslation(new TranslationData(
                 entityId,
-                locale.getLanguage(),
+                languageCode,
                 domain,
                 key
         )));
