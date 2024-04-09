@@ -9,6 +9,14 @@ public class TranslationData {
     private String key;
     private String value;
 
+    public TranslationData(Integer entityId, String languageCode, String domain, String key, String value) {
+        this.entityId = entityId;
+        this.languageCode = languageCode;
+        this.domain = domain;
+        this.key = key;
+        this.value = value;
+    }
+
     public TranslationData(Integer entityId, String languageCode, String domain, String key) {
         this.entityId = entityId;
         this.languageCode = languageCode;

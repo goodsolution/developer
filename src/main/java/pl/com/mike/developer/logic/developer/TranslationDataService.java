@@ -30,7 +30,8 @@ public class TranslationDataService {
                 translation.getEntityId(),
                 translation.getLanguageCode(),
                 translation.getDomain(),
-                translation.getKey()
+                translation.getKey(),
+                translation.getValue()
         );
     }
 }
