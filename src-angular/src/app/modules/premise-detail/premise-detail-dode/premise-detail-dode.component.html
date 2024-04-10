@@ -1,5 +1,5 @@
 <ng-container *ngFor="let premise of premises">
-  <div class="container my-5">
+  <div *ngIf="premises && premises.length" class="container my-5">
     <div class="row">
       <div class="col-md-7">
         <div class="premise-image mb-3">
@@ -17,12 +17,11 @@
           <p><strong>{{ 'shared.premise.pricePerM' | translate }}</strong> {{ premise.pricePerSqMeter }} pln</p>
           <p><strong>{{ 'shared.premise.totalPrice' | translate }}</strong> {{ premise.totalPrice }} pln</p>
           <p><strong>{{ 'shared.premise.technicalStatus' | translate }}</strong> {{ premise.technicalStatus }}</p>
-          <p><strong>{{ 'shared.premise.salesStatus' | translate }}</strong> {{ premise.salesStatus }}</p>
+          <p><strong>{{ 'shared.premise.salesStatus' | translate }}</strong> {{ labels[premise.salesStatus] }}</p>
           <p><strong>{{ 'shared.premise.exposure' | translate }}</strong> {{ premise.exposure }}</p>
           <p>
             <span class="badge bg-success" *ngIf="premise.isBalcony">Balcony</span>
             <span class="badge bg-primary" *ngIf="premise.isGarden">Garden</span>
-            <!-- Repeat for terrace and loggia -->
           </p>
           <a href="#" class="btn btn-primary btn-lg mt-3">{{ 'shared.premise.ask' | translate }}</a>
         </div>
@@ -31,7 +30,7 @@
   </div>
 </ng-container>
 <ng-container *ngFor="let investment of investments">
-  <section class="investment">
+  <section *ngIf="investments && investments.length" class="investment">
     <div class="investment__image-container">
       <img class="investment__image" src="assets/img/domdevelopment/estate.jpg" alt="{{ investment.name }}">
     </div>

@@ -1,6 +1,6 @@
 package pl.com.mike.developer.domain.developer;
 
-public class TranslationData {
+public class DictionaryData {
 
     private Long translationId;
     private Integer entityId;
@@ -9,7 +9,7 @@ public class TranslationData {
     private String key;
     private String value;
 
-    public TranslationData(Integer entityId, String languageCode, String domain, String key, String value) {
+    public DictionaryData(Integer entityId, String languageCode, String domain, String key, String value) {
         this.entityId = entityId;
         this.languageCode = languageCode;
         this.domain = domain;
@@ -17,14 +17,14 @@ public class TranslationData {
         this.value = value;
     }
 
-    public TranslationData(Integer entityId, String languageCode, String domain, String key) {
+    public DictionaryData(Integer entityId, String languageCode, String domain, String key) {
         this.entityId = entityId;
         this.languageCode = languageCode;
         this.domain = domain;
         this.key = key;
     }
 
-    public TranslationData(String languageCode, String domain, String key) {
+    public DictionaryData(String languageCode, String domain, String key) {
         this.languageCode = languageCode;
         this.domain = domain;
         this.key = key;

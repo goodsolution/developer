@@ -3,6 +3,7 @@ import {BehaviorSubject, Observable} from 'rxjs';
 import {HttpClient} from "@angular/common/http";
 import {ConstantsService} from "./constants.service";
 import {SearchResultTranslationModel} from "../models/searchResultTranslation.model";
+import {SearchResultDictionaryModel} from "../models/searchResultDictionary.model";
 
 @Injectable({
   providedIn: 'root'
@@ -31,6 +32,13 @@ export class LanguageService {
     const languageCode = this.getLanguage();
     return this.http.get<SearchResultTranslationModel>(
       this.constantsService.getApiTranslationEndpoint(entityId, domain, key) + `?languageCode=${languageCode}`
+    );
+  }
+
+  getDictionary(domain: string, key: string): Observable<SearchResultDictionaryModel> {
+    const languageCode = this.getLanguage();
+    return this.http.get<SearchResultDictionaryModel>(
+      this.constantsService.getApiDictionaryEndpoint(domain, key) + `?languageCode=${languageCode}`
     );
   }
 

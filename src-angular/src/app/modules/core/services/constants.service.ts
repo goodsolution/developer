@@ -25,7 +25,8 @@ export class ConstantsService {
   getApiTranslationEndpoint(entityId: number, domain: string, key: string): string {
     return `${this.API_BASE_URL}/system/${entityId}/${domain}/${key}`;
   }
-
-
+  getApiDictionaryEndpoint(domain: string, key: string): string {
+    return `${this.API_BASE_URL}/system/dictionary/${domain}/${key}`;
+  }
 
 }
