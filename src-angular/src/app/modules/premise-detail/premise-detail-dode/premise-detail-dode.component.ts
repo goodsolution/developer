@@ -58,7 +58,9 @@ export class PremiseDetailDodeComponent implements OnInit, OnDestroy {
         .pipe(takeUntil(this.unsubscribe$))
         .subscribe({
           next: (response) => {
-            this.labels[key] = response.translation;
+            const fullKey = `${domain}.${key}`;
+            console.log(`Fetching: ${fullKey}`, response);
+            this.labels[fullKey] = response.translation;
           },
           error: (error) => console.error(`Error fetching dictionary data for domain: ${domain}, key: ${key}`, error)
         });
@@ -66,22 +68,31 @@ export class PremiseDetailDodeComponent implements OnInit, OnDestroy {
   }
 
   determineAndFetchLabelsForPremise(premise: PremiseResponse): void {
-    // // Example: Determine keys based on some attributes of the premise
-    // const domain = 'premises.sales_status'; // This could also be dynamic if needed
-    // const keys = ['a', 'n']; // Determine these keys dynamically
-    // this.fetchDictionaryLabels(keys, domain);
-    // Let's say we're fetching a label based on the premise's current sales status
-    const domain = 'premises.sales_status';
-    // Here we use an attribute of premise to determine which keys to fetch
-    const keys = [premise.salesStatus]; // Assume salesStatus is 'a' or 'n'
-    this.fetchDictionaryLabels(keys, domain);
+    this.premises.forEach(premise => {
+      // List of premise attributes to translate
+      const attributesToTranslate = ['salesStatus', 'technicalStatus', 'exposure'];
+
+      attributesToTranslate.forEach(attribute => {
+        // Assuming the backend requires the domain to be in a specific format
+        // e.g., 'premises.sales_status' for the 'salesStatus' attribute
+        const domain = `premises.${attribute}`;
+        const value = premise[attribute as keyof typeof premise];
+
+        // Ensure value is a string and proceed to fetch its translation
+        if (typeof value === 'string') {
+          this.fetchDictionaryLabels([value], domain);
+        }
+      });
+    });
   }
 
   loadPremiseById(premiseId: string) {
     this.premiseService.getPremiseById(premiseId).subscribe({
       next: (response) => {
         this.premises = response.premisesGetResponse || [];
-        this.premises.forEach(premise => this.determineAndFetchLabelsForPremise(premise));
+        this.premises.forEach(premise => {
+          this.determineAndFetchLabelsForPremise(premise);
+        });
       },
       error: (error) => console.error('Error fetching premise:', error)
     });
@@ -113,6 +124,15 @@ export class PremiseDetailDodeComponent implements OnInit, OnDestroy {
           console.error('Error fetching investment description:', error);
         }
       });
+  }
+
+  getLabel(attribute: 'technicalStatus' | 'salesStatus' | 'exposure', premise: PremiseResponse): string {
+    const key = `premises.${attribute}.${premise[attribute]}`;
+    if (!this.labels[key]) {
+      console.warn(`Translation not found for key: ${key}`);
+      return `Translation not found for ${attribute}`;
+    }
+    return this.labels[key];
   }
 
   ngOnDestroy(): void {

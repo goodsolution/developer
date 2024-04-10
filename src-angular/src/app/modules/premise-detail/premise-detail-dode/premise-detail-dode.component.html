@@ -16,9 +16,10 @@
           <p><strong>{{ 'shared.premise.rooms' | translate }}</strong> {{ premise.numberOfRooms }}</p>
           <p><strong>{{ 'shared.premise.pricePerM' | translate }}</strong> {{ premise.pricePerSqMeter }} pln</p>
           <p><strong>{{ 'shared.premise.totalPrice' | translate }}</strong> {{ premise.totalPrice }} pln</p>
-          <p><strong>{{ 'shared.premise.technicalStatus' | translate }}</strong> {{ premise.technicalStatus }}</p>
-          <p><strong>{{ 'shared.premise.salesStatus' | translate }}</strong> {{ labels[premise.salesStatus] }}</p>
-          <p><strong>{{ 'shared.premise.exposure' | translate }}</strong> {{ premise.exposure }}</p>
+          <p><strong>{{ 'shared.premise.technicalStatus' | translate }}</strong> {{ getLabel('technicalStatus', premise) }}</p>
+          <p><strong>{{ 'shared.premise.salesStatus' | translate }}</strong> {{ getLabel('salesStatus', premise) }}</p>
+          <p><strong>{{ 'shared.premise.exposure' | translate }}</strong> {{ getLabel('exposure', premise) }}</p>
+
           <p>
             <span class="badge bg-success" *ngIf="premise.isBalcony">Balcony</span>
             <span class="badge bg-primary" *ngIf="premise.isGarden">Garden</span>
