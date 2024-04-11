@@ -9,6 +9,14 @@ export class ConstantsService {
   readonly API_CITIES_ENDPOINT = `${this.API_BASE_URL}/cities`;
   readonly API_DEVELOPER_BY_SYSTEM_CODE_ENDPOINT = `${this.API_BASE_URL}/developers/code`;
   readonly API_INVESTMENTS_ENDPOINT = `${this.API_BASE_URL}/investments`;
+  readonly ERROR_MESSAGE = 'An error has occurred';
+  readonly attributes = {
+    SALES_STATUS: 'salesStatus',
+    TECHNICAL_STATUS: 'technicalStatus',
+    EXPOSURE: 'exposure',
+    INVESTMENT: 'investment',
+    DESCRIPTION: 'description',
+  }
 
   getApiPremisesByInvestmentEndpoint(investmentId: number): string {
     return `${this.API_BASE_URL}/premises/investment/${investmentId}`;

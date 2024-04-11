@@ -6,6 +6,7 @@ import {PremiseResponse} from "../../core/models/premise.model";
 import {InvestmentResponse} from "../../core/models/investment.model";
 import {InvestmentsService} from "../../core/services/investments.service";
 import {LanguageService} from "../../core/services/language.service";
+import {ConstantsService} from "../../core/services/constants.service";
 
 @Component({
   selector: 'app-premise-detail-dode',
@@ -24,8 +25,15 @@ export class PremiseDetailDodeComponent implements OnInit, OnDestroy {
     private investmentService: InvestmentsService,
     private dynamicLoadingService: DynamicComponentLoadingService,
     private languageService: LanguageService,
+    protected constantsService: ConstantsService,
     private changeDetectorRef: ChangeDetectorRef
   ) {
+  }
+
+  getLabel(attribute: 'technicalStatus' | 'salesStatus' | 'exposure',
+           premise: PremiseResponse): string {
+    const key = `premises.${attribute}.${premise[attribute]}`;
+    return this.labels[key];
   }
 
   ngOnInit() {
@@ -36,7 +44,7 @@ export class PremiseDetailDodeComponent implements OnInit, OnDestroy {
           this.loadPremiseById(data.premiseId);
           this.loadInvestmentByPremiseId(data.premiseId);
         },
-        error: (error) => console.error('Error in dynamic loading of premise:', error)
+        error: (error) => console.error(this.constantsService.ERROR_MESSAGE, error)
       });
     this.languageService.language$
       .pipe(takeUntil(this.unsubscribe$))
@@ -52,40 +60,6 @@ export class PremiseDetailDodeComponent implements OnInit, OnDestroy {
       });
   }
 
-  fetchDictionaryLabels(keys: string[], domain: string): void {
-    keys.forEach(key => {
-      this.languageService.getDictionary(domain, key)
-        .pipe(takeUntil(this.unsubscribe$))
-        .subscribe({
-          next: (response) => {
-            const fullKey = `${domain}.${key}`;
-            console.log(`Fetching: ${fullKey}`, response);
-            this.labels[fullKey] = response.translation;
-          },
-          error: (error) => console.error(`Error fetching dictionary data for domain: ${domain}, key: ${key}`, error)
-        });
-    });
-  }
-
-  determineAndFetchLabelsForPremise(premise: PremiseResponse): void {
-    this.premises.forEach(premise => {
-      // List of premise attributes to translate
-      const attributesToTranslate = ['salesStatus', 'technicalStatus', 'exposure'];
-
-      attributesToTranslate.forEach(attribute => {
-        // Assuming the backend requires the domain to be in a specific format
-        // e.g., 'premises.sales_status' for the 'salesStatus' attribute
-        const domain = `premises.${attribute}`;
-        const value = premise[attribute as keyof typeof premise];
-
-        // Ensure value is a string and proceed to fetch its translation
-        if (typeof value === 'string') {
-          this.fetchDictionaryLabels([value], domain);
-        }
-      });
-    });
-  }
-
   loadPremiseById(premiseId: string) {
     this.premiseService.getPremiseById(premiseId).subscribe({
       next: (response) => {
@@ -94,26 +68,40 @@ export class PremiseDetailDodeComponent implements OnInit, OnDestroy {
           this.determineAndFetchLabelsForPremise(premise);
         });
       },
-      error: (error) => console.error('Error fetching premise:', error)
+      error: (error) => console.error(this.constantsService.ERROR_MESSAGE, error)
     });
   }
 
   loadInvestmentByPremiseId(premiseId: string) {
     this.investmentService.getInvestmentByPremiseId(premiseId).subscribe({
       next: (response) => {
-        if(Array.isArray(response.investments) && response.investments.length > 0){
+        if (Array.isArray(response.investments) && response.investments.length > 0) {
           this.investments = response.investments;
-          // Initialize translation fetching for all investments after they are loaded
           this.investments.forEach((_, index) => this.fetchInvestmentDescription(index));
         }
       },
-      error: (error) => console.error('Error fetching investment:', error)
+      error: (error) => console.error(this.constantsService.ERROR_MESSAGE, error)
     });
+  }
+
+  determineAndFetchLabelsForPremise(premise: PremiseResponse): void {
+    [
+      this.constantsService.attributes.SALES_STATUS,
+      this.constantsService.attributes.TECHNICAL_STATUS,
+      this.constantsService.attributes.EXPOSURE
+    ]
+      .forEach(attribute => {
+        const domain = `premises.${attribute}`;
+        const key = premise[attribute as keyof PremiseResponse];
+        if (typeof key === 'string') {
+          this.fetchDictionaryLabels([key], domain);
+        }
+      });
   }
 
   fetchInvestmentDescription(index: number): void {
     const investmentId = this.investments[index].id;
-    this.languageService.getTranslation(investmentId, 'investment', 'description')
+    this.languageService.getTranslation(investmentId, this.constantsService.attributes.INVESTMENT, this.constantsService.attributes.DESCRIPTION)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe({
         next: response => {
@@ -121,18 +109,23 @@ export class PremiseDetailDodeComponent implements OnInit, OnDestroy {
           this.changeDetectorRef.detectChanges();
         },
         error: error => {
-          console.error('Error fetching investment description:', error);
+          console.error(this.constantsService.ERROR_MESSAGE, error);
         }
       });
   }
 
-  getLabel(attribute: 'technicalStatus' | 'salesStatus' | 'exposure', premise: PremiseResponse): string {
-    const key = `premises.${attribute}.${premise[attribute]}`;
-    if (!this.labels[key]) {
-      console.warn(`Translation not found for key: ${key}`);
-      return `Translation not found for ${attribute}`;
-    }
-    return this.labels[key];
+  private fetchDictionaryLabels(keys: string[], domain: string): void {
+    keys.forEach(key => {
+      this.languageService.getDictionary(domain, key)
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe({
+          next: (response) => {
+            const fullKey = `${domain}.${key}`;
+            this.labels[fullKey] = response.translation;
+          },
+          error: (error) => console.error(this.constantsService.ERROR_MESSAGE, error)
+        });
+    });
   }
 
   ngOnDestroy(): void {
