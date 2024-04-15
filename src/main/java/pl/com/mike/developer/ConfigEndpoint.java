@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.com.mike.developer.config.ActiveProfileConfigLoader;
 import pl.com.mike.developer.config.ApplicationConfig;
+import pl.com.mike.developer.domain.developer.DictionaryData;
 import pl.com.mike.developer.domain.developer.TranslationData;
 import pl.com.mike.developer.logic.developer.DeveloperSearchFilter;
 import pl.com.mike.developer.logic.developer.DeveloperService;
@@ -16,7 +17,6 @@ import pl.com.mike.developer.logic.developer.TranslationDataService;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Properties;
 
@@ -46,11 +46,29 @@ public class ConfigEndpoint {
     public ResponseEntity<TranslationGetResponse> getTranslation(
             @PathVariable Integer entityId,
             @PathVariable String domain,
-            @PathVariable String key) {
-        Locale locale = LocaleContextHolder.getLocale();
+            @PathVariable String key,
+            @RequestParam(name = "languageCode", required = false) String languageCode) {
+        if (languageCode == null || languageCode.isEmpty()) {
+            languageCode = LocaleContextHolder.getLocale().getLanguage();
+        }
         return ResponseEntity.ok(translationDataService.getTranslation(new TranslationData(
                 entityId,
-                locale.getLanguage(),
+                languageCode,
+                domain,
+                key
+        )));
+    }
+
+    @GetMapping("/dictionary/{domain}/{key}")
+    public ResponseEntity<DictionaryGetResponse> getDictionary(
+            @PathVariable String domain,
+            @PathVariable String key,
+            @RequestParam(name = "languageCode", required = false) String languageCode) {
+        if (languageCode == null || languageCode.isEmpty()) {
+            languageCode = LocaleContextHolder.getLocale().getLanguage();
+        }
+        return ResponseEntity.ok(translationDataService.getDictionary(new DictionaryData(
+                languageCode,
                 domain,
                 key
         )));

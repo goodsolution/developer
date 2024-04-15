@@ -9,7 +9,8 @@ import {EnhancedPremiseModel} from "../models/enhancedPremise.model";
 })
 export class PremiseService {
 
-  constructor(private http: HttpClient, private constanceService: ConstantsService) {
+  constructor(private http: HttpClient,
+              private constanceService: ConstantsService) {
   }
 
   getPremiseById(id: string) {

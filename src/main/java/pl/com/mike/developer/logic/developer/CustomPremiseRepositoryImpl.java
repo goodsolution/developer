@@ -9,9 +9,15 @@ import javax.persistence.criteria.*;
 import java.util.List;
 
 @Repository
-public class CustomPremiseRepositoryImpl implements CustomPremiseRepository{
+public class CustomPremiseRepositoryImpl implements CustomPremiseRepository {
+
+    private static final String TOTAL_PRICE = "totalPrice";
+    private static final String BUILDING = "totalPrice";
+    private static final String INVESTMENT_ID = "totalPrice";
+
     @PersistenceContext
     private EntityManager entityManager;
+
     @Override
     public List<Premise> findPriceByInvestmentId(Long id, String priceFunction) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
@@ -25,18 +31,18 @@ public class CustomPremiseRepositoryImpl implements CustomPremiseRepository{
         // Determine the aggregate function based on the input parameter
         Expression<Double> priceExpression;
         if ("min".equals(priceFunction)) {
-            priceExpression = cb.min(premiseSubRoot.get("totalPrice"));
+            priceExpression = cb.min(premiseSubRoot.get(TOTAL_PRICE));
         } else if ("max".equals(priceFunction)) {
-            priceExpression = cb.max(premiseSubRoot.get("totalPrice"));
+            priceExpression = cb.max(premiseSubRoot.get(TOTAL_PRICE));
         } else {
             throw new IllegalArgumentException("Invalid priceFunction argument: " + priceFunction);
         }
 
         priceSubquery.select(priceExpression);
-        priceSubquery.where(cb.equal(premiseSubRoot.get("building").get("investmentId"), id));
+        priceSubquery.where(cb.equal(premiseSubRoot.get(BUILDING).get(INVESTMENT_ID), id));
 
         // Use the aggregate result in the main query
-        cq.select(premiseRoot).where(cb.equal(premiseRoot.get("totalPrice"), priceSubquery), cb.equal(premiseRoot.get("building").get("investmentId"), id));
+        cq.select(premiseRoot).where(cb.equal(premiseRoot.get(TOTAL_PRICE), priceSubquery), cb.equal(premiseRoot.get(BUILDING).get(INVESTMENT_ID), id));
 
         return entityManager.createQuery(cq).getResultList();
     }

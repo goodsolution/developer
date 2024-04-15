@@ -33,7 +33,11 @@ public final class ConverterToResponse {
                             list.getBalcony(),
                             list.getGarden(),
                             list.getTerrace(),
-                            list.getLoggia()
+                            list.getLoggia(),
+                            list.getTechnicalStatusTranslation(),
+                            list.getSalesStatusTranslation(),
+                            list.getExposureTranslation(),
+                            list.getLanguageCode()
                     )
             );
         }

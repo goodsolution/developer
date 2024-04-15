@@ -1,69 +1,68 @@
 package pl.com.mike.developer.logic.developer;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import pl.com.mike.developer.DictionaryGetResponse;
 import pl.com.mike.developer.PremiseAggregatedValuesGetResponse;
-import pl.com.mike.developer.domain.developer.AggregatedValues;
-import pl.com.mike.developer.domain.developer.Premise;
+import pl.com.mike.developer.domain.developer.DictionaryData;
 import pl.com.mike.developer.domain.developer.PremiseData;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
 public class PremiseService {
+
+    private static final String TECHNICAL_STATUS = "premises.technicalStatus";
+    private static final String SALES_STATUS = "premises.salesStatus";
+    private static final String EXPOSURE = "premises.exposure";
+
     private final PremiseRepository premiseRepository;
-    private final CustomPremiseRepositoryImpl customPremiseRepository;
+    private final TranslationDataService translationDataService;
 
+    private final Logger logger = LoggerFactory.getLogger(PremiseService.class);
 
-    public PremiseService(PremiseRepository premiseRepository, CustomPremiseRepositoryImpl customPremiseRepository1) {
+    public PremiseService(PremiseRepository premiseRepository, TranslationDataService translationDataService) {
         this.premiseRepository = premiseRepository;
-        this.customPremiseRepository = customPremiseRepository1;
+        this.translationDataService = translationDataService;
     }
 
     public PremiseAggregatedValuesGetResponse findPremisePriceRangeByInvestmentId(Long id) {
         return new PremiseAggregatedValuesGetResponse(premiseRepository.findPremisePriceRangeByInvestmentId(id));
     }
 
-    public List<PremiseData> findPriceByInvestmentId(Long id, String priceFunction) {
-        List<Premise> priceByInvestmentId = customPremiseRepository.findPriceByInvestmentId(id, priceFunction);
-        List<PremiseData> premises = new ArrayList<>();
-        priceByInvestmentId.forEach(premise -> premises.add(new PremiseData(premise)));
-        return premises;
+    public List<PremiseData> getPremiseDataById(PremiseSearchFilter filter) {
+        return premiseRepository.findById(filter.getId()).stream()
+                .map(PremiseData::new)
+                .map(premiseData -> setTranslationsAndLanguageCodeToPremiseData(premiseData, filter.getLanguageCode()))
+                .toList();
     }
 
     public List<PremiseData> getPremiseDataByInvestmentId(PremiseSearchFilter filter) {
-        List<PremiseData> premises = new ArrayList<>();
-        Iterable<Premise> optionalPremiseData = premiseRepository.findAllByInvestmentId(filter.getId());
-        if (optionalPremiseData.iterator().hasNext()) {
-            optionalPremiseData.forEach(premise -> premises.add(new PremiseData(premise)));
-        } else {
-            throw new NoSuchElementException();
-        }
-        return premises;
+        return premiseRepository.findAllByInvestmentId(filter.getId()).stream()
+                .map(PremiseData::new)
+                .map(premiseData -> setTranslationsAndLanguageCodeToPremiseData(premiseData, filter.getLanguageCode()))
+                .toList();
     }
 
-    public List<PremiseData> getPremiseDataById(PremiseSearchFilter filter) {
-        List<PremiseData> premises = new ArrayList<>();
-        Optional<Premise> optionalPremiseData = premiseRepository.findById(filter.getId());
-        if (optionalPremiseData.isPresent()) {
-            premises.add(new PremiseData(optionalPremiseData.get()));
-        } else {
-            throw new NoSuchElementException();
-        }
-        return premises;
+    private PremiseData setTranslationsAndLanguageCodeToPremiseData(PremiseData premiseData, String languageCode) {
+        premiseData.setTechnicalStatusTranslation(fetchTranslation(languageCode, TECHNICAL_STATUS, premiseData.getTechnicalStatus()));
+        premiseData.setSalesStatusTranslation(fetchTranslation(languageCode, SALES_STATUS, premiseData.getSalesStatus()));
+        premiseData.setExposureTranslation(fetchTranslation(languageCode, EXPOSURE, premiseData.getExposure()));
+        premiseData.setLanguageCode(languageCode);
+        return premiseData;
     }
 
-    public List<PremiseData> getAllPremises() {
-        List<PremiseData> premises = new ArrayList<>();
-        Iterable<Premise> optionalPremiseData = premiseRepository.findAll();
-        if (optionalPremiseData.iterator().hasNext()) {
-            optionalPremiseData.forEach(premise -> premises.add(new PremiseData(premise)));
-        } else {
-            throw new NoSuchElementException();
+    private String fetchTranslation(String languageCode, String domain, String key) {
+        try {
+            DictionaryGetResponse response = translationDataService.getDictionary(new DictionaryData(languageCode, domain, key));
+            return Optional.ofNullable(response.getTranslation()).orElse("Default Translation");
+        } catch (NoSuchElementException e) {
+            logger.error("Translation not found for domain: {} and key: {}", domain, key, e);
+            return "Default Translation";
         }
-        return premises;
     }
 
 }

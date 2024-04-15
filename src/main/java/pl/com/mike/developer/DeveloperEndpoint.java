@@ -1,11 +1,6 @@
 package pl.com.mike.developer;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import pl.com.mike.developer.config.ApplicationConfig;
 import pl.com.mike.developer.logic.developer.DeveloperSearchFilter;
 import pl.com.mike.developer.logic.developer.DeveloperService;
@@ -21,40 +16,36 @@ public class DeveloperEndpoint {
     private final DeveloperService developerService;
     private final ApplicationConfig applicationConfig;
 
-    private static final Logger logger = LoggerFactory.getLogger(DeveloperEndpoint.class);
-
-    public DeveloperEndpoint(PremiseService premiseService, DeveloperService developerService, ApplicationConfig applicationConfig) {
+    public DeveloperEndpoint(PremiseService premiseService,
+                             DeveloperService developerService,
+                             ApplicationConfig applicationConfig) {
         this.premiseService = premiseService;
         this.developerService = developerService;
         this.applicationConfig = applicationConfig;
     }
 
     @GetMapping("premises/investment/{id}/enhancedPremiseData")
-    public PremiseAggregatedValuesGetResponse getMinMaxTotalPremisePriceByInvestmentId(@PathVariable Long id) {
+    public PremiseAggregatedValuesGetResponse getMinAndMaxTotalPremisePriceByInvestmentId(@PathVariable Long id) {
         return premiseService.findPremisePriceRangeByInvestmentId(id);
     }
 
     @GetMapping("premises/investment/{id}")
-    public PremisesGetResponse getPremisesByInvestmentId(@PathVariable Long id) {
+    public PremisesGetResponse getPremisesByInvestmentId(
+            @PathVariable Long id,
+            @RequestParam(name = "languageCode", required = false) String languageCode) {
         return new PremisesGetResponse(
                 ConverterToResponse.premisesDataToResponse(
-                        premiseService.getPremiseDataByInvestmentId(new PremiseSearchFilter(id))
-                ));
-    }
-
-    @GetMapping("premises")
-    public PremisesGetResponse getAllPremises() {
-        return new PremisesGetResponse(
-                ConverterToResponse.premisesDataToResponse(
-                        premiseService.getAllPremises()
+                        premiseService.getPremiseDataByInvestmentId(new PremiseSearchFilter(id, languageCode))
                 ));
     }
 
     @GetMapping("premises/{id}")
-    public PremisesGetResponse getPremiseById(@PathVariable Long id) {
+    public PremisesGetResponse getPremiseById(
+            @PathVariable Long id,
+            @RequestParam(name = "languageCode", required = false) String languageCode) {
         return new PremisesGetResponse(
                 ConverterToResponse.premisesDataToResponse(
-                        premiseService.getPremiseDataById(new PremiseSearchFilter(id))
+                        premiseService.getPremiseDataById(new PremiseSearchFilter(id, languageCode))
                 ));
     }
 
@@ -74,17 +65,6 @@ public class DeveloperEndpoint {
                         developerService.getDeveloperByCode(new DeveloperSearchFilter(applicationConfig.getSystemCode()))
                 )
         );
-    }
-
-    @GetMapping("/premises/investment/{id}/{priceFunction}")
-    public PremisesGetResponse getMaxTotalPremisePriceByInvestmentId(@PathVariable Long id, @PathVariable String priceFunction) {
-        if (!"min".equals(priceFunction) && !"max".equals(priceFunction)) {
-            logger.error("Invalid price function. Only 'min' or 'max' are accepted.");
-        }
-        return new PremisesGetResponse(
-                ConverterToResponse.premisesDataToResponse(
-                        premiseService.findPriceByInvestmentId(id, priceFunction)
-                ));
     }
 
 }
