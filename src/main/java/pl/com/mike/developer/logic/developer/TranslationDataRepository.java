@@ -15,6 +15,6 @@ public interface TranslationDataRepository extends JpaRepository<Translation, Lo
             Integer entityId, String languageCode, String domain, String key
     );
 
-    @Cacheable(CacheType.TRANSLATIONS)
+    @Cacheable(CacheType.DICTIONARIES)
     Optional<Translation> findByLanguageCodeAndDomainAndKey(String languageCode, String domain, String key);
 }

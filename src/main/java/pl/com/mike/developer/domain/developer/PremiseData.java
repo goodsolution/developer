@@ -18,6 +18,10 @@ public class PremiseData {
     private Boolean isGarden;
     private Boolean isTerrace;
     private Boolean isLoggia;
+    private String technicalStatusTranslation;
+    private String salesStatusTranslation;
+    private String exposureTranslation;
+    private String languageCode;
 
     public PremiseData(Premise premise){
         this.id = premise.getId();
@@ -155,5 +159,37 @@ public class PremiseData {
 
     public void setLoggia(Boolean loggia) {
         isLoggia = loggia;
+    }
+
+    public String getTechnicalStatusTranslation() {
+        return technicalStatusTranslation;
+    }
+
+    public void setTechnicalStatusTranslation(String technicalStatusTranslation) {
+        this.technicalStatusTranslation = technicalStatusTranslation;
+    }
+
+    public String getSalesStatusTranslation() {
+        return salesStatusTranslation;
+    }
+
+    public void setSalesStatusTranslation(String salesStatusTranslation) {
+        this.salesStatusTranslation = salesStatusTranslation;
+    }
+
+    public String getExposureTranslation() {
+        return exposureTranslation;
+    }
+
+    public void setExposureTranslation(String exposureTranslation) {
+        this.exposureTranslation = exposureTranslation;
+    }
+
+    public String getLanguageCode() {
+        return languageCode;
+    }
+
+    public void setLanguageCode(String languageCode) {
+        this.languageCode = languageCode;
     }
 }

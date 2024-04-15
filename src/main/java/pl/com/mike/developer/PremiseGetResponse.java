@@ -18,8 +18,12 @@ public class PremiseGetResponse {
     private Boolean isGarden;
     private Boolean isTerrace;
     private Boolean isLoggia;
+    private String technicalStatusTranslation;
+    private String salesStatusTranslation;
+    private String exposureTranslation;
+    private String languageCode;
 
-    public PremiseGetResponse(Long id, String type, Integer number, Integer floor, Double surfacePerSqMeter, Double pricePerSqMeter, BigDecimal totalPrice, Integer numberOfRooms, String technicalStatus, String salesStatus, String exposure, Boolean isBalcony, Boolean isGarden, Boolean isTerrace, Boolean isLoggia) {
+    public PremiseGetResponse(Long id, String type, Integer number, Integer floor, Double surfacePerSqMeter, Double pricePerSqMeter, BigDecimal totalPrice, Integer numberOfRooms, String technicalStatus, String salesStatus, String exposure, Boolean isBalcony, Boolean isGarden, Boolean isTerrace, Boolean isLoggia, String technicalStatusTranslation, String salesStatusTranslation, String exposureTranslation, String languageCode) {
         this.id = id;
         this.type = type;
         this.number = number;
@@ -35,7 +39,10 @@ public class PremiseGetResponse {
         this.isGarden = isGarden;
         this.isTerrace = isTerrace;
         this.isLoggia = isLoggia;
-
+        this.technicalStatusTranslation = technicalStatusTranslation;
+        this.salesStatusTranslation = salesStatusTranslation;
+        this.exposureTranslation = exposureTranslation;
+        this.languageCode = languageCode;
     }
 
     public Long getId() {
@@ -158,4 +165,35 @@ public class PremiseGetResponse {
         isLoggia = loggia;
     }
 
+    public String getTechnicalStatusTranslation() {
+        return technicalStatusTranslation;
+    }
+
+    public void setTechnicalStatusTranslation(String technicalStatusTranslation) {
+        this.technicalStatusTranslation = technicalStatusTranslation;
+    }
+
+    public String getSalesStatusTranslation() {
+        return salesStatusTranslation;
+    }
+
+    public void setSalesStatusTranslation(String salesStatusTranslation) {
+        this.salesStatusTranslation = salesStatusTranslation;
+    }
+
+    public String getExposureTranslation() {
+        return exposureTranslation;
+    }
+
+    public void setExposureTranslation(String exposureTranslation) {
+        this.exposureTranslation = exposureTranslation;
+    }
+
+    public String getLanguageCode() {
+        return languageCode;
+    }
+
+    public void setLanguageCode(String languageCode) {
+        this.languageCode = languageCode;
+    }
 }

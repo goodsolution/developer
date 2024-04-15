@@ -7,11 +7,13 @@ import org.springframework.stereotype.Repository;
 import pl.com.mike.developer.domain.developer.AggregatedValues;
 import pl.com.mike.developer.domain.developer.Premise;
 
+import java.util.List;
+
 @Repository
 public interface PremiseRepository extends JpaRepository<Premise, Long> {
 
     @Query("SELECT p FROM Premise p WHERE p.building.investmentBuildings.id = :id")
-    Iterable<Premise> findAllByInvestmentId(@Param("id") Long id);
+    List<Premise> findAllByInvestmentId(@Param("id") Long id);
 
     @Query("SELECT MIN(p.totalPrice) AS minPrice, MAX(p.totalPrice) AS maxPrice " +
             "FROM Premise p JOIN p.building b " +

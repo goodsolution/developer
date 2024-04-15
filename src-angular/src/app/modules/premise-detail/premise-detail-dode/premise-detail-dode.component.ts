@@ -18,7 +18,7 @@ export class PremiseDetailDodeComponent implements OnInit, OnDestroy {
   investments: InvestmentResponse[] = [];
   private subscription!: Subscription;
   private unsubscribe$ = new Subject<void>();
-  labels: { [key: string]: string } = {};
+  private dictionaryValues: { [key: string]: string } = {};
 
   constructor(
     private premiseService: PremiseService,
@@ -30,10 +30,10 @@ export class PremiseDetailDodeComponent implements OnInit, OnDestroy {
   ) {
   }
 
-  getLabel(attribute: 'technicalStatus' | 'salesStatus' | 'exposure',
-           premise: PremiseResponse): string {
+  getDictionaryValue(attribute: 'technicalStatus' | 'salesStatus' | 'exposure',
+                     premise: PremiseResponse): string {
     const key = `premises.${attribute}.${premise[attribute]}`;
-    return this.labels[key];
+    return this.dictionaryValues[key];
   }
 
   ngOnInit() {
@@ -121,7 +121,7 @@ export class PremiseDetailDodeComponent implements OnInit, OnDestroy {
         .subscribe({
           next: (response) => {
             const fullKey = `${domain}.${key}`;
-            this.labels[fullKey] = response.translation;
+            this.dictionaryValues[fullKey] = response.translation;
           },
           error: (error) => console.error(this.constantsService.ERROR_MESSAGE, error)
         });
