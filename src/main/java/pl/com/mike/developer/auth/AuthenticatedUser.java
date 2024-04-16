@@ -8,11 +8,11 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
-import pl.com.mike.developer.domain.courseplatform.CustomerData;
+
 import pl.com.mike.developer.logic.ApplicationConfigService;
 import pl.com.mike.developer.logic.CacheType;
 import pl.com.mike.developer.logic.Language;
-import pl.com.mike.developer.logic.courseplatform.LanguagesUtil;
+
 
 import java.util.*;
 
