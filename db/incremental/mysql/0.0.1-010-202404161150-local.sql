@@ -196,6 +196,7 @@ create table premises
     COLLATE utf8mb4_general_ci;
 
 
+
 # inserts
 
 INSERT INTO developers (name, address_country, address_voivodeship, address_city, address_street,
