@@ -61,27 +61,20 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-jdbc</artifactId>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.boot</groupId>-->
-<!--            <artifactId>spring-boot-starter-cache</artifactId>-->
-<!--        </dependency>-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-mail</artifactId>
         </dependency>
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
             <scope>runtime</scope>
         </dependency>
-
         <dependency>
             <groupId>com.openhtmltopdf</groupId>
             <artifactId>openhtmltopdf-pdfbox</artifactId>
             <version>1.0.0</version>
         </dependency>
-
         <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
@@ -92,7 +85,6 @@
             <artifactId>commons-text</artifactId>
             <version>1.4</version>
         </dependency>
-
         <dependency>
             <groupId>org.apache.poi</groupId>
             <artifactId>poi</artifactId>
@@ -103,7 +95,6 @@
             <artifactId>poi-ooxml</artifactId>
             <version>4.1.1</version>
         </dependency>
-
         <dependency>
             <groupId>com.github.kagkarlsson</groupId>
             <artifactId>db-scheduler-spring-boot-starter</artifactId>
@@ -124,7 +115,6 @@
             <version>20180130</version>
         </dependency>
 
-
         <!-- TESTS -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -132,43 +122,38 @@
             <scope>test</scope>
             <version>1.5.10.RELEASE</version>
         </dependency>
-
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
             <scope>test</scope>
             <version>1.4.194</version>
         </dependency>
-
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.12</version>
             <scope>test</scope>
         </dependency>
-
         <dependency>
             <groupId>org.assertj</groupId>
             <artifactId>assertj-core</artifactId>
             <version>3.4.1</version>
             <scope>test</scope>
         </dependency>
-
         <dependency>
             <groupId>org.codehaus.mojo</groupId>
             <artifactId>exec-maven-plugin</artifactId>
             <version>3.1.0</version>
         </dependency>
-
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
         </dependency>
-
     </dependencies>
 
     <build>
         <plugins>
+            <!-- Angular Build -->
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
@@ -191,6 +176,8 @@
                     </arguments>
                 </configuration>
             </plugin>
+
+            <!-- Spring Boot Maven Plugin -->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
@@ -205,5 +192,4 @@
             </plugin>
         </plugins>
     </build>
-
 </project>

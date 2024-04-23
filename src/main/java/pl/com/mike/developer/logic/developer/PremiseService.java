@@ -47,7 +47,7 @@ public class PremiseService {
                 .toList();
     }
 
-    private PremiseData setTranslationsAndLanguageCodeToPremiseData(PremiseData premiseData, String languageCode) {
+    public PremiseData setTranslationsAndLanguageCodeToPremiseData(PremiseData premiseData, String languageCode) {
         premiseData.setTechnicalStatusTranslation(fetchTranslation(languageCode, TECHNICAL_STATUS, premiseData.getTechnicalStatus()));
         premiseData.setSalesStatusTranslation(fetchTranslation(languageCode, SALES_STATUS, premiseData.getSalesStatus()));
         premiseData.setExposureTranslation(fetchTranslation(languageCode, EXPOSURE, premiseData.getExposure()));
@@ -55,7 +55,7 @@ public class PremiseService {
         return premiseData;
     }
 
-    private String fetchTranslation(String languageCode, String domain, String key) {
+    public String fetchTranslation(String languageCode, String domain, String key) {
         try {
             DictionaryGetResponse response = translationDataService.getDictionary(new DictionaryData(languageCode, domain, key));
             return Optional.ofNullable(response.getTranslation()).orElse("Default Translation");
