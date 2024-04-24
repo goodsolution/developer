@@ -6,7 +6,6 @@ import org.aspectj.lang.annotation.Pointcut;
 @Aspect
 public class MyPerformanceAspect {
 
-    @Pointcut("execution(public * pl.com.mike.developer.logic.developer.PremiseService.fetchTranslation(..))")
+    @Pointcut("execution(public String pl.com.mike.developer.logic.developer.PremiseService.fetchTranslation(String, String, String))")
     public void myMonitor() {}
 }
-

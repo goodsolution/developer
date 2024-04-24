@@ -14,16 +14,14 @@ import org.springframework.context.annotation.Lazy;
 public class PerformanceMonitoringConfiguration {
 
     @Bean
-    public MyPerformanceMonitorInterceptor myPerformanceMonitorInterceptor() {
-        return new MyPerformanceMonitorInterceptor(true);
+    public PerformanceMonitorInterceptor myPerformanceMonitorInterceptor() {
+        return new PerformanceMonitorInterceptor(true);
     }
 
     @Bean
-    public Advisor myPerformanceMonitorAdvisor(MyPerformanceMonitorInterceptor interceptor) {
+    public Advisor myPerformanceMonitorAdvisor(PerformanceMonitorInterceptor interceptor) {
         AspectJExpressionPointcut pointcut = new AspectJExpressionPointcut();
-        pointcut.setExpression("execution(public * pl.com.mike.developer.logic.developer.PremiseService.fetchTranslation(..))");
+        pointcut.setExpression("execution(public String pl.com.mike.developer.logic.developer.PremiseService.fetchTranslation(String, String, String))");
         return new DefaultPointcutAdvisor(pointcut, interceptor);
     }
 }
-
-
