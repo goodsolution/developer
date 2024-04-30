@@ -19,10 +19,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     private static final Logger logger = LoggerFactory.getLogger(UserDetailsServiceImpl.class);
 
 
-    private UserRepository userRepository;
+    private UserRepositoryAuth userRepositoryAuth;
 
-    public UserDetailsServiceImpl(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public UserDetailsServiceImpl(UserRepositoryAuth userRepositoryAuth) {
+        this.userRepositoryAuth = userRepositoryAuth;
     }
 
     @Override
@@ -30,7 +30,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) {
         // logger.debug(String.format("username: %s", username));
 
-        UserEntity user = userRepository.findByLogin(username);
+        UserEntity user = userRepositoryAuth.findByLogin(username);
         if (user == null) throw new UsernameNotFoundException(username);
 
         Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
