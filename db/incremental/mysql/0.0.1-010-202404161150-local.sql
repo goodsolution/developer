@@ -665,3 +665,15 @@ ALTER TABLE voivodeships
     ADD COLUMN create_time DATETIME DEFAULT CURRENT_TIMESTAMP,
     ADD COLUMN edit_time DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     ADD COLUMN delete_time DATETIME NULL;
+
+create table users
+(
+    id       INT AUTO_INCREMENT PRIMARY KEY,
+    login VARCHAR(50) NOT NULL,
+    password_hash VARCHAR(255) NOT NULL,
+    create_time  TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    edit_time    TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    delete_time  TIMESTAMP NULL
+);
+
+insert into users (login, password_hash) values ('admin', 'password');
