@@ -1,26 +1,50 @@
 package pl.com.mike.developer.domain.developer;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
 public class User {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @NotBlank(message = "Login cannot be blank")
+    @Size(min = 3, max = 50, message = "Login must be between 3 and 50 characters")
     private String login;
+
+    @NotBlank(message = "Password hash cannot be blank")
     @Column(name = "password_hash")
     private String passwordHash;
-    @Column(name = "created_at")
+
+    @Column(name = "create_time", nullable = false, updatable = false)
     private LocalDateTime createdAt;
-    @Column(name = "updated_at")
+
+    @Column(name = "edit_time")
     private LocalDateTime updatedAt;
-    @Column(name = "deleted_at")
+
+    @Column(name = "delete_time")
     private LocalDateTime deletedAt;
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private Set<UserAuthority> userAuthorities;
+
     public User() {
+    }
+
+    @PrePersist
+    protected void onCreate() {
+        createdAt = LocalDateTime.now();
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        updatedAt = LocalDateTime.now();
     }
 
     public Long getId() {
@@ -51,10 +75,6 @@ public class User {
         return createdAt;
     }
 
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
     public LocalDateTime getUpdatedAt() {
         return updatedAt;
     }
@@ -71,6 +91,18 @@ public class User {
         this.deletedAt = deletedAt;
     }
 
+    public Set<UserAuthority> getUserAuthorities() {
+        return userAuthorities;
+    }
+
+    public void setUserAuthorities(Set<UserAuthority> userAuthorities) {
+        this.userAuthorities = userAuthorities;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -83,4 +115,5 @@ public class User {
     public int hashCode() {
         return Objects.hashCode(getId());
     }
+
 }
