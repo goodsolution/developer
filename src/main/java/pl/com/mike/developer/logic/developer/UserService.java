@@ -25,4 +25,10 @@ public class UserService {
         }
     }
 
+    public UserData createUser(UserData userData) {
+        User user = userData.toUser();
+        userRepository.save(user);
+        return new UserData(user);
+    }
+
 }

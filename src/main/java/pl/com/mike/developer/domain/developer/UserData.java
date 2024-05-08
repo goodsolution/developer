@@ -12,6 +12,9 @@ public class UserData {
     private LocalDateTime updatedAt;
     private LocalDateTime deletedAt;
 
+    public UserData() {
+    }
+
     public UserData(User user) {
         this.id = user.getId();
         this.login = user.getLogin();
@@ -64,5 +67,13 @@ public class UserData {
 
     public void setDeletedAt(LocalDateTime deletedAt) {
         this.deletedAt = deletedAt;
+    }
+
+    public User toUser() {
+        User user = new User();
+        user.setId(id);
+        user.setLogin(login);
+        user.setPasswordHash(passwordHash);
+        return user;
     }
 }
