@@ -1,4 +1,4 @@
-package pl.com.mike.developer.config;
+package pl.com.mike.developer.config.developer;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

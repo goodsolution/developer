@@ -8,7 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.thymeleaf.TemplateEngine;
-import pl.com.mike.developer.config.ApplicationConfig;
+import pl.com.mike.developer.config.developer.ApplicationConfig;
 import pl.com.mike.developer.domain.itube.ITubeFilter;
 import pl.com.mike.developer.domain.itube.ITubeGetResponseAdmin;
 import pl.com.mike.developer.logic.Language;

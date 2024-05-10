@@ -1,4 +1,4 @@
-package pl.com.mike.developer.config;
+package pl.com.mike.developer.config.developer;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import org.springframework.beans.factory.annotation.Value;
@@ -157,6 +157,20 @@ public class ApplicationConfig {
 
     @Value("system.")
     private String systemPrefix;
+
+    @Value("${jwt.secret}")
+    private String jwtSecret;
+
+    @Value("${jwt.expiration}")
+    private long jwtExpirationInMillis;
+
+    public String getJwtSecret() {
+        return jwtSecret;
+    }
+
+    public long getJwtExpirationInMillis() {
+        return jwtExpirationInMillis;
+    }
 
     public String getSystemPrefix() {
         return systemPrefix;

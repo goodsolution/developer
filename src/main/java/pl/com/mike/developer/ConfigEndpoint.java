@@ -7,7 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.com.mike.developer.config.ActiveProfileConfigLoader;
-import pl.com.mike.developer.config.ApplicationConfig;
+import pl.com.mike.developer.config.developer.ApplicationConfig;
 import pl.com.mike.developer.domain.developer.DictionaryData;
 import pl.com.mike.developer.domain.developer.TranslationData;
 import pl.com.mike.developer.logic.developer.DeveloperSearchFilter;

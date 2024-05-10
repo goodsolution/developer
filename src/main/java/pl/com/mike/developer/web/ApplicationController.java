@@ -7,7 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import pl.com.mike.developer.config.ApplicationConfig;
+import pl.com.mike.developer.config.developer.ApplicationConfig;
 import pl.com.mike.developer.logic.CacheService;
 import pl.com.mike.developer.logic.CacheType;
 import pl.com.mike.developer.logic.DictionariesService;
@@ -103,10 +103,10 @@ public class ApplicationController {
         return themePath + "/home-page";
     }
 
-    @GetMapping({ "/developer/contact"})
-    public String contact(Model model) {
-        return "contact";
-    }
+//    @GetMapping({ "/developer/contact"})
+//    public String contact(Model model) {
+//        return "contact";
+//    }
 
     @GetMapping({"/buy-our-code"})
     public String buyOurCode(Model model) {

@@ -1,4 +1,4 @@
-package pl.com.mike.developer.web;
+package pl.com.mike.developer;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;

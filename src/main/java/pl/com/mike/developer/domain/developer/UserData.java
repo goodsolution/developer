@@ -16,7 +16,6 @@ public class UserData {
     }
 
     public UserData(User user) {
-        this.id = user.getId();
         this.login = user.getLogin();
         this.passwordHash = user.getPasswordHash();
     }

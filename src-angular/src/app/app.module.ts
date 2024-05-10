@@ -20,6 +20,7 @@ import {PremiseDetailModule} from "./modules/premise-detail/premise-detail.modul
 import {AcceptLanguageInterceptor} from "./modules/core/services/accept-language.interceptor";
 import {LanguageService} from "./modules/core/services/language.service";
 import {MatPaginatorIntl} from "@angular/material/paginator";
+import {DashboardModule} from "./modules/dashboard/dashboard.module";
 
 export function initializeConfig(config: ConfigService) {
   return (): Promise<any> => {
@@ -84,6 +85,7 @@ export class CustomMatPaginatorIntl extends MatPaginatorIntl {
     PremiseListModule,
     PremiseListFilterModule,
     PremiseDetailModule,
+    DashboardModule,
     AppRoutingModule,
     HttpClientModule,
     TranslateModule.forRoot({

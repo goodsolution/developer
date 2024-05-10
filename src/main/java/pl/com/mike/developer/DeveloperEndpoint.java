@@ -1,7 +1,7 @@
 package pl.com.mike.developer;
 
 import org.springframework.web.bind.annotation.*;
-import pl.com.mike.developer.config.ApplicationConfig;
+import pl.com.mike.developer.config.developer.ApplicationConfig;
 import pl.com.mike.developer.logic.developer.DeveloperSearchFilter;
 import pl.com.mike.developer.logic.developer.DeveloperService;
 import pl.com.mike.developer.logic.developer.PremiseSearchFilter;
