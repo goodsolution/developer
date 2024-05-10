@@ -13,27 +13,21 @@ export class AuthenticationService {
   constructor(private http: HttpClient) {}
 
   login(username: string, password: string): Observable<string> {
-    return this.http.post<LoginResponse>(this.apiUrl, { username, password }, {
-      headers: {'Content-Type': 'application/json'},
-      observe: 'response'
-    })
-      .pipe(
-        map(response => {
-          const token = response.body?.token;
-          if (token) {
-            localStorage.setItem('currentUser', JSON.stringify({ username, token }));
-            return token;
-          } else {
-            // If no token in the response, throw an error to be caught by catchError
-            throw new Error('No token received');
-          }
-        }),
-        catchError((error: HttpErrorResponse) => {
-          // Optionally, handle the error and log or display to the user
-          console.error('Login error:', error.message);
-          return throwError(() => new Error('Login failed, please try again.'));
-        })
-      );
+    return this.http.post<any>(this.apiUrl, { login: username, passwordHash: password }, {
+      headers: { 'Content-Type': 'application/json' }
+    }).pipe(
+      map(response => {
+        const token = response.token;
+        if (!token) {
+          throw new Error('Authentication failed.');
+        }
+        return token;
+      }),
+      catchError(error => {
+        console.error('Authentication error:', error);
+        return throwError(() => new Error('Authentication failed.'));
+      })
+    );
   }
 
 }
