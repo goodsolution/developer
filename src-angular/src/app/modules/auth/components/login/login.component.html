@@ -1,5 +1,5 @@
 <div class="login-wrapper mt-3">
-  <form #f="ngForm" (ngSubmit)="onLogin()" novalidate> <!-- Added novalidate to disable browser's native form validation -->
+  <form #f="ngForm" (ngSubmit)="onLogin()" novalidate>
     <div>
       <mat-form-field>
         <mat-label>{{ 'shared.log.user.name' | translate }}</mat-label>
@@ -12,9 +12,8 @@
     <div>
       <mat-form-field>
         <mat-label>{{ 'shared.log.password' | translate }}</mat-label>
-        <input matInput [type]="hide ? 'password' : 'text'" [(ngModel)]="password" name="password" required #passwordField="ngModel">
-        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="hide ? 'Hide password' : 'Show password'"
-                [attr.aria-pressed]="hide">
+        <input matInput [type]="hide ? 'password' : 'text'" [(ngModel)]="password" name="password" required #passwordField="ngModel" autocomplete="current-password">
+        <button mat-icon-button matSuffix (click)="hide = !hide" type="button" [attr.aria-label]="hide ? 'Hide password' : 'Show password'" [attr.aria-pressed]="hide">
           <mat-icon>{{ hide ? 'visibility_off' : 'visibility' }}</mat-icon>
         </button>
         <mat-error *ngIf="passwordField.invalid && passwordField.touched">

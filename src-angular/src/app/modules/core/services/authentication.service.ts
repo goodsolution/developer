@@ -1,33 +1,63 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpErrorResponse, HttpResponse} from "@angular/common/http";
-import {catchError, map, Observable, throwError} from "rxjs";
-import {LoginResponse} from "../models/loginResponse.model";
+import {HttpClient, HttpErrorResponse} from "@angular/common/http";
+import {BehaviorSubject, catchError, map, Observable, throwError} from "rxjs";
+import {TokenService} from "./token.service";
+import {Router} from "@angular/router";
+import {ConstantsService} from "./constants.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService {
 
-  private apiUrl = 'https://localhost:8081/api/auth/login';
+  private loggedIn = new BehaviorSubject<boolean>(this.hasToken());
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private tokenService: TokenService,
+    private router: Router,
+    private constantsService: ConstantsService
+  ) {}
 
   login(username: string, password: string): Observable<string> {
-    return this.http.post<any>(this.apiUrl, { login: username, passwordHash: password }, {
+    return this.http.post<{ token: string }>(this.constantsService.getApiLoginEndpoint(), { login: username, passwordHash: password }, {
       headers: { 'Content-Type': 'application/json' }
     }).pipe(
       map(response => {
         const token = response.token;
-        if (!token) {
-          throw new Error('Authentication failed.');
+        if (token) {
+          this.tokenService.saveToken(token);
+          this.loggedIn.next(true);
+          return token;
+        } else {
+          throw new Error('Authentication failed: No token received');
         }
-        return token;
       }),
-      catchError(error => {
-        console.error('Authentication error:', error);
-        return throwError(() => new Error('Authentication failed.'));
-      })
+      catchError(this.handleError)
     );
+  }
+
+  logout(): void {
+    this.tokenService.clearToken();
+    this.loggedIn.next(false);
+    this.router.navigate(['/login']);
+  }
+
+  isLoggedIn(): Observable<boolean> {
+    return this.loggedIn.asObservable();
+  }
+
+  isLoggedInSync(): boolean {
+    return !!this.tokenService.getToken() && !this.tokenService.isTokenExpired(this.tokenService.getToken()!);
+  }
+
+  private hasToken(): boolean {
+    return !!this.tokenService.getToken();
+  }
+
+  private handleError(error: HttpErrorResponse) {
+    console.error('Authentication error:', error);
+    return throwError(() => new Error('Authentication failed with status: ' + error.status));
   }
 
 }

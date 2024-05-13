@@ -9,6 +9,7 @@ export class ConstantsService {
   readonly API_CITIES_ENDPOINT = `${this.API_BASE_URL}/cities`;
   readonly API_DEVELOPER_BY_SYSTEM_CODE_ENDPOINT = `${this.API_BASE_URL}/developers/code`;
   readonly API_INVESTMENTS_ENDPOINT = `${this.API_BASE_URL}/investments`;
+  readonly API_LOGIN_ENDPOINT = `${this.API_BASE_URL}/auth/login`;
   readonly ERROR_MESSAGE = 'An error has occurred';
   readonly attributes = {
     SALES_STATUS: 'salesStatus',
@@ -35,6 +36,9 @@ export class ConstantsService {
   }
   getApiDictionaryEndpoint(domain: string, key: string): string {
     return `${this.API_BASE_URL}/system/dictionary/${domain}/${key}`;
+  }
+  getApiLoginEndpoint(): string {
+    return this.API_LOGIN_ENDPOINT;
   }
 
 }

@@ -4,6 +4,8 @@ import {HeaderLogoUrlService} from "../../../services/header-logo-url.service";
 import {CitiesService} from "../../../services/cities.service";
 import {TranslateService} from "@ngx-translate/core";
 import {LanguageService} from "../../../services/language.service";
+import {AuthenticationService} from "../../../services/authentication.service";
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-dode-header',
@@ -13,13 +15,18 @@ import {LanguageService} from "../../../services/language.service";
 export class DodeHeaderComponent implements OnInit {
   url!: string;
   cities: CityResponse[] = [];
+  isLoggedIn$: Observable<boolean>; // Use a dollar sign to denote an observable
+
 
   constructor(private headerLogoUrlService: HeaderLogoUrlService,
               private cityService: CitiesService,
               private translate: TranslateService,
-              private languageService: LanguageService
+              private authService: AuthenticationService, // Add AuthenticationService
+              private languageService: LanguageService,
+
   ) {
     translate.setDefaultLang('en')
+    this.isLoggedIn$ = this.authService.isLoggedIn(); // Assign the observable
   }
 
   switchLanguage(language: string) {
@@ -42,6 +49,10 @@ export class DodeHeaderComponent implements OnInit {
   ngOnInit(): void {
     this.getLogoUrl();
     this.getCities();
+  }
+
+  logout(): void {
+    this.authService.logout();
   }
 
 }

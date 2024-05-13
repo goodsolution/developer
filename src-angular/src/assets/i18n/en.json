@@ -17,6 +17,7 @@
     "header.language.selection": "Language",
     "log.user.name": "User Name",
     "log.login": "Login",
+    "log.logout": "Logout",
     "log.password": "Password",
     "footer.copy.rights": "Copy Rights",
     "investments.list.none": "Currently no investments",

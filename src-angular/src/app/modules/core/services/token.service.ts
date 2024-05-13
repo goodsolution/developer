@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import {jwtDecode} from "jwt-decode";
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +16,18 @@ export class TokenService {
 
   getToken(): string | null {
     return localStorage.getItem(this.TOKEN_KEY);
+  }
+
+  isTokenExpired(token: string): boolean {
+    try {
+      const decoded: any = jwtDecode(token);
+      const now = Date.now() / 1000; // Current time in seconds since epoch
+      console.log('Token expiration:', decoded.exp, 'Current time:', now);
+      return decoded.exp < now;
+    } catch (error) {
+      console.error('Failed to decode token', error);
+      return true;
+    }
   }
 
   clearToken(): void {
