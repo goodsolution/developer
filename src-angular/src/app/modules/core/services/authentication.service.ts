@@ -33,7 +33,11 @@ export class AuthenticationService {
           throw new Error('Authentication failed: No token received');
         }
       }),
-      catchError(this.handleError)
+      catchError((error: HttpErrorResponse) => {
+        console.error('AuthService error:', error);
+        const errorMessage = error.error.message || 'An error occurred during login';
+        return throwError(() => new Error(errorMessage));
+      })
     );
   }
 
@@ -53,11 +57,6 @@ export class AuthenticationService {
 
   private hasToken(): boolean {
     return !!this.tokenService.getToken();
-  }
-
-  private handleError(error: HttpErrorResponse) {
-    console.error('Authentication error:', error);
-    return throwError(() => new Error('Authentication failed with status: ' + error.status));
   }
 
 }

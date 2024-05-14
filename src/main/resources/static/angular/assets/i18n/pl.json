@@ -38,6 +38,10 @@
     "paginator.first.page": "Pierwsza strona",
     "paginator.last.page": "Ostatnia strona",
     "paginator.range": "{{start}} - {{end}} z {{length}}",
-    "paginator.range.of": "z"
+    "paginator.range.of": "z",
+    "error.username.required": "Nazwa użytkownika jest wymagana",
+    "error.password.required": "Hasło jest wymagane",
+    "error.login.failed": "Nazwa użytkownika lub hasło jest nieprawidłowe. Proszę spróbuj ponownie.",
+    "error.unknown": "Wystąpił błąd. Proszę spróbować ponownie później."
   }
 }

@@ -3,7 +3,7 @@
     <div>
       <mat-form-field>
         <mat-label>{{ 'shared.log.user.name' | translate }}</mat-label>
-        <input matInput [(ngModel)]="username" name="username" required #usernameField="ngModel">
+        <input matInput [(ngModel)]="username" name="username" required #usernameField="ngModel" autocomplete="username">
         <mat-error *ngIf="usernameField.invalid && usernameField.touched">
           {{ 'shared.error.username.required' | translate }}
         </mat-error>
@@ -20,6 +20,9 @@
           {{ 'shared.error.password.required' | translate }}
         </mat-error>
       </mat-form-field>
+    </div>
+    <div *ngIf="errorMessage" class="error-message">
+      {{ errorMessage }}
     </div>
     <div class="d-flex justify-content-end">
       <button mat-raised-button color="primary" [disabled]="f.invalid">{{ 'shared.log.login' | translate }}</button>
