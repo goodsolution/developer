@@ -44,6 +44,12 @@
     "error.login.failed": "Nazwa użytkownika lub hasło jest nieprawidłowe. Proszę spróbuj ponownie.",
     "error.unknown": "Wystąpił błąd. Proszę spróbować ponownie później.",
     "header.dashboard": "Panel Administracyjny"
-
+  },
+  "dashboard": {
+    "title": "Panel",
+    "developers": "Deweloperzy",
+    "investments": "Inwestycje",
+    "buildings": "Budynki",
+    "premises": "Pomieszczenia"
   }
 }
