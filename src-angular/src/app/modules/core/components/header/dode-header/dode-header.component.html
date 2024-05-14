@@ -11,6 +11,9 @@
     </mat-menu>
     <button mat-button [routerLink]="['/contact']">{{ 'shared.header.contact' | translate }}</button>
     <span class="spacer"></span>
+    <button mat-button *ngIf="(isLoggedIn$ | async)" [routerLink]="['/dashboard']">
+      <i class="material-icons">dashboard</i>{{ 'shared.header.dashboard' | translate }}
+    </button>
     <button mat-button [matMenuTriggerFor]="language_menu">
       <i class="material-icons">language</i>{{ 'shared.header.language.selection' | translate }}
     </button>

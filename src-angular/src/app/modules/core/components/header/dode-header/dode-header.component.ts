@@ -15,17 +15,16 @@ import {Observable} from "rxjs";
 export class DodeHeaderComponent implements OnInit {
   url!: string;
   cities: CityResponse[] = [];
-  isLoggedIn$: Observable<boolean>; // Use a dollar sign to denote an observable
+  isLoggedIn$: Observable<boolean>;
 
-
-  constructor(private headerLogoUrlService: HeaderLogoUrlService,
-              private cityService: CitiesService,
-              private translate: TranslateService,
-              private authService: AuthenticationService, // Add AuthenticationService
-              private languageService: LanguageService,
-
+  constructor(
+    private headerLogoUrlService: HeaderLogoUrlService,
+    private cityService: CitiesService,
+    private translate: TranslateService,
+    private authService: AuthenticationService, // Add AuthenticationService
+    private languageService: LanguageService
   ) {
-    translate.setDefaultLang('en')
+    translate.setDefaultLang('en');
     this.isLoggedIn$ = this.authService.isLoggedIn(); // Assign the observable
   }
 

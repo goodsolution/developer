@@ -42,6 +42,8 @@
     "error.username.required": "Nazwa użytkownika jest wymagana",
     "error.password.required": "Hasło jest wymagane",
     "error.login.failed": "Nazwa użytkownika lub hasło jest nieprawidłowe. Proszę spróbuj ponownie.",
-    "error.unknown": "Wystąpił błąd. Proszę spróbować ponownie później."
+    "error.unknown": "Wystąpił błąd. Proszę spróbować ponownie później.",
+    "header.dashboard": "Panel Administracyjny"
+
   }
 }
