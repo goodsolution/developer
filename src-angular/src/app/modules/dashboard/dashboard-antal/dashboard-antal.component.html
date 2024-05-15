@@ -1,1 +1,57 @@
-<p>dashboard-antal works!</p>
+<div class="dashboard">
+  <h1>{{ 'dashboard.title' | translate }}</h1>
+  <div class="dashboard-sections">
+    <section class="dashboard-section">
+      <button class="dashboard-header" (click)="toggleDeveloperSection()" (keydown)="handleKey($event)">
+        {{ 'dashboard.developers' | translate }}
+      </button>
+      <div *ngIf="showDeveloperSection" class="developer-container">
+        <ul>
+          <li *ngFor="let developer of developers">
+            <button (click)="selectDeveloper(developer)"
+                    (keydown)="onDeveloperKeydown($event, developer)"
+                    class="developer-item">
+              {{ developer.name }}
+            </button>
+          </li>
+        </ul>
+        <div *ngIf="selectedDeveloper" class="developer-details">
+          <h3>Developer Details</h3>
+          <form (ngSubmit)="saveDeveloper()">
+            <div>
+              <label for="developer-name">Name:</label>
+              <input [(ngModel)]="selectedDeveloper.name" name="name" id="developer-name">
+            </div>
+            <div>
+              <label for="developer-address">Address:</label>
+              <input [(ngModel)]="selectedDeveloper.addressStreet" name="address" id="developer-address">
+            </div>
+            <!-- Add other fields as necessary -->
+            <div class="button-group">
+              <button type="submit">Save</button>
+              <button type="button" (click)="cancelEdit()">Cancel</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+    <section class="dashboard-section">
+      <button class="dashboard-header">
+        {{ 'dashboard.investments' | translate }}
+      </button>
+      <!-- Content for managing investments -->
+    </section>
+    <section class="dashboard-section">
+      <button class="dashboard-header">
+        {{ 'dashboard.buildings' | translate }}
+      </button>
+      <!-- Content for managing buildings -->
+    </section>
+    <section class="dashboard-section">
+      <button class="dashboard-header">
+        {{ 'dashboard.premises' | translate }}
+      </button>
+      <!-- Content for managing premises -->
+    </section>
+  </div>
+</div>

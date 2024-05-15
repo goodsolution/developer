@@ -74,7 +74,7 @@ export class AppComponent implements OnInit, OnDestroy {
       [ComponentLocation.InvestmentList]: InvestmentListAntalComponent,
       [ComponentLocation.PremiseList]: PremiseListAntalComponent,
       [ComponentLocation.PremiseDetail]: PremiseDetailAntalComponent,
-      [ComponentLocation.Dashboard]: DashboardAntalComponent
+      [ComponentLocation.Dashboard]: DashboardAntalComponent,
     },
     domdevelopment: {
       [ComponentLocation.Header]: DodeHeaderComponent,
@@ -84,7 +84,7 @@ export class AppComponent implements OnInit, OnDestroy {
       [ComponentLocation.InvestmentList]: InvestmentListDodeComponent,
       [ComponentLocation.PremiseList]: PremiseListDodeComponent,
       [ComponentLocation.PremiseDetail]: PremiseDetailDodeComponent,
-      [ComponentLocation.Dashboard]: DashboardDodeComponent
+      [ComponentLocation.Dashboard]: DashboardDodeComponent,
     },
     default: {
       [ComponentLocation.Header]: DefaultComponent,
@@ -94,7 +94,7 @@ export class AppComponent implements OnInit, OnDestroy {
       [ComponentLocation.InvestmentList]: DefaultComponent,
       [ComponentLocation.PremiseList]: DefaultComponent,
       [ComponentLocation.PremiseDetail]: DefaultComponent,
-      [ComponentLocation.Dashboard]: DefaultComponent
+      [ComponentLocation.Dashboard]: DefaultComponent,
     }
   };
 
@@ -161,7 +161,7 @@ export class AppComponent implements OnInit, OnDestroy {
       this.loadDynamicPremiseDetailComponent(url);
     } else if (url === '/') {
       this.createComponent(this.homeContainer, ComponentLocation.Home);
-    } else if (/^\/dashboard/.test(url)) {
+    } else if (url.startsWith("/dashboard")) {
       this.loadDynamicDashboardComponent();
     }
   }
