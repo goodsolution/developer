@@ -34,10 +34,10 @@ public class UserService {
     public UserData createUser(UserData userData) {
         User user = userData.toUser();
         user.setPasswordHash(passwordEncoder.encode(user.getPasswordHash()));
-        // Assign default role if no roles are provided
+
         if (user.getRoles() == null || user.getRoles().isEmpty()) {
             Set<Roles> defaultRoles = new HashSet<>();
-            defaultRoles.add(Roles.DEVELOPER); // Assign default role as DEVELOPER
+            defaultRoles.add(Roles.DEVELOPER);
             user.setRoles(defaultRoles);
         }
         userRepository.save(user);
@@ -45,7 +45,8 @@ public class UserService {
     }
 
     public void assignRoleToUser(String login, Roles role) {
-        User user = userRepository.getUserByLogin(login).orElseThrow(() -> new NoSuchElementException("User with login " + login + " not found"));
+        User user = userRepository.getUserByLogin(login).
+                orElseThrow(() -> new NoSuchElementException("User with login " + login + " not found"));
         user.getRoles().add(role);
         userRepository.save(user);
     }
