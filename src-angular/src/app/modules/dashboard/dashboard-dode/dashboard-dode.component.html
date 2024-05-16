@@ -19,35 +19,33 @@
           <h3>Developer Details</h3>
           <form (ngSubmit)="saveDeveloper()">
             <div>
-              <label for="developer-name">Name:</label>
-              <input [(ngModel)]="selectedDeveloper.name" name="name" id="developer-name">
+              <label for="name">Name:</label>
+              <input id="name" [(ngModel)]="selectedDeveloper.name" name="name">
             </div>
             <div>
-              <label for="developer-address">Address:</label>
-              <input [(ngModel)]="selectedDeveloper.addressStreet" name="address" id="developer-address">
+              <label for="address">Address:</label>
+              <input id="address" [(ngModel)]="selectedDeveloper.addressStreet" name="address">
             </div>
             <!-- Add other fields as necessary -->
-            <div class="button-group">
-              <button type="submit">Save</button>
-              <button type="button" (click)="cancelEdit()">Cancel</button>
-            </div>
+            <button type="submit">Save</button>
+            <button type="button" (click)="cancelEdit()">Cancel</button>
           </form>
         </div>
       </div>
     </section>
-    <section class="dashboard-section">
+    <section class="dashboard-section" *ngIf="authService.hasRole('ROLE_DEVELOPER')">
       <button class="dashboard-header">
         {{ 'dashboard.investments' | translate }}
       </button>
       <!-- Content for managing investments -->
     </section>
-    <section class="dashboard-section">
+    <section class="dashboard-section" *ngIf="authService.hasRole('ROLE_DEVELOPER')">
       <button class="dashboard-header">
         {{ 'dashboard.buildings' | translate }}
       </button>
       <!-- Content for managing buildings -->
     </section>
-    <section class="dashboard-section">
+    <section class="dashboard-section" *ngIf="authService.hasRole('ROLE_DEVELOPER')">
       <button class="dashboard-header">
         {{ 'dashboard.premises' | translate }}
       </button>

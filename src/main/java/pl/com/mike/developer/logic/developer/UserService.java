@@ -2,8 +2,8 @@ package pl.com.mike.developer.logic.developer;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import pl.com.mike.developer.auth.developer.Roles;
 import pl.com.mike.developer.domain.developer.User;
-import pl.com.mike.developer.domain.developer.UserAuthority;
 import pl.com.mike.developer.domain.developer.UserData;
 
 import java.util.HashSet;
@@ -14,7 +14,6 @@ import java.util.Set;
 @Service
 public class UserService {
 
-    private static final String ROLE = "ROLE_DEVELOPER";
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
@@ -35,17 +34,20 @@ public class UserService {
     public UserData createUser(UserData userData) {
         User user = userData.toUser();
         user.setPasswordHash(passwordEncoder.encode(user.getPasswordHash()));
-
-        Set<UserAuthority> authorities = new HashSet<>();
-
-        UserAuthority authority = new UserAuthority();
-        authority.setUser(user);
-        authority.setAuthority(ROLE);
-        authorities.add(authority);
-        user.setUserAuthorities(authorities);
-
+        // Assign default role if no roles are provided
+        if (user.getRoles() == null || user.getRoles().isEmpty()) {
+            Set<Roles> defaultRoles = new HashSet<>();
+            defaultRoles.add(Roles.DEVELOPER); // Assign default role as DEVELOPER
+            user.setRoles(defaultRoles);
+        }
         userRepository.save(user);
         return new UserData(user);
+    }
+
+    public void assignRoleToUser(String login, Roles role) {
+        User user = userRepository.getUserByLogin(login).orElseThrow(() -> new NoSuchElementException("User with login " + login + " not found"));
+        user.getRoles().add(role);
+        userRepository.save(user);
     }
 
 }

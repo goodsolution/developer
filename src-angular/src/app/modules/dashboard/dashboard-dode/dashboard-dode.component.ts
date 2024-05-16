@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {DeveloperResponse} from "../../core/models/developer.model";
 import {DeveloperService} from "../../core/services/developer.service";
 import {SearchResultDeveloperModel} from "../../core/models/searchResultDeveloper.model";
+import {AuthenticationService} from "../../core/services/authentication.service";
 
 @Component({
   selector: 'app-dashboard-dode',
@@ -13,8 +14,10 @@ export class DashboardDodeComponent implements OnInit {
   selectedDeveloper: DeveloperResponse | null = null;
   showDeveloperSection: boolean = false;
 
-  constructor(private developerService: DeveloperService) {
-  }
+  constructor(
+    private developerService: DeveloperService,
+    public authService: AuthenticationService
+  ) { }
 
   ngOnInit(): void {
     this.fetchDevelopers();

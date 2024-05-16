@@ -1,15 +1,14 @@
-import {Injectable} from '@angular/core';
-import {HttpClient, HttpErrorResponse} from "@angular/common/http";
-import {BehaviorSubject, catchError, map, Observable, throwError} from "rxjs";
-import {TokenService} from "./token.service";
-import {Router} from "@angular/router";
-import {ConstantsService} from "./constants.service";
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { BehaviorSubject, catchError, map, Observable, throwError } from 'rxjs';
+import { TokenService } from './token.service';
+import { Router } from '@angular/router';
+import { ConstantsService } from './constants.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService {
-
   private loggedIn = new BehaviorSubject<boolean>(this.hasToken());
 
   constructor(
@@ -20,13 +19,14 @@ export class AuthenticationService {
   ) {}
 
   login(username: string, password: string): Observable<string> {
-    return this.http.post<{ token: string }>(this.constantsService.getApiLoginEndpoint(), { login: username, passwordHash: password }, {
+    return this.http.post<{ token: string, roles: string[] }>(this.constantsService.getApiLoginEndpoint(), { login: username, passwordHash: password }, {
       headers: { 'Content-Type': 'application/json' }
     }).pipe(
       map(response => {
-        const token = response.token;
+        const { token, roles } = response;
         if (token) {
           this.tokenService.saveToken(token);
+          this.tokenService.saveRoles(roles);
           this.loggedIn.next(true);
           return token;
         } else {
@@ -43,6 +43,7 @@ export class AuthenticationService {
 
   logout(): void {
     this.tokenService.clearToken();
+    this.tokenService.clearRoles();
     this.loggedIn.next(false);
     this.router.navigate(['/login']);
   }
@@ -55,8 +56,12 @@ export class AuthenticationService {
     return !!this.tokenService.getToken() && !this.tokenService.isTokenExpired(this.tokenService.getToken()!);
   }
 
+  hasRole(role: string): boolean {
+    const roles = this.tokenService.getRoles();
+    return roles.includes(role);
+  }
+
   private hasToken(): boolean {
     return !!this.tokenService.getToken();
   }
-
 }

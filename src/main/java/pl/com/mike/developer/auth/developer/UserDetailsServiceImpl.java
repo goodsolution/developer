@@ -30,8 +30,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         User user = userRepository.getUserByLogin(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
-        Collection<GrantedAuthority> authorities = user.getUserAuthorities().stream()
-                .map(role -> new SimpleGrantedAuthority(role.getAuthority()))
+        Collection<GrantedAuthority> authorities = user.getRoles().stream()
+                .map(role -> new SimpleGrantedAuthority(role.getCode()))
                 .collect(Collectors.toList());
 
         return new org.springframework.security.core.userdetails.User(
@@ -40,5 +40,4 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                 authorities
         );
     }
-
 }

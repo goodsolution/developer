@@ -1,16 +1,18 @@
 package pl.com.mike.developer.domain.developer;
 
+import pl.com.mike.developer.auth.developer.Roles;
+
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
-
 
 public class UserData {
 
     private Long id;
     private String login;
     private String passwordHash;
-    private Set<String> roles;
+    private Set<String> roles = new HashSet<>();
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private LocalDateTime deletedAt;
@@ -19,11 +21,15 @@ public class UserData {
     }
 
     public UserData(User user) {
+        this.id = user.getId();
         this.login = user.getLogin();
         this.passwordHash = user.getPasswordHash();
-        this.roles = user.getUserAuthorities().stream()
-                .map(UserAuthority::getAuthority)
+        this.roles = user.getRoles().stream()
+                .map(Roles::name)
                 .collect(Collectors.toSet());
+        this.createdAt = user.getCreatedAt();
+        this.updatedAt = user.getUpdatedAt();
+        this.deletedAt = user.getDeletedAt();
     }
 
     public Long getId() {
@@ -87,6 +93,9 @@ public class UserData {
         user.setId(id);
         user.setLogin(login);
         user.setPasswordHash(passwordHash);
+        user.setRoles(roles.stream()
+                .map(Roles::valueOf)
+                .collect(Collectors.toSet()));
         return user;
     }
 }

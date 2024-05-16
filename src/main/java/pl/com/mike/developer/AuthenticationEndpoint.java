@@ -13,13 +13,13 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pl.com.mike.developer.domain.developer.UserData;
 
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -49,18 +49,24 @@ public class AuthenticationEndpoint {
             );
             SecurityContextHolder.getContext().setAuthentication(authentication);
 
+            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+            String roles = userDetails.getAuthorities().stream()
+                    .map(GrantedAuthority::getAuthority)
+                    .collect(Collectors.joining(","));
+
             long now = System.currentTimeMillis();
             String jwt = Jwts.builder()
                     .setSubject(user.getLogin())
-                    .claim("roles", authentication.getAuthorities().stream()
-                            .map(GrantedAuthority::getAuthority)
-                            .collect(Collectors.toList()))
+                    .claim("roles", roles)
                     .setIssuedAt(new Date(now))
                     .setExpiration(new Date(now + jwtExpirationInMillis))
                     .signWith(SignatureAlgorithm.HS256, jwtSecret)
                     .compact();
 
-            return ResponseEntity.ok().body(Collections.singletonMap("token", jwt));
+            Map<String, Object> response = new HashMap<>();
+            response.put("token", jwt);
+            response.put("roles", roles.split(","));
+            return ResponseEntity.ok().body(response);
         } catch (AuthenticationException e) {
             Map<String, String> errorResponse = new HashMap<>();
             errorResponse.put("error", "Unauthorized");
@@ -68,5 +74,4 @@ public class AuthenticationEndpoint {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).contentType(MediaType.APPLICATION_JSON).body(errorResponse);
         }
     }
-
 }
