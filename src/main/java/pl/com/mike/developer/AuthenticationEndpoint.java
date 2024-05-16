@@ -35,7 +35,10 @@ public class AuthenticationEndpoint {
 
     private final Logger log = org.slf4j.LoggerFactory.getLogger(AuthenticationEndpoint.class);
 
-    public AuthenticationEndpoint(AuthenticationManager authenticationManager, @Value("${jwt.secret}") String jwtSecret, @Value("${jwt.expiration}") long jwtExpirationInMillis) {
+    public AuthenticationEndpoint(AuthenticationManager authenticationManager,
+                                  @Value("${jwt.secret}") String jwtSecret,
+                                  @Value("${jwt.expiration}")
+                                  long jwtExpirationInMillis) {
         this.authenticationManager = authenticationManager;
         this.jwtSecret = jwtSecret;
         this.jwtExpirationInMillis = jwtExpirationInMillis;
@@ -71,7 +74,9 @@ public class AuthenticationEndpoint {
             Map<String, String> errorResponse = new HashMap<>();
             errorResponse.put("error", "Unauthorized");
             errorResponse.put("message", "Invalid username or password");
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).contentType(MediaType.APPLICATION_JSON).body(errorResponse);
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .body(errorResponse);
         }
     }
 }
