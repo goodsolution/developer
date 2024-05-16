@@ -6,13 +6,13 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import pl.com.mike.developer.domain.developer.User;
 import pl.com.mike.developer.logic.developer.UserRepository;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.Collection;
+import java.util.stream.Collectors;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
@@ -26,13 +26,19 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     }
 
     @Override
-    @Transactional(readOnly = true)
-    public UserDetails loadUserByUsername(String login) {
-        User user = userRepository.getUserByLogin(login).orElseThrow(() -> new RuntimeException("User not found: " + login));
-        logger.info("Loaded user: {} with password: {}", user.getLogin(), user.getPasswordHash());
-        Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
-        grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_DEVELOPER"));
-        return new org.springframework.security.core.userdetails.User(user.getLogin(), user.getPasswordHash(), grantedAuthorities);
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User user = userRepository.getUserByLogin(username)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+
+        Collection<GrantedAuthority> authorities = user.getUserAuthorities().stream()
+                .map(role -> new SimpleGrantedAuthority(role.getAuthority()))
+                .collect(Collectors.toList());
+
+        return new org.springframework.security.core.userdetails.User(
+                user.getLogin(),
+                user.getPasswordHash(),
+                authorities
+        );
     }
 
 }

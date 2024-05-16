@@ -11,6 +11,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,6 +23,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("api/auth/")
@@ -50,8 +52,11 @@ public class AuthenticationEndpoint {
             long now = System.currentTimeMillis();
             String jwt = Jwts.builder()
                     .setSubject(user.getLogin())
+                    .claim("roles", authentication.getAuthorities().stream()
+                            .map(GrantedAuthority::getAuthority)
+                            .collect(Collectors.toList()))
                     .setIssuedAt(new Date(now))
-                    .setExpiration(new Date(now + jwtExpirationInMillis)) // Sets expiration to 24 hours
+                    .setExpiration(new Date(now + jwtExpirationInMillis))
                     .signWith(SignatureAlgorithm.HS256, jwtSecret)
                     .compact();
 
@@ -63,7 +68,5 @@ public class AuthenticationEndpoint {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).contentType(MediaType.APPLICATION_JSON).body(errorResponse);
         }
     }
-
-
 
 }

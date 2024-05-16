@@ -1,6 +1,8 @@
 package pl.com.mike.developer.domain.developer;
 
 import java.time.LocalDateTime;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 
 public class UserData {
@@ -8,6 +10,7 @@ public class UserData {
     private Long id;
     private String login;
     private String passwordHash;
+    private Set<String> roles;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private LocalDateTime deletedAt;
@@ -18,6 +21,9 @@ public class UserData {
     public UserData(User user) {
         this.login = user.getLogin();
         this.passwordHash = user.getPasswordHash();
+        this.roles = user.getUserAuthorities().stream()
+                .map(UserAuthority::getAuthority)
+                .collect(Collectors.toSet());
     }
 
     public Long getId() {
@@ -66,6 +72,14 @@ public class UserData {
 
     public void setDeletedAt(LocalDateTime deletedAt) {
         this.deletedAt = deletedAt;
+    }
+
+    public Set<String> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<String> roles) {
+        this.roles = roles;
     }
 
     public User toUser() {
