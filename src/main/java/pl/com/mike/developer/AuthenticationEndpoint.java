@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pl.com.mike.developer.domain.developer.UserData;
 
+import java.nio.charset.StandardCharsets;
+import java.util.Base64;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -47,8 +49,12 @@ public class AuthenticationEndpoint {
     @PostMapping("login")
     public ResponseEntity<?> login(@RequestBody UserData user) {
         try {
+
+            String decodedPassword = new String(Base64.getDecoder().decode(user.getPasswordHash()), StandardCharsets.UTF_8);
+            log.info("Decoded password: {}", decodedPassword);
+
             Authentication authentication = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(user.getLogin(), user.getPasswordHash())
+                    new UsernamePasswordAuthenticationToken(user.getLogin(), decodedPassword)
             );
             SecurityContextHolder.getContext().setAuthentication(authentication);
 
@@ -77,6 +83,10 @@ public class AuthenticationEndpoint {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                     .contentType(MediaType.APPLICATION_JSON)
                     .body(errorResponse);
+        } catch (Exception e) {
+            log.error("Error during decryption", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
+
 }

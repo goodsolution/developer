@@ -3,6 +3,7 @@ import {AuthenticationService} from "../../../core/services/authentication.servi
 import {Router} from "@angular/router";
 import {Subject, takeUntil} from "rxjs";
 import {TranslateService} from "@ngx-translate/core";
+import * as CryptoJS from 'crypto-js';
 
 @Component({
   selector: 'app-login',
@@ -37,7 +38,11 @@ export class LoginComponent implements OnInit, OnDestroy {
   onLogin(): void {
     this.errorMessage = ''; // Clear previous error messages
     console.log('Attempting login with', this.username);
-    this.authService.login(this.username, this.password).pipe(
+
+    const encryptedPassword = btoa(this.password.trim());
+    console.log('Encrypted Password:', encryptedPassword);
+
+    this.authService.login(this.username, encryptedPassword).pipe(
       takeUntil(this.unsubscribe$)
     ).subscribe({
       next: (token) => {
