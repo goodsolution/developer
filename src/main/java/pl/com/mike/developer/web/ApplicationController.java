@@ -98,9 +98,13 @@ public class ApplicationController {
         return "home";
     }
 
+//    @GetMapping({"/", "/home"})
+//    public String home(Model model) {
+//        return themePath + "/home-page";
+//    }
     @GetMapping({"/", "/home"})
-    public String home(Model model) {
-        return themePath + "/home-page";
+    public String home() {
+        return "forward:/angular/index.html";
     }
 
 //    @GetMapping({ "/developer/contact"})

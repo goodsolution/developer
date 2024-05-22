@@ -32,7 +32,8 @@ public class WebConfig implements WebMvcConfigurer {
                         "/angular/**",
                         "/assets/i18n/**",
                         "/assets/img/domdevelopment/**",
-                        "/assets/img/antal/**"
+                        "/assets/img/antal/**",
+                        "/**"
                 )
                 .addResourceLocations(
                         "classpath:/static/img/",
@@ -43,7 +44,8 @@ public class WebConfig implements WebMvcConfigurer {
                         "classpath:/static/angular/",
                         "classpath:/static/angular/assets/i18n/",
                         "classpath:/static/angular/assets/img/domdevelopment/",
-                        "classpath:/static/angular/assets/img/antal/"
+                        "classpath:/static/angular/assets/img/antal/",
+                        "classpath:/static/"
                 );
     }
 
