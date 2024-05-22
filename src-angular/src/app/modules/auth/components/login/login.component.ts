@@ -36,7 +36,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   onLogin(): void {
-    this.errorMessage = ''; // Clear previous error messages
+    this.errorMessage = '';
     console.log('Attempting login with', this.username);
 
     const encryptedPassword = btoa(this.password.trim());

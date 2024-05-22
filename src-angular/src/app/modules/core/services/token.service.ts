@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {jwtDecode} from "jwt-decode";
 
 
@@ -7,18 +7,23 @@ import {jwtDecode} from "jwt-decode";
 })
 export class TokenService {
   private readonly TOKEN_KEY = 'auth_token';
-  private readonly ROLES_KEY = 'auth_roles';
-
-  constructor() { }
 
   saveToken(token: string): void {
     localStorage.setItem(this.TOKEN_KEY, token);
-    const roles = this.extractRolesFromToken(token);
-    this.saveRoles(roles);
   }
 
   getToken(): string | null {
     return localStorage.getItem(this.TOKEN_KEY);
+  }
+
+  getRolesFromToken(token: string): string[] {
+    try {
+      const decoded: any = jwtDecode(token);
+      return decoded.roles || [];
+    } catch (error) {
+      console.error('Failed to decode token and extract roles', error);
+      return [];
+    }
   }
 
   isTokenExpired(token: string): boolean {
@@ -35,29 +40,6 @@ export class TokenService {
 
   clearToken(): void {
     localStorage.removeItem(this.TOKEN_KEY);
-    this.clearRoles();
   }
 
-  public saveRoles(roles: string[]): void {
-    localStorage.setItem(this.ROLES_KEY, JSON.stringify(roles));
-  }
-
-  getRoles(): string[] {
-    const roles = localStorage.getItem(this.ROLES_KEY);
-    return roles ? JSON.parse(roles) : [];
-  }
-
-  public clearRoles(): void {
-    localStorage.removeItem(this.ROLES_KEY);
-  }
-
-  private extractRolesFromToken(token: string): string[] {
-    try {
-      const decoded: any = jwtDecode(token);
-      return decoded.roles || [];
-    } catch (error) {
-      console.error('Failed to decode token and extract roles', error);
-      return [];
-    }
-  }
 }

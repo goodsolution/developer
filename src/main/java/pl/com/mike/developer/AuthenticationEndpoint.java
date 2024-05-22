@@ -39,8 +39,7 @@ public class AuthenticationEndpoint {
 
     public AuthenticationEndpoint(AuthenticationManager authenticationManager,
                                   @Value("${jwt.secret}") String jwtSecret,
-                                  @Value("${jwt.expiration}")
-                                  long jwtExpirationInMillis) {
+                                  @Value("${jwt.expiration}") long jwtExpirationInMillis) {
         this.authenticationManager = authenticationManager;
         this.jwtSecret = jwtSecret;
         this.jwtExpirationInMillis = jwtExpirationInMillis;
@@ -74,8 +73,8 @@ public class AuthenticationEndpoint {
 
             Map<String, Object> response = new HashMap<>();
             response.put("token", jwt);
-            response.put("roles", roles.split(","));
             return ResponseEntity.ok().body(response);
+
         } catch (AuthenticationException e) {
             Map<String, String> errorResponse = new HashMap<>();
             errorResponse.put("error", "Unauthorized");

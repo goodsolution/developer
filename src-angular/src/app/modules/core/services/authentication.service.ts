@@ -28,10 +28,9 @@ export class AuthenticationService {
         headers: {'Content-Type': 'application/json'}
       }).pipe(
       map(response => {
-        const {token, roles} = response;
+        const {token} = response;
         if (token) {
           this.tokenService.saveToken(token);
-          this.tokenService.saveRoles(roles);
           this.loggedIn.next(true);
           return token;
         } else {
@@ -48,7 +47,6 @@ export class AuthenticationService {
 
   logout(): void {
     this.tokenService.clearToken();
-    this.tokenService.clearRoles();
     this.loggedIn.next(false);
     this.router.navigate(['/login']);
   }
@@ -62,11 +60,16 @@ export class AuthenticationService {
   }
 
   hasRole(role: string): boolean {
-    const roles = this.tokenService.getRoles();
-    return roles.includes(role);
+    const token = this.tokenService.getToken();
+    if (token) {
+      const roles = this.tokenService.getRolesFromToken(token);
+      return roles.includes(role);
+    }
+    return false;
   }
 
   private hasToken(): boolean {
     return !!this.tokenService.getToken();
   }
+
 }
