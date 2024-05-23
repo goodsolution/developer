@@ -1,4 +1,4 @@
-package pl.com.mike.developer.web;
+package pl.com.mike.developer.web.developer;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
