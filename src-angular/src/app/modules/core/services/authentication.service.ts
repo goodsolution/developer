@@ -68,8 +68,18 @@ export class AuthenticationService {
     return false;
   }
 
+  getLoggedInUsername(): string | null {
+    const token = this.tokenService.getToken();
+    if (token) {
+      return this.tokenService.getUsernameFromToken(token);
+    }
+    return null;
+  }
+
   private hasToken(): boolean {
     return !!this.tokenService.getToken();
   }
+
+
 
 }

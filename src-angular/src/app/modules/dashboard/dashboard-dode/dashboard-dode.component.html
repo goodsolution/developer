@@ -1,55 +1,135 @@
-<div class="dashboard">
-  <h1>{{ 'dashboard.title' | translate }}</h1>
-  <div class="dashboard-sections">
-    <section class="dashboard-section">
-      <button class="dashboard-header" (click)="toggleDeveloperSection()" (keydown)="handleKey($event)">
-        {{ 'dashboard.developers' | translate }}
-      </button>
-      <div *ngIf="showDeveloperSection" class="developer-container">
-        <ul>
-          <li *ngFor="let developer of developers">
-            <button (click)="selectDeveloper(developer)"
-                    (keydown)="onDeveloperKeydown($event, developer)"
-                    class="developer-item">
-              {{ developer.name }}
-            </button>
-          </li>
-        </ul>
-        <div *ngIf="selectedDeveloper" class="developer-details">
-          <h3>Developer Details</h3>
-          <form (ngSubmit)="saveDeveloper()">
-            <div>
-              <label for="name">Name:</label>
-              <input id="name" [(ngModel)]="selectedDeveloper.name" name="name">
-            </div>
-            <div>
-              <label for="address">Address:</label>
-              <input id="address" [(ngModel)]="selectedDeveloper.addressStreet" name="address">
-            </div>
-            <!-- Add other fields as necessary -->
-            <button type="submit">Save</button>
-            <button type="button" (click)="cancelEdit()">Cancel</button>
-          </form>
-        </div>
+<div class="admin-panel">
+  <header class="admin-header">
+    <div class="logo">
+      <h1>Developer Panel</h1>
+    </div>
+    <div class="user-info">
+      <span>Logged User: {{ loggedInUsername }}</span>
+    </div>
+  </header>
+
+  <div class="admin-body">
+    <nav class="sidebar">
+      <ul>
+        <li (click)="selectSection('developer')">Developer</li>
+        <li (click)="selectSection('investment')">Investment</li>
+        <li (click)="selectSection('building')">Building</li>
+        <li (click)="selectSection('premise')">Premise</li>
+      </ul>
+    </nav>
+
+    <main class="content">
+      <div *ngIf="selectedSection === 'developer'">
+        <h2>Developer</h2>
+        <table>
+          <thead>
+          <tr>
+            <th>Name</th>
+            <th>Address Country</th>
+            <th>Address Street</th>
+            <th>Building Number</th>
+            <th>Postal Code</th>
+            <th>Details</th>
+            <th>Delete</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let developer of developers">
+            <td>{{ developer.name }}</td>
+            <td>{{ developer.addressCountry }}</td>
+            <td>{{ developer.addressStreet }}</td>
+            <td>{{ developer.addressBuildingNumber }}</td>
+            <td>{{ developer.addressPostalCode }}</td>
+<!--            <td><button (click)="viewDetails(developer)">Details</button></td>-->
+<!--            <td><button (click)="deleteDeveloper(developer)">Delete</button></td>-->
+          </tr>
+          </tbody>
+        </table>
       </div>
-    </section>
-    <section class="dashboard-section" *ngIf="authService.hasRole('ROLE_DEVELOPER')">
-      <button class="dashboard-header">
-        {{ 'dashboard.investments' | translate }}
-      </button>
-      <!-- Content for managing investments -->
-    </section>
-    <section class="dashboard-section" *ngIf="authService.hasRole('ROLE_DEVELOPER')">
-      <button class="dashboard-header">
-        {{ 'dashboard.buildings' | translate }}
-      </button>
-      <!-- Content for managing buildings -->
-    </section>
-    <section class="dashboard-section" *ngIf="authService.hasRole('ROLE_DEVELOPER')">
-      <button class="dashboard-header">
-        {{ 'dashboard.premises' | translate }}
-      </button>
-      <!-- Content for managing premises -->
-    </section>
+
+      <div *ngIf="selectedSection === 'investment'">
+        <h2>Investment</h2>
+        <table>
+          <thead>
+          <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Address Country</th>
+            <th>Address Street</th>
+            <th>Details</th>
+            <th>Delete</th>
+          </tr>
+          </thead>
+          <tbody>
+<!--          <tr *ngFor="let investment of investments">-->
+<!--            <td>{{ investment.name }}</td>-->
+<!--            <td>{{ investment.description }}</td>-->
+<!--            <td>{{ investment.addressCountry }}</td>-->
+<!--            <td>{{ investment.addressStreet }}</td>-->
+<!--            <td><button (click)="viewDetails(investment)">Details</button></td>-->
+<!--            <td><button (click)="deleteInvestment(investment)">Delete</button></td>-->
+<!--          </tr>-->
+          </tbody>
+        </table>
+      </div>
+
+      <div *ngIf="selectedSection === 'building'">
+        <h2>Building</h2>
+        <table>
+          <thead>
+          <tr>
+            <th>Name</th>
+            <th>Address Country</th>
+            <th>Address Street</th>
+            <th>Building Number</th>
+            <th>Postal Code</th>
+            <th>Details</th>
+            <th>Delete</th>
+          </tr>
+          </thead>
+          <tbody>
+<!--          <tr *ngFor="let building of buildings">-->
+<!--            <td>{{ building.name }}</td>-->
+<!--            <td>{{ building.addressCountry }}</td>-->
+<!--            <td>{{ building.addressStreet }}</td>-->
+<!--            <td>{{ building.addressBuildingNumber }}</td>-->
+<!--            <td>{{ building.addressPostalCode }}</td>-->
+<!--            <td><button (click)="viewDetails(building)">Details</button></td>-->
+<!--            <td><button (click)="deleteBuilding(building)">Delete</button></td>-->
+<!--          </tr>-->
+          </tbody>
+        </table>
+      </div>
+
+      <div *ngIf="selectedSection === 'premise'">
+        <h2>Premise</h2>
+        <table>
+          <thead>
+          <tr>
+            <th>Type</th>
+            <th>Number</th>
+            <th>Floor</th>
+            <th>Surface Per Sq Meter</th>
+            <th>Price Per Sq Meter</th>
+            <th>Total Price</th>
+            <th>Details</th>
+            <th>Delete</th>
+          </tr>
+          </thead>
+          <tbody>
+<!--          <tr *ngFor="let premise of premises">-->
+<!--            <td>{{ premise.type }}</td>-->
+<!--            <td>{{ premise.number }}</td>-->
+<!--            <td>{{ premise.floor }}</td>-->
+<!--            <td>{{ premise.surfacePerSqMeter }}</td>-->
+<!--            <td>{{ premise.pricePerSqMeter }}</td>-->
+<!--            <td>{{ premise.totalPrice }}</td>-->
+<!--            <td><button (click)="viewDetails(premise)">Details</button></td>-->
+<!--            <td><button (click)="deletePremise(premise)">Delete</button></td>-->
+<!--          </tr>-->
+          </tbody>
+        </table>
+      </div>
+    </main>
   </div>
 </div>

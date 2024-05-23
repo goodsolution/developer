@@ -10,9 +10,12 @@ import {AuthenticationService} from "../../core/services/authentication.service"
   styleUrls: ['./dashboard-dode.component.scss']
 })
 export class DashboardDodeComponent implements OnInit {
+
   developers: DeveloperResponse[] = [];
   selectedDeveloper: DeveloperResponse | null = null;
   showDeveloperSection: boolean = false;
+  selectedSection: string = 'developer';
+  loggedInUsername: string | null = null;
 
   constructor(
     private developerService: DeveloperService,
@@ -21,6 +24,11 @@ export class DashboardDodeComponent implements OnInit {
 
   ngOnInit(): void {
     this.fetchDevelopers();
+    this.loggedInUsername = this.authService.getLoggedInUsername();
+  }
+
+  selectSection(section: string): void {
+    this.selectedSection = section;
   }
 
   fetchDevelopers(): void {

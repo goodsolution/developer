@@ -42,4 +42,14 @@ export class TokenService {
     localStorage.removeItem(this.TOKEN_KEY);
   }
 
+  getUsernameFromToken(token: string): string | null {
+    try {
+      const decoded: any = jwtDecode(token);
+      return decoded.sub || null; // 'sub' is the subject, usually the username
+    } catch (error) {
+      console.error('Failed to decode token and extract username', error);
+      return null;
+    }
+  }
+
 }
