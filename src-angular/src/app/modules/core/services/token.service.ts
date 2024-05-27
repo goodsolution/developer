@@ -7,6 +7,53 @@ import {jwtDecode} from "jwt-decode";
 })
 export class TokenService {
   private readonly TOKEN_KEY = 'auth_token';
+  private readonly SECRET_KEY = '2B8gYvT3QUHvWaUQ1UJmbksIfBhPfA3PIvnOeGyvXzI='; // Base64 encoded key
+
+  async encrypt(data: string): Promise<string> {
+    const key = await this.getKey();
+    const iv = window.crypto.getRandomValues(new Uint8Array(12)); // 12 bytes IV for GCM mode
+
+    const encoder = new TextEncoder();
+    const encodedData = encoder.encode(data);
+
+    const encryptedData = await window.crypto.subtle.encrypt(
+      {
+        name: 'AES-GCM',
+        iv: iv
+      },
+      key,
+      encodedData
+    );
+
+    const combined = new Uint8Array(iv.length + encryptedData.byteLength);
+    combined.set(iv, 0);
+    combined.set(new Uint8Array(encryptedData), iv.length);
+
+    const encryptedString = this.arrayBufferToBase64(combined.buffer);
+    console.log('Encrypted Password:', encryptedString); // Log encrypted password
+    return encryptedString;
+  }
+
+  private async getKey(): Promise<CryptoKey> {
+    const rawKey = Uint8Array.from(atob(this.SECRET_KEY), c => c.charCodeAt(0));
+    return window.crypto.subtle.importKey(
+      'raw',
+      rawKey,
+      { name: 'AES-GCM' },
+      false,
+      ['encrypt', 'decrypt']
+    );
+  }
+
+  private arrayBufferToBase64(buffer: ArrayBuffer): string {
+    let binary = '';
+    const bytes = new Uint8Array(buffer);
+    const len = bytes.byteLength;
+    for (let i = 0; i < len; i++) {
+      binary += String.fromCharCode(bytes[i]);
+    }
+    return window.btoa(binary);
+  }
 
   saveToken(token: string): void {
     localStorage.setItem(this.TOKEN_KEY, token);

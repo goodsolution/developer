@@ -35,14 +35,11 @@ export class LoginComponent implements OnInit, OnDestroy {
     });
   }
 
-  onLogin(): void {
+  async onLogin(): Promise<void> {
     this.errorMessage = '';
     console.log('Attempting login with', this.username);
 
-    const encryptedPassword = btoa(this.password.trim());
-    console.log('Encrypted Password:', encryptedPassword);
-
-    this.authService.login(this.username, encryptedPassword).pipe(
+    this.authService.login(this.username, this.password).pipe(
       takeUntil(this.unsubscribe$)
     ).subscribe({
       next: (token) => {
