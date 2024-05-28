@@ -17,12 +17,9 @@ export class TokenService {
     await this.encryptionService.fetchEncryptionKey();
 
     const key = await this.getKey(this.encryptionService.getEncryptionKey());
-
-    const iv = window.crypto.getRandomValues(new Uint8Array(12)); // 12 bytes IV for GCM mode
-
+    const iv = window.crypto.getRandomValues(new Uint8Array(12));
     const encoder = new TextEncoder();
     const encodedData = encoder.encode(data);
-
     const encryptedData = await window.crypto.subtle.encrypt(
       {
         name: 'AES-GCM',
@@ -31,14 +28,10 @@ export class TokenService {
       key,
       encodedData
     );
-
     const combined = new Uint8Array(iv.length + encryptedData.byteLength);
     combined.set(iv, 0);
     combined.set(new Uint8Array(encryptedData), iv.length);
-
-    const encryptedString = this.arrayBufferToBase64(combined.buffer);
-    console.log('Encrypted Password:', encryptedString); // Log encrypted password
-    return encryptedString;
+    return this.arrayBufferToBase64(combined.buffer);
   }
 
   private async getKey(key: string): Promise<CryptoKey> {
@@ -83,7 +76,7 @@ export class TokenService {
   isTokenExpired(token: string): boolean {
     try {
       const decoded: any = jwtDecode(token);
-      const now = Date.now() / 1000; // Current time in seconds since epoch
+      const now = Date.now() / 1000;
       console.log('Token expiration:', decoded.exp, 'Current time:', now);
       return decoded.exp < now;
     } catch (error) {
@@ -99,7 +92,7 @@ export class TokenService {
   getUsernameFromToken(token: string): string | null {
     try {
       const decoded: any = jwtDecode(token);
-      return decoded.sub || null; // 'sub' is the subject, usually the username
+      return decoded.sub || null;
     } catch (error) {
       console.error('Failed to decode token and extract username', error);
       return null;
