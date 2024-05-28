@@ -13,8 +13,11 @@ public class ApplicationConfig {
     @Value("${system.code}")
     private String systemCode;
 
-    @Value("${system.prefix}")
+    @Value("${properties.prefix}")
     private String systemPrefix;
+
+    @Value("${system.logoDeveloperEndpoint}")
+    private String logoDeveloperEndpoint;
 
     public String getSystemPrefix() {
         return systemPrefix;
@@ -22,6 +25,10 @@ public class ApplicationConfig {
 
     public String getSystemCode() {
         return systemCode;
+    }
+
+    public String getLogoDeveloperEndpoint() {
+        return logoDeveloperEndpoint;
     }
 
 }

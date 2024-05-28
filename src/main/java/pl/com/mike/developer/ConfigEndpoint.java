@@ -81,7 +81,6 @@ public class ConfigEndpoint {
             logger.error("Error loading properties file", ex);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
-        logger.info("Loaded properties: {}", prop);
         return ResponseEntity.ok(propertyConfigService.getFilteredConfigProperties(prop));
     }
 
