@@ -62,7 +62,9 @@ public class DeveloperEndpoint {
     public DevelopersGetResponse getDeveloperByCode() {
         return new DevelopersGetResponse(
                 ConverterToResponse.developerDataToResponse(
-                        developerService.getDeveloperByCode(new DeveloperSearchFilter(applicationConfig.getSystemCode()))
+                        developerService.getDeveloperByCode(
+                                new DeveloperSearchFilter(applicationConfig.getSystemCode())
+                        )
                 )
         );
     }

@@ -1,9 +1,9 @@
 package pl.com.mike.developer.config.developer;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
+import org.springframework.context.annotation.Configuration;
 
-@Component
+@Configuration
 public class EncryptionConfig {
     @Value("${aes}")
     private String aes;
