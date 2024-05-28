@@ -1,16 +1,24 @@
 import {Injectable} from '@angular/core';
 import {jwtDecode} from "jwt-decode";
+import {EncryptionService} from "./encryption.service";
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class TokenService {
+
   private readonly TOKEN_KEY = 'auth_token';
-  private readonly SECRET_KEY = '2B8gYvT3QUHvWaUQ1UJmbksIfBhPfA3PIvnOeGyvXzI='; // Base64 encoded key
+  // private readonly SECRET_KEY = '2B8gYvT3QUHvWaUQ1UJmbksIfBhPfA3PIvnOeGyvXzI='; // Base64 encoded key
+
+  constructor(private encryptionService: EncryptionService) {}
+
 
   async encrypt(data: string): Promise<string> {
-    const key = await this.getKey();
+    await this.encryptionService.fetchEncryptionKey();
+
+    const key = await this.getKey(this.encryptionService.getEncryptionKey());
+
     const iv = window.crypto.getRandomValues(new Uint8Array(12)); // 12 bytes IV for GCM mode
 
     const encoder = new TextEncoder();
@@ -34,8 +42,8 @@ export class TokenService {
     return encryptedString;
   }
 
-  private async getKey(): Promise<CryptoKey> {
-    const rawKey = Uint8Array.from(atob(this.SECRET_KEY), c => c.charCodeAt(0));
+  private async getKey(key: string): Promise<CryptoKey> {
+    const rawKey = Uint8Array.from(atob(key), c => c.charCodeAt(0));
     return window.crypto.subtle.importKey(
       'raw',
       rawKey,

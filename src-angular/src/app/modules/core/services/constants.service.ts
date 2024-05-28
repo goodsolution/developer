@@ -11,6 +11,7 @@ export class ConstantsService {
   readonly API_INVESTMENTS_ENDPOINT = `${this.API_BASE_URL}/investments`;
   readonly API_LOGIN_ENDPOINT = `${this.API_BASE_URL}/auth/login`;
   readonly ERROR_MESSAGE = 'An error has occurred';
+  readonly API_ENCRYPTION_KEY = `${this.API_BASE_URL}/auth/encryption`;
   readonly attributes = {
     SALES_STATUS: 'salesStatus',
     TECHNICAL_STATUS: 'technicalStatus',
@@ -39,6 +40,9 @@ export class ConstantsService {
   }
   getApiLoginEndpoint(): string {
     return this.API_LOGIN_ENDPOINT;
+  }
+  getApiEncryptionKeyEndpoint(): string {
+    return this.API_ENCRYPTION_KEY;
   }
 
 }

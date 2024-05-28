@@ -13,10 +13,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import pl.com.mike.developer.config.developer.EncryptionConfig;
 import pl.com.mike.developer.config.developer.JwtConfig;
 import pl.com.mike.developer.domain.developer.UserData;
@@ -47,6 +44,11 @@ public class AuthenticationEndpoint {
         this.authenticationManager = authenticationManager;
         this.jwtConfig = jwtConfig;
         this.encryptionConfig = encryptionConfig;
+    }
+
+    @GetMapping("encryption")
+    public ResponseEntity<String> getEncryptionKey() {
+        return ResponseEntity.ok(encryptionConfig.getKey());
     }
 
     @PostMapping("login")
