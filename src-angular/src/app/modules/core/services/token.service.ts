@@ -9,10 +9,9 @@ import {EncryptionService} from "./encryption.service";
 export class TokenService {
 
   private readonly TOKEN_KEY = 'auth_token';
-  // private readonly SECRET_KEY = '2B8gYvT3QUHvWaUQ1UJmbksIfBhPfA3PIvnOeGyvXzI='; // Base64 encoded key
 
-  constructor(private encryptionService: EncryptionService) {}
-
+  constructor(private encryptionService: EncryptionService) {
+  }
 
   async encrypt(data: string): Promise<string> {
     await this.encryptionService.fetchEncryptionKey();
@@ -47,7 +46,7 @@ export class TokenService {
     return window.crypto.subtle.importKey(
       'raw',
       rawKey,
-      { name: 'AES-GCM' },
+      {name: 'AES-GCM'},
       false,
       ['encrypt', 'decrypt']
     );

@@ -18,7 +18,6 @@ export class EncryptionService {
           this.constantsService.getApiEncryptionKeyEndpoint(), {responseType: 'text'}
         )
       );
-      console.log('Fetched Encryption Key:', this.encryptionKey);
       this.validateBase64(this.encryptionKey);
     } catch (error) {
       console.error('Failed to fetch encryption key', error);
