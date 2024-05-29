@@ -1,4 +1,4 @@
-package pl.com.mike.developer.config;
+package pl.com.mike.developer.config.developer;
 
 import org.springframework.aop.Advisor;
 import org.springframework.aop.aspectj.AspectJExpressionPointcut;

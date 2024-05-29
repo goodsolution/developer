@@ -1,7 +1,5 @@
-package pl.com.mike.developer.web;
+package pl.com.mike.developer;
 
-import pl.com.mike.developer.DeveloperGetResponse;
-import pl.com.mike.developer.PremiseGetResponse;
 import pl.com.mike.developer.domain.developer.DeveloperData;
 import pl.com.mike.developer.domain.developer.PremiseData;
 

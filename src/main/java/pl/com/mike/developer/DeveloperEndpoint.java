@@ -8,7 +8,6 @@ import pl.com.mike.developer.logic.developer.DeveloperSearchFilter;
 import pl.com.mike.developer.logic.developer.DeveloperService;
 import pl.com.mike.developer.logic.developer.PremiseSearchFilter;
 import pl.com.mike.developer.logic.developer.PremiseService;
-import pl.com.mike.developer.web.ConverterToResponse;
 
 @RestController
 @RequestMapping("api/")

@@ -1,4 +1,4 @@
-package pl.com.mike.developer.config;
+package pl.com.mike.developer.config.developer;
 
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;

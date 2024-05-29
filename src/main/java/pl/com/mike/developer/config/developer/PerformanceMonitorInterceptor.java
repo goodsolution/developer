@@ -1,4 +1,4 @@
-package pl.com.mike.developer.config;
+package pl.com.mike.developer.config.developer;
 
 import io.micrometer.core.lang.NonNull;
 import org.aopalliance.intercept.MethodInvocation;

@@ -1,4 +1,4 @@
-package pl.com.mike.developer.config;
+package pl.com.mike.developer.config.developer;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
