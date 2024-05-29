@@ -1,7 +1,9 @@
 package pl.com.mike.developer;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.com.mike.developer.config.developer.ApplicationConfig;
+import pl.com.mike.developer.domain.developer.DeveloperData;
 import pl.com.mike.developer.logic.developer.DeveloperSearchFilter;
 import pl.com.mike.developer.logic.developer.DeveloperService;
 import pl.com.mike.developer.logic.developer.PremiseSearchFilter;
@@ -54,8 +56,7 @@ public class DeveloperEndpoint {
         return new DevelopersGetResponse(
                 ConverterToResponse.developersDataToResponse(
                         developerService.getDeveloperById(new DeveloperSearchFilter(id))
-                )
-        );
+                ));
     }
 
     @GetMapping("developers/code")
@@ -65,8 +66,25 @@ public class DeveloperEndpoint {
                         developerService.getDeveloperByCode(
                                 new DeveloperSearchFilter(applicationConfig.getSystemCode())
                         )
-                )
-        );
+                ));
+    }
+
+    @PostMapping("developers/register")
+    public ResponseEntity<?> registerDeveloper(@RequestBody DeveloperData developerData) {
+        DeveloperData developer = developerService.createDeveloper(developerData);
+        return ResponseEntity.ok(developer);
+    }
+
+    @PutMapping("developers/{id}")
+    public ResponseEntity<?> updateDeveloper(@PathVariable Long id, @RequestBody DeveloperData developerData) {
+        DeveloperData developer = developerService.updateDeveloper(id, developerData);
+        return ResponseEntity.ok(developer);
+    }
+
+    @DeleteMapping("developers/{id}")
+    public ResponseEntity<Void> softDeleteDeveloper(@PathVariable Long id) {
+        developerService.softDeleteDeveloper(id);
+        return ResponseEntity.noContent().build();
     }
 
 }

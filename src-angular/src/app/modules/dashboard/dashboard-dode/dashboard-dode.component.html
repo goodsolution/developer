@@ -21,6 +21,7 @@
     <main class="content">
       <div *ngIf="selectedSection === 'developer'">
         <h2>Developer</h2>
+        <button (click)="addNewDeveloper()">Add New Developer</button>
         <table>
           <thead>
           <tr>
@@ -29,7 +30,7 @@
             <th>Address Street</th>
             <th>Building Number</th>
             <th>Postal Code</th>
-            <th>Details</th>
+            <th>Edit</th>
             <th>Delete</th>
           </tr>
           </thead>
@@ -40,96 +41,172 @@
             <td>{{ developer.addressStreet }}</td>
             <td>{{ developer.addressBuildingNumber }}</td>
             <td>{{ developer.addressPostalCode }}</td>
-<!--            <td><button (click)="viewDetails(developer)">Details</button></td>-->
-<!--            <td><button (click)="deleteDeveloper(developer)">Delete</button></td>-->
+            <td><button (click)="editDeveloper(developer)">Edit</button></td>
+            <td><button (click)="deleteDeveloper(developer)">Delete</button></td>
           </tr>
           </tbody>
         </table>
-      </div>
 
-      <div *ngIf="selectedSection === 'investment'">
-        <h2>Investment</h2>
-        <table>
-          <thead>
-          <tr>
-            <th>Name</th>
-            <th>Description</th>
-            <th>Address Country</th>
-            <th>Address Street</th>
-            <th>Details</th>
-            <th>Delete</th>
-          </tr>
-          </thead>
-          <tbody>
-<!--          <tr *ngFor="let investment of investments">-->
-<!--            <td>{{ investment.name }}</td>-->
-<!--            <td>{{ investment.description }}</td>-->
-<!--            <td>{{ investment.addressCountry }}</td>-->
-<!--            <td>{{ investment.addressStreet }}</td>-->
-<!--            <td><button (click)="viewDetails(investment)">Details</button></td>-->
-<!--            <td><button (click)="deleteInvestment(investment)">Delete</button></td>-->
-<!--          </tr>-->
-          </tbody>
-        </table>
-      </div>
+        <div *ngIf="selectedDeveloper">
+          <h3>{{ isNewDeveloper ? 'Add New Developer' : 'Edit Developer' }}</h3>
+          <form (ngSubmit)="isNewDeveloper ? saveNewDeveloper() : updateDeveloper()">
+            <label for="name">Name:</label>
+            <input id="name" [(ngModel)]="selectedDeveloper.name" name="name" required>
 
-      <div *ngIf="selectedSection === 'building'">
-        <h2>Building</h2>
-        <table>
-          <thead>
-          <tr>
-            <th>Name</th>
-            <th>Address Country</th>
-            <th>Address Street</th>
-            <th>Building Number</th>
-            <th>Postal Code</th>
-            <th>Details</th>
-            <th>Delete</th>
-          </tr>
-          </thead>
-          <tbody>
-<!--          <tr *ngFor="let building of buildings">-->
-<!--            <td>{{ building.name }}</td>-->
-<!--            <td>{{ building.addressCountry }}</td>-->
-<!--            <td>{{ building.addressStreet }}</td>-->
-<!--            <td>{{ building.addressBuildingNumber }}</td>-->
-<!--            <td>{{ building.addressPostalCode }}</td>-->
-<!--            <td><button (click)="viewDetails(building)">Details</button></td>-->
-<!--            <td><button (click)="deleteBuilding(building)">Delete</button></td>-->
-<!--          </tr>-->
-          </tbody>
-        </table>
-      </div>
+            <label for="addressCountry">Address Country:</label>
+            <input id="addressCountry" [(ngModel)]="selectedDeveloper.addressCountry" name="addressCountry" required>
 
-      <div *ngIf="selectedSection === 'premise'">
-        <h2>Premise</h2>
-        <table>
-          <thead>
-          <tr>
-            <th>Type</th>
-            <th>Number</th>
-            <th>Floor</th>
-            <th>Surface Per Sq Meter</th>
-            <th>Price Per Sq Meter</th>
-            <th>Total Price</th>
-            <th>Details</th>
-            <th>Delete</th>
-          </tr>
-          </thead>
-          <tbody>
-<!--          <tr *ngFor="let premise of premises">-->
-<!--            <td>{{ premise.type }}</td>-->
-<!--            <td>{{ premise.number }}</td>-->
-<!--            <td>{{ premise.floor }}</td>-->
-<!--            <td>{{ premise.surfacePerSqMeter }}</td>-->
-<!--            <td>{{ premise.pricePerSqMeter }}</td>-->
-<!--            <td>{{ premise.totalPrice }}</td>-->
-<!--            <td><button (click)="viewDetails(premise)">Details</button></td>-->
-<!--            <td><button (click)="deletePremise(premise)">Delete</button></td>-->
-<!--          </tr>-->
-          </tbody>
-        </table>
+            <label for="addressStreet">Address Street:</label>
+            <input id="addressStreet" [(ngModel)]="selectedDeveloper.addressStreet" name="addressStreet" required>
+
+            <label for="addressBuildingNumber">Building Number:</label>
+            <input id="addressBuildingNumber" [(ngModel)]="selectedDeveloper.addressBuildingNumber" name="addressBuildingNumber" required>
+
+            <label for="addressPostalCode">Postal Code:</label>
+            <input id="addressPostalCode" [(ngModel)]="selectedDeveloper.addressPostalCode" name="addressPostalCode" required>
+
+            <button type="submit">{{ isNewDeveloper ? 'Add' : 'Save' }}</button>
+            <button type="button" (click)="cancelEdit()">Cancel</button>
+          </form>
+        </div>
       </div>
     </main>
   </div>
 </div>
+
+
+<!--<div class="admin-panel">-->
+<!--  <header class="admin-header">-->
+<!--    <div class="logo">-->
+<!--      <h1>Developer Panel</h1>-->
+<!--    </div>-->
+<!--    <div class="user-info">-->
+<!--      <span>Logged User: {{ loggedInUsername }}</span>-->
+<!--    </div>-->
+<!--  </header>-->
+
+<!--  <div class="admin-body">-->
+<!--    <nav class="sidebar">-->
+<!--      <ul>-->
+<!--        <li (click)="selectSection('developer')">Developer</li>-->
+<!--        <li (click)="selectSection('investment')">Investment</li>-->
+<!--        <li (click)="selectSection('building')">Building</li>-->
+<!--        <li (click)="selectSection('premise')">Premise</li>-->
+<!--      </ul>-->
+<!--    </nav>-->
+
+<!--    <main class="content">-->
+<!--      <div *ngIf="selectedSection === 'developer'">-->
+<!--        <h2>Developer</h2>-->
+<!--        <table>-->
+<!--          <thead>-->
+<!--          <tr>-->
+<!--            <th>Name</th>-->
+<!--            <th>Address Country</th>-->
+<!--            <th>Address Street</th>-->
+<!--            <th>Building Number</th>-->
+<!--            <th>Postal Code</th>-->
+<!--            <th>Details</th>-->
+<!--            <th>Delete</th>-->
+<!--          </tr>-->
+<!--          </thead>-->
+<!--          <tbody>-->
+<!--          <tr *ngFor="let developer of developers">-->
+<!--            <td>{{ developer.name }}</td>-->
+<!--            <td>{{ developer.addressCountry }}</td>-->
+<!--            <td>{{ developer.addressStreet }}</td>-->
+<!--            <td>{{ developer.addressBuildingNumber }}</td>-->
+<!--            <td>{{ developer.addressPostalCode }}</td>-->
+<!--&lt;!&ndash;            <td><button (click)="viewDetails(developer)">Details</button></td>&ndash;&gt;-->
+<!--&lt;!&ndash;            <td><button (click)="deleteDeveloper(developer)">Delete</button></td>&ndash;&gt;-->
+<!--          </tr>-->
+<!--          </tbody>-->
+<!--        </table>-->
+<!--      </div>-->
+
+<!--      <div *ngIf="selectedSection === 'investment'">-->
+<!--        <h2>Investment</h2>-->
+<!--        <table>-->
+<!--          <thead>-->
+<!--          <tr>-->
+<!--            <th>Name</th>-->
+<!--            <th>Description</th>-->
+<!--            <th>Address Country</th>-->
+<!--            <th>Address Street</th>-->
+<!--            <th>Details</th>-->
+<!--            <th>Delete</th>-->
+<!--          </tr>-->
+<!--          </thead>-->
+<!--          <tbody>-->
+<!--&lt;!&ndash;          <tr *ngFor="let investment of investments">&ndash;&gt;-->
+<!--&lt;!&ndash;            <td>{{ investment.name }}</td>&ndash;&gt;-->
+<!--&lt;!&ndash;            <td>{{ investment.description }}</td>&ndash;&gt;-->
+<!--&lt;!&ndash;            <td>{{ investment.addressCountry }}</td>&ndash;&gt;-->
+<!--&lt;!&ndash;            <td>{{ investment.addressStreet }}</td>&ndash;&gt;-->
+<!--&lt;!&ndash;            <td><button (click)="viewDetails(investment)">Details</button></td>&ndash;&gt;-->
+<!--&lt;!&ndash;            <td><button (click)="deleteInvestment(investment)">Delete</button></td>&ndash;&gt;-->
+<!--&lt;!&ndash;          </tr>&ndash;&gt;-->
+<!--          </tbody>-->
+<!--        </table>-->
+<!--      </div>-->
+
+<!--      <div *ngIf="selectedSection === 'building'">-->
+<!--        <h2>Building</h2>-->
+<!--        <table>-->
+<!--          <thead>-->
+<!--          <tr>-->
+<!--            <th>Name</th>-->
+<!--            <th>Address Country</th>-->
+<!--            <th>Address Street</th>-->
+<!--            <th>Building Number</th>-->
+<!--            <th>Postal Code</th>-->
+<!--            <th>Details</th>-->
+<!--            <th>Delete</th>-->
+<!--          </tr>-->
+<!--          </thead>-->
+<!--          <tbody>-->
+<!--&lt;!&ndash;          <tr *ngFor="let building of buildings">&ndash;&gt;-->
+<!--&lt;!&ndash;            <td>{{ building.name }}</td>&ndash;&gt;-->
+<!--&lt;!&ndash;            <td>{{ building.addressCountry }}</td>&ndash;&gt;-->
+<!--&lt;!&ndash;            <td>{{ building.addressStreet }}</td>&ndash;&gt;-->
+<!--&lt;!&ndash;            <td>{{ building.addressBuildingNumber }}</td>&ndash;&gt;-->
+<!--&lt;!&ndash;            <td>{{ building.addressPostalCode }}</td>&ndash;&gt;-->
+<!--&lt;!&ndash;            <td><button (click)="viewDetails(building)">Details</button></td>&ndash;&gt;-->
+<!--&lt;!&ndash;            <td><button (click)="deleteBuilding(building)">Delete</button></td>&ndash;&gt;-->
+<!--&lt;!&ndash;          </tr>&ndash;&gt;-->
+<!--          </tbody>-->
+<!--        </table>-->
+<!--      </div>-->
+
+<!--      <div *ngIf="selectedSection === 'premise'">-->
+<!--        <h2>Premise</h2>-->
+<!--        <table>-->
+<!--          <thead>-->
+<!--          <tr>-->
+<!--            <th>Type</th>-->
+<!--            <th>Number</th>-->
+<!--            <th>Floor</th>-->
+<!--            <th>Surface Per Sq Meter</th>-->
+<!--            <th>Price Per Sq Meter</th>-->
+<!--            <th>Total Price</th>-->
+<!--            <th>Details</th>-->
+<!--            <th>Delete</th>-->
+<!--          </tr>-->
+<!--          </thead>-->
+<!--          <tbody>-->
+<!--&lt;!&ndash;          <tr *ngFor="let premise of premises">&ndash;&gt;-->
+<!--&lt;!&ndash;            <td>{{ premise.type }}</td>&ndash;&gt;-->
+<!--&lt;!&ndash;            <td>{{ premise.number }}</td>&ndash;&gt;-->
+<!--&lt;!&ndash;            <td>{{ premise.floor }}</td>&ndash;&gt;-->
+<!--&lt;!&ndash;            <td>{{ premise.surfacePerSqMeter }}</td>&ndash;&gt;-->
+<!--&lt;!&ndash;            <td>{{ premise.pricePerSqMeter }}</td>&ndash;&gt;-->
+<!--&lt;!&ndash;            <td>{{ premise.totalPrice }}</td>&ndash;&gt;-->
+<!--&lt;!&ndash;            <td><button (click)="viewDetails(premise)">Details</button></td>&ndash;&gt;-->
+<!--&lt;!&ndash;            <td><button (click)="deletePremise(premise)">Delete</button></td>&ndash;&gt;-->
+<!--&lt;!&ndash;          </tr>&ndash;&gt;-->
+<!--          </tbody>-->
+<!--        </table>-->
+<!--      </div>-->
+<!--    </main>-->
+<!--  </div>-->
+<!--</div>-->

@@ -6,6 +6,7 @@ import pl.com.mike.developer.domain.developer.City;
 import pl.com.mike.developer.domain.developer.CityData;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 @Service
@@ -30,4 +31,8 @@ public class CityService {
                 .collect(Collectors.toList());
     }
 
+    public City getCityById(Long cityId) {
+        return cityRepository.findById(cityId)
+                .orElseThrow(() -> new NoSuchElementException("City with id " + cityId + " not found"));
+    }
 }

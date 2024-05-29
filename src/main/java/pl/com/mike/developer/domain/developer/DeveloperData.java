@@ -1,5 +1,7 @@
 package pl.com.mike.developer.domain.developer;
 
+import java.time.LocalDateTime;
+
 public class DeveloperData {
 
     private Long id;
@@ -16,8 +18,14 @@ public class DeveloperData {
     private Long cityId;
     private String logoUrl;
     private String code;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+    private LocalDateTime deletedAt;
 
-    public DeveloperData(Long id, String name, String addressCountry, String addressStreet, String addressBuildingNumber, String addressFlatNumber, String addressPostalCode, String telephoneNumber, String faxNumber, String email, String taxIdentificationNumber, Long cityId, String logoUrl, String code) {
+    public DeveloperData() {
+    }
+
+    public DeveloperData(Long id, String name, String addressCountry, String addressStreet, String addressBuildingNumber, String addressFlatNumber, String addressPostalCode, String telephoneNumber, String faxNumber, String email, String taxIdentificationNumber, Long cityId, String logoUrl, String code, LocalDateTime createdAt, LocalDateTime updatedAt, LocalDateTime deletedAt) {
         this.id = id;
         this.name = name;
         this.addressCountry = addressCountry;
@@ -32,6 +40,29 @@ public class DeveloperData {
         this.cityId = cityId;
         this.logoUrl = logoUrl;
         this.code = code;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+        this.deletedAt = deletedAt;
+    }
+
+    public DeveloperData(Developer developer) {
+        this.id = developer.getId();
+        this.name = developer.getName();
+        this.addressCountry = developer.getAddressCountry();
+        this.addressStreet = developer.getAddressStreet();
+        this.addressBuildingNumber = developer.getAddressBuildingNumber();
+        this.addressFlatNumber = developer.getAddressFlatNumber();
+        this.addressPostalCode = developer.getAddressPostalCode();
+        this.telephoneNumber = developer.getTelephoneNumber();
+        this.faxNumber = developer.getFaxNumber();
+        this.email = developer.getEmail();
+        this.taxIdentificationNumber = developer.getTaxIdentificationNumber();
+        this.cityId = developer.getDeveloperCity().getId();
+        this.logoUrl = developer.getLogoUrl();
+        this.code = developer.getCode();
+        this.createdAt = developer.getCreatedAt();
+        this.updatedAt = developer.getUpdatedAt();
+        this.deletedAt = developer.getDeletedAt();
     }
 
     public Long getId() {
@@ -145,4 +176,29 @@ public class DeveloperData {
     public void setCode(String code) {
         this.code = code;
     }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public LocalDateTime getDeletedAt() {
+        return deletedAt;
+    }
+
+    public void setDeletedAt(LocalDateTime deletedAt) {
+        this.deletedAt = deletedAt;
+    }
+
 }

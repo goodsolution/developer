@@ -13,4 +13,7 @@ export interface DeveloperResponse {
   cityId: number;
   logoUrl: string;
   code: string;
+  createdAt: string;
+  updatedAt: string;
+  deletedAt: string;
 }

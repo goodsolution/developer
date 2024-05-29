@@ -20,6 +20,15 @@ export class ConstantsService {
     DESCRIPTION: 'description',
   }
 
+  getApiSoftDeleteDeveloperEndpoint(developerId: number): string {
+    return `${this.API_BASE_URL}/developers/${developerId}`;
+  }
+  getApiRegisterDeveloperEndpoint(): string {
+    return `${this.API_BASE_URL}/developers/register`;
+  }
+  getApiUpdateDeveloperEndpoint(developerId: number): string {
+    return `${this.API_BASE_URL}/developers/${developerId}`;
+  }
   getApiPremisesByInvestmentEndpoint(investmentId: number): string {
     return `${this.API_BASE_URL}/premises/investment/${investmentId}`;
   }
