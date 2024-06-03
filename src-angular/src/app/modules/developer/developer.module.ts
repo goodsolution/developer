@@ -1,25 +1,22 @@
-import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
-import {DeveloperRoutingModule} from './developer-routing.module';
+import { DeveloperRoutingModule } from './developer-routing.module';
 import {SharedModule} from "../shared/shared.module";
-import {DeveloperAntalComponent} from './developer-antal/developer-antal.component';
-import {DeveloperDodeComponent} from './developer-dode/developer-dode.component';
+import {DeveloperComponent} from "./developer.component";
 
 
 @NgModule({
   declarations: [
-    DeveloperAntalComponent,
-    DeveloperDodeComponent
+    DeveloperComponent
   ],
   imports: [
     CommonModule,
-    DeveloperRoutingModule,
-    SharedModule
+    SharedModule,
+    DeveloperRoutingModule
   ],
   exports: [
-    DeveloperAntalComponent,
-    DeveloperDodeComponent
+    DeveloperComponent
   ]
 })
 export class DeveloperModule { }

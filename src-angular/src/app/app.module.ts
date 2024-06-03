@@ -21,7 +21,7 @@ import {AcceptLanguageInterceptor} from "./modules/core/services/accept-language
 import {LanguageService} from "./modules/core/services/language.service";
 import {MatPaginatorIntl} from "@angular/material/paginator";
 import {DashboardModule} from "./modules/dashboard/dashboard.module";
-import { DeveloperComponent } from './modules/developer/developer.component';
+import {DeveloperModule} from "./modules/developer/developer.module";
 
 export function initializeConfig(config: ConfigService) {
   return (): Promise<any> => {
@@ -74,8 +74,7 @@ export class CustomMatPaginatorIntl extends MatPaginatorIntl {
 
 @NgModule({
   declarations: [
-    AppComponent,
-    DeveloperComponent
+    AppComponent
   ],
   imports: [
     BrowserModule,
@@ -88,6 +87,7 @@ export class CustomMatPaginatorIntl extends MatPaginatorIntl {
     PremiseListFilterModule,
     PremiseDetailModule,
     DashboardModule,
+    DeveloperModule,
     AppRoutingModule,
     HttpClientModule,
     TranslateModule.forRoot({

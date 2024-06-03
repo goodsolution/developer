@@ -1,7 +1,7 @@
 <div class="admin-panel">
   <header class="admin-header">
     <div class="logo">
-      <h1>Developer Panel</h1>
+      <h1>Admin Panel</h1>
     </div>
     <div class="user-info">
       <span>Logged User: {{ loggedInUsername }}</span>
@@ -9,67 +9,14 @@
   </header>
 
   <div class="admin-body">
-    <nav class="sidebar">
-      <ul>
-        <li (click)="selectSection('developer')">Developer</li>
-        <li (click)="selectSection('investment')">Investment</li>
-        <li (click)="selectSection('building')">Building</li>
-        <li (click)="selectSection('premise')">Premise</li>
-      </ul>
-    </nav>
+    <app-sidebar></app-sidebar>
 
     <main class="content">
-      <div *ngIf="selectedSection === 'developer'">
-        <h2>Developer</h2>
-        <button (click)="addNewDeveloper()">Add New Developer</button>
-        <table>
-          <thead>
-          <tr>
-            <th>Name</th>
-            <th>Address Country</th>
-            <th>Address Street</th>
-            <th>Building Number</th>
-            <th>Postal Code</th>
-            <th>Edit</th>
-            <th>Delete</th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr *ngFor="let developer of developers">
-            <td>{{ developer.name }}</td>
-            <td>{{ developer.addressCountry }}</td>
-            <td>{{ developer.addressStreet }}</td>
-            <td>{{ developer.addressBuildingNumber }}</td>
-            <td>{{ developer.addressPostalCode }}</td>
-            <td><button (click)="editDeveloper(developer)">Edit</button></td>
-            <td><button (click)="deleteDeveloper(developer)">Delete</button></td>
-          </tr>
-          </tbody>
-        </table>
-
-        <div *ngIf="selectedDeveloper">
-          <h3>{{ isNewDeveloper ? 'Add New Developer' : 'Edit Developer' }}</h3>
-          <form (ngSubmit)="isNewDeveloper ? saveNewDeveloper() : updateDeveloper()">
-            <label for="name">Name:</label>
-            <input id="name" [(ngModel)]="selectedDeveloper.name" name="name" required>
-
-            <label for="addressCountry">Address Country:</label>
-            <input id="addressCountry" [(ngModel)]="selectedDeveloper.addressCountry" name="addressCountry" required>
-
-            <label for="addressStreet">Address Street:</label>
-            <input id="addressStreet" [(ngModel)]="selectedDeveloper.addressStreet" name="addressStreet" required>
-
-            <label for="addressBuildingNumber">Building Number:</label>
-            <input id="addressBuildingNumber" [(ngModel)]="selectedDeveloper.addressBuildingNumber" name="addressBuildingNumber" required>
-
-            <label for="addressPostalCode">Postal Code:</label>
-            <input id="addressPostalCode" [(ngModel)]="selectedDeveloper.addressPostalCode" name="addressPostalCode" required>
-
-            <button type="submit">{{ isNewDeveloper ? 'Add' : 'Save' }}</button>
-            <button type="button" (click)="cancelEdit()">Cancel</button>
-          </form>
-        </div>
-      </div>
+      <app-developer *ngIf="selectedSection === 'developer'"></app-developer>
+<!--      <app-investment *ngIf="selectedSection === 'investment'"></app-investment>-->
+<!--      <app-building *ngIf="selectedSection === 'building'"></app-building>-->
+<!--      <app-premise *ngIf="selectedSection === 'premise'"></app-premise>-->
     </main>
   </div>
 </div>
+
