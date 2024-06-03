@@ -24,7 +24,7 @@ export class AuthenticationService {
       switchMap(encryptedPassword =>
         this.http.post<{ token: string, roles: string[] }>(this.constantsService.getApiLoginEndpoint(),
           {
-            login: username, passwordHash: encryptedPassword
+            login: username, encryptedPassword: encryptedPassword
           },
           {
             headers: { 'Content-Type': 'application/json' }

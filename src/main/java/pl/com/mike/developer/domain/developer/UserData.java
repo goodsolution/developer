@@ -11,7 +11,7 @@ public class UserData {
 
     private Long id;
     private String login;
-    private String passwordHash;
+    private String encryptedPassword;
     private Set<String> roles = new HashSet<>();
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
@@ -23,7 +23,7 @@ public class UserData {
     public UserData(User user) {
         this.id = user.getId();
         this.login = user.getLogin();
-        this.passwordHash = user.getPasswordHash();
+        this.encryptedPassword = user.getEncryptedPassword();
         this.roles = user.getRoles().stream()
                 .map(Roles::name)
                 .collect(Collectors.toSet());
@@ -48,12 +48,12 @@ public class UserData {
         this.login = login;
     }
 
-    public String getPasswordHash() {
-        return passwordHash;
+    public String getEncryptedPassword() {
+        return encryptedPassword;
     }
 
-    public void setPasswordHash(String passwordHash) {
-        this.passwordHash = passwordHash;
+    public void setEncryptedPassword(String encryptedPassword) {
+        this.encryptedPassword = encryptedPassword;
     }
 
     public LocalDateTime getCreatedAt() {
@@ -92,7 +92,7 @@ public class UserData {
         User user = new User();
         user.setId(id);
         user.setLogin(login);
-        user.setPasswordHash(passwordHash);
+        user.setEncryptedPassword(encryptedPassword);
         user.setRoles(roles.stream()
                 .map(Roles::valueOf)
                 .collect(Collectors.toSet()));

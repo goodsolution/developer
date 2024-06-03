@@ -28,7 +28,7 @@ public class User implements UserDetails {
 
     @NotBlank(message = "Password hash cannot be blank")
     @Column(name = "password_hash")
-    private String passwordHash;
+    private String encryptedPassword;
 
     @Column(name = "create_time", nullable = false, updatable = false)
     private LocalDateTime createdAt;
@@ -68,7 +68,7 @@ public class User implements UserDetails {
 
     @Override
     public String getPassword() {
-        return passwordHash;
+        return encryptedPassword;
     }
 
     @Override
@@ -112,12 +112,12 @@ public class User implements UserDetails {
         this.login = login;
     }
 
-    public String getPasswordHash() {
-        return passwordHash;
+    public String getEncryptedPassword() {
+        return encryptedPassword;
     }
 
-    public void setPasswordHash(String passwordHash) {
-        this.passwordHash = passwordHash;
+    public void setEncryptedPassword(String passwordHash) {
+        this.encryptedPassword = passwordHash;
     }
 
     public LocalDateTime getCreatedAt() {

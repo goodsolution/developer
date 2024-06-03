@@ -55,7 +55,7 @@ public class AuthenticationEndpoint {
     public ResponseEntity<?> login(@RequestBody UserData user) {
         try {
             Authentication authentication = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(user.getLogin(), decrypt(user.getPasswordHash())
+                    new UsernamePasswordAuthenticationToken(user.getLogin(), decrypt(user.getEncryptedPassword())
                     ));
             SecurityContextHolder.getContext().setAuthentication(authentication);
 

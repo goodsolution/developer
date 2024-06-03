@@ -33,7 +33,7 @@ public class UserService {
 
     public UserData createUser(UserData userData) {
         User user = userData.toUser();
-        user.setPasswordHash(passwordEncoder.encode(user.getPasswordHash()));
+        user.setEncryptedPassword(passwordEncoder.encode(user.getEncryptedPassword()));
 
         if (user.getRoles() == null || user.getRoles().isEmpty()) {
             Set<Roles> defaultRoles = new HashSet<>();
