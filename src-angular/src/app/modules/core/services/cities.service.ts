@@ -8,7 +8,7 @@ import {ConstantsService} from "./constants.service";
   providedIn: 'root'
 })
 export class CitiesService {
-  private apiUrl = this.constantsService.API_CITIES_ENDPOINT;
+  private apiUrl = this.constantsService.API_CITIES_BY_DEVELOPER_ENDPOINT;
   private cache!: SearchResultCityModel;
   private lastUpdated: number = 0;
   private updateInterval = 60000; // 15 sec in milliseconds

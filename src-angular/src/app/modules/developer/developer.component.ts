@@ -2,6 +2,10 @@ import {Component, OnInit} from '@angular/core';
 import {DeveloperResponse} from "../core/models/developer.model";
 import {DeveloperService} from "../core/services/developer.service";
 import {SearchResultDeveloperModel} from "../core/models/searchResultDeveloper.model";
+import {CityService} from "../core/services/city.service";
+import {CityResponse} from "../core/models/city.model";
+import {SearchResultCityModel} from "../core/models/searchResultCity.model";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-developer',
@@ -12,12 +16,46 @@ export class DeveloperComponent implements OnInit {
 
   developers: DeveloperResponse[] = [];
   selectedDeveloper: DeveloperResponse | null = null;
+  cities: CityResponse[] = [];
+  developerForm: FormGroup;
   isNewDeveloper: boolean = false;
 
-  constructor(private developerService: DeveloperService) { }
+  constructor(
+    private fb: FormBuilder,
+    private developerService: DeveloperService,
+    private cityService: CityService
+  ) {
+    this.developerForm = this.fb.group({
+      name: ['', [Validators.required, Validators.minLength(3)]],
+      addressCountry: ['', Validators.required],
+      addressStreet: ['', Validators.required],
+      addressBuildingNumber: ['', Validators.required],
+      addressFlatNumber: [''],
+      addressPostalCode: ['', Validators.required],
+      telephoneNumber: ['', Validators.pattern(/^[0-9]{10}$/)],
+      faxNumber: ['', Validators.pattern(/^[0-9]{10}$/)],
+      email: ['', [Validators.required, Validators.email]],
+      taxIdentificationNumber: ['', Validators.required],
+      cityId: ['', Validators.required],
+      logoUrl: ['']
+    });
+  }
 
   ngOnInit(): void {
     this.fetchDevelopers();
+    this.fetchCities();
+  }
+
+  fetchDevelopers(): void {
+    this.developerService.fetchDevelopers().subscribe((response: SearchResultDeveloperModel) => {
+      this.developers = response.developers;
+    });
+  }
+
+  fetchCities(): void {
+    this.cityService.fetchCities().subscribe((response: SearchResultCityModel) => {
+      this.cities = response.cities;
+    });
   }
 
   addNewDeveloper(): void {
@@ -34,33 +72,35 @@ export class DeveloperComponent implements OnInit {
       email: '',
       taxIdentificationNumber: '',
       cityId: 0,
-      logoUrl: '',
-      code: '',
-      createdAt: ''
+      logoUrl: ''
     } as DeveloperResponse;
     this.isNewDeveloper = true;
+    this.developerForm.reset();
   }
 
   editDeveloper(developer: DeveloperResponse): void {
-    this.selectedDeveloper = { ...developer }; // Create a copy of the developer object
+    this.selectedDeveloper = { ...developer };
     this.isNewDeveloper = false;
+    this.developerForm.patchValue(developer);
   }
 
   saveNewDeveloper(): void {
-    if (this.selectedDeveloper) {
-      this.developerService.addDeveloper(this.selectedDeveloper).subscribe(() => {
-        this.fetchDevelopers(); // Refresh the list
-        this.selectedDeveloper = null; // Deselect the developer
+    if (this.developerForm.valid) {
+      const newDeveloper = this.developerForm.value;
+      this.developerService.addDeveloper(newDeveloper).subscribe(() => {
+        this.fetchDevelopers();
+        this.selectedDeveloper = null;
         this.isNewDeveloper = false;
       });
     }
   }
 
   updateDeveloper(): void {
-    if (this.selectedDeveloper) {
-      this.developerService.updateDeveloper(this.selectedDeveloper).subscribe(() => {
-        this.fetchDevelopers(); // Refresh the list
-        this.selectedDeveloper = null; // Deselect the developer
+    if (this.developerForm.valid) {
+      const updatedDeveloper = this.developerForm.value;
+      this.developerService.updateDeveloper(updatedDeveloper).subscribe(() => {
+        this.fetchDevelopers();
+        this.selectedDeveloper = null;
         this.isNewDeveloper = false;
       });
     }
@@ -73,13 +113,7 @@ export class DeveloperComponent implements OnInit {
 
   deleteDeveloper(developer: DeveloperResponse): void {
     this.developerService.deleteDeveloper(developer.id).subscribe(() => {
-      this.fetchDevelopers(); // Refresh the list
-    });
-  }
-
-  fetchDevelopers(): void {
-    this.developerService.fetchDevelopers().subscribe((response: SearchResultDeveloperModel) => {
-      this.developers = response.developers;
+      this.fetchDevelopers();
     });
   }
 

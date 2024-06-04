@@ -6,6 +6,7 @@ import { Injectable } from '@angular/core';
 export class ConstantsService {
   readonly API_SYSTEM_CONFIG = 'https://localhost:8081/api/system/config/properties';
   private readonly API_BASE_URL = 'https://localhost:8081/api';
+  readonly API_CITIES_BY_DEVELOPER_ENDPOINT = `${this.API_BASE_URL}/cities_by_developer`;
   readonly API_CITIES_ENDPOINT = `${this.API_BASE_URL}/cities`;
   readonly API_DEVELOPER_BY_SYSTEM_CODE_ENDPOINT = `${this.API_BASE_URL}/developers/code`;
   readonly API_INVESTMENTS_ENDPOINT = `${this.API_BASE_URL}/investments`;
