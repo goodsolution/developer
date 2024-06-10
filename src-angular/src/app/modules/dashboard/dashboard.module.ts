@@ -8,6 +8,7 @@ import { DashboardAntalComponent } from './dashboard-antal/dashboard-antal.compo
 import {SharedModule} from "../shared/shared.module";
 import { SidebarComponent } from './sidebar/sidebar.component';
 import {DeveloperModule} from "../developer/developer.module";
+import { DashboardAdminComponent } from './dashboard-admin/dashboard-admin.component';
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import {DeveloperModule} from "../developer/developer.module";
     DashboardComponent,
     DashboardDodeComponent,
     DashboardAntalComponent,
-    SidebarComponent
+    SidebarComponent,
+    DashboardAdminComponent
   ],
   imports: [
     CommonModule,

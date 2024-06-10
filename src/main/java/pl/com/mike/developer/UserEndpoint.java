@@ -23,4 +23,10 @@ public class UserEndpoint {
         return ResponseEntity.ok(user);
     }
 
+    @PostMapping("user/registerAdmin")
+    public ResponseEntity<?> registerAdmin(@RequestBody UserData userData) {
+        UserData user = userService.createAdmin(userData);
+        return ResponseEntity.ok(user);
+    }
+
 }

@@ -1,0 +1,22 @@
+<div class="admin-panel">
+  <header class="admin-header">
+    <div class="logo">
+      <h1>Admin Panel</h1>
+    </div>
+    <div class="user-info">
+      <span>Logged User: {{ loggedInUsername }}</span>
+    </div>
+  </header>
+
+  <div class="admin-body">
+    <app-sidebar></app-sidebar>
+
+    <main class="content">
+      <app-developer *ngIf="selectedSection === 'developer'"></app-developer>
+      <!--      <app-investment *ngIf="selectedSection === 'investment'"></app-investment>-->
+      <!--      <app-building *ngIf="selectedSection === 'building'"></app-building>-->
+      <!--      <app-premise *ngIf="selectedSection === 'premise'"></app-premise>-->
+    </main>
+  </div>
+</div>
+

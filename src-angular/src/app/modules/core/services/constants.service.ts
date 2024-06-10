@@ -54,5 +54,8 @@ export class ConstantsService {
   getApiEncryptionKeyEndpoint(): string {
     return this.API_ENCRYPTION_KEY;
   }
+  getApiAllActiveDevelopersEndpoint(): string {
+    return `${this.API_BASE_URL}/developers`;
+  }
 
 }

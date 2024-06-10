@@ -3,12 +3,11 @@ import {AuthenticationService} from "../../core/services/authentication.service"
 import {SectionService} from "../../core/services/section.service";
 
 @Component({
-  selector: 'app-dashboard-dode',
-  templateUrl: './dashboard-dode.component.html',
-  styleUrls: ['./dashboard-dode.component.scss']
+  selector: 'app-dashboard-admin',
+  templateUrl: './dashboard-admin.component.html',
+  styleUrls: ['./dashboard-admin.component.scss']
 })
-export class DashboardDodeComponent implements OnInit {
-//TODO przenieść klucz do pliku konfiguracyjnego na froncie
+export class DashboardAdminComponent implements OnInit{
   selectedSection: string | null = null;
   loggedInUsername: string | null = null;
 
