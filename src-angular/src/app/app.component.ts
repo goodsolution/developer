@@ -66,16 +66,6 @@ export class AppComponent implements OnInit, OnDestroy {
   private statusCodeSource = new ReplaySubject<SearchResultCode>(1);
 
   private componentConfig: ComponentConfig = {
-    admin: {
-      [ComponentLocation.Header]: DodeHeaderComponent,
-      [ComponentLocation.Footer]: FooterDodeComponent,
-      [ComponentLocation.Contact]: ContactDodeComponent,
-      [ComponentLocation.Home]: HomeDodeComponent,
-      [ComponentLocation.InvestmentList]: InvestmentListDodeComponent,
-      [ComponentLocation.PremiseList]: PremiseListDodeComponent,
-      [ComponentLocation.PremiseDetail]: PremiseDetailDodeComponent,
-      [ComponentLocation.Dashboard]: DashboardDodeComponent,
-    },
     antal: {
       [ComponentLocation.Header]: AntalHeaderComponent,
       [ComponentLocation.Footer]: FooterAntalComponent,
