@@ -24,8 +24,9 @@ import {
   PremiseDetailAntalComponent
 } from './modules/premise-detail/premise-detail-antal/premise-detail-antal.component';
 import {PremiseDetailDodeComponent} from "./modules/premise-detail/premise-detail-dode/premise-detail-dode.component";
-import {DashboardAntalComponent} from "./modules/dashboard/dashboard-antal/dashboard-antal.component";
-import {DashboardDodeComponent} from "./modules/dashboard/dashboard-dode/dashboard-dode.component";
+import {AuthenticationService} from "./modules/core/services/authentication.service";
+import {DashboardDeveloperComponent} from "./modules/dashboard/dashboard-developer/dashboard-developer.component";
+import {DashboardAdminComponent} from "./modules/dashboard/dashboard-admin/dashboard-admin.component";
 
 
 enum ComponentLocation {
@@ -74,7 +75,7 @@ export class AppComponent implements OnInit, OnDestroy {
       [ComponentLocation.InvestmentList]: InvestmentListAntalComponent,
       [ComponentLocation.PremiseList]: PremiseListAntalComponent,
       [ComponentLocation.PremiseDetail]: PremiseDetailAntalComponent,
-      [ComponentLocation.Dashboard]: DashboardAntalComponent,
+      [ComponentLocation.Dashboard]: DashboardDeveloperComponent,
     },
     domdevelopment: {
       [ComponentLocation.Header]: DodeHeaderComponent,
@@ -84,7 +85,7 @@ export class AppComponent implements OnInit, OnDestroy {
       [ComponentLocation.InvestmentList]: InvestmentListDodeComponent,
       [ComponentLocation.PremiseList]: PremiseListDodeComponent,
       [ComponentLocation.PremiseDetail]: PremiseDetailDodeComponent,
-      [ComponentLocation.Dashboard]: DashboardDodeComponent,
+      [ComponentLocation.Dashboard]: DashboardDeveloperComponent,
     },
     default: {
       [ComponentLocation.Header]: DefaultComponent,
@@ -99,11 +100,14 @@ export class AppComponent implements OnInit, OnDestroy {
   };
 
   constructor(
-    private configService: ConfigService, private router: Router) {
+    private configService: ConfigService,
+    private router: Router,
+    private authService: AuthenticationService) {
   }
 
   ngOnInit() {
     this.initializeAppAfterFetchingCode();
+    this.observeRouterEvents();
   }
 
   ngOnDestroy() {
@@ -116,7 +120,7 @@ export class AppComponent implements OnInit, OnDestroy {
     ).subscribe({
       next: (statusCode) => {
         this.statusCode = statusCode;
-        this.observeRouterEvents();
+//observeRouterEvents
         this.loadDynamicComponents();
       },
       error: (error) => {
@@ -260,19 +264,36 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   private loadDynamicDashboardComponent() {
-    if (!this.statusCode) {
-      console.warn('Status code is not available, cannot load dashboard component');
-      return;
-    }
-    const statusKey = this.statusCode.code || 'default';
-    const componentMapping = this.componentConfig[statusKey];
-    const componentClass = componentMapping[ComponentLocation.Dashboard];
-    if (componentClass) {
-      this.loadComponent(this.dashboardContainer, componentClass);
+    if (this.authService.hasRole('DEVELOPER')) {
+      this.loadComponent(this.dashboardContainer, DashboardDeveloperComponent);
+    } else if (this.authService.hasRole('ADMIN')) {
+      this.loadComponent(this.dashboardContainer, DashboardAdminComponent);
     } else {
-      console.error(`No dashboard component found for status key ${statusKey}`);
+      const statusKey = this.statusCode?.code || 'default';
+      const componentMapping = this.componentConfig[statusKey];
+      const componentClass = componentMapping[ComponentLocation.Dashboard];
+      if (componentClass) {
+        this.loadComponent(this.dashboardContainer, componentClass);
+      } else {
+        console.error(`No dashboard component found for status key ${statusKey}`);
+      }
     }
   }
+
+  // private loadDynamicDashboardComponent() {
+  //   if (!this.statusCode) {
+  //     console.warn('Status code is not available, cannot load dashboard component');
+  //     return;
+  //   }
+  //   const statusKey = this.statusCode.code || 'default';
+  //   const componentMapping = this.componentConfig[statusKey];
+  //   const componentClass = componentMapping[ComponentLocation.Dashboard];
+  //   if (componentClass) {
+  //     this.loadComponent(this.dashboardContainer, componentClass);
+  //   } else {
+  //     console.error(`No dashboard component found for status key ${statusKey}`);
+  //   }
+  // }
 
   private createComponent(container: ViewContainerRef, location: ComponentLocation) {
     if (!this.statusCode) {

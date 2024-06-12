@@ -3,21 +3,19 @@ import { CommonModule } from '@angular/common';
 
 import { DashboardRoutingModule } from './dashboard-routing.module';
 import { DashboardComponent } from './dashboard.component';
-import { DashboardDodeComponent } from './dashboard-dode/dashboard-dode.component';
-import { DashboardAntalComponent } from './dashboard-antal/dashboard-antal.component';
 import {SharedModule} from "../shared/shared.module";
 import { SidebarComponent } from './sidebar/sidebar.component';
 import {DeveloperModule} from "../developer/developer.module";
 import { DashboardAdminComponent } from './dashboard-admin/dashboard-admin.component';
+import {DashboardDeveloperComponent} from "./dashboard-developer/dashboard-developer.component";
 
 
 @NgModule({
   declarations: [
     DashboardComponent,
-    DashboardDodeComponent,
-    DashboardAntalComponent,
     SidebarComponent,
-    DashboardAdminComponent
+    DashboardAdminComponent,
+    DashboardDeveloperComponent
   ],
   imports: [
     CommonModule,
@@ -27,8 +25,8 @@ import { DashboardAdminComponent } from './dashboard-admin/dashboard-admin.compo
   ],
   exports: [
     DashboardComponent,
-    DashboardDodeComponent,
-    DashboardAntalComponent
+    DashboardAdminComponent,
+    DashboardDeveloperComponent
   ]
 })
 export class DashboardModule { }

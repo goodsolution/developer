@@ -1,14 +1,16 @@
 import {Component, OnInit} from '@angular/core';
+import {HttpClient} from "@angular/common/http";
+import {ConfigService} from "../../core/services/config.service";
 import {AuthenticationService} from "../../core/services/authentication.service";
 import {SectionService} from "../../core/services/section.service";
 
 @Component({
-  selector: 'app-dashboard-dode',
-  templateUrl: './dashboard-dode.component.html',
-  styleUrls: ['./dashboard-dode.component.scss']
+  selector: 'app-dashboard-developer',
+  templateUrl: './dashboard-developer.component.html',
+  styleUrls: ['./dashboard-developer.component.scss']
 })
-export class DashboardDodeComponent implements OnInit {
-//TODO przenieść klucz do pliku konfiguracyjnego na froncie
+export class DashboardDeveloperComponent implements OnInit {
+
   selectedSection: string | null = null;
   loggedInUsername: string | null = null;
 
