@@ -12,11 +12,33 @@
     <app-sidebar></app-sidebar>
 
     <main class="content">
-      <app-developer *ngIf="selectedSection === 'developer'"></app-developer>
-      <!--      <app-investment *ngIf="selectedSection === 'investment'"></app-investment>-->
-      <!--      <app-building *ngIf="selectedSection === 'building'"></app-building>-->
-      <!--      <app-premise *ngIf="selectedSection === 'premise'"></app-premise>-->
+      <app-developer [adminView]="false" *ngIf="selectedSection === 'developer'"></app-developer>
+      <!-- Additional sections for developer can be added here -->
     </main>
   </div>
 </div>
+
+
+
+<!--<div class="admin-panel">-->
+<!--  <header class="admin-header">-->
+<!--    <div class="logo">-->
+<!--      <h1>Developer Panel</h1>-->
+<!--    </div>-->
+<!--    <div class="user-info">-->
+<!--      <span>Logged User: {{ loggedInUsername }}</span>-->
+<!--    </div>-->
+<!--  </header>-->
+
+<!--  <div class="admin-body">-->
+<!--    <app-sidebar></app-sidebar>-->
+
+<!--    <main class="content">-->
+<!--      <app-developer *ngIf="selectedSection === 'developer'"></app-developer>-->
+<!--      &lt;!&ndash;      <app-investment *ngIf="selectedSection === 'investment'"></app-investment>&ndash;&gt;-->
+<!--      &lt;!&ndash;      <app-building *ngIf="selectedSection === 'building'"></app-building>&ndash;&gt;-->
+<!--      &lt;!&ndash;      <app-premise *ngIf="selectedSection === 'premise'"></app-premise>&ndash;&gt;-->
+<!--    </main>-->
+<!--  </div>-->
+<!--</div>-->
 

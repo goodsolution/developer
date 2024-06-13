@@ -13,6 +13,10 @@ export class DeveloperService {
   constructor(private http: HttpClient, private constantsService: ConstantsService) {
   }
 
+  fetchAllDevelopers(): Observable<SearchResultDeveloperModel> {
+    return this.http.get<SearchResultDeveloperModel>(this.constantsService.getApiAllActiveDevelopersEndpoint());
+  }
+
   fetchDevelopers(): Observable<SearchResultDeveloperModel> {
     return this.http.get<SearchResultDeveloperModel>(this.constantsService.API_DEVELOPER_BY_SYSTEM_CODE_ENDPOINT);
   }

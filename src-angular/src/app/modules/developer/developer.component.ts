@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {DeveloperResponse} from "../core/models/developer.model";
 import {DeveloperService} from "../core/services/developer.service";
 import {SearchResultDeveloperModel} from "../core/models/searchResultDeveloper.model";
@@ -14,6 +14,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 })
 export class DeveloperComponent implements OnInit {
 
+  @Input() adminView: boolean = false;
   developers: DeveloperResponse[] = [];
   selectedDeveloper: DeveloperResponse | null = null;
   cities: CityResponse[] = [];
@@ -47,9 +48,15 @@ export class DeveloperComponent implements OnInit {
   }
 
   fetchDevelopers(): void {
-    this.developerService.fetchDevelopers().subscribe((response: SearchResultDeveloperModel) => {
-      this.developers = response.developers;
-    });
+    if (this.adminView) {
+      this.developerService.fetchAllDevelopers().subscribe((response: SearchResultDeveloperModel) => {
+        this.developers = response.developers;
+      });
+    } else {
+      this.developerService.fetchDevelopers().subscribe((response: SearchResultDeveloperModel) => {
+        this.developers = response.developers;
+      });
+    }
   }
 
   fetchCities(): void {
@@ -115,6 +122,13 @@ export class DeveloperComponent implements OnInit {
     this.developerService.deleteDeveloper(developer.id).subscribe(() => {
       this.fetchDevelopers();
     });
+  }
+
+  selectDeveloperForAdmin(developer: DeveloperResponse): void {
+    if (this.adminView) {
+      this.selectedDeveloper = developer;
+      this.developerForm.patchValue(developer);
+    }
   }
 
 }

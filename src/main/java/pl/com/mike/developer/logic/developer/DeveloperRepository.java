@@ -10,7 +10,8 @@ import java.util.Optional;
 @Repository
 public interface DeveloperRepository extends JpaRepository<Developer, Long> {
 
-    Optional<Developer> getDeveloperDataByCode(String code);
+    Optional<Developer> findByCodeAndDeletedAtIsNull(String code);
 
     List<Developer> findByDeletedAtIsNull();
+
 }

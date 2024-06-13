@@ -50,8 +50,8 @@ public class DeveloperService {
     }
 
     public DeveloperData getDeveloperByCode(DeveloperSearchFilter filter) {
-        if (developerRepository.getDeveloperDataByCode(filter.getCode()).isPresent()) {
-            return developerRepository.getDeveloperDataByCode(filter.getCode())
+        if (developerRepository.findByCodeAndDeletedAtIsNull(filter.getCode()).isPresent()) {
+            return developerRepository.findByCodeAndDeletedAtIsNull(filter.getCode())
                     .map(developer -> new DeveloperData(
                             developer.getId(),
                             developer.getName(),

@@ -12,11 +12,8 @@
     <app-sidebar></app-sidebar>
 
     <main class="content">
-      <app-developer *ngIf="selectedSection === 'developer'"></app-developer>
-      <!--      <app-investment *ngIf="selectedSection === 'investment'"></app-investment>-->
-      <!--      <app-building *ngIf="selectedSection === 'building'"></app-building>-->
-      <!--      <app-premise *ngIf="selectedSection === 'premise'"></app-premise>-->
+      <app-developer [adminView]="true" *ngIf="selectedSection === 'developer'"></app-developer>
+      <!-- Additional sections for admin can be added here -->
     </main>
   </div>
 </div>
-
