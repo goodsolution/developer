@@ -57,5 +57,8 @@ export class ConstantsService {
   getApiAllActiveDevelopersEndpoint(): string {
     return `${this.API_BASE_URL}/developers`;
   }
+  getCryptoKey(): string {
+    return '2B8gYvT3QUHvWaUQ1UJmbksIfBhPfA3PIvnOeGyvXzI';
+  }
 
 }

@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {jwtDecode} from "jwt-decode";
 import {EncryptionService} from "./encryption.service";
+import {ConstantsService} from "./constants.service";
 
 
 @Injectable({
@@ -10,13 +11,14 @@ export class TokenService {
 
   private readonly TOKEN_KEY = 'auth_token';
 
-  constructor(private encryptionService: EncryptionService) {
+  constructor(private encryptionService: EncryptionService,
+              private constantsService: ConstantsService) {
   }
 
   async encrypt(data: string): Promise<string> {
-    await this.encryptionService.fetchEncryptionKey();
+    // await this.encryptionService.fetchEncryptionKey();
 
-    const key = await this.getKey(this.encryptionService.getEncryptionKey());
+    const key = await this.getKey(this.constantsService.getCryptoKey());
     const iv = window.crypto.getRandomValues(new Uint8Array(12));
     const encoder = new TextEncoder();
     const encodedData = encoder.encode(data);
