@@ -93,12 +93,21 @@ export class DeveloperComponent implements OnInit {
 
   saveNewDeveloper(): void {
     if (this.developerForm.valid) {
+      console.log('Developer form is valid'); // Debugging log
       const newDeveloper = this.developerForm.value;
-      this.developerService.addDeveloper(newDeveloper).subscribe(() => {
-        this.fetchDevelopers();
-        this.selectedDeveloper = null;
-        this.isNewDeveloper = false;
+      this.developerService.addDeveloper(newDeveloper).subscribe({
+        next: () => {
+          console.log('Developer added successfully'); // Debugging log
+          this.fetchDevelopers();
+          this.selectedDeveloper = null;
+          this.isNewDeveloper = false;
+        },
+        error: (error) => {
+          console.error('Error adding developer', error); // Debugging log
+        }
       });
+    } else {
+      console.log('Developer form is invalid', this.developerForm); // Debugging log
     }
   }
 

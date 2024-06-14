@@ -69,6 +69,7 @@
       <input id="telephoneNumber" formControlName="telephoneNumber">
       <div *ngIf="developerForm.controls['telephoneNumber'].invalid && developerForm.controls['telephoneNumber'].touched">
         <small *ngIf="developerForm.controls['telephoneNumber'].errors?.['pattern']">Telephone Number must be 10 digits long.</small>
+        <small *ngIf="developerForm.controls['telephoneNumber'].errors?.['required']">Telephone Number is required.</small>
       </div>
 
       <label for="faxNumber">Fax Number:</label>
