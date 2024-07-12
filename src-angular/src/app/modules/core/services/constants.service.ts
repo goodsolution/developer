@@ -1,25 +1,20 @@
 import { Injectable } from '@angular/core';
+import {environment} from "../../../../environments/environment.development";
 
 @Injectable({
   providedIn: 'root'
 })
 export class ConstantsService {
-  readonly API_SYSTEM_CONFIG = 'https://localhost:8081/api/system/config/properties';
-  private readonly API_BASE_URL = 'https://localhost:8081/api';
-  readonly API_CITIES_BY_DEVELOPER_ENDPOINT = `${this.API_BASE_URL}/cities_by_developer`;
-  readonly API_CITIES_ENDPOINT = `${this.API_BASE_URL}/cities`;
-  readonly API_DEVELOPER_BY_SYSTEM_CODE_ENDPOINT = `${this.API_BASE_URL}/developers/code`;
-  readonly API_INVESTMENTS_ENDPOINT = `${this.API_BASE_URL}/investments`;
-  readonly API_LOGIN_ENDPOINT = `${this.API_BASE_URL}/auth/login`;
-  readonly ERROR_MESSAGE = 'An error has occurred';
-  readonly API_ENCRYPTION_KEY = `${this.API_BASE_URL}/auth/encryption`;
-  readonly attributes = {
-    SALES_STATUS: 'salesStatus',
-    TECHNICAL_STATUS: 'technicalStatus',
-    EXPOSURE: 'exposure',
-    INVESTMENT: 'investment',
-    DESCRIPTION: 'description',
-  }
+  readonly API_SYSTEM_CONFIG = environment.API_SYSTEM_CONFIG;
+  private readonly API_BASE_URL = environment.API_BASE_URL;
+  readonly API_CITIES_BY_DEVELOPER_ENDPOINT = `${this.API_BASE_URL}${environment.API_CITIES_BY_DEVELOPER_ENDPOINT}`;
+  readonly API_CITIES_ENDPOINT = `${this.API_BASE_URL}${environment.API_CITIES_ENDPOINT}`;
+  readonly API_DEVELOPER_BY_SYSTEM_CODE_ENDPOINT = `${this.API_BASE_URL}${environment.API_DEVELOPER_BY_SYSTEM_CODE_ENDPOINT}`;
+  readonly API_INVESTMENTS_ENDPOINT = `${this.API_BASE_URL}${environment.API_INVESTMENTS_ENDPOINT}`;
+  readonly API_LOGIN_ENDPOINT = `${this.API_BASE_URL}${environment.API_LOGIN_ENDPOINT}`;
+  readonly ERROR_MESSAGE = environment.ERROR_MESSAGE;
+  readonly API_ENCRYPTION_KEY = `${this.API_BASE_URL}${environment.API_ENCRYPTION_KEY}`;
+  readonly attributes = environment.attributes;
 
   getApiSoftDeleteDeveloperEndpoint(developerId: number): string {
     return `${this.API_BASE_URL}/developers/${developerId}`;
@@ -58,7 +53,7 @@ export class ConstantsService {
     return `${this.API_BASE_URL}/developers`;
   }
   getCryptoKey(): string {
-    return '2B8gYvT3QUHvWaUQ1UJmbksIfBhPfA3PIvnOeGyvXzI';
+    return environment.cryptoKey;
   }
 
 }
