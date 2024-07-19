@@ -9,6 +9,8 @@ import {MatCardModule} from "@angular/material/card";
 import {MatGridListModule} from "@angular/material/grid-list";
 import {MatSliderModule} from "@angular/material/slider";
 import {MatPaginatorModule} from "@angular/material/paginator";
+import {MatSidenavModule} from "@angular/material/sidenav";
+import {MatListModule} from "@angular/material/list";
 
 @NgModule({
   declarations: [],
@@ -22,7 +24,9 @@ import {MatPaginatorModule} from "@angular/material/paginator";
     MatCardModule,
     MatGridListModule,
     MatSliderModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatSidenavModule,
+    MatListModule
   ]
 })
 export class MaterialModule { }

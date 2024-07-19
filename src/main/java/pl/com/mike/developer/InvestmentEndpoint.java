@@ -20,10 +20,24 @@ public class InvestmentEndpoint {
         this.cityService = cityService;
     }
 
-    @GetMapping("cities")
+    @GetMapping("cities_by_developer")
     public CitiesGetResponse getCitiesResponse() {
         return new CitiesGetResponse(
                 cityService.getCitiesByDeveloperCode()
+                        .stream()
+                        .map(city -> new CityGetResponse(
+                                city.getId(),
+                                city.getName(),
+                                city.getVoivodeshipId()
+                        ))
+                        .collect(Collectors.toList())
+        );
+    }
+
+    @GetMapping("cities")
+    public CitiesGetResponse getAllCitiesResponse() {
+        return new CitiesGetResponse(
+                cityService.getCities()
                         .stream()
                         .map(city -> new CityGetResponse(
                                 city.getId(),

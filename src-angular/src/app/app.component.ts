@@ -24,10 +24,20 @@ import {
   PremiseDetailAntalComponent
 } from './modules/premise-detail/premise-detail-antal/premise-detail-antal.component';
 import {PremiseDetailDodeComponent} from "./modules/premise-detail/premise-detail-dode/premise-detail-dode.component";
+import {AuthenticationService} from "./modules/core/services/authentication.service";
+import {DashboardDeveloperComponent} from "./modules/dashboard/dashboard-developer/dashboard-developer.component";
+import {DashboardAdminComponent} from "./modules/dashboard/dashboard-admin/dashboard-admin.component";
 
 
 enum ComponentLocation {
-  Header, Footer, Contact, Home, InvestmentList, PremiseList, PremiseDetail
+  Header,
+  Footer,
+  Contact,
+  Home,
+  InvestmentList,
+  PremiseList,
+  PremiseDetail,
+  Dashboard
 }
 
 interface ComponentConfig {
@@ -50,6 +60,7 @@ export class AppComponent implements OnInit, OnDestroy {
   @ViewChild('investmentListContainer', {read: ViewContainerRef}) private investmentListContainer!: ViewContainerRef;
   @ViewChild('premiseListContainer', {read: ViewContainerRef}) private premiseListContainer!: ViewContainerRef;
   @ViewChild('premiseDetailContainer', {read: ViewContainerRef}) private premiseDetailContainer!: ViewContainerRef;
+  @ViewChild('dashboardContainer', {read: ViewContainerRef}) private dashboardContainer!: ViewContainerRef;
 
   private subscriptions: Subscription = new Subscription();
   private statusCode: SearchResultCode | null = null;
@@ -63,7 +74,8 @@ export class AppComponent implements OnInit, OnDestroy {
       [ComponentLocation.Home]: HomeAntalComponent,
       [ComponentLocation.InvestmentList]: InvestmentListAntalComponent,
       [ComponentLocation.PremiseList]: PremiseListAntalComponent,
-      [ComponentLocation.PremiseDetail]: PremiseDetailAntalComponent
+      [ComponentLocation.PremiseDetail]: PremiseDetailAntalComponent,
+      [ComponentLocation.Dashboard]: DashboardDeveloperComponent,
     },
     domdevelopment: {
       [ComponentLocation.Header]: DodeHeaderComponent,
@@ -72,7 +84,8 @@ export class AppComponent implements OnInit, OnDestroy {
       [ComponentLocation.Home]: HomeDodeComponent,
       [ComponentLocation.InvestmentList]: InvestmentListDodeComponent,
       [ComponentLocation.PremiseList]: PremiseListDodeComponent,
-      [ComponentLocation.PremiseDetail]: PremiseDetailDodeComponent
+      [ComponentLocation.PremiseDetail]: PremiseDetailDodeComponent,
+      [ComponentLocation.Dashboard]: DashboardDeveloperComponent,
     },
     default: {
       [ComponentLocation.Header]: DefaultComponent,
@@ -81,22 +94,39 @@ export class AppComponent implements OnInit, OnDestroy {
       [ComponentLocation.Home]: DefaultComponent,
       [ComponentLocation.InvestmentList]: DefaultComponent,
       [ComponentLocation.PremiseList]: DefaultComponent,
-      [ComponentLocation.PremiseDetail]: DefaultComponent
+      [ComponentLocation.PremiseDetail]: DefaultComponent,
+      [ComponentLocation.Dashboard]: DefaultComponent,
     }
   };
 
   constructor(
     private configService: ConfigService,
-    private router: Router
-  ) {
+    private router: Router,
+    private authService: AuthenticationService) {
   }
 
   ngOnInit() {
     this.initializeAppAfterFetchingCode();
+    this.observeRouterEvents();
   }
 
   ngOnDestroy() {
     this.subscriptions.unsubscribe();
+  }
+
+  private initializeAppAfterFetchingCode() {
+    this.fetchCode().pipe(
+      take(1)
+    ).subscribe({
+      next: (statusCode) => {
+        this.statusCode = statusCode;
+//observeRouterEvents
+        this.loadDynamicComponents();
+      },
+      error: (error) => {
+        console.error('Error fetching status code:', error);
+      },
+    });
   }
 
   private fetchCode(): Observable<SearchResultCode> {
@@ -111,21 +141,6 @@ export class AppComponent implements OnInit, OnDestroy {
     );
   }
 
-  private initializeAppAfterFetchingCode() {
-    this.fetchCode().pipe(
-      take(1) // Take only the first emission from the observable
-    ).subscribe({
-      next: (statusCode) => {
-        this.statusCode = statusCode;
-        this.observeRouterEvents(); // Set up router events after status code is fetched
-        this.loadDynamicComponents(); // Load dynamic components after status code is fetched
-      },
-      error: (error) => {
-        console.error('Error fetching status code:', error);
-      },
-    });
-  }
-
   private observeRouterEvents() {
     this.subscriptions.add(
       this.router.events.pipe(
@@ -134,16 +149,6 @@ export class AppComponent implements OnInit, OnDestroy {
         this.handleNavigationChange(event);
       })
     );
-  }
-
-  private loadDynamicComponents() {
-    if (this.statusCode) {
-      this.createComponent(this.headerContainer, ComponentLocation.Header);
-      this.createComponent(this.footerContainer, ComponentLocation.Footer);
-      if (this.router.url === '/') {
-        this.createComponent(this.homeContainer, ComponentLocation.Home);
-      }
-    }
   }
 
   private handleNavigationChange(event: NavigationEnd) {
@@ -160,6 +165,18 @@ export class AppComponent implements OnInit, OnDestroy {
       this.loadDynamicPremiseDetailComponent(url);
     } else if (url === '/') {
       this.createComponent(this.homeContainer, ComponentLocation.Home);
+    } else if (url.startsWith("/dashboard")) {
+      this.loadDynamicDashboardComponent();
+    }
+  }
+
+  private loadDynamicComponents() {
+    if (this.statusCode) {
+      this.createComponent(this.headerContainer, ComponentLocation.Header);
+      this.createComponent(this.footerContainer, ComponentLocation.Footer);
+      if (this.router.url === '/') {
+        this.createComponent(this.homeContainer, ComponentLocation.Home);
+      }
     }
   }
 
@@ -169,6 +186,7 @@ export class AppComponent implements OnInit, OnDestroy {
     this.investmentListContainer.clear();
     this.premiseListContainer.clear();
     this.premiseDetailContainer.clear();
+    this.dashboardContainer.clear();
   }
 
   private routesClearingMap = new Map<string, () => void>([
@@ -187,21 +205,20 @@ export class AppComponent implements OnInit, OnDestroy {
       this.investmentListContainer.clear();
       this.contactContainer.clear();
     }],
+    ['/dashboard', () => {
+      this.clearAllContainers();
+      this.loadDynamicDashboardComponent();
+    }],
     // Add more route actions as needed
   ]);
 
   private loadDynamicInvestmentComponent(url: string) {
     const urlSegments = url.split('/');
-    // Assuming the city id is the second segment after '/city/', like '/city/2'
-    const cityId = urlSegments[2]; // This should not be null, adjust the index as necessary
-
-    // Your existing logic
+    const cityId = urlSegments[2];
     const statusKey = this.statusCode?.code || 'default';
     const componentMapping = this.componentConfig[statusKey];
     const componentClass = componentMapping[ComponentLocation.InvestmentList];
-
     if (componentClass) {
-      // Pass the cityId directly to the loadComponent call
       this.loadComponent(
         this.investmentListContainer,
         componentClass,
@@ -214,14 +231,11 @@ export class AppComponent implements OnInit, OnDestroy {
 
   private loadDynamicPremiseComponent(url: string) {
     const urlSegments = url.split('/');
-    const investmentId = urlSegments[2]; // Adjust the index as necessary
-
+    const investmentId = urlSegments[2];
     const statusKey = this.statusCode?.code || 'default';
     const componentMapping = this.componentConfig[statusKey];
     const componentClass = componentMapping[ComponentLocation.PremiseList];
-
     if (componentClass) {
-      // Pass the investmentId directly to the loadComponent call
       this.loadComponent(
         this.premiseListContainer,
         componentClass,
@@ -235,11 +249,10 @@ export class AppComponent implements OnInit, OnDestroy {
   private loadDynamicPremiseDetailComponent(url: string) {
     const urlSegments = url.split('/');
     const premiseId = urlSegments[2]; // Adjust the index as necessary
-
     const statusKey = this.statusCode?.code || 'default';
     const componentMapping = this.componentConfig[statusKey];
     const componentClass = componentMapping[ComponentLocation.PremiseDetail];
-    if(componentClass) {
+    if (componentClass) {
       this.loadComponent(
         this.premiseDetailContainer,
         componentClass,
@@ -249,6 +262,38 @@ export class AppComponent implements OnInit, OnDestroy {
       console.error(`No component found for Premise Detail with status key ${statusKey}`);
     }
   }
+
+  private loadDynamicDashboardComponent() {
+    if (this.authService.hasRole('DEVELOPER')) {
+      this.loadComponent(this.dashboardContainer, DashboardDeveloperComponent);
+    } else if (this.authService.hasRole('ADMIN')) {
+      this.loadComponent(this.dashboardContainer, DashboardAdminComponent);
+    } else {
+      const statusKey = this.statusCode?.code || 'default';
+      const componentMapping = this.componentConfig[statusKey];
+      const componentClass = componentMapping[ComponentLocation.Dashboard];
+      if (componentClass) {
+        this.loadComponent(this.dashboardContainer, componentClass);
+      } else {
+        console.error(`No dashboard component found for status key ${statusKey}`);
+      }
+    }
+  }
+
+  // private loadDynamicDashboardComponent() {
+  //   if (!this.statusCode) {
+  //     console.warn('Status code is not available, cannot load dashboard component');
+  //     return;
+  //   }
+  //   const statusKey = this.statusCode.code || 'default';
+  //   const componentMapping = this.componentConfig[statusKey];
+  //   const componentClass = componentMapping[ComponentLocation.Dashboard];
+  //   if (componentClass) {
+  //     this.loadComponent(this.dashboardContainer, componentClass);
+  //   } else {
+  //     console.error(`No dashboard component found for status key ${statusKey}`);
+  //   }
+  // }
 
   private createComponent(container: ViewContainerRef, location: ComponentLocation) {
     if (!this.statusCode) {

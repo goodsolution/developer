@@ -10,7 +10,7 @@ import java.util.Set;
 @Table(name = "developers")
 public class Developer implements Serializable {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     @Column(name = "address_country")
@@ -30,8 +30,6 @@ public class Developer implements Serializable {
     private String email;
     @Column(name = "tax_identification_number")
     private String taxIdentificationNumber;
-    @Column(name = "city_id" , insertable = false, updatable = false)
-    private Long cityId;
     @Column(name = "logo_url")
     private String logoUrl;
     private String code;
@@ -180,17 +178,10 @@ public class Developer implements Serializable {
         this.logoUrl = logoUrl;
     }
 
-    public void setCityId(Long cityId) {
-        this.cityId = cityId;
-    }
-
     public void setCode(String code) {
         this.code = code;
     }
 
-    public Long getCityId() {
-        return cityId;
-    }
     public City getDeveloperCity() {
         return developerCity;
     }

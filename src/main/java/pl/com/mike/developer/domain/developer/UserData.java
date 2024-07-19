@@ -1,21 +1,35 @@
 package pl.com.mike.developer.domain.developer;
 
-import java.time.LocalDateTime;
+import pl.com.mike.developer.auth.developer.Roles;
 
+import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class UserData {
 
     private Long id;
     private String login;
-    private String passwordHash;
+    private String encryptedPassword;
+    private Set<String> roles = new HashSet<>();
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private LocalDateTime deletedAt;
 
+    public UserData() {
+    }
+
     public UserData(User user) {
         this.id = user.getId();
         this.login = user.getLogin();
-        this.passwordHash = user.getPasswordHash();
+        this.encryptedPassword = user.getEncryptedPassword();
+        this.roles = user.getRoles().stream()
+                .map(Roles::name)
+                .collect(Collectors.toSet());
+        this.createdAt = user.getCreatedAt();
+        this.updatedAt = user.getUpdatedAt();
+        this.deletedAt = user.getDeletedAt();
     }
 
     public Long getId() {
@@ -34,12 +48,12 @@ public class UserData {
         this.login = login;
     }
 
-    public String getPasswordHash() {
-        return passwordHash;
+    public String getEncryptedPassword() {
+        return encryptedPassword;
     }
 
-    public void setPasswordHash(String passwordHash) {
-        this.passwordHash = passwordHash;
+    public void setEncryptedPassword(String encryptedPassword) {
+        this.encryptedPassword = encryptedPassword;
     }
 
     public LocalDateTime getCreatedAt() {
@@ -64,5 +78,24 @@ public class UserData {
 
     public void setDeletedAt(LocalDateTime deletedAt) {
         this.deletedAt = deletedAt;
+    }
+
+    public Set<String> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<String> roles) {
+        this.roles = roles;
+    }
+
+    public User toUser() {
+        User user = new User();
+        user.setId(id);
+        user.setLogin(login);
+        user.setEncryptedPassword(encryptedPassword);
+        user.setRoles(roles.stream()
+                .map(Roles::valueOf)
+                .collect(Collectors.toSet()));
+        return user;
     }
 }

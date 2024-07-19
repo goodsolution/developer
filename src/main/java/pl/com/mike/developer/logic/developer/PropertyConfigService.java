@@ -1,7 +1,7 @@
 package pl.com.mike.developer.logic.developer;
 
 import org.springframework.stereotype.Service;
-import pl.com.mike.developer.config.ApplicationConfig;
+import pl.com.mike.developer.config.developer.ApplicationConfig;
 
 import java.util.HashMap;
 import java.util.Map;

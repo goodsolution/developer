@@ -20,6 +20,8 @@ import {PremiseDetailModule} from "./modules/premise-detail/premise-detail.modul
 import {AcceptLanguageInterceptor} from "./modules/core/services/accept-language.interceptor";
 import {LanguageService} from "./modules/core/services/language.service";
 import {MatPaginatorIntl} from "@angular/material/paginator";
+import {DashboardModule} from "./modules/dashboard/dashboard.module";
+import {DeveloperModule} from "./modules/developer/developer.module";
 
 export function initializeConfig(config: ConfigService) {
   return (): Promise<any> => {
@@ -31,7 +33,7 @@ export function serveLanguageServices(languageService: LanguageService, translat
   return (): Promise<any> => {
     return new Promise((resolve) => {
       const browserLang = translate.getBrowserLang();
-      const langToUse = localStorage.getItem('preferredLanguage') || browserLang || 'en';
+      const langToUse = localStorage.getItem('preferredLanguage') ?? browserLang ?? 'en';
       translate.setDefaultLang(langToUse);
       languageService.setLanguage(langToUse);
       translate.use(langToUse).subscribe(() => {
@@ -84,6 +86,8 @@ export class CustomMatPaginatorIntl extends MatPaginatorIntl {
     PremiseListModule,
     PremiseListFilterModule,
     PremiseDetailModule,
+    DashboardModule,
+    DeveloperModule,
     AppRoutingModule,
     HttpClientModule,
     TranslateModule.forRoot({

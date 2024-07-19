@@ -17,6 +17,7 @@
     "header.language.selection": "Language",
     "log.user.name": "User Name",
     "log.login": "Login",
+    "log.logout": "Logout",
     "log.password": "Password",
     "footer.copy.rights": "Copy Rights",
     "investments.list.none": "Currently no investments",
@@ -37,6 +38,18 @@
     "paginator.first.page": "First page",
     "paginator.last.page": "Last page",
     "paginator.range": "{{start}} - {{end}} of {{length}}",
-    "paginator.range.of": "of"
+    "paginator.range.of": "of",
+    "error.username.required": "User Name is required",
+    "error.password.required": "Password is required",
+    "error.login.failed": "Username or password is incorrect. Please try again.",
+    "error.unknown": "An error occurred. Please try again later.",
+    "header.dashboard": "Dashboard"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "developers": "Developers",
+    "investments": "Investments",
+    "buildings": "Buildings",
+    "premises": "Premises"
   }
 }
