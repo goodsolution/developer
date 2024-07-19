@@ -11,6 +11,8 @@ import {MatSliderModule} from "@angular/material/slider";
 import {MatPaginatorModule} from "@angular/material/paginator";
 import {MatSidenavModule} from "@angular/material/sidenav";
 import {MatListModule} from "@angular/material/list";
+import {MatDialogModule} from "@angular/material/dialog";
+import {MatExpansionModule} from "@angular/material/expansion";
 
 @NgModule({
   declarations: [],
@@ -26,7 +28,9 @@ import {MatListModule} from "@angular/material/list";
     MatSliderModule,
     MatPaginatorModule,
     MatSidenavModule,
-    MatListModule
+    MatListModule,
+    MatDialogModule,
+    MatExpansionModule
   ]
 })
 export class MaterialModule { }

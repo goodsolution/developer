@@ -1,0 +1,18 @@
+h1 {
+  font-size: 1.8em;
+  color: #1976d2;
+  margin-bottom: 20px; /* Add space below title */
+}
+
+mat-dialog-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.enlarged-image {
+  max-width: 100%;
+  height: auto;
+  border-radius: 4px;
+}
