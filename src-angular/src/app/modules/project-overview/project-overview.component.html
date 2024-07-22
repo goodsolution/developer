@@ -28,6 +28,17 @@
     </div>
   </section>
 
+  <section class="section functionality-description">
+    <h2>Description Functionality</h2>
+    <div class="functionality-steps">
+      <div class="step" *ngFor="let step of functionalitySteps">
+        <h3>{{ step.title }}</h3>
+        <p>{{ step.description }}</p>
+        <img [src]="step.image" alt="{{ step.title }} image">
+      </div>
+    </div>
+  </section>
+
   <section class="section screenshots">
     <h2>Chosen Screens</h2>
     <div class="screenshot-list">
@@ -77,5 +88,4 @@
       </div>
     </div>
   </section>
-
 </div>

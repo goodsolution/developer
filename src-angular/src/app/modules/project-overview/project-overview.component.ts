@@ -73,6 +73,25 @@ export class ProjectOverviewComponent {
     }
   ];
 
+  functionalitySteps = [
+    {
+      title: 'Step 1: Login',
+      description: 'Enter your credentials to log in to the Real Estate Management App.',
+      image: 'assets/img/overview/step1_login.jpg'
+    },
+    {
+      title: 'Step 2: Filter Premises',
+      description: 'Use the filtering options to narrow down the list of available premises.',
+      image: 'assets/img/overview/step2_filter_premises.jpg'
+    },
+    {
+      title: 'Step 3: View Premise Details',
+      description: 'Click on a premise to view detailed information and images.',
+      image: 'assets/img/overview/step3_view_details.jpg'
+    }
+    // Add more steps as needed
+  ];
+
   highlights = [
     {
       title: 'Login',
