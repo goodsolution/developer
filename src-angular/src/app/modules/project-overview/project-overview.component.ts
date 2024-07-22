@@ -47,9 +47,9 @@ export class ProjectOverviewComponent {
       description: 'A typed superset of JavaScript that compiles to plain JavaScript.'
     },
     {
-      name: 'SCSS',
-      logo: 'assets/img/overview/tech_logo/CSS3_logo.png',
-      description: 'A CSS extension that adds power and elegance to the basic language.'
+      name: 'HTML/SCSS',
+      logo: 'assets/img/overview/tech_logo/html_scss.jpg',
+      description: 'Combining HTML and SCSS for powerful, elegant web design and development.'
     },
     {
       name: 'MySQL',

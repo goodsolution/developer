@@ -1,11 +1,12 @@
 /* Container */
 .container {
   max-width: 1200px;
-  margin: auto;
   padding: 20px;
   background-color: #f9f9f9;
   border-radius: 8px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  margin-top: 30px;
+  margin-bottom: 30px;
 }
 
 /* Sections */
@@ -144,9 +145,16 @@
           white-space: pre-wrap;
           word-wrap: break-word;
           background: #f4f4f4;
-          padding: 10px;
+          padding: 15px; /* Adjusted padding */
           border-radius: 4px;
           box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+          font-size: 1rem; /* Adjusted font size */
+          line-height: 1.5; /* Adjusted line height */
+          overflow-x: auto; /* Enable horizontal scrolling */
+        }
+
+        code {
+          font-family: 'Courier New', Courier, monospace; /* Monospaced font for code */
         }
       }
     }
@@ -162,18 +170,47 @@
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 
-  ul {
-    list-style: none;
-    padding: 0;
-    li {
-      margin-bottom: 10px;
-      a {
-        color: #ffeb3b;
-        text-decoration: none;
+  .contact-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 20px;
 
-        &:hover {
-          text-decoration: underline;
+    .contact-info {
+      flex: 1;
+      min-width: 250px;
+      text-align: left;
+
+      ul {
+        list-style: none;
+        padding: 0;
+        li {
+          margin-bottom: 10px;
+          a {
+            color: #ffeb3b;
+            text-decoration: none;
+            &:hover {
+              text-decoration: underline;
+            }
+          }
         }
+      }
+    }
+
+    .contact-photo {
+      flex: 0 0 150px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      img {
+        width: 100%;
+        max-width: 150px;
+        border-radius: 50%;
+        border: 4px solid #fff;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        transform: rotate(90deg); /* Ensure the photo is upright */
       }
     }
   }
