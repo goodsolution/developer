@@ -9,13 +9,17 @@
         {{ city.name }}
       </button>
     </mat-menu>
-    <button mat-button [routerLink]="['/contact']"><span class="menu-text">{{ 'shared.header.contact' | translate }}</span></button>
+    <button mat-button [routerLink]="['/contact']">
+      <i class="material-icons">contact_mail</i>
+      <span class="menu-text">{{ 'shared.header.contact' | translate }}</span>
+    </button>
     <span class="spacer"></span>
     <button mat-button *ngIf="(isLoggedIn$ | async)" [routerLink]="['/dashboard']">
       <i class="material-icons">dashboard</i><span class="menu-text">{{ 'shared.header.dashboard' | translate }}</span>
     </button>
     <button mat-button [matMenuTriggerFor]="language_menu">
-      <i class="material-icons">language</i><span class="menu-text">{{ 'shared.header.language.selection' | translate }}</span>
+      <i class="material-icons">language</i><span
+      class="menu-text">{{ 'shared.header.language.selection' | translate }}</span>
     </button>
     <mat-menu #language_menu="matMenu">
       <button mat-menu-item (click)="switchLanguage('pl')">{{ 'shared.header.language.polish' | translate }}</button>
