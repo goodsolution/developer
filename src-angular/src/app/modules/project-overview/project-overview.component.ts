@@ -52,11 +52,6 @@ export class ProjectOverviewComponent {
       description: 'A CSS extension that adds power and elegance to the basic language.'
     },
     {
-      name: 'Node.js',
-      logo: 'assets/img/overview/tech_logo/node.png',
-      description: 'A JavaScript runtime built on Chrome\'s V8 JavaScript engine.'
-    },
-    {
       name: 'MySQL',
       logo: 'assets/img/overview/tech_logo/mySQL-logo.png',
       description: 'An open-source relational database management system.'
