@@ -16,64 +16,64 @@ export class ProjectOverviewComponent {
     {
       title: 'Admin Panel',
       description: 'This is the admin panel of the application.',
-      imageUrl: 'assets/img/admin_panel.jpg'
+      imageUrl: 'assets/img/overview/admin_panel.jpg'
     },
     {
       title: 'Filtering Premises',
       description: 'This screen shows how premises can be filtered.',
-      imageUrl: 'assets/img/filtering_premises.jpg'
+      imageUrl: 'assets/img/overview/filtering_premises.jpg'
     },
     {
       title: 'Home Page',
       description: 'This is the home page of the application.',
-      imageUrl: 'assets/img/home_page.jpg'
+      imageUrl: 'assets/img/overview/home_page.jpg'
     },
     {
       title: 'Premise Detail',
       description: 'Detailed view of a single premise.',
-      imageUrl: 'assets/img/premise_detail.jpg'
+      imageUrl: 'assets/img/overview/premise_detail.jpg'
     }
   ];
 
   technologies = [
     {
       name: 'Angular',
-      logo: 'assets/img/tech_logo/angular.jpg',
+      logo: 'assets/img/overview/tech_logo/angular.jpg',
       description: 'A platform for building mobile and desktop web applications.'
     },
     {
       name: 'TypeScript',
-      logo: 'assets/img/tech_logo/Typescript_logo.png',
+      logo: 'assets/img/overview/tech_logo/Typescript_logo.png',
       description: 'A typed superset of JavaScript that compiles to plain JavaScript.'
     },
     {
       name: 'SCSS',
-      logo: 'assets/img/tech_logo/CSS3_logo.png',
+      logo: 'assets/img/overview/tech_logo/CSS3_logo.png',
       description: 'A CSS extension that adds power and elegance to the basic language.'
     },
     {
       name: 'Node.js',
-      logo: 'assets/img/tech_logo/node.png',
+      logo: 'assets/img/overview/tech_logo/node.png',
       description: 'A JavaScript runtime built on Chrome\'s V8 JavaScript engine.'
     },
     {
       name: 'MySQL',
-      logo: 'assets/img/tech_logo/mySQL-logo.png',
+      logo: 'assets/img/overview/tech_logo/mySQL-logo.png',
       description: 'An open-source relational database management system.'
     },
     {
       name: 'Java',
-      logo: 'assets/img/tech_logo/java_logo.jpg',
+      logo: 'assets/img/overview/tech_logo/java_logo.jpg',
       description: 'A high-level, class-based, object-oriented programming language.'
     },
     {
       name: 'SpringBoot',
-      logo: 'assets/img/tech_logo/spring_boot.png',
+      logo: 'assets/img/overview/tech_logo/spring_boot.png',
       description: 'A framework that simplifies the development of new Spring applications.'
     },
     {
       name: 'Hibernate',
-      logo: 'assets/img/tech_logo/Hibernaternate.jpg',
+      logo: 'assets/img/overview/tech_logo/Hibernaternate.jpg',
       description: 'An object-relational mapping tool for the Java programming language.'
     }
   ];
