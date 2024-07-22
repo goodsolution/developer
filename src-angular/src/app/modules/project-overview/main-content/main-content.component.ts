@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {ScreenshotDialogComponent} from "../screenshot-dialog/screenshot-dialog.component";
 import {MatDialog} from "@angular/material/dialog";
 
