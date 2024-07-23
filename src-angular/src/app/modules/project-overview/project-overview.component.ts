@@ -16,22 +16,22 @@ export class ProjectOverviewComponent {
     {
       title: 'Admin Panel',
       description: 'This is the admin panel of the application.',
-      imageUrl: 'assets/img/overview/admin_panel.jpg'
+      images: [{ url: 'assets/img/overview/admin_panel.jpg', alt: 'Admin Panel' }]
     },
     {
       title: 'Filtering Premises',
       description: 'This screen shows how premises can be filtered.',
-      imageUrl: 'assets/img/overview/filtering_premises.jpg'
+      images: [{ url: 'assets/img/overview/filtering_premises.jpg', alt: 'Filtering Premises' }]
     },
     {
       title: 'Home Page',
       description: 'This is the home page of the application.',
-      imageUrl: 'assets/img/overview/home_page.jpg'
+      images: [{ url: 'assets/img/overview/home_page.jpg', alt: 'Home Page' }]
     },
     {
       title: 'Premise Detail',
       description: 'Detailed view of a single premise.',
-      imageUrl: 'assets/img/overview/premise_detail.jpg'
+      images: [{ url: 'assets/img/overview/premise_detail.jpg', alt: 'Premise Detail' }]
     }
   ];
 
@@ -80,22 +80,30 @@ export class ProjectOverviewComponent {
 
   functionalitySteps = [
     {
-      title: 'Step 1: Login',
-      description: 'Enter your credentials to log in to the Real Estate Management App.',
-      image: 'assets/img/overview/step1_login.jpg'
+      title: 'Backend: Login to Dashboard',
+      description: 'You can log in with either a developer or admin authority, providing different dashboard views. Developers receive a personalized dashboard for their activities, while admins can manage all developers through a comprehensive dashboard view.',
+      images: [
+        { url: 'assets/img/overview/developer_panel.jpg', alt: 'Developer Panel' },
+        { url: 'assets/img/overview/admin_panel.jpg', alt: 'Admin Panel' }
+      ]
     },
     {
       title: 'Step 2: Filter Premises',
-      description: 'Use the filtering options to narrow down the list of available premises.',
-      image: 'assets/img/overview/step2_filter_premises.jpg'
+      description: 'Use the filtering options to narrow down the list of available premises. This includes filtering by location, price, size, and other relevant criteria to find the perfect match.',
+      images: [
+        { url: 'assets/img/overview/step2_filter_premises.jpg', alt: 'Filter Premises' }
+      ]
     },
     {
       title: 'Step 3: View Premise Details',
-      description: 'Click on a premise to view detailed information and images.',
-      image: 'assets/img/overview/step3_view_details.jpg'
+      description: 'Click on a premise to view detailed information, including images, descriptions, and specifications. This allows for an in-depth understanding of each property.',
+      images: [
+        { url: 'assets/img/overview/step3_view_details.jpg', alt: 'View Premise Details' }
+      ]
     }
-    // Add more steps as needed
   ];
+
+
 
   highlights = [
     {
@@ -223,23 +231,6 @@ export class ProjectOverviewComponent {
       title: 'Angular Dynamic Component Loading',
       description: 'Implemented dynamic loading of components to create a flexible and easily extendable application architecture.',
       code: `
-        import {Component, OnDestroy, OnInit, Type, ViewChild, ViewContainerRef} from '@angular/core';
-        import {NavigationEnd, Router} from "@angular/router";
-        import {filter, Observable, of, ReplaySubject, Subscription, take, tap} from 'rxjs';
-        import {SearchResultCode} from "./modules/core/models/searchResultCode.model";
-        import {AntalHeaderComponent} from "./modules/core/components/header/antal-header/antal-header.component";
-        import {FooterAntalComponent} from "./modules/core/components/footer/footer-antal/footer-antal.component";
-        import {ContactAntalComponent} from "./modules/contact/contact-antal/contact-antal.component";
-        import {HomeAntalComponent} from "./modules/home/home-antal/home-antal.component";
-        import {DodeHeaderComponent} from "./modules/core/components/header/dode-header/dode-header.component";
-        import {FooterDodeComponent} from "./modules/core/components/footer/footer-dode/footer-dode.component";
-        import {ContactDodeComponent} from "./modules/contact/contact-dode/contact-dode.component";
-        import {HomeDodeComponent} from "./modules/home/home-dode/home-dode.component";
-        import {DefaultComponent} from "./modules/shared/default/default.component";
-        import {ConfigService} from "./modules/core/services/config.service";
-        import {AuthenticationService} from "./modules/core/services/authentication.service";
-        import {DashboardDeveloperComponent} from "./modules/dashboard/dashboard-developer/dashboard-developer.component";
-        import {DashboardAdminComponent} from "./modules/dashboard/dashboard-admin/dashboard-admin.component";
 
         enum ComponentLocation {
           Header,
@@ -663,11 +654,11 @@ export class ProjectOverviewComponent {
   constructor(public dialog: MatDialog) {
   }
 
-  openDialog(screenshot: { title: string, imageUrl: string }) {
+  openDialog(screenshot: { title: string, images: { url: string; alt: string; }[] }) {
     this.dialog.open(ScreenshotDialogComponent, {
       data: {
         title: screenshot.title,
-        imageUrl: screenshot.imageUrl
+        images: screenshot.images
       },
       hasBackdrop: true,
       backdropClass: 'backdrop-class',
@@ -675,6 +666,5 @@ export class ProjectOverviewComponent {
       height: '80%'
     });
   }
-
 
 }

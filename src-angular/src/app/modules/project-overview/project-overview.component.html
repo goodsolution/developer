@@ -31,10 +31,12 @@
   <section class="section functionality-description">
     <h2>Description Functionality</h2>
     <div class="functionality-steps">
-      <div class="step" *ngFor="let step of functionalitySteps">
-        <h3>{{ step.title }}</h3>
-        <p>{{ step.description }}</p>
-        <img [src]="step.image" alt="{{ step.title }} image">
+      <div class="step" *ngFor="let screenshot of functionalitySteps" (click)="openDialog(screenshot)">
+        <h3>{{ screenshot.title }}</h3>
+        <p>{{ screenshot.description }}</p>
+        <div class="step-images">
+          <img *ngFor="let image of screenshot.images" [src]="image.url" alt="{{ image.alt }}">
+        </div>
       </div>
     </div>
   </section>
@@ -47,7 +49,7 @@
           <mat-card-title>{{ screenshot.title }}</mat-card-title>
           <mat-card-subtitle>{{ screenshot.description }}</mat-card-subtitle>
         </mat-card-header>
-        <img mat-card-image [src]="screenshot.imageUrl" alt="{{ screenshot.title }}">
+        <img mat-card-image [src]="screenshot.images[0].url" alt="{{ screenshot.title }}">
       </mat-card>
     </div>
   </section>
