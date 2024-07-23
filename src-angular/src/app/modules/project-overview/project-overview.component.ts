@@ -70,6 +70,11 @@ export class ProjectOverviewComponent {
       name: 'Hibernate',
       logo: 'assets/img/overview/tech_logo/Hibernaternate.jpg',
       description: 'An object-relational mapping tool for the Java programming language.'
+    },
+    {
+      name: 'GitHub',
+      logo: 'assets/img/overview/tech_logo/github.png',
+      description: 'A web-based interface for version control and collaboration using Git.'
     }
   ];
 
