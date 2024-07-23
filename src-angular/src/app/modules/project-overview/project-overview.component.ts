@@ -88,17 +88,27 @@ export class ProjectOverviewComponent {
       ]
     },
     {
-      title: 'Step 2: Filter Premises',
-      description: 'Use the filtering options to narrow down the list of available premises. This includes filtering by location, price, size, and other relevant criteria to find the perfect match.',
+      title: 'Backend: Adding Developer',
+      description: 'When logged in as an admin, you can easily add a new developer to the system if necessary. It is fast, easy, and convenient. The system is prepared to hold many developers with different implementations of front needs.',
       images: [
-        { url: 'assets/img/overview/step2_filter_premises.jpg', alt: 'Filter Premises' }
+        { url: 'assets/img/overview/add_developer_01_dashboard_admin_view.jpg', alt: 'Add Developer - Dashboard View 1' },
+        { url: 'assets/img/overview/add_developer_02_dashboard_admin_view.jpg', alt: 'Add Developer - Dashboard View 2' }
       ]
     },
     {
-      title: 'Step 3: View Premise Details',
-      description: 'Click on a premise to view detailed information, including images, descriptions, and specifications. This allows for an in-depth understanding of each property.',
+      title: 'Frontend: Filter and Paginate Premises',
+      description: 'Use the filtering options to narrow down the list of available premises. This includes filtering by price value. The implementation uses Angular Material for efficient filtering and includes pagination and sorting options to enhance the user experience.',
       images: [
-        { url: 'assets/img/overview/step3_view_details.jpg', alt: 'View Premise Details' }
+        { url: 'assets/img/overview/filtering_premises_functionality.jpg', alt: 'Filter Premises' },
+        { url: 'assets/img/overview/paginating_premises_functionality.jpg', alt: 'Paginate Premises' }
+      ]
+    },
+    {
+      title: 'Frontend: Dynamic Homepage Setup',
+      description: 'You can change the system code from the backend to set up different developers dynamically. This allows us to modify views on the front end easily, quickly, and efficiently. The entire platform is built to adapt easily to the next developer, making it a key point to generate fast revenue.',
+      images: [
+        { url: 'assets/img/overview/homepage_antal.jpg', alt: 'Homepage Antal' },
+        { url: 'assets/img/overview/homepage_domde.jpg', alt: 'Homepage Dom Development' }
       ]
     }
   ];
