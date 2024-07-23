@@ -9,7 +9,7 @@
         {{ city.name }}
       </button>
     </mat-menu>
-    <button mat-button [routerLink]="['/contact']">
+    <button mat-button [routerLink]="['/contact']" class="contact-button">
       <i class="material-icons">contact_mail</i>
       <span class="menu-text">{{ 'shared.header.contact' | translate }}</span>
     </button>
@@ -18,8 +18,7 @@
       <i class="material-icons">dashboard</i><span class="menu-text">{{ 'shared.header.dashboard' | translate }}</span>
     </button>
     <button mat-button [matMenuTriggerFor]="language_menu">
-      <i class="material-icons">language</i><span
-      class="menu-text">{{ 'shared.header.language.selection' | translate }}</span>
+      <i class="material-icons">language</i><span class="menu-text">{{ 'shared.header.language.selection' | translate }}</span>
     </button>
     <mat-menu #language_menu="matMenu">
       <button mat-menu-item (click)="switchLanguage('pl')">{{ 'shared.header.language.polish' | translate }}</button>
