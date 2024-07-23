@@ -21,9 +21,18 @@ mat-toolbar {
       background-color: rgba(0,0,0,0.05); /* Slight hover effect */
     }
 
-    mat-icon {
-      margin-right: 10px;
+    i.material-icons {
+      vertical-align: middle;
+      margin-right: 8px; /* Add margin to the right of the icon */
     }
+
+    .menu-text {
+      vertical-align: middle;
+    }
+  }
+
+  .contact-button .material-icons {
+    margin-right: 8px; /* Ensures spacing for the contact button icon */
   }
 
   .mat-menu-item {

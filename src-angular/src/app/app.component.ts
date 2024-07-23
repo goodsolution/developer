@@ -27,6 +27,7 @@ import {PremiseDetailDodeComponent} from "./modules/premise-detail/premise-detai
 import {AuthenticationService} from "./modules/core/services/authentication.service";
 import {DashboardDeveloperComponent} from "./modules/dashboard/dashboard-developer/dashboard-developer.component";
 import {DashboardAdminComponent} from "./modules/dashboard/dashboard-admin/dashboard-admin.component";
+import {ProjectOverviewComponent} from "./modules/project-overview/project-overview.component";
 
 
 enum ComponentLocation {
@@ -37,7 +38,8 @@ enum ComponentLocation {
   InvestmentList,
   PremiseList,
   PremiseDetail,
-  Dashboard
+  Dashboard,
+  ProjectOverview
 }
 
 interface ComponentConfig {
@@ -61,6 +63,9 @@ export class AppComponent implements OnInit, OnDestroy {
   @ViewChild('premiseListContainer', {read: ViewContainerRef}) private premiseListContainer!: ViewContainerRef;
   @ViewChild('premiseDetailContainer', {read: ViewContainerRef}) private premiseDetailContainer!: ViewContainerRef;
   @ViewChild('dashboardContainer', {read: ViewContainerRef}) private dashboardContainer!: ViewContainerRef;
+  @ViewChild('projectOverviewContainer', {read: ViewContainerRef}) private projectOverviewContainer!: ViewContainerRef;
+
+  title  = 'developer project';
 
   private subscriptions: Subscription = new Subscription();
   private statusCode: SearchResultCode | null = null;
@@ -76,6 +81,7 @@ export class AppComponent implements OnInit, OnDestroy {
       [ComponentLocation.PremiseList]: PremiseListAntalComponent,
       [ComponentLocation.PremiseDetail]: PremiseDetailAntalComponent,
       [ComponentLocation.Dashboard]: DashboardDeveloperComponent,
+      [ComponentLocation.ProjectOverview]: ProjectOverviewComponent,
     },
     domdevelopment: {
       [ComponentLocation.Header]: DodeHeaderComponent,
@@ -86,6 +92,7 @@ export class AppComponent implements OnInit, OnDestroy {
       [ComponentLocation.PremiseList]: PremiseListDodeComponent,
       [ComponentLocation.PremiseDetail]: PremiseDetailDodeComponent,
       [ComponentLocation.Dashboard]: DashboardDeveloperComponent,
+      [ComponentLocation.ProjectOverview]: ProjectOverviewComponent,
     },
     default: {
       [ComponentLocation.Header]: DefaultComponent,
@@ -96,6 +103,7 @@ export class AppComponent implements OnInit, OnDestroy {
       [ComponentLocation.PremiseList]: DefaultComponent,
       [ComponentLocation.PremiseDetail]: DefaultComponent,
       [ComponentLocation.Dashboard]: DefaultComponent,
+      [ComponentLocation.ProjectOverview]: DefaultComponent,
     }
   };
 
@@ -187,6 +195,7 @@ export class AppComponent implements OnInit, OnDestroy {
     this.premiseListContainer.clear();
     this.premiseDetailContainer.clear();
     this.dashboardContainer.clear();
+    // this.projectOverviewContainer.clear();
   }
 
   private routesClearingMap = new Map<string, () => void>([
@@ -208,6 +217,10 @@ export class AppComponent implements OnInit, OnDestroy {
     ['/dashboard', () => {
       this.clearAllContainers();
       this.loadDynamicDashboardComponent();
+    }],
+    ['/project-overview', () => {
+      this.clearAllContainers();
+      this.createComponent(this.projectOverviewContainer, ComponentLocation.ProjectOverview);
     }],
     // Add more route actions as needed
   ]);
@@ -280,20 +293,16 @@ export class AppComponent implements OnInit, OnDestroy {
     }
   }
 
-  // private loadDynamicDashboardComponent() {
-  //   if (!this.statusCode) {
-  //     console.warn('Status code is not available, cannot load dashboard component');
-  //     return;
-  //   }
-  //   const statusKey = this.statusCode.code || 'default';
-  //   const componentMapping = this.componentConfig[statusKey];
-  //   const componentClass = componentMapping[ComponentLocation.Dashboard];
-  //   if (componentClass) {
-  //     this.loadComponent(this.dashboardContainer, componentClass);
-  //   } else {
-  //     console.error(`No dashboard component found for status key ${statusKey}`);
-  //   }
-  // }
+  private loadDynamicProjectOverviewComponent() {
+    const statusKey = this.statusCode?.code || 'default';
+    const componentMapping = this.componentConfig[statusKey];
+    const componentClass = componentMapping[ComponentLocation.ProjectOverview];
+    if (componentClass) {
+      this.loadComponent(this.projectOverviewContainer, componentClass);
+    } else {
+      console.error(`No project Overview component found for status key ${statusKey}`);
+    }
+  }
 
   private createComponent(container: ViewContainerRef, location: ComponentLocation) {
     if (!this.statusCode) {

@@ -22,6 +22,7 @@ import {LanguageService} from "./modules/core/services/language.service";
 import {MatPaginatorIntl} from "@angular/material/paginator";
 import {DashboardModule} from "./modules/dashboard/dashboard.module";
 import {DeveloperModule} from "./modules/developer/developer.module";
+import {ProjectOverviewModule} from "./modules/project-overview/project-overview.module";
 
 export function initializeConfig(config: ConfigService) {
   return (): Promise<any> => {
@@ -87,6 +88,7 @@ export class CustomMatPaginatorIntl extends MatPaginatorIntl {
     PremiseListFilterModule,
     PremiseDetailModule,
     DashboardModule,
+    ProjectOverviewModule,
     DeveloperModule,
     AppRoutingModule,
     HttpClientModule,

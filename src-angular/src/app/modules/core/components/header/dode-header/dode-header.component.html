@@ -9,7 +9,10 @@
         {{ city.name }}
       </button>
     </mat-menu>
-    <button mat-button [routerLink]="['/contact']"><span class="menu-text">{{ 'shared.header.contact' | translate }}</span></button>
+    <button mat-button [routerLink]="['/contact']" class="contact-button">
+      <i class="material-icons">contact_mail</i>
+      <span class="menu-text">{{ 'shared.header.contact' | translate }}</span>
+    </button>
     <span class="spacer"></span>
     <button mat-button *ngIf="(isLoggedIn$ | async)" [routerLink]="['/dashboard']">
       <i class="material-icons">dashboard</i><span class="menu-text">{{ 'shared.header.dashboard' | translate }}</span>
