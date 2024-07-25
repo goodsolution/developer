@@ -82,7 +82,7 @@ public class AuthenticationEndpoint {
         }
     }
 
-    private ResponseEntity<Map<String, String>> createErrorResponse(HttpStatus status, String error, String message) {
+    private ResponseEntity<Map<String, String>> createErrorResponse(HttpStatus status, String error, String message) { // Added this method
         Map<String, String> errorResponse = new HashMap<>();
         errorResponse.put("error", error);
         errorResponse.put("message", message);
@@ -92,8 +92,8 @@ public class AuthenticationEndpoint {
     private String decrypt(String encryptedData) {
         try {
             byte[] encryptedBytesWithIv = Base64.getDecoder().decode(encryptedData);
-            byte[] iv = Arrays.copyOfRange(encryptedBytesWithIv, 0, encryptionConfig.getGcmIVLength());
-            byte[] encryptedBytes = Arrays.copyOfRange(encryptedBytesWithIv, encryptionConfig.getGcmIVLength(), encryptedBytesWithIv.length);
+            byte[] iv = Arrays.copyOfRange(encryptedBytesWithIv, 0, encryptionConfig.getGcmIVLength()); // Updated this line
+            byte[] encryptedBytes = Arrays.copyOfRange(encryptedBytesWithIv, encryptionConfig.getGcmIVLength(), encryptedBytesWithIv.length); // Updated this line
 
             Cipher cipher = Cipher.getInstance(encryptionConfig.getAesGcmNoPadding());
             GCMParameterSpec gcmParameterSpec = new GCMParameterSpec(encryptionConfig.getGcmTagLength() * 8, iv);
@@ -106,6 +106,4 @@ public class AuthenticationEndpoint {
             throw new EncryptionException("Error while decrypting", e);
         }
     }
-
-
 }
