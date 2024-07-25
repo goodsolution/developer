@@ -1,6 +1,7 @@
 package pl.com.mike.developer.domain.developer;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
