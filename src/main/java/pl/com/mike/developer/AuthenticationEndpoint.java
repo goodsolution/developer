@@ -23,10 +23,7 @@ import javax.crypto.Cipher;
 import javax.crypto.spec.GCMParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 import java.nio.charset.StandardCharsets;
-import java.util.Base64;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @RestController
@@ -55,8 +52,8 @@ public class AuthenticationEndpoint {
     public ResponseEntity<?> login(@RequestBody UserData user) {
         try {
             Authentication authentication = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(user.getLogin(), decrypt(user.getEncryptedPassword())
-                    ));
+                    new UsernamePasswordAuthenticationToken(user.getLogin(), decrypt(user.getEncryptedPassword()))
+            );
             SecurityContextHolder.getContext().setAuthentication(authentication);
 
             UserDetails userDetails = (UserDetails) authentication.getPrincipal();
@@ -78,34 +75,37 @@ public class AuthenticationEndpoint {
             return ResponseEntity.ok().body(response);
 
         } catch (AuthenticationException e) {
-            Map<String, String> errorResponse = new HashMap<>();
-            errorResponse.put("error", "Unauthorized");
-            errorResponse.put("message", "Invalid username or password");
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .body(errorResponse);
+            return createErrorResponse(HttpStatus.UNAUTHORIZED, "Unauthorized", "Invalid username or password");
         } catch (EncryptionException e) {
             log.error("Error during decryption", e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 
+    private ResponseEntity<Map<String, String>> createErrorResponse(HttpStatus status, String error, String message) {
+        Map<String, String> errorResponse = new HashMap<>();
+        errorResponse.put("error", error);
+        errorResponse.put("message", message);
+        return ResponseEntity.status(status).contentType(MediaType.APPLICATION_JSON).body(errorResponse);
+    }
+
     private String decrypt(String encryptedData) {
         try {
             byte[] encryptedBytesWithIv = Base64.getDecoder().decode(encryptedData);
-            byte[] iv = new byte[encryptionConfig.getGcmIVLength()];
-            byte[] encryptedBytes = new byte[encryptedBytesWithIv.length - encryptionConfig.getGcmIVLength()];
-            System.arraycopy(encryptedBytesWithIv, 0, iv, 0, iv.length);
-            System.arraycopy(encryptedBytesWithIv, iv.length, encryptedBytes, 0, encryptedBytes.length);
+            byte[] iv = Arrays.copyOfRange(encryptedBytesWithIv, 0, encryptionConfig.getGcmIVLength());
+            byte[] encryptedBytes = Arrays.copyOfRange(encryptedBytesWithIv, encryptionConfig.getGcmIVLength(), encryptedBytesWithIv.length);
+
             Cipher cipher = Cipher.getInstance(encryptionConfig.getAesGcmNoPadding());
             GCMParameterSpec gcmParameterSpec = new GCMParameterSpec(encryptionConfig.getGcmTagLength() * 8, iv);
             SecretKeySpec secretKeySpec = new SecretKeySpec(Base64.getDecoder().decode(encryptionConfig.getKey()), encryptionConfig.getAes());
             cipher.init(Cipher.DECRYPT_MODE, secretKeySpec, gcmParameterSpec);
+
             byte[] decryptedBytes = cipher.doFinal(encryptedBytes);
             return new String(decryptedBytes, StandardCharsets.UTF_8);
         } catch (Exception e) {
             throw new EncryptionException("Error while decrypting", e);
         }
     }
+
 
 }
