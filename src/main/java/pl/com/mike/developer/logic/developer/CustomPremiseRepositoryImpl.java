@@ -1,11 +1,11 @@
 package pl.com.mike.developer.logic.developer;
 
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.criteria.*;
 import org.springframework.stereotype.Repository;
 import pl.com.mike.developer.domain.developer.Premise;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.criteria.*;
 import java.util.List;
 
 @Repository

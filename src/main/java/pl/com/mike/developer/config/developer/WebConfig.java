@@ -1,26 +1,21 @@
 package pl.com.mike.developer.config.developer;
 
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import org.springframework.web.servlet.i18n.AcceptHeaderLocaleResolver;
-
-import java.util.Locale;
 
 @Configuration
 @EnableWebMvc
 public class WebConfig implements WebMvcConfigurer {
 
-    @Bean
-    public LocaleResolver localeResolver() {
-        AcceptHeaderLocaleResolver resolver = new AcceptHeaderLocaleResolver();
-        resolver.setDefaultLocale(Locale.ENGLISH); // Set default Locale as English
-        return resolver;
-    }
+//    @Bean
+//    public LocaleResolver localeResolver() {
+//        AcceptHeaderLocaleResolver resolver = new AcceptHeaderLocaleResolver();
+//        resolver.setDefaultLocale(Locale.ENGLISH); // Set default Locale as English
+//        return resolver;
+//    }
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {

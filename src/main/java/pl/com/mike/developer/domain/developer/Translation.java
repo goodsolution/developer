@@ -1,6 +1,7 @@
 package pl.com.mike.developer.domain.developer;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
+
 import java.sql.Timestamp;
 import java.util.Objects;
 
