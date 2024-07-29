@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import { HttpClient } from "@angular/common/http";
 import {interval, Observable, of, switchMap, tap} from "rxjs";
 import {SearchResultCityModel} from "../models/searchResultCity.model";
 import {ConstantsService} from "./constants.service";

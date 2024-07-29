@@ -4,12 +4,8 @@ import {PremiseResponse} from "../../core/models/premise.model";
 import {PremiseService} from "../../core/services/premise.service";
 import {DynamicComponentLoadingService} from "../../core/services/dynamic-component-loading.service";
 import {MatPaginator} from "@angular/material/paginator";
+import {FilterCriteria} from "../../premise-list-filter/premise-list-filter-dode/premise-list-filter-dode.component";
 
-// Define filter criteria interface
-interface PriceFilterCriteria {
-  minPrice: number;
-  maxPrice: number;
-}
 
 @Component({
   selector: 'app-premise-list-dode',
@@ -18,15 +14,15 @@ interface PriceFilterCriteria {
 })
 export class PremiseListDodeComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
-  currentPage!: number
-  pageSize!: number
+  currentPage!: number;
+  pageSize!: number;
   premises: PremiseResponse[] = [];
   pagedPremises: PremiseResponse[] = [];
   filteredPremises: PremiseResponse[] = [];
   investmentId!: number;
   private unsubscribe$ = new Subject<void>();
   private subscription!: Subscription;
-  filterCriteria: PriceFilterCriteria = {minPrice: 0, maxPrice: Infinity};
+  filterCriteria: FilterCriteria = {minPrice: 0, maxPrice: Infinity, minRoomCount: 0, maxRoomCount: Infinity};
 
   constructor(
     private premiseService: PremiseService,
@@ -78,7 +74,7 @@ export class PremiseListDodeComponent implements OnInit, AfterViewInit, OnDestro
     });
   }
 
-  onPriceRangeChange(criteria: PriceFilterCriteria): void {
+  onFilterCriteriaChange(criteria: FilterCriteria): void {
     this.filterCriteria = criteria;
     this.applyFilters();
   }
@@ -86,7 +82,9 @@ export class PremiseListDodeComponent implements OnInit, AfterViewInit, OnDestro
   private applyFilters(): void {
     this.filteredPremises = this.premises.filter(premise =>
       premise.totalPrice >= this.filterCriteria.minPrice &&
-      premise.totalPrice <= this.filterCriteria.maxPrice
+      premise.totalPrice <= this.filterCriteria.maxPrice &&
+      premise.numberOfRooms >= this.filterCriteria.minRoomCount &&
+      premise.numberOfRooms <= this.filterCriteria.maxRoomCount
     );
     if (this.paginator) {
       this.paginator.length = this.filteredPremises.length;
@@ -105,5 +103,4 @@ export class PremiseListDodeComponent implements OnInit, AfterViewInit, OnDestro
     this.unsubscribe$.complete();
     this.subscription.unsubscribe();
   }
-
 }
