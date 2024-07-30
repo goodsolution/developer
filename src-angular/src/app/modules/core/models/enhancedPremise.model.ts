@@ -3,4 +3,6 @@ export interface EnhancedPremiseModel {
   maxPrice: number;
   minRoomCount: number;
   maxRoomCount: number;
+  minArea: number;
+  maxArea: number;
 }

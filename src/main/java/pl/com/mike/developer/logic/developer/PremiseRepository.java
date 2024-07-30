@@ -15,7 +15,9 @@ public interface PremiseRepository extends JpaRepository<Premise, Long> {
     @Query("SELECT p FROM Premise p WHERE p.building.investmentBuildings.id = :id")
     List<Premise> findAllByInvestmentId(@Param("id") Long id);
 
-    @Query("SELECT MIN(p.totalPrice) AS minPrice, MAX(p.totalPrice) AS maxPrice, MIN(p.numberOfRooms) as minRoomCount, MAX(p.numberOfRooms) as maxRoomCount " +
+    @Query("SELECT MIN(p.totalPrice) AS minPrice, MAX(p.totalPrice) AS maxPrice, " +
+            "MIN(p.numberOfRooms) as minRoomCount, MAX(p.numberOfRooms) as maxRoomCount, " +
+            "MIN(p.surfacePerSqMeter) as minArea, MAX(p.surfacePerSqMeter) as maxArea " +
             "FROM Premise p JOIN p.building b " +
             "WHERE b.investmentId = :investmentId")
     AggregatedValues findPremisePriceRangeByInvestmentId(@Param("investmentId") Long investmentId);

@@ -1,8 +1,8 @@
 import {AfterViewInit, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {Subject, Subscription, takeUntil} from 'rxjs';
 import {PremiseResponse} from "../../core/models/premise.model";
-import {PremiseService} from "../../core/services/premise.service";
-import {DynamicComponentLoadingService} from "../../core/services/dynamic-component-loading.service";
+import {PremiseService}from "../../core/services/premise.service";
+import {DynamicComponentLoadingService}from "../../core/services/dynamic-component-loading.service";
 import {MatPaginator} from "@angular/material/paginator";
 import {FilterCriteria} from "../../premise-list-filter/premise-list-filter-dode/premise-list-filter-dode.component";
 
@@ -22,7 +22,7 @@ export class PremiseListDodeComponent implements OnInit, AfterViewInit, OnDestro
   investmentId!: number;
   private unsubscribe$ = new Subject<void>();
   private subscription!: Subscription;
-  filterCriteria: FilterCriteria = {minPrice: 0, maxPrice: Infinity, minRoomCount: 0, maxRoomCount: Infinity};
+  filterCriteria: FilterCriteria = {minPrice: 0, maxPrice: Infinity, minRoomCount: 0, maxRoomCount: Infinity, minArea: 0, maxArea: Infinity};
 
   constructor(
     private premiseService: PremiseService,
@@ -84,7 +84,9 @@ export class PremiseListDodeComponent implements OnInit, AfterViewInit, OnDestro
       premise.totalPrice >= this.filterCriteria.minPrice &&
       premise.totalPrice <= this.filterCriteria.maxPrice &&
       premise.numberOfRooms >= this.filterCriteria.minRoomCount &&
-      premise.numberOfRooms <= this.filterCriteria.maxRoomCount
+      premise.numberOfRooms <= this.filterCriteria.maxRoomCount &&
+      premise.surfacePerSqMeter >= this.filterCriteria.minArea &&
+      premise.surfacePerSqMeter <= this.filterCriteria.maxArea
     );
     if (this.paginator) {
       this.paginator.length = this.filteredPremises.length;
