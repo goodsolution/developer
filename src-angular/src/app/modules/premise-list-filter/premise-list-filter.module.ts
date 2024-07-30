@@ -5,6 +5,7 @@ import {PremiseListFilterRoutingModule} from './premise-list-filter-routing.modu
 import {PremiseListFilterDodeComponent} from './premise-list-filter-dode/premise-list-filter-dode.component';
 import {PremiseListFilterAntalComponent} from './premise-list-filter-antal/premise-list-filter-antal.component';
 import {SharedModule} from "../shared/shared.module";
+import {RoomPluralPipe} from "../../room-plural.pipe";
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import {SharedModule} from "../shared/shared.module";
   imports: [
     CommonModule,
     PremiseListFilterRoutingModule,
-    SharedModule
+    SharedModule,
+    RoomPluralPipe
   ],
   exports: [
     PremiseListFilterDodeComponent,

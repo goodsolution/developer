@@ -14,7 +14,7 @@ import {TranslateModule} from "@ngx-translate/core";
     CommonModule
   ],
   exports: [
-    CommonModule, TranslateModule, MaterialModule, FormsModule, ReactiveFormsModule, BrowserAnimationsModule, DefaultComponent
+    CommonModule, TranslateModule, MaterialModule, FormsModule, ReactiveFormsModule, BrowserAnimationsModule, DefaultComponent,
   ]
 })
 export class SharedModule {

@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import { HttpClient } from "@angular/common/http";
 import {catchError, Observable, shareReplay, tap, throwError} from "rxjs";
 import {SearchResultInvestmentModel} from "../models/searchResultInvestment.model";
 import {ConstantsService} from "./constants.service";

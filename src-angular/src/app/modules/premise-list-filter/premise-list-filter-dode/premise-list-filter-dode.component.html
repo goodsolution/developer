@@ -10,4 +10,16 @@
       <span class="price-to">{{ formatPrice(maxPrice) }}</span>
     </div>
   </div>
+
+  <div class="filter-container">
+    <span class="filter-label">{{ 'shared.filter.room.count' | translate }}</span>
+    <mat-slider class="rooms-slider" [min]="minAllowedRoomCount" [max]="maxAllowedRoomCount" step="1">
+      <input matInput [value]="minRoomCount" (input)="onMinRoomCountChange($event)" matSliderStartThumb>
+      <input matInput [value]="maxRoomCount" (input)="onMaxRoomCountChange($event)" matSliderEndThumb>
+    </mat-slider>
+    <div class="rooms-display">
+      <span class="rooms-from">{{ minRoomCount }} {{ minRoomCount | roomPlural }}</span>
+      <span class="rooms-to">{{ maxRoomCount }} {{ maxRoomCount | roomPlural }}</span>
+    </div>
+  </div>
 </div>

@@ -6,7 +6,7 @@ import {AppComponent} from './app.component';
 import {CoreModule} from "./modules/core/core.module";
 import {HomeModule} from "./modules/home/home.module";
 import {AuthModule} from "./modules/auth/auth.module";
-import {HTTP_INTERCEPTORS, HttpClient, HttpClientModule} from "@angular/common/http";
+import { HTTP_INTERCEPTORS, HttpClient, provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
 import {TranslateLoader, TranslateModule, TranslateService} from "@ngx-translate/core";
 import {TranslateHttpLoader} from "@ngx-translate/http-loader";
 import {ContactModule} from "./modules/contact/contact.module";
@@ -73,65 +73,60 @@ export class CustomMatPaginatorIntl extends MatPaginatorIntl {
   }
 }
 
-@NgModule({
-  declarations: [
-    AppComponent
+@NgModule({ declarations: [
+        AppComponent,
   ],
-  imports: [
-    BrowserModule,
-    HomeModule,
-    ContactModule,
-    AuthModule,
-    CoreModule,
-    InvestmentListModule,
-    PremiseListModule,
-    PremiseListFilterModule,
-    PremiseDetailModule,
-    DashboardModule,
-    ProjectOverviewModule,
-    DeveloperModule,
-    AppRoutingModule,
-    HttpClientModule,
-    TranslateModule.forRoot({
-      loader: {
-        provide: TranslateLoader,
-        useFactory: HttpLoaderFactory,
-        deps: [HttpClient]
-      }
-    })
-  ],
-  providers: [
-    ConfigService,
-    {
-      provide: APP_INITIALIZER,
-      useFactory: initializeConfig,
-      deps: [ConfigService],
-      multi: true
-    },
-    {
-      provide: APP_INITIALIZER,
-      useFactory: serveLanguageServices,
-      deps: [LanguageService, TranslateService],
-      multi: true
-    },
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: AcceptLanguageInterceptor,
-      multi: true
-    },
-    {
-      provide: RouteReuseStrategy,
-      useClass: CustomReuseStrategyService
-    },
-    {
-      provide: MatPaginatorIntl,
-      deps: [TranslateService],
-      useFactory: (translate: TranslateService) => {
-        return new CustomMatPaginatorIntl(translate);
-      }
-    }
-  ],
-  bootstrap: [AppComponent]
-})
+    exports: [],
+    bootstrap: [AppComponent], imports: [BrowserModule,
+        HomeModule,
+        ContactModule,
+        AuthModule,
+        CoreModule,
+        InvestmentListModule,
+        PremiseListModule,
+        PremiseListFilterModule,
+        PremiseDetailModule,
+        DashboardModule,
+        ProjectOverviewModule,
+        DeveloperModule,
+        AppRoutingModule,
+        TranslateModule.forRoot({
+            loader: {
+                provide: TranslateLoader,
+                useFactory: HttpLoaderFactory,
+                deps: [HttpClient]
+            }
+        })], providers: [
+        ConfigService,
+        {
+            provide: APP_INITIALIZER,
+            useFactory: initializeConfig,
+            deps: [ConfigService],
+            multi: true
+        },
+        {
+            provide: APP_INITIALIZER,
+            useFactory: serveLanguageServices,
+            deps: [LanguageService, TranslateService],
+            multi: true
+        },
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: AcceptLanguageInterceptor,
+            multi: true
+        },
+        {
+            provide: RouteReuseStrategy,
+            useClass: CustomReuseStrategyService
+        },
+        {
+            provide: MatPaginatorIntl,
+            deps: [TranslateService],
+            useFactory: (translate: TranslateService) => {
+                return new CustomMatPaginatorIntl(translate);
+            }
+        },
+        provideHttpClient(withInterceptorsFromDi())
+    ] })
 export class AppModule {
 }

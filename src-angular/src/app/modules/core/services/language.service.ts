@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject, Observable} from 'rxjs';
-import {HttpClient} from "@angular/common/http";
+import { HttpClient } from "@angular/common/http";
 import {ConstantsService} from "./constants.service";
 import {SearchResultTranslationModel} from "../models/searchResultTranslation.model";
 import {SearchResultDictionaryModel} from "../models/searchResultDictionary.model";

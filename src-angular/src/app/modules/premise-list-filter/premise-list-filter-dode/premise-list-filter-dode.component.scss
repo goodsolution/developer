@@ -14,9 +14,9 @@ $font-stack: 'Helvetica Neue', sans-serif;
 .filter-container {
   display: flex;
   flex-direction: column;
-  align-items:flex-start;
+  align-items: flex-start;
   padding: 20px;
-  //background-color: $filter-bg;
+  background-color: $filter-bg;
   border-radius: 8px;
   box-shadow: 0 2px 4px $shadow-color;
   margin-bottom: 30px;
@@ -28,26 +28,37 @@ $font-stack: 'Helvetica Neue', sans-serif;
     font-family: $font-stack;
   }
 
-    .price-slider {
-      width: 80%;
-      max-width: 400px;
-      margin-top: -15px; // Pull closer
+  .price-slider,
+  .rooms-slider {
+    width: 80%;
+    max-width: 400px;
+    margin-top: -15px; // Pull closer
+  }
+
+  .price-display,
+  .rooms-display {
+    width: 100%;
+    max-width: 450px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 1rem;
+    color: darken($label-color, 20%);
+    padding: 0 10px; // Align with the slider thumb positions
+    font-family: $font-stack;
+
+    .price-from,
+    .price-to,
+    .rooms-from,
+    .rooms-to {
+      font-weight: bold;
     }
+  }
 
-    .price-display {
-      width: 100%;
-      max-width: 450px;
-      display: flex;
-      justify-content: space-between;
-      font-size: 1rem;
-      color: darken($label-color, 20%);
-      padding: 0 10px; // Align with the slider thumb positions
-      font-family: $font-stack;
+  .mat-slider-thumb {
+    background-color: $thumb-color !important; // Change to your primary color
+  }
 
-      .price-from,
-      .price-to {
-        font-weight: bold;
-      }
-    }
-
+  .mat-slider-track-fill {
+    background-color: $thumb-color !important; // Change to your primary color
+  }
 }
