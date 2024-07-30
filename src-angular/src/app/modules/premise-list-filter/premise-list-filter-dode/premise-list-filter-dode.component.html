@@ -22,4 +22,16 @@
       <span class="rooms-to">{{ maxRoomCount }} {{ maxRoomCount | roomPlural }}</span>
     </div>
   </div>
+
+  <div class="filter-container">
+    <span class="filter-label">{{ 'shared.filter.area' | translate }}</span>
+    <mat-slider class="area-slider" [min]="minAllowedArea" [max]="maxAllowedArea" step="1">
+      <input matInput [value]="minArea" (input)="onMinAreaChange($event)" matSliderStartThumb>
+      <input matInput [value]="maxArea" (input)="onMaxAreaChange($event)" matSliderEndThumb>
+    </mat-slider>
+    <div class="area-display">
+      <span class="area-from">{{ minArea }} m²</span>
+      <span class="area-to">{{ maxArea }} m²</span>
+    </div>
+  </div>
 </div>

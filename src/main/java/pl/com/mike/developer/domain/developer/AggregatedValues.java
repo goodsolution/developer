@@ -7,4 +7,6 @@ public interface AggregatedValues {
     BigDecimal getMaxPrice();
     Integer getMinRoomCount();
     Integer getMaxRoomCount();
+    Double getMinArea();
+    Double getMaxArea();
 }

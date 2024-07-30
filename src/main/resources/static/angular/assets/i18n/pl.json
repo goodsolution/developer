@@ -33,6 +33,7 @@
     "premise.exposure": "Ekspozycja",
     "filter.price": "Filtruj według ceny:",
     "filter.room.count": "Filtruj według liczby pokoi:",
+    "filter.area": "Filtruj według powierzchni:",
     "room": {
       "one": "Pokój",
       "other": "Pokoje"

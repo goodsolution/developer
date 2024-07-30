@@ -8,6 +8,8 @@ export interface FilterCriteria {
   maxPrice: number;
   minRoomCount: number;
   maxRoomCount: number;
+  minArea: number;
+  maxArea: number;
 }
 
 @Component({
@@ -25,6 +27,11 @@ export class PremiseListFilterDodeComponent implements OnInit, OnDestroy {
   maxRoomCount!: number;
   minAllowedRoomCount!: number;
   maxAllowedRoomCount!: number;
+
+  minArea!: number;
+  maxArea!: number;
+  minAllowedArea!: number;
+  maxAllowedArea!: number;
 
   @Input() investmentId!: number;
   @Output() filterCriteriaChange = new EventEmitter<FilterCriteria>();
@@ -63,6 +70,11 @@ export class PremiseListFilterDodeComponent implements OnInit, OnDestroy {
         this.maxRoomCount = response.maxRoomCount;
         this.minAllowedRoomCount = this.minRoomCount;
         this.maxAllowedRoomCount = this.maxRoomCount;
+
+        this.minArea = response.minArea;
+        this.maxArea = response.maxArea;
+        this.minAllowedArea = this.minArea;
+        this.maxAllowedArea = this.maxArea;
       });
   }
 
@@ -90,12 +102,26 @@ export class PremiseListFilterDodeComponent implements OnInit, OnDestroy {
     this.emitFilterCriteriaChange();
   }
 
+  onMinAreaChange(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    this.minArea = Number(input.value);
+    this.emitFilterCriteriaChange();
+  }
+
+  onMaxAreaChange(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    this.maxArea = Number(input.value);
+    this.emitFilterCriteriaChange();
+  }
+
   private emitFilterCriteriaChange(): void {
     this.filterCriteriaChange.emit({
       minPrice: this.minPrice,
       maxPrice: this.maxPrice,
       minRoomCount: this.minRoomCount,
-      maxRoomCount: this.maxRoomCount
+      maxRoomCount: this.maxRoomCount,
+      minArea: this.minArea,
+      maxArea: this.maxArea
     });
   }
 
