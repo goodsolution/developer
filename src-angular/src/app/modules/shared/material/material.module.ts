@@ -13,6 +13,7 @@ import {MatSidenavModule} from "@angular/material/sidenav";
 import {MatListModule} from "@angular/material/list";
 import {MatDialogModule} from "@angular/material/dialog";
 import {MatExpansionModule} from "@angular/material/expansion";
+import {MatTooltipModule} from "@angular/material/tooltip";
 
 @NgModule({
   declarations: [],
@@ -30,7 +31,8 @@ import {MatExpansionModule} from "@angular/material/expansion";
     MatSidenavModule,
     MatListModule,
     MatDialogModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatTooltipModule
   ]
 })
 export class MaterialModule { }
