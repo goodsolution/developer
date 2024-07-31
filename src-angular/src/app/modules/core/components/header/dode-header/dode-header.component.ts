@@ -1,11 +1,11 @@
-import {Component, OnInit} from '@angular/core';
-import {CityResponse} from "../../../models/city.model";
-import {HeaderLogoUrlService} from "../../../services/header-logo-url.service";
-import {CitiesService} from "../../../services/cities.service";
-import {TranslateService} from "@ngx-translate/core";
-import {LanguageService} from "../../../services/language.service";
-import {AuthenticationService} from "../../../services/authentication.service";
-import {Observable} from "rxjs";
+import { Component, OnInit } from '@angular/core';
+import { CityResponse } from "../../../models/city.model";
+import { HeaderLogoUrlService } from "../../../services/header-logo-url.service";
+import { CitiesService } from "../../../services/cities.service";
+import { TranslateService } from "@ngx-translate/core";
+import { LanguageService } from "../../../services/language.service";
+import { AuthenticationService } from "../../../services/authentication.service";
+import { Observable } from "rxjs";
 
 @Component({
   selector: 'app-dode-header',
@@ -21,11 +21,10 @@ export class DodeHeaderComponent implements OnInit {
     private headerLogoUrlService: HeaderLogoUrlService,
     private cityService: CitiesService,
     private translate: TranslateService,
-    private authService: AuthenticationService, // Add AuthenticationService
+    private authService: AuthenticationService,
     private languageService: LanguageService
   ) {
-    translate.setDefaultLang('en');
-    this.isLoggedIn$ = this.authService.isLoggedIn(); // Assign the observable
+    this.isLoggedIn$ = this.authService.isLoggedIn();
   }
 
   switchLanguage(language: string) {
@@ -53,5 +52,4 @@ export class DodeHeaderComponent implements OnInit {
   logout(): void {
     this.authService.logout();
   }
-
 }
