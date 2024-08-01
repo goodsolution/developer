@@ -6,8 +6,10 @@ import org.springframework.stereotype.Service;
 import pl.com.mike.developer.DictionaryGetResponse;
 import pl.com.mike.developer.PremiseAggregatedValuesGetResponse;
 import pl.com.mike.developer.domain.developer.DictionaryData;
+import pl.com.mike.developer.domain.developer.Premise;
 import pl.com.mike.developer.domain.developer.PremiseData;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -47,6 +49,51 @@ public class PremiseService {
                 .toList();
     }
 
+    public PremiseData createPremiseData(PremiseData premiseData) {
+        return new PremiseData(premiseRepository.save(new Premise(
+                premiseData.getId(),
+                premiseData.getType(),
+                premiseData.getNumber(),
+                premiseData.getFloor(),
+                premiseData.getSurfacePerSqMeter(),
+                premiseData.getPricePerSqMeter(),
+                premiseData.getTotalPrice(),
+                premiseData.getNumberOfRooms(),
+                premiseData.getTechnicalStatus(),
+                premiseData.getSalesStatus(),
+                premiseData.getExposure(),
+                premiseData.getBalcony(),
+                premiseData.getGarden(),
+                premiseData.getTerrace(),
+                premiseData.getLoggia(),
+                premiseData.getBuildingId()
+        )));
+    }
+
+    public PremiseData updatePremise(Long id, PremiseData premiseData) {
+        Premise premise = premiseRepository.findById(id).orElseThrow(
+                () -> new NoSuchElementException("Premise with id " + id + " not found")
+        );
+        premise.setType(premiseData.getType());
+        premise.setNumber(premiseData.getNumber());
+        premise.setFloor(premiseData.getFloor());
+        premise.setSurfacePerSqMeter(premiseData.getSurfacePerSqMeter());
+        premise.setPricePerSqMeter(premiseData.getPricePerSqMeter());
+        premise.setTotalPrice(premiseData.getTotalPrice());
+        premise.setNumberOfRooms(premiseData.getNumberOfRooms());
+        premise.setTechnicalStatus(premiseData.getTechnicalStatus());
+        premise.setSalesStatus(premiseData.getSalesStatus());
+        premise.setExposure(premiseData.getExposure());
+        premise.setBalcony(premiseData.getBalcony());
+        premise.setGarden(premiseData.getGarden());
+        premise.setTerrace(premiseData.getTerrace());
+        premise.setLoggia(premiseData.getLoggia());
+        premise.setBuildingId(premiseData.getBuildingId());
+
+        return new PremiseData(premiseRepository.save(premise));
+
+    }
+
     public PremiseData setTranslationsAndLanguageCodeToPremiseData(PremiseData premiseData, String languageCode) {
         premiseData.setTechnicalStatusTranslation(fetchTranslation(languageCode, TECHNICAL_STATUS, premiseData.getTechnicalStatus()));
         premiseData.setSalesStatusTranslation(fetchTranslation(languageCode, SALES_STATUS, premiseData.getSalesStatus()));
@@ -63,6 +110,13 @@ public class PremiseService {
             logger.error("Translation not found for domain: {} and key: {}", domain, key, e);
             return "Default Translation";
         }
+    }
+
+    public void softDeletePremise(Long id) {
+        Premise premise = premiseRepository
+                .findById(id)
+                .orElseThrow(() -> new RuntimeException("Premise not found"));
+        premise.setDeletedAt(LocalDateTime.now());
     }
 
 }
