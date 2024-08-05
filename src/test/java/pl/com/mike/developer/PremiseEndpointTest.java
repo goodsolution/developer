@@ -17,6 +17,7 @@ class PremiseEndpointTest {
     void createPremise() {
         // Prepare test data
         PremiseData premiseData = new PremiseData();
+        premiseData.setId(1L);
         premiseData.setType("type");
         premiseData.setNumber(1);
         premiseData.setFloor(2);
@@ -32,25 +33,26 @@ class PremiseEndpointTest {
         premiseData.setTerrace(true);
         premiseData.setLoggia(true);
 
-        PremisePostResponse premisePostResponse = new PremisePostResponse(premiseData);
+        Long expectedId = 1L;
 
         // Mock dependencies
         PremiseService premiseService = mock(PremiseService.class);
-        when(premiseService.createPremiseData(premiseData)).thenReturn(premiseData);
+        when(premiseService.createPremiseData(premiseData)).thenReturn(expectedId);
 
         // Create the endpoint instance with the mocked service
         PremiseEndpoint premiseEndpoint = new PremiseEndpoint(premiseService);
 
         // Call the method under test
-        ResponseEntity<PremisePostResponse> responseEntity = premiseEndpoint.createPremise(premiseData);
+        ResponseEntity<Long> responseEntity = premiseEndpoint.createPremise(premiseData);
 
         // Assertions
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.CREATED);
-        assertThat(responseEntity.getBody()).usingRecursiveComparison().isEqualTo(premisePostResponse);
+        assertThat(responseEntity.getBody()).isEqualTo(expectedId);  // Direct comparison without recursive comparison
 
-        // Verify interactions (optional)
-        // For example, you can verify if the service method was called exactly once with the expected data
-         verify(premiseService, times(1)).createPremiseData(premiseData);
+        // Verify interactions
+        verify(premiseService, times(1)).createPremiseData(premiseData);
     }
+
+
 
 }

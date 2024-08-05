@@ -7,6 +7,8 @@ import pl.com.mike.developer.domain.developer.PremiseData;
 import pl.com.mike.developer.logic.developer.PremiseSearchFilter;
 import pl.com.mike.developer.logic.developer.PremiseService;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("api/premises/")
 public class PremiseEndpoint {
@@ -25,32 +27,34 @@ public class PremiseEndpoint {
     public PremisesGetResponse getPremisesByInvestmentId(
             @PathVariable Long id,
             @RequestParam(name = "languageCode", required = false) String languageCode) {
-        return new PremisesGetResponse(
-                ConverterToResponse.premisesDataToResponse(
-                        premiseService.getPremiseDataByInvestmentId(new PremiseSearchFilter(id, languageCode))
-                ));
+        return getPremisesGetResponse(premiseService.getPremiseDataByInvestmentId(
+                new PremiseSearchFilter.PremiseSearchFilterBuilder()
+                        .withId(id)
+                        .withLanguageCode(languageCode)
+                        .build()));
     }
 
     @GetMapping("{id}")
     public PremisesGetResponse getPremiseById(
             @PathVariable Long id,
             @RequestParam(name = "languageCode", required = false) String languageCode) {
-        return new PremisesGetResponse(
-                ConverterToResponse.premisesDataToResponse(
-                        premiseService.getPremiseDataById(new PremiseSearchFilter(id, languageCode))
-                ));
+        return getPremisesGetResponse(premiseService.getPremiseDataById(
+                new PremiseSearchFilter.PremiseSearchFilterBuilder()
+                        .withId(id)
+                        .withLanguageCode(languageCode)
+                        .build()));
     }
 
     @PostMapping
-    public ResponseEntity<PremisePostResponse> createPremise(@RequestBody PremiseData request) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(new PremisePostResponse(premiseService.createPremiseData(request)));
+    public ResponseEntity<Long> createPremise(@RequestBody PremiseData request) {
+        Long premiseId = premiseService.createPremiseData(request);
+        return ResponseEntity.status(HttpStatus.CREATED).body(premiseId);
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<PremisePutResponse> updatePremise(@PathVariable Long id, @RequestBody PremiseData premiseDatadata) {
-        return ResponseEntity.status(HttpStatus.OK).body(
-                new PremisePutResponse(premiseService.updatePremise(id, premiseDatadata))
-        );
+    public ResponseEntity<Long> updatePremise(@PathVariable Long id, @RequestBody PremiseData premiseData) {
+        Long premiseId = premiseService.updatePremise(id, premiseData);
+        return ResponseEntity.status(HttpStatus.OK).body(premiseId);
     }
 
     @DeleteMapping("{id}")
@@ -59,5 +63,11 @@ public class PremiseEndpoint {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
+    private PremisesGetResponse getPremisesGetResponse(List<PremiseData> premiseService) {
+        return new PremisesGetResponse(
+                ConverterToResponse.premisesDataToResponse(
+                        premiseService
+                ));
+    }
 
 }

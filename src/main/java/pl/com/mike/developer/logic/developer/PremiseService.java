@@ -49,8 +49,8 @@ public class PremiseService {
                 .toList();
     }
 
-    public PremiseData createPremiseData(PremiseData premiseData) {
-        return new PremiseData(premiseRepository.save(new Premise(
+    public Long createPremiseData(PremiseData premiseData) {
+        Premise premise = new Premise(
                 premiseData.getId(),
                 premiseData.getType(),
                 premiseData.getNumber(),
@@ -67,10 +67,13 @@ public class PremiseService {
                 premiseData.getTerrace(),
                 premiseData.getLoggia(),
                 premiseData.getBuildingId()
-        )));
+        );
+
+        Premise savedPremise = premiseRepository.save(premise);
+        return savedPremise.getId();
     }
 
-    public PremiseData updatePremise(Long id, PremiseData premiseData) {
+    public Long updatePremise(Long id, PremiseData premiseData) {
         Premise premise = premiseRepository.findById(id).orElseThrow(
                 () -> new NoSuchElementException("Premise with id " + id + " not found")
         );
@@ -90,7 +93,7 @@ public class PremiseService {
         premise.setLoggia(premiseData.getLoggia());
         premise.setBuildingId(premiseData.getBuildingId());
 
-        return new PremiseData(premiseRepository.save(premise));
+        return new PremiseData(premiseRepository.save(premise)).getId();
 
     }
 
