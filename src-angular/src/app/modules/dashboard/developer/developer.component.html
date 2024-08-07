@@ -11,7 +11,7 @@
       <th>Postal Code</th>
       <th *ngIf="adminView">Select</th>
       <th *ngIf="!adminView">Edit</th>
-<!--      <th *ngIf="!adminView">Delete</th> NOT TO DELETE YOURSELF-->
+      <!--      <th *ngIf="!adminView">Delete</th> NOT TO DELETE YOURSELF-->
     </tr>
     </thead>
     <tbody>
@@ -23,7 +23,7 @@
       <td>{{ developer.addressPostalCode }}</td>
       <td *ngIf="adminView"><button class="btn select-btn" (click)="selectDeveloperForAdmin(developer)">Select</button></td>
       <td *ngIf="!adminView"><button class="btn edit-btn" (click)="editDeveloper(developer)">Edit</button></td>
-<!--      <td *ngIf="!adminView"><button class="btn delete-btn" (click)="deleteDeveloper(developer)">Delete</button></td> NOT TO DELETE YOURSELF-->
+      <!--      <td *ngIf="!adminView"><button class="btn delete-btn" (click)="deleteDeveloper(developer)">Delete</button></td> NOT TO DELETE YOURSELF-->
     </tr>
     </tbody>
   </table>

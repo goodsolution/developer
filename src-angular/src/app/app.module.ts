@@ -21,7 +21,6 @@ import {AcceptLanguageInterceptor} from "./modules/core/services/accept-language
 import {LanguageService} from "./modules/core/services/language.service";
 import {MatPaginatorIntl} from "@angular/material/paginator";
 import {DashboardModule} from "./modules/dashboard/dashboard.module";
-import {DeveloperModule} from "./modules/developer/developer.module";
 import {ProjectOverviewModule} from "./modules/project-overview/project-overview.module";
 
 export function initializeConfig(config: ConfigService) {
@@ -88,7 +87,6 @@ export class CustomMatPaginatorIntl extends MatPaginatorIntl {
         PremiseDetailModule,
         DashboardModule,
         ProjectOverviewModule,
-        DeveloperModule,
         AppRoutingModule,
         TranslateModule.forRoot({
             loader: {

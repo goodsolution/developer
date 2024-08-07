@@ -1,19 +1,20 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
 
-import { DashboardRoutingModule } from './dashboard-routing.module';
-import { DashboardComponent } from './dashboard.component';
+import {DashboardRoutingModule} from './dashboard-routing.module';
+import {DashboardComponent} from './dashboard.component';
 import {SharedModule} from "../shared/shared.module";
-import { SidebarComponent } from './sidebar/sidebar.component';
-import {DeveloperModule} from "../developer/developer.module";
-import { DashboardAdminComponent } from './dashboard-admin/dashboard-admin.component';
+import {SidebarComponent} from './sidebar/sidebar.component';
+import {DashboardAdminComponent} from './dashboard-admin/dashboard-admin.component';
 import {DashboardDeveloperComponent} from "./dashboard-developer/dashboard-developer.component";
+import {DeveloperComponent} from "./developer/developer.component";
 
 
 @NgModule({
   declarations: [
     DashboardComponent,
     SidebarComponent,
+    DeveloperComponent,
     DashboardAdminComponent,
     DashboardDeveloperComponent
   ],
@@ -21,7 +22,6 @@ import {DashboardDeveloperComponent} from "./dashboard-developer/dashboard-devel
     CommonModule,
     SharedModule,
     DashboardRoutingModule,
-    DeveloperModule
   ],
   exports: [
     DashboardComponent,
