@@ -9,6 +9,7 @@ import pl.com.mike.developer.domain.developer.DictionaryData;
 import pl.com.mike.developer.domain.developer.Premise;
 import pl.com.mike.developer.domain.developer.PremiseData;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -29,6 +30,28 @@ public class PremiseService {
     public PremiseService(PremiseRepository premiseRepository, TranslationDataService translationDataService) {
         this.premiseRepository = premiseRepository;
         this.translationDataService = translationDataService;
+    }
+
+    public void generateAndSavePremise(){
+        for(int i = 0; i < 10000; i++){
+            Premise premise = new Premise();
+            premise.setType("a");
+            premise.setNumber(1);
+            premise.setFloor(1);
+            premise.setSurfacePerSqMeter(30.00);
+            premise.setPricePerSqMeter(20000.00);
+            premise.setTotalPrice(BigDecimal.valueOf(600000.00));
+            premise.setNumberOfRooms(3);
+            premise.setTechnicalStatus("c");
+            premise.setSalesStatus("a");
+            premise.setExposure("w");
+            premise.setBalcony(true);
+            premise.setGarden(true);
+            premise.setTerrace(false);
+            premise.setLoggia(false);
+            premise.setBuildingId(1L);
+            premiseRepository.save(premise);
+        }
     }
 
     public PremiseAggregatedValuesGetResponse findPremisePriceRangeByInvestmentId(Long id) {
