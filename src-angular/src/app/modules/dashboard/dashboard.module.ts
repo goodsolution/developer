@@ -8,6 +8,7 @@ import {SidebarComponent} from './sidebar/sidebar.component';
 import {DashboardAdminComponent} from './dashboard-admin/dashboard-admin.component';
 import {DashboardDeveloperComponent} from "./dashboard-developer/dashboard-developer.component";
 import {DeveloperComponent} from "./developer/developer.component";
+import {PremiseComponent} from "./premise/premise.component";
 
 
 @NgModule({
@@ -15,6 +16,7 @@ import {DeveloperComponent} from "./developer/developer.component";
     DashboardComponent,
     SidebarComponent,
     DeveloperComponent,
+    PremiseComponent,
     DashboardAdminComponent,
     DashboardDeveloperComponent
   ],

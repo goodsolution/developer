@@ -13,6 +13,7 @@
 
     <main class="content">
       <app-developer [adminView]="true" *ngIf="selectedSection === 'developer'"></app-developer>
+      <app-premise [adminView]="true" *ngIf="selectedSection === 'premise'"></app-premise>
       <!-- Additional sections for admin can be added here -->
     </main>
   </div>
