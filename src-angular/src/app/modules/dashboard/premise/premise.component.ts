@@ -131,15 +131,17 @@ export class PremiseComponent implements OnInit {
   deletePremise(premise: PremiseResponse): void {
     const dialogRef = this.dialog.open(DeleteConfirmationDialogComponent, {
       width: '250px',
-      data: { title: 'Delete Premise', message: 'Do you really want to delete this premise? This action cannot be undone.' }
+      data: { title: 'Delete Premise', message: 'Do you really want to delete this premise?' }
     });
-
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.premiseService.deletePremise(premise.id.toString()).subscribe(() => {
           this.fetchPremises();
+        }, error => {
         });
+      } else {
       }
     });
   }
+
 }
