@@ -30,7 +30,7 @@
       </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let premise of premises">
+      <tr *ngFor="let premise of pagedPremises">
         <td>{{ premise.number }}</td>
         <td>{{ premise.floor }}</td>
         <td>{{ premise.salesStatus }}</td>
@@ -43,6 +43,12 @@
       </tr>
       </tbody>
     </table>
+
+    <mat-paginator [length]="premises.length"
+                   [pageSize]="pageSize"
+                   [pageSizeOptions]="[5, 10, 25, 100]"
+                   (page)="onPageChange($event)">
+    </mat-paginator>
 
     <div *ngIf="isNewPremise || selectedPremise">
       <h3>{{ isNewPremise ? 'Add New Premise' : 'Edit Premise' }}</h3>
