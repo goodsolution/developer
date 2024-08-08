@@ -25,19 +25,21 @@
         <th>Building Number</th>
         <th>Flat Number</th>
         <th>Postal Code</th>
-        <th></th>
-        <th></th>
+        <th>Edit</th>
+        <th>Delete</th>
       </tr>
       </thead>
       <tbody>
       <tr *ngFor="let premise of pagedPremises">
-        <td>{{ premise.number }}</td>
+        <td>{{ premise.id }}</td>
         <td>{{ premise.floor }}</td>
         <td>{{ premise.salesStatus }}</td>
-        <td>{{ premise.surfacePerSqMeter }}</td>
+        <td>{{ premise.numberOfRooms }}</td>
         <td>{{ premise.totalPrice }}</td>
-        <td class="action-buttons">
+        <td>
           <button class="btn-edit" (click)="editPremise(premise)">Edit</button>
+        </td>
+        <td>
           <button class="btn-delete" (click)="deletePremise(premise)">Delete</button>
         </td>
       </tr>
@@ -52,7 +54,7 @@
 
     <div *ngIf="isNewPremise || selectedPremise">
       <h3>{{ isNewPremise ? 'Add New Premise' : 'Edit Premise' }}</h3>
-      <form [formGroup]="premiseForm" (ngSubmit)="isNewPremise ? saveNewPremise() : updatePremise()">
+      <form [formGroup]="premiseForm" (ngSubmit)="onSubmit()">
         <label for="name">Name:</label>
         <input id="name" formControlName="name">
 

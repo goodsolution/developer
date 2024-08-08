@@ -15,25 +15,6 @@
   mat-form-field {
     width: 100%;
     margin-bottom: 20px;
-
-    mat-select {
-      background-color: white;
-      border-radius: 4px;
-
-      .mat-select-trigger {
-        font-size: 16px;
-        padding: 8px 12px;
-      }
-
-      .mat-select-placeholder {
-        color: #aaa;
-        font-style: italic;
-      }
-    }
-
-    .mat-form-field-label {
-      color: #555;
-    }
   }
 
   table {
@@ -47,75 +28,52 @@
     thead {
       background-color: #1976d2;
       color: white;
-      text-align: left;
 
       th {
         padding: 12px;
         text-align: left;
-        background-color: #1976d2;
-        color: white;
+      }
+    }
+
+    tbody {
+      td {
+        padding: 12px;
+        text-align: left;
         border-bottom: 1px solid #ddd;
-        width: 20%; // Adjust width according to your needs
-      }
 
-      th.action-header {
-        width: 100px; // Adjust this value to fit your buttons
-      }
-    }
-
-    th, td {
-      padding: 12px;
-      text-align: left;
-      border-bottom: 1px solid #ddd;
-    }
-
-    th {
-      font-weight: bold;
-    }
-
-    tr:hover td {
-      background-color: #f1f1f1;
-    }
-
-    .action-buttons {
-      display: flex;
-      justify-content: flex-start; // Align buttons to the left
-      gap: 10px;
-
-      .btn-edit, .btn-delete {
-        padding: 6px 12px;
-        font-size: 14px;
-        border-radius: 4px;
-        border: none;
-        cursor: pointer;
-        transition: background-color 0.3s ease, box-shadow 0.3s ease;
-        min-width: 70px;
-        text-align: center;
-      }
-
-      .btn-edit {
-        background-color: #1976d2;
-        color: white;
-
-        &:hover {
-          background-color: #155a9b;
-          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        button {
+          padding: 6px 12px;
+          font-size: 14px;
+          border-radius: 4px;
+          border: none;
+          cursor: pointer;
+          transition: background-color 0.3s ease, box-shadow 0.3s ease;
+          color: white;
+          text-align: center;
         }
-      }
 
-      .btn-delete {
-        background-color: #e53935;
-        color: white;
+        .btn-edit {
+          background-color: #1976d2;
 
-        &:hover {
-          background-color: #c62828;
-          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+          &:hover {
+            background-color: #155a9b;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+          }
+        }
+
+        .btn-delete {
+          background-color: #e53935;
+
+          &:hover {
+            background-color: #c62828;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+          }
         }
       }
     }
   }
 
-  .btn {
+  .btn.add-btn {
     background-color: #1976d2;
     color: white;
     padding: 10px 20px;

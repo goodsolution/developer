@@ -5,6 +5,8 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { PremiseService } from "../../core/services/premise.service";
 import { DeveloperService } from "../../core/services/developer.service";
 import { MatPaginator } from "@angular/material/paginator";
+import { MatDialog } from '@angular/material/dialog';
+import { DeleteConfirmationDialogComponent } from "../delete-confirmation-dialog/delete-confirmation-dialog.component"; // Import MatDialog
 
 @Component({
   selector: 'app-premise',
@@ -29,9 +31,9 @@ export class PremiseComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private premiseService: PremiseService,
-    private developerService: DeveloperService
+    private developerService: DeveloperService,
+    private dialog: MatDialog
   ) {
-    // Initialize the form group with validation
     this.premiseForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(3)]],
       addressStreet: ['', Validators.required],
@@ -92,36 +94,52 @@ export class PremiseComponent implements OnInit {
     this.premiseForm.patchValue(premise);
   }
 
-  saveNewPremise(): void {
+  onSubmit(): void {
     if (this.premiseForm.valid) {
-      const newPremise = this.premiseForm.value;
-      this.premiseService.createPremise(newPremise).subscribe(() => {
-        this.fetchPremises();
-        this.isNewPremise = false;
-        this.premiseForm.reset();
-      });
+      if (this.isNewPremise) {
+        this.saveNewPremise();
+      } else {
+        this.updatePremise();
+      }
     }
   }
 
+  saveNewPremise(): void {
+    const newPremise = this.premiseForm.value;
+    this.premiseService.createPremise(newPremise).subscribe(() => {
+      this.fetchPremises();
+      this.isNewPremise = false;
+      this.premiseForm.reset();
+    });
+  }
+
   updatePremise(): void {
-    if (this.premiseForm.valid) {
-      const updatedPremise = this.premiseForm.value;
-      this.premiseService.updatePremise(updatedPremise.id, updatedPremise).subscribe(() => {
-        this.fetchPremises();
-        this.isNewPremise = false;
-        this.selectedPremise = null;
-      });
-    }
+    const updatedPremise = this.premiseForm.value;
+    this.premiseService.updatePremise(updatedPremise.id, updatedPremise).subscribe(() => {
+      this.fetchPremises();
+      this.isNewPremise = false;
+      this.selectedPremise = null;
+    });
   }
 
   cancelEdit(): void {
     this.selectedPremise = null;
     this.isNewPremise = false;
+    this.premiseForm.reset();
   }
 
   deletePremise(premise: PremiseResponse): void {
-    this.premiseService.deletePremise(premise.id.toString()).subscribe(() => {
-      this.fetchPremises();
+    const dialogRef = this.dialog.open(DeleteConfirmationDialogComponent, {
+      width: '250px',
+      data: { title: 'Delete Premise', message: 'Do you really want to delete this premise? This action cannot be undone.' }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.premiseService.deletePremise(premise.id.toString()).subscribe(() => {
+          this.fetchPremises();
+        });
+      }
     });
   }
 }
