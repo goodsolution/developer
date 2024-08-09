@@ -1,5 +1,6 @@
 package pl.com.mike.developer;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.com.mike.developer.config.developer.ApplicationConfig;
@@ -45,46 +46,50 @@ public class DeveloperEndpoint {
     public DevelopersGetResponse getAllActiveDevelopers() {
         List<Developer> allActiveDevelopers = developerService.getAllActiveDevelopers();
         return new DevelopersGetResponse(
-                allActiveDevelopers.stream()
-                        .map(developer -> new DeveloperGetResponse(
-                                developer.getId(),
-                                developer.getName(),
-                                developer.getAddressCountry(),
-                                developer.getAddressStreet(),
-                                developer.getAddressBuildingNumber(),
-                                developer.getAddressFlatNumber(),
-                                developer.getAddressPostalCode(),
-                                developer.getTelephoneNumber(),
-                                developer.getFaxNumber(),
-                                developer.getEmail(),
-                                developer.getTaxIdentificationNumber(),
-                                developer.getDeveloperCity().getId(),
-                                developer.getLogoUrl(),
-                                developer.getCode(),
-                                developer.getCreatedAt(),
-                                developer.getUpdatedAt(),
-                                developer.getDeletedAt()
-                        ))
-                        .toList()
+                getDeveloperGetResponses(allActiveDevelopers)
         );
     }
 
     @PostMapping("register")
-    public ResponseEntity<?> registerDeveloper(@RequestBody DeveloperData developerData) {
-        DeveloperData developer = developerService.createDeveloper(developerData);
-        return ResponseEntity.ok(developer);
+    public ResponseEntity<Long> registerDeveloper(@RequestBody DeveloperData developerData) {
+        Long developerId = developerService.createDeveloper(developerData);
+        return ResponseEntity.status(HttpStatus.CREATED).body(developerId);
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<?> updateDeveloper(@PathVariable Long id, @RequestBody DeveloperData developerData) {
-        DeveloperData developer = developerService.updateDeveloper(id, developerData);
-        return ResponseEntity.ok(developer);
+    public ResponseEntity<Long> updateDeveloper(@PathVariable Long id, @RequestBody DeveloperData developerData) {
+        Long developerId = developerService.updateDeveloper(id, developerData);
+        return ResponseEntity.status(HttpStatus.OK).body(developerId);
     }
 
     @DeleteMapping("{id}")
     public ResponseEntity<Void> softDeleteDeveloper(@PathVariable Long id) {
         developerService.softDeleteDeveloper(id);
         return ResponseEntity.noContent().build();
+    }
+
+    private static List<DeveloperGetResponse> getDeveloperGetResponses(List<Developer> allActiveDevelopers) {
+        return allActiveDevelopers.stream()
+                .map(developer -> new DeveloperGetResponse(
+                        developer.getId(),
+                        developer.getName(),
+                        developer.getAddressCountry(),
+                        developer.getAddressStreet(),
+                        developer.getAddressBuildingNumber(),
+                        developer.getAddressFlatNumber(),
+                        developer.getAddressPostalCode(),
+                        developer.getTelephoneNumber(),
+                        developer.getFaxNumber(),
+                        developer.getEmail(),
+                        developer.getTaxIdentificationNumber(),
+                        developer.getDeveloperCity().getId(),
+                        developer.getLogoUrl(),
+                        developer.getCode(),
+                        developer.getCreatedAt(),
+                        developer.getUpdatedAt(),
+                        developer.getDeletedAt()
+                ))
+                .toList();
     }
 
 }

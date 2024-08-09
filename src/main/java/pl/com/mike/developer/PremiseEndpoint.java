@@ -46,8 +46,8 @@ public class PremiseEndpoint {
     }
 
     @PostMapping
-    public ResponseEntity<Long> createPremise(@RequestBody PremiseData request) {
-        Long premiseId = premiseService.createPremiseData(request);
+    public ResponseEntity<Long> createPremise(@RequestBody PremiseData premiseData) {
+        Long premiseId = premiseService.createPremiseData(premiseData);
         return ResponseEntity.status(HttpStatus.CREATED).body(premiseId);
     }
 
