@@ -1,9 +1,10 @@
-package pl.com.mike.developer.domain.developer;
+package pl.com.mike.developer;
+
+import pl.com.mike.developer.domain.developer.PremiseData;
 
 import java.math.BigDecimal;
 
-public class PremiseData {
-    private Long id;
+public class PremisePutResponse {
     private String type;
     private Integer number;
     private Integer floor;
@@ -22,43 +23,21 @@ public class PremiseData {
     private String salesStatusTranslation;
     private String exposureTranslation;
     private String languageCode;
-    private Long buildingId;
 
-    public PremiseData() {
-    }
-
-    public PremiseData(Premise premise){
-        this.id = premise.getId();
-        this.type = premise.getType();
-        this.number = premise.getNumber();
-        this.floor = premise.getFloor();
-        this.surfacePerSqMeter = premise.getSurfacePerSqMeter();
-        this.pricePerSqMeter = premise.getPricePerSqMeter();
-        this.totalPrice = premise.getTotalPrice();
-        this.numberOfRooms = premise.getNumberOfRooms();
-        this.technicalStatus = premise.getTechnicalStatus();
-        this.salesStatus = premise.getSalesStatus();
-        this.exposure = premise.getExposure();
-        this.isBalcony = premise.getBalcony();
-        this.isGarden = premise.getGarden();
-        this.isTerrace = premise.getTerrace();
-        this.isLoggia = premise.getLoggia();
-    }
-
-    public Long getBuildingId() {
-        return buildingId;
-    }
-
-    public void setBuildingId(Long buildingId) {
-        this.buildingId = buildingId;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
+    public PremisePutResponse(PremiseData data) {
+        this.type = data.getType();
+        this.number = data.getNumber();
+        this.floor = data.getFloor();
+        this.surfacePerSqMeter = data.getSurfacePerSqMeter();
+        this.pricePerSqMeter = data.getPricePerSqMeter();
+        this.totalPrice = data.getTotalPrice();
+        this.numberOfRooms = data.getNumberOfRooms();
+        this.technicalStatus = data.getTechnicalStatus();
+        this.salesStatus = data.getSalesStatus();
+        this.exposure = data.getExposure();
+        this.isBalcony = data.getBalcony();
+        this.isGarden = data.getGarden();
+        this.isTerrace = data.getTerrace();
     }
 
     public String getType() {
@@ -204,5 +183,4 @@ public class PremiseData {
     public void setLanguageCode(String languageCode) {
         this.languageCode = languageCode;
     }
-
 }

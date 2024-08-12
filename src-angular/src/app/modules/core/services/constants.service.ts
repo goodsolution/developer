@@ -11,6 +11,7 @@ export class ConstantsService {
   readonly API_CITIES_ENDPOINT = `${this.API_BASE_URL}${environment.API_CITIES_ENDPOINT}`;
   readonly API_DEVELOPER_BY_SYSTEM_CODE_ENDPOINT = `${this.API_BASE_URL}${environment.API_DEVELOPER_BY_SYSTEM_CODE_ENDPOINT}`;
   readonly API_INVESTMENTS_ENDPOINT = `${this.API_BASE_URL}${environment.API_INVESTMENTS_ENDPOINT}`;
+  readonly API_PREMISES_ENDPOINT = `${this.API_BASE_URL}${environment.API_PREMISES_ENDPOINT}`;
   readonly API_LOGIN_ENDPOINT = `${this.API_BASE_URL}${environment.API_LOGIN_ENDPOINT}`;
   readonly ERROR_MESSAGE = environment.ERROR_MESSAGE;
   readonly API_ENCRYPTION_KEY = `${this.API_BASE_URL}${environment.API_ENCRYPTION_KEY}`;
@@ -34,6 +35,15 @@ export class ConstantsService {
   getApiPremiseByIdEndpoint(premiseId: string): string {
     return `${this.API_BASE_URL}/premises/${premiseId}`;
   }
+  getApiCreatePremiseEndpoint(): string {
+    return `${this.API_PREMISES_ENDPOINT}`;
+  }
+  getApiUpdatePremiseEndpoint(premiseId: string): string {
+    return `${this.API_PREMISES_ENDPOINT}/${premiseId}`;
+  }
+  getApiDeletePremiseEndpoint(premiseId: string): string {
+    return `${this.API_PREMISES_ENDPOINT}/${premiseId}`;
+  }
   getApiInvestmentByPremiseIdEndpoint(premiseId: string): string {
     return `${this.API_BASE_URL}/investmentByPremiseId/${premiseId}`;
   }
@@ -50,7 +60,7 @@ export class ConstantsService {
     return this.API_ENCRYPTION_KEY;
   }
   getApiAllActiveDevelopersEndpoint(): string {
-    return `${this.API_BASE_URL}/developers`;
+    return `${this.API_BASE_URL}/developers/`;
   }
   getCryptoKey(): string {
     return environment.cryptoKey;

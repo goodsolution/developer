@@ -6,6 +6,7 @@ export const environment = {
   API_CITIES_ENDPOINT: '/cities',
   API_DEVELOPER_BY_SYSTEM_CODE_ENDPOINT: '/developers/code',
   API_INVESTMENTS_ENDPOINT: '/investments',
+  API_PREMISES_ENDPOINT: '/premises',
   API_LOGIN_ENDPOINT: '/auth/login',
   ERROR_MESSAGE: 'An error has occurred',
   API_ENCRYPTION_KEY: '/auth/encryption',

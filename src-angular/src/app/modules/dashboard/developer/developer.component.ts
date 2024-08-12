@@ -1,16 +1,16 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {DeveloperResponse} from "../core/models/developer.model";
-import {DeveloperService} from "../core/services/developer.service";
-import {SearchResultDeveloperModel} from "../core/models/searchResultDeveloper.model";
-import {CityService} from "../core/services/city.service";
-import {CityResponse} from "../core/models/city.model";
-import {SearchResultCityModel} from "../core/models/searchResultCity.model";
+import {DeveloperResponse} from "../../core/models/developer.model";
+import {CityResponse} from "../../core/models/city.model";
+import {DeveloperService} from "../../core/services/developer.service";
+import {CityService} from "../../core/services/city.service";
+import {SearchResultDeveloperModel} from "../../core/models/searchResultDeveloper.model";
+import {SearchResultCityModel} from "../../core/models/searchResultCity.model";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-developer',
   templateUrl: './developer.component.html',
-  styleUrls: ['./developer.component.scss']
+  styleUrl: './developer.component.scss'
 })
 export class DeveloperComponent implements OnInit {
 

@@ -14,6 +14,7 @@ import {MatListModule} from "@angular/material/list";
 import {MatDialogModule} from "@angular/material/dialog";
 import {MatExpansionModule} from "@angular/material/expansion";
 import {MatTooltipModule} from "@angular/material/tooltip";
+import {MatSelectModule} from "@angular/material/select";
 
 @NgModule({
   declarations: [],
@@ -32,7 +33,9 @@ import {MatTooltipModule} from "@angular/material/tooltip";
     MatListModule,
     MatDialogModule,
     MatExpansionModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatSelectModule,
+    MatDialogModule
   ]
 })
 export class MaterialModule { }
