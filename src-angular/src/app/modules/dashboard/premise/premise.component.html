@@ -16,31 +16,52 @@
   <div *ngIf="selectedDeveloper">
     <h3>Premises for {{ selectedDeveloper.name }}</h3>
     <button class="btn add-btn" (click)="addNewPremise()">Add New Premise</button>
-
     <table>
       <thead>
       <tr>
-        <th>Name</th>
-        <th>Address Street</th>
-        <th>Building Number</th>
-        <th>Flat Number</th>
-        <th>Postal Code</th>
+        <th>ID</th>
+        <th>Type</th>
+        <th>Nb</th>
+        <th>Floor</th>
+        <th>Surf PerSqM</th>
+        <th>$ PerSqM</th>
+        <th>$ Total</th>
+        <th>Rooms</th>
+        <th>Tech</th>
+        <th>Sales</th>
+        <th>Side</th>
+        <th>Balcony</th>
+        <th>Garden</th>
+        <th>Terrace</th>
+        <th>Loggia</th>
+        <th>Bdg ID</th>
         <th>Edit</th>
-        <th>Delete</th>
+        <th>Del</th>
       </tr>
       </thead>
       <tbody>
       <tr *ngFor="let premise of pagedPremises">
         <td>{{ premise.id }}</td>
+        <td>{{ premise.type }}</td>
+        <td>{{ premise.number }}</td>
         <td>{{ premise.floor }}</td>
-        <td>{{ premise.salesStatus }}</td>
-        <td>{{ premise.numberOfRooms }}</td>
+        <td>{{ premise.surfacePerSqMeter }}</td>
+        <td>{{ premise.pricePerSqMeter }}</td>
         <td>{{ premise.totalPrice }}</td>
+        <td>{{ premise.numberOfRooms }}</td>
+        <td>{{ premise.technicalStatus }}</td>
+        <td>{{ premise.salesStatus }}</td>
+        <td>{{ premise.exposure }}</td>
+        <td>{{ premise.isBalcony ? 'Yes' : 'No' }}</td>
+        <td>{{ premise.isGarden ? 'Yes' : 'No' }}</td>
+        <td>{{ premise.isTerrace ? 'Yes' : 'No' }}</td>
+        <td>{{ premise.isLoggia ? 'Yes' : 'No' }}</td>
+        <td>{{ premise.buildingId }}</td>
         <td>
           <button class="btn-edit" (click)="editPremise(premise)">Edit</button>
         </td>
         <td>
-          <button class="btn-delete" (click)="deletePremise(premise)">Delete</button>
+          <button class="btn-delete" (click)="deletePremise(premise)">Del</button>
         </td>
       </tr>
       </tbody>
