@@ -35,7 +35,8 @@ public final class ConverterToResponse {
                             list.getTechnicalStatusTranslation(),
                             list.getSalesStatusTranslation(),
                             list.getExposureTranslation(),
-                            list.getLanguageCode()
+                            list.getLanguageCode(),
+                            list.getBuildingId()
                     )
             );
         }

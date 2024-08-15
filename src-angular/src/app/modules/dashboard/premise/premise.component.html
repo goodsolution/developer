@@ -52,10 +52,10 @@
         <td>{{ premise.technicalStatus }}</td>
         <td>{{ premise.salesStatus }}</td>
         <td>{{ premise.exposure }}</td>
-        <td>{{ premise.isBalcony ? 'Yes' : 'No' }}</td>
-        <td>{{ premise.isGarden ? 'Yes' : 'No' }}</td>
-        <td>{{ premise.isTerrace ? 'Yes' : 'No' }}</td>
-        <td>{{ premise.isLoggia ? 'Yes' : 'No' }}</td>
+        <td>{{ premise.balcony ? 'Yes' : 'No' }}</td>
+        <td>{{ premise.garden ? 'Yes' : 'No'  }}</td>
+        <td>{{ premise.terrace ? 'Yes' : 'No'  }}</td>
+        <td>{{ premise.loggia ? 'Yes' : 'No'  }}</td>
         <td>{{ premise.buildingId }}</td>
         <td>
           <button class="btn-edit" (click)="editPremise(premise)">Edit</button>

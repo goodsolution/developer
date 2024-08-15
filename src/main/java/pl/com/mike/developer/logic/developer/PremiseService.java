@@ -65,11 +65,18 @@ public class PremiseService {
                 .toList();
     }
 
-    public List<PremiseData> getPremiseDataByInvestmentId(PremiseSearchFilter filter) {
+    public List<PremiseData> getPremiseDataByInvestmentIdAndSetTranslation(PremiseSearchFilter filter) {
         return premiseRepository.findAllByInvestmentId(filter.getId()).stream()
                 .filter(premise -> premise.getDeletedAt() == null)
                 .map(PremiseData::new)
                 .map(premiseData -> setTranslationsAndLanguageCodeToPremiseData(premiseData, filter.getLanguageCode()))
+                .toList();
+    }
+
+    public List<PremiseData> getPremiseDataByInvestmentId(PremiseSearchFilter filter) {
+        return premiseRepository.findAllByInvestmentId(filter.getId()).stream()
+                .filter(premise -> premise.getDeletedAt() == null)
+                .map(PremiseData::new)
                 .toList();
     }
 

@@ -43,6 +43,7 @@ public class PremiseData {
         this.isGarden = premise.getGarden();
         this.isTerrace = premise.getTerrace();
         this.isLoggia = premise.getLoggia();
+        this.buildingId = premise.getBuildingId();
     }
 
     public Long getBuildingId() {

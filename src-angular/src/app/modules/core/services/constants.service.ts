@@ -26,8 +26,11 @@ export class ConstantsService {
   getApiUpdateDeveloperEndpoint(developerId: number): string {
     return `${this.API_BASE_URL}/developers/${developerId}`;
   }
-  getApiPremisesByInvestmentEndpoint(investmentId: number): string {
+  getApiPremisesByInvestmentEndpointAndSetTranslation(investmentId: number): string {
     return `${this.API_BASE_URL}/premises/investment/${investmentId}`;
+  }
+  getApiPremisesByInvestmentEndpoint(investmentId: number): string {
+    return `${this.API_BASE_URL}/premises/dashboard/investment/${investmentId}`;
   }
   getApiPremiseMinMaxTotalPriceByInvestmentId(investmentId: number): string {
     return `${this.API_BASE_URL}/premises/investment/${investmentId}/enhancedPremiseData`;

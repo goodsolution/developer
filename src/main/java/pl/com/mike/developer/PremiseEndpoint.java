@@ -24,13 +24,22 @@ public class PremiseEndpoint {
     }
 
     @GetMapping("investment/{id}")
-    public PremisesGetResponse getPremisesByInvestmentId(
+    public PremisesGetResponse getPremisesByInvestmentIdAndSetTranslation(
             @PathVariable Long id,
             @RequestParam(name = "languageCode", required = false) String languageCode) {
-        return getPremisesGetResponse(premiseService.getPremiseDataByInvestmentId(
+        return getPremisesGetResponse(premiseService.getPremiseDataByInvestmentIdAndSetTranslation(
                 new PremiseSearchFilter.PremiseSearchFilterBuilder()
                         .withId(id)
                         .withLanguageCode(languageCode)
+                        .build()));
+    }
+
+    @GetMapping("/dashboard/investment/{id}")
+    public PremisesGetResponse getPremisesByInvestmentId(
+            @PathVariable Long id) {
+        return getPremisesGetResponse(premiseService.getPremiseDataByInvestmentId(
+                new PremiseSearchFilter.PremiseSearchFilterBuilder()
+                        .withId(id)
                         .build()));
     }
 

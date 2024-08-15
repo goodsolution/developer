@@ -61,12 +61,22 @@ export class PremiseComponent implements OnInit {
 
   fetchPremises(): void {
     if (this.selectedDeveloper) {
-      this.premiseService.getPremisesByInvestmentId(this.selectedDeveloper.id).subscribe((response) => {
-        this.premises = response.premisesGetResponse;
-        this.updatePagedPremises();
+      this.premiseService.getPremisesByInvestmentId(this.selectedDeveloper.id).subscribe({
+        next: (response) => {
+          this.premises = response.premisesGetResponse;
+          console.log('Premises:', this.premises);
+          this.updatePagedPremises();
+        },
+        error: (error) => {
+          console.error('Error fetching premises:', error);
+        },
+        complete: () => {
+          console.log('Finished fetching premises');
+        }
       });
     }
   }
+
 
   onPageChange(event: any): void {
     this.currentPage = event.pageIndex;

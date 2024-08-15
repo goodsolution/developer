@@ -34,7 +34,7 @@ export class PremiseListAntalComponent implements OnInit, OnDestroy {
   }
 
   private loadPremises(investmentId: number) {
-    this.premiseService.getPremisesByInvestmentId(investmentId).subscribe({
+    this.premiseService.getPremisesByInvestmentIdAndSetTranslation(investmentId).subscribe({
       next: (response) => {
         this.premises = response.premisesGetResponse;
       },

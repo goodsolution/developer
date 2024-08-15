@@ -65,7 +65,7 @@ export class PremiseListDodeComponent implements OnInit, AfterViewInit, OnDestro
   }
 
   private loadPremises(investmentId: number) {
-    this.premiseService.getPremisesByInvestmentId(investmentId).subscribe({
+    this.premiseService.getPremisesByInvestmentIdAndSetTranslation(investmentId).subscribe({
       next: (response) => {
         this.premises = response.premisesGetResponse;
         this.applyFilters();
