@@ -7,6 +7,7 @@ import { DeveloperService } from "../../core/services/developer.service";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteConfirmationDialogComponent } from "../delete-confirmation-dialog/delete-confirmation-dialog.component";
+import { PremiseDialogComponent } from './premise-dialog/premise-dialog.component';  // Import the dialog component
 
 @Component({
   selector: 'app-premise',
@@ -19,9 +20,6 @@ export class PremiseComponent implements OnInit {
   selectedDeveloper: DeveloperResponse | null = null;
   premises: PremiseResponse[] = [];
   pagedPremises: PremiseResponse[] = [];
-  selectedPremise: PremiseResponse | null = null;
-  premiseForm: FormGroup;
-  isNewPremise: boolean = false;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
@@ -29,20 +27,10 @@ export class PremiseComponent implements OnInit {
   pageSize: number = 5;
 
   constructor(
-    private fb: FormBuilder,
     private premiseService: PremiseService,
     private developerService: DeveloperService,
     private dialog: MatDialog
-  ) {
-    this.premiseForm = this.fb.group({
-      name: ['', [Validators.required, Validators.minLength(3)]],
-      addressStreet: ['', Validators.required],
-      buildingNumber: ['', Validators.required],
-      flatNumber: [''],
-      postalCode: ['', Validators.required],
-      developerId: ['', Validators.required]
-    });
-  }
+  ) {}
 
   ngOnInit(): void {
     this.fetchDevelopers();
@@ -64,19 +52,14 @@ export class PremiseComponent implements OnInit {
       this.premiseService.getPremisesByInvestmentId(this.selectedDeveloper.id).subscribe({
         next: (response) => {
           this.premises = response.premisesGetResponse;
-          console.log('Premises:', this.premises);
           this.updatePagedPremises();
         },
         error: (error) => {
           console.error('Error fetching premises:', error);
-        },
-        complete: () => {
-          console.log('Finished fetching premises');
         }
       });
     }
   }
-
 
   onPageChange(event: any): void {
     this.currentPage = event.pageIndex;
@@ -90,52 +73,33 @@ export class PremiseComponent implements OnInit {
   }
 
   addNewPremise(): void {
-    this.selectedPremise = null;
-    this.isNewPremise = true;
-    this.premiseForm.reset();
-    if (this.selectedDeveloper) {
-      this.premiseForm.controls['developerId'].setValue(this.selectedDeveloper.id);
-    }
+    const dialogRef = this.dialog.open(PremiseDialogComponent, {
+      width: '400px',
+      data: null
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.premiseService.createPremise(result).subscribe(() => {
+          this.fetchPremises();
+        });
+      }
+    });
   }
 
   editPremise(premise: PremiseResponse): void {
-    this.selectedPremise = premise;
-    this.isNewPremise = false;
-    this.premiseForm.patchValue(premise);
-  }
+    const dialogRef = this.dialog.open(PremiseDialogComponent, {
+      width: '400px',
+      data: premise
+    });
 
-  onSubmit(): void {
-    if (this.premiseForm.valid) {
-      if (this.isNewPremise) {
-        this.saveNewPremise();
-      } else {
-        this.updatePremise();
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.premiseService.updatePremise(premise.id.toString(), result).subscribe(() => {
+          this.fetchPremises();
+        });
       }
-    }
-  }
-
-  saveNewPremise(): void {
-    const newPremise = this.premiseForm.value;
-    this.premiseService.createPremise(newPremise).subscribe(() => {
-      this.fetchPremises();
-      this.isNewPremise = false;
-      this.premiseForm.reset();
     });
-  }
-
-  updatePremise(): void {
-    const updatedPremise = this.premiseForm.value;
-    this.premiseService.updatePremise(updatedPremise.id, updatedPremise).subscribe(() => {
-      this.fetchPremises();
-      this.isNewPremise = false;
-      this.selectedPremise = null;
-    });
-  }
-
-  cancelEdit(): void {
-    this.selectedPremise = null;
-    this.isNewPremise = false;
-    this.premiseForm.reset();
   }
 
   deletePremise(premise: PremiseResponse): void {
@@ -143,15 +107,13 @@ export class PremiseComponent implements OnInit {
       width: '250px',
       data: { title: 'Delete Premise', message: 'Do you really want to delete this premise?' }
     });
+
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.premiseService.deletePremise(premise.id.toString()).subscribe(() => {
           this.fetchPremises();
-        }, error => {
         });
-      } else {
       }
     });
   }
-
 }

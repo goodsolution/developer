@@ -73,27 +73,5 @@
                    (page)="onPageChange($event)">
     </mat-paginator>
 
-    <div *ngIf="isNewPremise || selectedPremise">
-      <h3>{{ isNewPremise ? 'Add New Premise' : 'Edit Premise' }}</h3>
-      <form [formGroup]="premiseForm" (ngSubmit)="onSubmit()">
-        <label for="name">Name:</label>
-        <input id="name" formControlName="name">
-
-        <label for="addressStreet">Address Street:</label>
-        <input id="addressStreet" formControlName="addressStreet">
-
-        <label for="buildingNumber">Building Number:</label>
-        <input id="buildingNumber" formControlName="buildingNumber">
-
-        <label for="flatNumber">Flat Number:</label>
-        <input id="flatNumber" formControlName="flatNumber">
-
-        <label for="postalCode">Postal Code:</label>
-        <input id="postalCode" formControlName="postalCode">
-
-        <button type="submit">{{ isNewPremise ? 'Add' : 'Save' }}</button>
-        <button type="button" (click)="cancelEdit()">Cancel</button>
-      </form>
-    </div>
   </div>
 </div>
