@@ -6,7 +6,7 @@ import {DeveloperService} from "../../core/services/developer.service";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatDialog} from '@angular/material/dialog';
 import {DeleteConfirmationDialogComponent} from "../delete-confirmation-dialog/delete-confirmation-dialog.component";
-import {PremiseDialogComponent} from './premise-dialog/premise-dialog.component'; // Import the dialog component
+import {PremiseDialogComponent} from './premise-dialog/premise-dialog.component';
 
 @Component({
   selector: 'app-premise',
