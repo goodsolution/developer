@@ -1,13 +1,12 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { DeveloperResponse } from "../../core/models/developer.model";
-import { PremiseResponse } from "../../core/models/premise.model";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { PremiseService } from "../../core/services/premise.service";
-import { DeveloperService } from "../../core/services/developer.service";
-import { MatPaginator } from "@angular/material/paginator";
-import { MatDialog } from '@angular/material/dialog';
-import { DeleteConfirmationDialogComponent } from "../delete-confirmation-dialog/delete-confirmation-dialog.component";
-import { PremiseDialogComponent } from './premise-dialog/premise-dialog.component';  // Import the dialog component
+import {Component, Input, OnInit, ViewChild} from '@angular/core';
+import {DeveloperResponse} from "../../core/models/developer.model";
+import {PremiseResponse} from "../../core/models/premise.model";
+import {PremiseService} from "../../core/services/premise.service";
+import {DeveloperService} from "../../core/services/developer.service";
+import {MatPaginator} from "@angular/material/paginator";
+import {MatDialog} from '@angular/material/dialog';
+import {DeleteConfirmationDialogComponent} from "../delete-confirmation-dialog/delete-confirmation-dialog.component";
+import {PremiseDialogComponent} from './premise-dialog/premise-dialog.component'; // Import the dialog component
 
 @Component({
   selector: 'app-premise',
