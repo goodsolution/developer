@@ -19,6 +19,10 @@ export class PremiseService {
     return this.http.get<SearchResultPremiseModel>(this.constanceService.getApiPremiseByIdEndpoint(id));
   }
 
+  getPremisesByInvestmentIdAndSetTranslation(id: number) {
+    return this.http.get<SearchResultPremiseModel>(this.constanceService.getApiPremisesByInvestmentEndpointAndSetTranslation(id));
+  }
+
   getPremisesByInvestmentId(id: number) {
     return this.http.get<SearchResultPremiseModel>(this.constanceService.getApiPremisesByInvestmentEndpoint(id));
   }

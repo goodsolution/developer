@@ -16,31 +16,52 @@
   <div *ngIf="selectedDeveloper">
     <h3>Premises for {{ selectedDeveloper.name }}</h3>
     <button class="btn add-btn" (click)="addNewPremise()">Add New Premise</button>
-
     <table>
       <thead>
       <tr>
-        <th>Name</th>
-        <th>Address Street</th>
-        <th>Building Number</th>
-        <th>Flat Number</th>
-        <th>Postal Code</th>
+        <th>ID</th>
+        <th>Type</th>
+        <th>Nb</th>
+        <th>Floor</th>
+        <th>Surf PerSqM</th>
+        <th>$ PerSqM</th>
+        <th>$ Total</th>
+        <th>Rooms</th>
+        <th>Tech</th>
+        <th>Sales</th>
+        <th>Side</th>
+        <th>Balcony</th>
+        <th>Garden</th>
+        <th>Terrace</th>
+        <th>Loggia</th>
+        <th>Bdg ID</th>
         <th>Edit</th>
-        <th>Delete</th>
+        <th>Del</th>
       </tr>
       </thead>
       <tbody>
       <tr *ngFor="let premise of pagedPremises">
         <td>{{ premise.id }}</td>
+        <td>{{ premise.type }}</td>
+        <td>{{ premise.number }}</td>
         <td>{{ premise.floor }}</td>
-        <td>{{ premise.salesStatus }}</td>
-        <td>{{ premise.numberOfRooms }}</td>
+        <td>{{ premise.surfacePerSqMeter }}</td>
+        <td>{{ premise.pricePerSqMeter }}</td>
         <td>{{ premise.totalPrice }}</td>
+        <td>{{ premise.numberOfRooms }}</td>
+        <td>{{ premise.technicalStatus }}</td>
+        <td>{{ premise.salesStatus }}</td>
+        <td>{{ premise.exposure }}</td>
+        <td>{{ premise.balcony ? 'Yes' : 'No' }}</td>
+        <td>{{ premise.garden ? 'Yes' : 'No'  }}</td>
+        <td>{{ premise.terrace ? 'Yes' : 'No'  }}</td>
+        <td>{{ premise.loggia ? 'Yes' : 'No'  }}</td>
+        <td>{{ premise.buildingId }}</td>
         <td>
           <button class="btn-edit" (click)="editPremise(premise)">Edit</button>
         </td>
         <td>
-          <button class="btn-delete" (click)="deletePremise(premise)">Delete</button>
+          <button class="btn-delete" (click)="deletePremise(premise)">Del</button>
         </td>
       </tr>
       </tbody>
@@ -52,27 +73,5 @@
                    (page)="onPageChange($event)">
     </mat-paginator>
 
-    <div *ngIf="isNewPremise || selectedPremise">
-      <h3>{{ isNewPremise ? 'Add New Premise' : 'Edit Premise' }}</h3>
-      <form [formGroup]="premiseForm" (ngSubmit)="onSubmit()">
-        <label for="name">Name:</label>
-        <input id="name" formControlName="name">
-
-        <label for="addressStreet">Address Street:</label>
-        <input id="addressStreet" formControlName="addressStreet">
-
-        <label for="buildingNumber">Building Number:</label>
-        <input id="buildingNumber" formControlName="buildingNumber">
-
-        <label for="flatNumber">Flat Number:</label>
-        <input id="flatNumber" formControlName="flatNumber">
-
-        <label for="postalCode">Postal Code:</label>
-        <input id="postalCode" formControlName="postalCode">
-
-        <button type="submit">{{ isNewPremise ? 'Add' : 'Save' }}</button>
-        <button type="button" (click)="cancelEdit()">Cancel</button>
-      </form>
-    </div>
   </div>
 </div>

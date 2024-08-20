@@ -21,8 +21,8 @@
           <p><strong>{{ 'shared.premise.exposure' | translate }}</strong> {{ getDictionaryValue('exposure', premise) }}</p>
 
           <p>
-            <span class="badge bg-success" *ngIf="premise.isBalcony">Balcony</span>
-            <span class="badge bg-primary" *ngIf="premise.isGarden">Garden</span>
+            <span class="badge bg-success" *ngIf="premise.balcony">Balcony</span>
+            <span class="badge bg-primary" *ngIf="premise.garden">Garden</span>
           </p>
           <a [routerLink]="['/contact']" class="btn btn-primary btn-lg mt-3">{{ 'shared.premise.ask' | translate }}</a>
         </div>

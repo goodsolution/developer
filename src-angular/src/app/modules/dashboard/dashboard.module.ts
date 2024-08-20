@@ -10,6 +10,7 @@ import {DashboardDeveloperComponent} from "./dashboard-developer/dashboard-devel
 import {DeveloperComponent} from "./developer/developer.component";
 import {PremiseComponent} from "./premise/premise.component";
 import {DeleteConfirmationDialogComponent} from "./delete-confirmation-dialog/delete-confirmation-dialog.component";
+import {PremiseDialogComponent} from "./premise/premise-dialog/premise-dialog.component";
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import {DeleteConfirmationDialogComponent} from "./delete-confirmation-dialog/de
     PremiseComponent,
     DashboardAdminComponent,
     DashboardDeveloperComponent,
-    DeleteConfirmationDialogComponent
+    DeleteConfirmationDialogComponent,
+    PremiseDialogComponent
   ],
   imports: [
     CommonModule,

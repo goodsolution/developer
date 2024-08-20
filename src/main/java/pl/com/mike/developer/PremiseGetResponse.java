@@ -22,8 +22,10 @@ public class PremiseGetResponse {
     private String salesStatusTranslation;
     private String exposureTranslation;
     private String languageCode;
+    private Long buildingId;
 
-    public PremiseGetResponse(Long id, String type, Integer number, Integer floor, Double surfacePerSqMeter, Double pricePerSqMeter, BigDecimal totalPrice, Integer numberOfRooms, String technicalStatus, String salesStatus, String exposure, Boolean isBalcony, Boolean isGarden, Boolean isTerrace, Boolean isLoggia, String technicalStatusTranslation, String salesStatusTranslation, String exposureTranslation, String languageCode) {
+
+    public PremiseGetResponse(Long id, String type, Integer number, Integer floor, Double surfacePerSqMeter, Double pricePerSqMeter, BigDecimal totalPrice, Integer numberOfRooms, String technicalStatus, String salesStatus, String exposure, Boolean isBalcony, Boolean isGarden, Boolean isTerrace, Boolean isLoggia, String technicalStatusTranslation, String salesStatusTranslation, String exposureTranslation, String languageCode, Long buildingId) {
         this.id = id;
         this.type = type;
         this.number = number;
@@ -43,6 +45,15 @@ public class PremiseGetResponse {
         this.salesStatusTranslation = salesStatusTranslation;
         this.exposureTranslation = exposureTranslation;
         this.languageCode = languageCode;
+        this.buildingId = buildingId;
+    }
+
+    public Long getBuildingId() {
+        return buildingId;
+    }
+
+    public void setBuildingId(Long buildingId) {
+        this.buildingId = buildingId;
     }
 
     public Long getId() {
