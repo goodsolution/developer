@@ -20,6 +20,18 @@ class CommonValidatorTest {
     }
 
     @Test
+    void testValidInputWithOneLine() {
+        // Given
+        String validText = "#title.pl(){\"Użycie konstruktora\"};";
+
+        // When
+        Result result = validator.validate(validText);
+
+        // Then
+        Assertions.assertTrue(result.isValid());
+    }
+
+    @Test
     void testValidInputWithSpaces() {
         //Given
         String validText = "#title.pl(){\"Użycie konstruktora\"};\n\n" +

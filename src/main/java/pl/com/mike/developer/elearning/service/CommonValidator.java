@@ -15,12 +15,15 @@ public class CommonValidator implements Validator {
         COMMAND_PATTERN = Stream.of(Command.values())
                 .map(Command::getValue)
                 .collect(Collectors.joining("|"));
+
+
         FULL_PATTERN = String.format(
-                "^#(%s)\\.pl\\(\\)\\{\\s*\".*?\"\\s*\\};\\s*\\r?\\n\\s*" +
-                        "#(%s)\\.en\\(\\)\\{\\s*\".*?\"\\s*\\};\\s*\\r?\\n\\s*" +
-                        "#(%s)\\.pl\\(\\)\\{\\s*\".*?\"\\s*\\};\\s*\\r?\\n\\s*" +
-                        "#(%s)\\.en\\(\\)\\{\\s*\".*?\"\\s*\\};\\s*$",
-                COMMAND_PATTERN, COMMAND_PATTERN, COMMAND_PATTERN, COMMAND_PATTERN
+                "^\\s*#(%s)\\.pl\\(\\)\\{\\s*\".*?\"\\s*\\};" + // Required line
+                        "(\\s*\\r?\\n\\s*#(%s)\\.en\\(\\)\\{\\s*\".*?\"\\s*\\};?" +  // Optional #title.en line
+                        "(\\s*\\r?\\n\\s*#(%s)\\.pl\\(\\)\\{\\s*\".*?\"\\s*\\};)?" +  // Optional #description.pl line
+                        "(\\s*\\r?\\n\\s*#(%s)\\.en\\(\\)\\{\\s*\".*?\"\\s*\\};)?" +  // Optional #description.en line
+                        "\\s*)?$", // End of string, optional trailing whitespace
+                COMMAND_PATTERN,COMMAND_PATTERN, COMMAND_PATTERN, COMMAND_PATTERN
         );
     }
 
