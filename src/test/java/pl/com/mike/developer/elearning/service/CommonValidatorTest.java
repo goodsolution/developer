@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class CommonValidatorTest {
+
     private final CommonValidator validator = new CommonValidator();
 
     @Test
@@ -17,6 +18,7 @@ class CommonValidatorTest {
         Result result = validator.validate(validText);
         //Then
         Assertions.assertTrue(result.isValid());
+        Assertions.assertEquals(Reason.OK, result.getReason());
     }
 
     @Test
@@ -29,6 +31,7 @@ class CommonValidatorTest {
 
         // Then
         Assertions.assertTrue(result.isValid());
+        Assertions.assertEquals(Reason.OK, result.getReason());
     }
 
     @Test
@@ -42,10 +45,11 @@ class CommonValidatorTest {
         Result result = validator.validate(validText);
         //Then
         Assertions.assertTrue(result.isValid());
+        Assertions.assertEquals(Reason.OK, result.getReason());
     }
 
     @Test
-    void testInvalidInput() {
+    void testInvalidInputWhenNoDescription() {
         //Given
         String invalidText = "#title.pl(){\"Użycie konstruktora\"};\n" +
                 "#title.en(){\"Constructor usage\"};\n" +
@@ -55,6 +59,33 @@ class CommonValidatorTest {
         Result result = validator.validate(invalidText);
         //Then
         Assertions.assertFalse(result.isValid());
+        Assertions.assertEquals(Reason.UNKNOWN, result.getReason());
+
+    }
+
+
+    @Test
+    void testInvalidInputWithUnknownCommand() {
+        // Given
+        String invalidText = "#unknown.pl(){\"Invalid command\"};\n" +
+                "#title.en(){\"Constructor usage\"};";
+        // When
+        Result result = validator.validate(invalidText);
+        // Then
+        Assertions.assertFalse(result.isValid());
+        Assertions.assertEquals(Reason.UNKNOWN, result.getReason());
+    }
+
+    @Test
+    void testInvalidInputWithMultipleUnknownCommands() {
+        // Given
+        String invalidText = "#unknown.pl(){\"Invalid command\"};\n" +
+                "#fake.en(){\"Another invalid command\"};";
+        // When
+        Result result = validator.validate(invalidText);
+        // Then
+        Assertions.assertFalse(result.isValid());
+        Assertions.assertEquals(Reason.UNKNOWN, result.getReason());
     }
 
     @Test
@@ -67,4 +98,5 @@ class CommonValidatorTest {
         Assertions.assertFalse(result.isValid());
         Assertions.assertEquals(Reason.EMPTY, result.getReason());
     }
+
 }
