@@ -11,21 +11,24 @@ public class CommonValidator implements Validator {
 
     private static final String COMMAND_PATTERN;
 
+    private final TitleValidator titleValidator = new TitleValidator();
+    private final DescriptionValidator descriptionValidator = new DescriptionValidator();
+    private final CommandValidator commandValidator = new CommandValidator(titleValidator, descriptionValidator);
+
     static {
         COMMAND_PATTERN = Stream.of(Command.values())
                 .map(Command::getValue)
                 .collect(Collectors.joining("|"));
 
-
         FULL_PATTERN = String.format(
-                "^\\s*#(%s)\\.pl\\(\\)\\{\\s*\".*?\"\\s*\\};" + // Required line
-                        "(\\s*\\r?\\n\\s*#(%s)\\.en\\(\\)\\{\\s*\".*?\"\\s*\\};?" +  // Optional #title.en line
-                        "(\\s*\\r?\\n\\s*#(%s)\\.pl\\(\\)\\{\\s*\".*?\"\\s*\\};)?" +  // Optional #description.pl line
-                        "(\\s*\\r?\\n\\s*#(%s)\\.en\\(\\)\\{\\s*\".*?\"\\s*\\};)?" +  // Optional #description.en line
-                        "\\s*)?$", // End of string, optional trailing whitespace
-                COMMAND_PATTERN,COMMAND_PATTERN, COMMAND_PATTERN, COMMAND_PATTERN
+                "^\\s*#(%s)\\.pl\\(\\)\\{\\s*\".*?\"\\s*\\};\\s*" +  // Required .pl line
+                        "(#(%s)\\.en\\(\\)\\{\\s*\".*?\"\\s*\\};\\s*)?" +  // Optional .en line
+                        "(#(%s)\\.pl\\(\\)\\{\\s*\".*?\"\\s*\\};\\s*)?" +  // Optional .pl line
+                        "(#(%s)\\.en\\(\\)\\{\\s*\".*?\"\\s*\\};\\s*)?$",  // Optional .en line
+                COMMAND_PATTERN, COMMAND_PATTERN, COMMAND_PATTERN, COMMAND_PATTERN
         );
     }
+
 
     private static final Pattern PATTERN = Pattern.compile(FULL_PATTERN);
 
@@ -34,7 +37,10 @@ public class CommonValidator implements Validator {
         if (isNullOrEmpty(text)) {
             return new Result(false, Reason.EMPTY);
         }
-        return matchesPattern(text) ? new Result(true, Reason.OK) : new Result(false, Reason.UNKNOWN);
+        if(!matchesPattern(text)) {
+            return new Result(false, Reason.UNKNOWN);
+        }
+        return commandValidator.validate(text);
     }
 
     private boolean isNullOrEmpty(String text) {
@@ -46,6 +52,4 @@ public class CommonValidator implements Validator {
         return matcher.matches();
     }
 
-//    ^\s*#title.pl\(\)\{\s*".*?"\s*\};\r?\n\s*#title.en\(\)\{\s*".*?"\s*\};\r?\r?\n\s*#description.pl\(\)\{\s*".*?"\s*\};\r?\n\s*#description.en\(\)\{\s*".*?"\s*\}\s*;
-    //            "^#title.pl\\(\\)\\{\\s*\".*?\"\\s*\\};\\r?\\n#title.en\\(\\)\\{\\s*\".*?\"\\s*\\};\\r?\\r?\\n#description.pl\\(\\)\\{\\s*\".*?\"\\s*\\};\\r?\\n#description.en\\(\\)\\{\\s*\".*?\"\\s*\\};";
 }
